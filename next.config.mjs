@@ -8,7 +8,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['images.unsplash.com', 'plus.unsplash.com'],
+    domains: ['images.unsplash.com', 'plus.unsplash.com', 'ulnorqgbqtvpgfvgruen.supabase.co'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -16,12 +16,10 @@ const nextConfig = {
       },
     ],
   },
-  // Remove or set to false if it exists
+  // Use standalone output for Vercel
   output: 'standalone',
-  // Add this to disable static exports
-  // output: 'export', // REMOVE THIS LINE if it exists
   // Add webpack configuration to handle the error
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // Avoid the WasmHash error
     config.optimization.moduleIds = 'named';
     
