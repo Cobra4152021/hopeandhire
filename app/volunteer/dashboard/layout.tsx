@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Users, Briefcase, Building2, LogOut, Menu, X, UserCircle, HandshakeIcon } from "lucide-react"
+import { LayoutDashboard, Users, Briefcase, Building2, LogOut, Menu, X, UserCircle, Handshake } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function VolunteerDashboardLayout({
@@ -21,7 +21,7 @@ export default function VolunteerDashboardLayout({
     { name: "Candidates", href: "/volunteer/dashboard/candidates", icon: Users },
     { name: "Jobs", href: "/volunteer/dashboard/jobs", icon: Briefcase },
     { name: "Companies", href: "/volunteer/dashboard/companies", icon: Building2 },
-    { name: "Match", href: "/volunteer/dashboard/match", icon: HandshakeIcon },
+    { name: "Match", href: "/volunteer/dashboard/match", icon: Handshake },
   ]
 
   return (
