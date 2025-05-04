@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove swcMinify as it's no longer needed in Next.js 15
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
@@ -9,8 +8,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
-    domains: ['localhost'],
+    domains: ['images.unsplash.com', 'plus.unsplash.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -18,6 +16,10 @@ const nextConfig = {
       },
     ],
   },
+  // Remove or set to false if it exists
+  output: 'standalone',
+  // Add this to disable static exports
+  // output: 'export', // REMOVE THIS LINE if it exists
   // Add webpack configuration to handle the error
   webpack: (config, { isServer }) => {
     // Avoid the WasmHash error
@@ -32,14 +34,6 @@ const nextConfig = {
     
     return config;
   },
-  env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  },
-  experimental: {
-    // ...any existing experimental options
-  },
-  output: 'standalone',
 }
 
 export default nextConfig

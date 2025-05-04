@@ -3,139 +3,37 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      companies: {
-        Row: {
-          id: string
-          created_at: string
-          name: string
-          description: string | null
-          website: string | null
-          industry: string | null
-          size: string | null
-          location: string | null
-          logo_url: string | null
-          user_id: string
-        }
-        Insert: {
-          id?: string
-          created_at?: string
-          name: string
-          description?: string | null
-          website?: string | null
-          industry?: string | null
-          size?: string | null
-          location?: string | null
-          logo_url?: string | null
-          user_id: string
-        }
-        Update: {
-          id?: string
-          created_at?: string
-          name?: string
-          description?: string | null
-          website?: string | null
-          industry?: string | null
-          size?: string | null
-          location?: string | null
-          logo_url?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "companies_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      jobs: {
-        Row: {
-          id: string
-          created_at: string
-          title: string
-          description: string
-          requirements: string | null
-          salary_range: string | null
-          location: string
-          job_type: string
-          company_id: string
-          is_active: boolean
-          application_url: string | null
-          contact_email: string | null
-          deadline: string | null
-        }
-        Insert: {
-          id?: string
-          created_at?: string
-          title: string
-          description: string
-          requirements?: string | null
-          salary_range?: string | null
-          location: string
-          job_type: string
-          company_id: string
-          is_active?: boolean
-          application_url?: string | null
-          contact_email?: string | null
-          deadline?: string | null
-        }
-        Update: {
-          id?: string
-          created_at?: string
-          title?: string
-          description?: string
-          requirements?: string | null
-          salary_range?: string | null
-          location?: string
-          job_type?: string
-          company_id?: string
-          is_active?: boolean
-          application_url?: string | null
-          contact_email?: string | null
-          deadline?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "jobs_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "companies"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      // Define your tables here
+      // This is a minimal placeholder
       profiles: {
         Row: {
           id: string
-          created_at: string
-          user_id: string
+          updated_at: string | null
+          username: string | null
           full_name: string | null
           avatar_url: string | null
-          role: string
+          website: string | null
         }
         Insert: {
-          id?: string
-          created_at?: string
-          user_id: string
+          id: string
+          updated_at?: string | null
+          username?: string | null
           full_name?: string | null
           avatar_url?: string | null
-          role?: string
+          website?: string | null
         }
         Update: {
           id?: string
-          created_at?: string
-          user_id?: string
+          updated_at?: string | null
+          username?: string | null
           full_name?: string | null
           avatar_url?: string | null
-          role?: string
+          website?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -149,6 +47,9 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
       [_ in never]: never
     }
   }
