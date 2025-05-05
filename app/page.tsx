@@ -32,13 +32,25 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1">
-        <HeroSection />
-        <FeaturesSection />
-        <StatsSection />
-        <TestimonialsSection />
-        <PartnersSection />
-        <CTASection />
+      <main className="flex-1 space-y-16">
+        <div className="container mx-auto px-4 max-w-screen-xl">
+          <HeroSection />
+        </div>
+        <div className="container mx-auto px-4 max-w-screen-xl">
+          <FeaturesSection />
+        </div>
+        <div className="container mx-auto px-4 max-w-screen-xl">
+          <StatsSection />
+        </div>
+        <div className="container mx-auto px-4 max-w-screen-xl">
+          <TestimonialsSection />
+        </div>
+        <div className="container mx-auto px-4 max-w-screen-xl">
+          <PartnersSection />
+        </div>
+        <div className="container mx-auto px-4 max-w-screen-xl">
+          <CTASection />
+        </div>
       </main>
       <Footer />
     </div>
