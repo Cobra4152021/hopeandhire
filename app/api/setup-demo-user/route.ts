@@ -2,14 +2,10 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
-// This is an admin-only route to set up the demo user
-// You would call this once to create the demo user
-
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
   const secretKey = requestUrl.searchParams.get("secret")
 
-  // Check if the secret key is provided and matches
   if (!secretKey || secretKey !== process.env.SETUP_SECRET_KEY) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
@@ -18,7 +14,6 @@ export async function GET(request: Request) {
     const cookieStore = cookies()
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
 
-    // Check if the demo user already exists
     const { data: existingUser } = await supabase
       .from("profiles")
       .select("*")
@@ -29,7 +24,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: "Demo user already exists" })
     }
 
-    // Create the demo user
     const { data, error } = await supabase.auth.admin.createUser({
       email: "demo@hopeandhire.com",
       password: "Demo@123456",

@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs"
+import { createMiddlewareClient } from '@supabase/ssr';
 
 export async function middleware(req: NextRequest) {
-  // Create a response object
-  const res = NextResponse.next()
+  const res = NextResponse.next();
 
   // Skip middleware for emergency access and static dashboard
   if (req.nextUrl.pathname === "/employer/emergency-access" || req.nextUrl.pathname === "/employer/static-dashboard") {

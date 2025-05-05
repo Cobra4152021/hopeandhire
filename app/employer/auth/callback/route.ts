@@ -23,11 +23,9 @@ export async function GET(request: NextRequest) {
     const cookieStore = cookies()
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
 
-    // Exchange the code for a session
     console.log("Auth callback - Exchanging code for session")
     await supabase.auth.exchangeCodeForSession(code)
 
-    // Get the session to check if the user is authenticated
     console.log("Auth callback - Getting session")
     const {
       data: { session },
@@ -43,16 +41,13 @@ export async function GET(request: NextRequest) {
 
     if (session) {
       console.log("Auth callback - Session found, redirecting to:", next)
-      // User is authenticated, redirect to dashboard
       return NextResponse.redirect(new URL(next, requestUrl.origin))
     } else {
       console.log("Auth callback - No session after exchange")
-      // No session after exchange, redirect to login with email_confirmed
       return NextResponse.redirect(new URL("/employer/login?email_confirmed=true", requestUrl.origin))
     }
   } catch (error) {
     console.error("Auth callback error:", error)
-    // If there's an error, redirect to login with an error message
     return NextResponse.redirect(
       new URL(`/employer/login?error=${encodeURIComponent("Authentication failed")}&success=false`, requestUrl.origin),
     )

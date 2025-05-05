@@ -7,7 +7,8 @@ const nextConfig = {
   },
 
   typescript: {
-    ignoreBuildErrors: true, // ❗Only keep this if absolutely needed
+    // You may disable this for development only
+    // ignoreBuildErrors: true
   },
 
   images: {
@@ -17,23 +18,18 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**', // Optional: Can be more restrictive
+        hostname: '**',
       },
     ],
   },
 
-  // ❌ REMOVE: This is only for Docker/self-hosting
-  // output: 'standalone',
-
   webpack: (config) => {
-    config.optimization.moduleIds = 'named'; // Optional: helps debugging
-
+    config.optimization.moduleIds = 'named';
     config.performance = {
       ...config.performance,
       maxAssetSize: 1000000,
       maxEntrypointSize: 1000000,
     };
-
     return config;
   },
 };
