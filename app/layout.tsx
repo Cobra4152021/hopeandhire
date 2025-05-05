@@ -5,7 +5,7 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
-import { createClient } from "@/utils/supabase/server"
+import { createServerSupabaseClient } from "@/lib/supabase"
 import { Suspense } from "react"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  generator: 'v0.dev'
+  generator: "v0.dev"
 }
 
 export default async function RootLayout({
@@ -46,7 +46,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const supabase = createClient()
+  const supabase = createServerSupabaseClient()
 
   const {
     data: { session },
@@ -54,13 +54,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className + " bg-background text-foreground"}>
+      <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Suspense>
-            <div className="container mx-auto px-4 max-w-screen-xl">
-              {children}
-              <Toaster />
-            </div>
+            {children}
+            <Toaster />
           </Suspense>
         </ThemeProvider>
         <Analytics />

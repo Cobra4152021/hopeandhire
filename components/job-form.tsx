@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClientClient } from "@/utils/supabase/client"
+import { createClient } from "@/utils/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,7 +20,7 @@ interface JobFormProps {
 
 export function JobForm({ initialData, companyId }: JobFormProps) {
   const router = useRouter()
-  const supabase = createClientClient()
+  const supabase = createClient()
 
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({

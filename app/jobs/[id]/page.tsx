@@ -1,9 +1,9 @@
+import React from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { createClient } from "@/utils/supabase/server"
+import { createServerSupabaseClient } from "@/lib/supabase"
 
-// Define proper types for the params
 type PageParams = {
   params: {
     id: string
@@ -16,10 +16,13 @@ export const metadata: Metadata = {
 }
 
 export default async function JobDetailPage({ params }: PageParams) {
-  const supabase = createClient()
+  const supabase = createServerSupabaseClient()
 
-  // Fetch the job details
-  const { data: job, error } = await supabase.from("jobs").select("*").eq("id", params.id).single()
+  const { data: job, error } = await supabase
+    .from("job_listings")
+    .select("*, companies(name)")
+    .eq("id", params.id)
+    .single()
 
   if (error || !job) {
     notFound()
@@ -40,10 +43,12 @@ export default async function JobDetailPage({ params }: PageParams) {
       <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold">{job.company_name}</h2>
+            <h2 className="text-xl font-semibold">{job.companies?.name}</h2>
             <p className="text-gray-600">{job.location}</p>
           </div>
-          <div className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">{job.job_type}</div>
+          <div className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+            {job.job_type}
+          </div>
         </div>
 
         <div className="mb-6 border-t border-gray-200 pt-4">
@@ -54,7 +59,7 @@ export default async function JobDetailPage({ params }: PageParams) {
         <div className="mb-6 border-t border-gray-200 pt-4">
           <h3 className="mb-2 text-lg font-semibold">Requirements</h3>
           <ul className="list-inside list-disc space-y-1 text-gray-700">
-            {job.requirements?.split("\n").map((req: string, index: number) => (
+            {job.requirements?.map((req: string, index: number) => (
               <li key={index}>{req}</li>
             ))}
           </ul>
@@ -63,7 +68,7 @@ export default async function JobDetailPage({ params }: PageParams) {
         <div className="border-t border-gray-200 pt-4">
           <h3 className="mb-2 text-lg font-semibold">Benefits</h3>
           <ul className="list-inside list-disc space-y-1 text-gray-700">
-            {job.benefits?.split("\n").map((benefit: string, index: number) => (
+            {job.benefits?.map((benefit: string, index: number) => (
               <li key={index}>{benefit}</li>
             ))}
           </ul>

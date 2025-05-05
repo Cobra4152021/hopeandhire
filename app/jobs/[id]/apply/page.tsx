@@ -1,12 +1,21 @@
+import React from "react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { createClient } from "@/utils/supabase/server"
+import { createServerClient } from "@/utils/supabase/server"
+import type { Database } from "@/types/supabase"
 
-// Define proper types for the params
 type PageParams = {
   params: {
     id: string
   }
+}
+
+type Company = {
+  name: string
+}
+
+type JobWithCompany = Database["public"]["Tables"]["job_listings"]["Row"] & {
+  companies?: Company | null
 }
 
 export const metadata: Metadata = {
@@ -14,34 +23,38 @@ export const metadata: Metadata = {
   description: "Apply for a job opportunity through Hope and Hire",
 }
 
-// Fix the type issue by properly typing the params
 export default async function JobApplicationPage({ params }: PageParams) {
-  const supabase = createClient()
+  const supabase = createServerClient()
 
-  // Fetch the job details
-  const { data: job, error } = await supabase.from("jobs").select("*").eq("id", params.id).single()
+  const { data: job, error } = await supabase
+    .from("job_listings")
+    .select("*, companies(name)")
+    .eq("id", params.id)
+    .single()
 
   if (error || !job) {
     notFound()
   }
 
+  const jobTyped = job as JobWithCompany
+
   return (
     <div className="container mx-auto py-10">
-      <h1 className="mb-6 text-3xl font-bold">Apply for: {job.title}</h1>
+      <h1 className="mb-6 text-3xl font-bold">Apply for: {jobTyped.title}</h1>
 
       <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
         <h2 className="mb-4 text-xl font-semibold">Job Details</h2>
         <p className="mb-2">
-          <span className="font-medium">Company:</span> {job.company_name}
+          <span className="font-medium">Company:</span> {jobTyped.companies?.name || "Unknown Company"}
         </p>
         <p className="mb-2">
-          <span className="font-medium">Location:</span> {job.location}
+          <span className="font-medium">Location:</span> {jobTyped.location}
         </p>
         <p className="mb-2">
-          <span className="font-medium">Type:</span> {job.job_type}
+          <span className="font-medium">Type:</span> {jobTyped.job_type}
         </p>
         <p className="mb-4">
-          <span className="font-medium">Description:</span> {job.description}
+          <span className="font-medium">Description:</span> {jobTyped.description}
         </p>
       </div>
 

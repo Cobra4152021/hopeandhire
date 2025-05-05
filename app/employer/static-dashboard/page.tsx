@@ -1,15 +1,17 @@
 "use client"
 
+import React from "react"
 import { useState, useEffect } from "react"
+import type { User } from "@supabase/supabase-js"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { supabase } from "@/lib/supabase"
 import Link from "next/link"
 
 export default function StaticDashboardPage() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const getUser = async () => {
@@ -22,7 +24,8 @@ export default function StaticDashboardPage() {
           setUser(data.user)
         }
       } catch (err) {
-        setError("Failed to get user: " + (err.message || String(err)))
+        const message = err instanceof Error ? err.message : String(err)
+        setError("Failed to get user: " + message)
       } finally {
         setLoading(false)
       }
@@ -36,7 +39,8 @@ export default function StaticDashboardPage() {
       await supabase.auth.signOut()
       window.location.href = "/employer/login?message=You have been signed out"
     } catch (err) {
-      setError("Failed to sign out: " + (err.message || String(err)))
+      const message = err instanceof Error ? err.message : String(err)
+      setError("Failed to sign out: " + message)
     }
   }
 
@@ -61,9 +65,7 @@ export default function StaticDashboardPage() {
             <p className="text-red-700">{error}</p>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" onClick={() => (window.location.href = "/employer/login")}>
-              Return to Login
-            </Button>
+            <Button variant="outline" onClick={() => (window.location.href = "/employer/login")}>Return to Login</Button>
           </CardFooter>
         </Card>
       ) : null}
@@ -77,21 +79,15 @@ export default function StaticDashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <div>
-                  <span className="font-medium">Email:</span> {user.email}
-                </div>
-                <div>
-                  <span className="font-medium">User ID:</span> {user.id}
-                </div>
-                <div>
-                  <span className="font-medium">Last Sign In:</span> {new Date(user.last_sign_in_at).toLocaleString()}
-                </div>
+                <div><span className="font-medium">Email:</span> {user.email}</div>
+                <div><span className="font-medium">User ID:</span> {user.id}</div>
+                <div><span className="font-medium">Last Sign In:</span>{" "}
+                {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : "Unknown"}
+              </div>
               </div>
             </CardContent>
             <CardFooter>
-              <Button variant="outline" onClick={handleSignOut}>
-                Sign Out
-              </Button>
+              <Button variant="outline" onClick={handleSignOut}>Sign Out</Button>
             </CardFooter>
           </Card>
 

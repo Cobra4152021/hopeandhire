@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { createClientClient } from "@/utils/supabase/client"
+import { createClient } from "@/utils/supabase/client"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import { User, Bell, Menu } from "lucide-react"
 
 export function EmployerDashboardHeader() {
   const pathname = usePathname()
-  const supabase = createClientClient()
+  const supabase = createClient()
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()

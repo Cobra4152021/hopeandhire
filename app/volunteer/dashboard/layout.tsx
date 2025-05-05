@@ -4,7 +4,15 @@ import type React from "react"
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Briefcase, Building2, Handshake, LayoutDashboard, LogOut, Menu, UserCircle, Users } from "lucide-react"
+import {
+  Briefcase,
+  Building2,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  UserCircle,
+  Users,
+} from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -44,7 +52,7 @@ export default function VolunteerDashboardLayout({ children }: VolunteerDashboar
     {
       href: "/volunteer/dashboard/match",
       label: "Match",
-      icon: <Handshake className="h-5 w-5" />, // Changed from HandshakeIcon to Handshake
+      icon: <Users className="h-5 w-5" />, // Replaced Handshake with Users
       active: pathname === "/volunteer/dashboard/match",
     },
   ]
@@ -102,7 +110,7 @@ export default function VolunteerDashboardLayout({ children }: VolunteerDashboar
                 href={route.href}
                 className={cn(
                   "flex items-center gap-2 text-muted-foreground hover:text-foreground",
-                  route.active && "text-foreground",
+                  route.active && "text-foreground"
                 )}
               >
                 {route.icon}
