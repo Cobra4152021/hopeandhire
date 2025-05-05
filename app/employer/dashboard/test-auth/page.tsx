@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import type { User } from "@supabase/supabase-js" // ✅ Added
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { supabase } from "@/lib/supabase"
@@ -9,7 +10,7 @@ import { CheckCircle2, XCircle } from "lucide-react"
 
 export default function TestAuthPage() {
   const router = useRouter()
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<User | null>(null) // ✅ Fixed typing
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -24,7 +25,7 @@ export default function TestAuthPage() {
         }
 
         setUser(data.user)
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error fetching user:", error)
         setError(error.message)
       } finally {
@@ -108,9 +109,7 @@ export default function TestAuthPage() {
                 <h3 className="font-medium">Not Authenticated</h3>
               </div>
               <p className="mt-1 text-sm">You are not logged in. Please sign in to access this page.</p>
-              <Button className="mt-4" onClick={() => router.push("/employer/login")}>
-                Go to Login
-              </Button>
+              <Button className="mt-4" onClick={() => router.push("/employer/login")}>Go to Login</Button>
             </div>
           )}
         </CardContent>

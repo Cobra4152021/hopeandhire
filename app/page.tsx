@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "HopeAndHire - Bridging the Gap from Hope to Hire",
     description: "Empowering individuals with second chances through workforce readiness and meaningful employment.",
     type: "website",
-    url: "https://hopeandhire.org",
+    url: "https://hopeandhire.net",
     images: [
       {
         url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0420.jpg-VJCh7vUN0Y7OYbDUuKi3ahip7nq7jq.jpeg",

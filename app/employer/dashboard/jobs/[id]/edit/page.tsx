@@ -35,30 +35,16 @@ export default function EditJobPage() {
   useEffect(() => {
     async function fetchJob() {
       try {
-        const jobId = params.id
+        const rawId = params.id
+        const jobId = Array.isArray(rawId) ? rawId[0] : rawId
+        if (!jobId) throw new Error("Job ID is required")
 
-        if (!jobId) {
-          throw new Error("Job ID is required")
-        }
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) throw new Error("You must be logged in to edit job details")
 
-        // Get current user
-        const {
-          data: { user },
-        } = await supabase.auth.getUser()
-
-        if (!user) {
-          throw new Error("You must be logged in to edit job details")
-        }
-
-        // Fetch job details
         const { data, error } = await supabase.from("job_listings").select("*").eq("id", jobId).single()
-
         if (error) throw error
         if (!data) throw new Error("Job not found")
-
-        // Format requirements and benefits for the form
-        const requirementsText = Array.isArray(data.requirements) ? data.requirements.join("\n") : ""
-        const benefitsText = Array.isArray(data.benefits) ? data.benefits.join("\n") : ""
 
         setFormData({
           title: data.title || "",
@@ -67,8 +53,8 @@ export default function EditJobPage() {
           employment_type: data.job_type || "full_time",
           salary_min: data.salary_min?.toString() || "",
           salary_max: data.salary_max?.toString() || "",
-          benefits: benefitsText,
-          requirements: requirementsText,
+          benefits: Array.isArray(data.benefits) ? data.benefits.join("\n") : "",
+          requirements: Array.isArray(data.requirements) ? data.requirements.join("\n") : "",
           status: data.status || "draft",
         })
 
@@ -77,7 +63,7 @@ export default function EditJobPage() {
         console.error("Error fetching job:", error)
         toast({
           title: "Error loading job",
-          description: error.message || "There was a problem loading the job details.",
+          description: error instanceof Error ? error.message : "There was a problem loading the job details.",
           variant: "destructive",
         })
       } finally {
@@ -88,31 +74,55 @@ export default function EditJobPage() {
     fetchJob()
   }, [params.id, toast])
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSelectChange = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
+  const handleSelectChange = (name: string, value: string) => {
+    if (name === "status") {
+      handleStatusChange(value)
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }))
+    }
   }
 
-  const handleSubmit = async (e) => {
+  const handleStatusChange = (value: string) => {
+    if (formData.status !== "active" && value === "active") {
+      if (window.confirm("Are you sure you want to publish this job posting?")) {
+        setFormData((prev) => ({ ...prev, status: value }))
+      }
+    } else if (formData.status === "active" && value !== "active") {
+      if (window.confirm("Are you sure you want to unpublish this job posting?")) {
+        setFormData((prev) => ({ ...prev, status: value }))
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, status: value }))
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSaving(true)
 
     try {
-      const jobId = params.id
-
-      if (!jobId) {
-        throw new Error("Job ID is required")
+      if (Number(formData.salary_min) > Number(formData.salary_max) && formData.salary_max) {
+        toast({
+          title: "Invalid salary range",
+          description: "Minimum salary cannot be greater than maximum salary.",
+          variant: "destructive",
+        })
+        setIsSaving(false)
+        return
       }
 
-      // Process requirements and benefits as arrays
+      const rawId = params.id
+      const jobId = Array.isArray(rawId) ? rawId[0] : rawId
+      if (!jobId) throw new Error("Job ID is required")
+
       const requirements = formData.requirements.split("\n").filter(Boolean)
       const benefits = formData.benefits.split("\n").filter(Boolean)
 
-      // Update job posting
       const { error } = await supabase
         .from("job_listings")
         .update({
@@ -121,18 +131,16 @@ export default function EditJobPage() {
           location: formData.location,
           is_remote: isRemote,
           job_type: formData.employment_type,
-          salary_min: Number.parseInt(formData.salary_min) || 0,
-          salary_max: Number.parseInt(formData.salary_max) || 0,
-          benefits: benefits,
-          requirements: requirements,
-          status: formData.status,
+          salary_min: formData.salary_min ? Number.parseFloat(formData.salary_min) : 0,
+          salary_max: formData.salary_max ? Number.parseFloat(formData.salary_max) : 0,
+          benefits,
+          requirements,
+          status: formData.status as "draft" | "active" | "closed",
           updated_at: new Date().toISOString(),
         })
         .eq("id", jobId)
 
-      if (error) {
-        throw error
-      }
+      if (error) throw error
 
       toast({
         title: "Job updated successfully",
@@ -146,10 +154,9 @@ export default function EditJobPage() {
     } catch (error) {
       toast({
         title: "Error updating job",
-        description: error.message || "Something went wrong. Please try again.",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
         variant: "destructive",
       })
-      console.error(error)
     } finally {
       setIsSaving(false)
     }
@@ -164,244 +171,108 @@ export default function EditJobPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Edit Job Posting</h1>
-          <p className="text-muted-foreground">Update the details of your job posting.</p>
-        </div>
-        <Button variant="outline" onClick={() => router.back()} className="flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Edit Job</CardTitle>
+          <CardDescription>Update your job posting below.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Label htmlFor="title">Title</Label>
+            <Input id="title" name="title" value={formData.title} onChange={handleChange} required />
+          </div>
+          <div>
+            <Label htmlFor="description">Description</Label>
+            <Textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
+          </div>
+          <div>
+            <Label htmlFor="location">Location</Label>
+            <Input id="location" name="location" value={formData.location} onChange={handleChange} required />
+          </div>
+          <div>
+            <Label htmlFor="employment_type">Employment Type</Label>
+            <Select 
+              value={formData.employment_type} 
+              onValueChange={(value: string) => handleSelectChange("employment_type", value)}
+            >
+              <SelectTrigger id="employment_type">
+                <SelectValue placeholder="Select employment type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="full_time">Full Time</SelectItem>
+                <SelectItem value="part_time">Part Time</SelectItem>
+                <SelectItem value="contract">Contract</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Switch id="is_remote" checked={isRemote} onCheckedChange={setIsRemote} />
+            <Label htmlFor="is_remote">Remote</Label>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="salary_min">Min Salary</Label>
+              <Input id="salary_min" name="salary_min" type="number" value={formData.salary_min} onChange={handleChange} />
+            </div>
+            <div>
+              <Label htmlFor="salary_max">Max Salary</Label>
+              <Input id="salary_max" name="salary_max" type="number" value={formData.salary_max} onChange={handleChange} />
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="benefits">Benefits</Label>
+            <Textarea 
+              id="benefits" 
+              name="benefits" 
+              value={formData.benefits} 
+              onChange={handleChange} 
+              placeholder="Enter each benefit on a new line"
+            />
+          </div>
+          <div>
+            <Label htmlFor="requirements">Requirements</Label>
+            <Textarea 
+              id="requirements" 
+              name="requirements" 
+              value={formData.requirements} 
+              onChange={handleChange} 
+              placeholder="Enter each requirement on a new line"
+            />
+          </div>
+          <div>
+            <Label htmlFor="status">Status</Label>
+            <Select 
+              value={formData.status} 
+              onValueChange={(value: string) => handleSelectChange("status", value)}
+            >
+              <SelectTrigger id="status">
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="draft">Draft</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="closed">Closed</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+      <div className="flex justify-between">
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={() => router.back()} 
+          className="flex items-center gap-2"
+        >
           <ArrowLeft className="h-4 w-4" />
           Back
         </Button>
+        <Button type="submit" disabled={isSaving} className="flex items-center gap-2">
+          {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+          Save Changes
+        </Button>
       </div>
-
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Job Details</CardTitle>
-            <CardDescription>Basic information about the position you're hiring for.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="title">Job Title</Label>
-              <Input
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="e.g. Warehouse Associate"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description">Job Description</Label>
-              <Textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Describe the role, responsibilities, and ideal candidate..."
-                className="min-h-32"
-                required
-              />
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <Input
-                  id="location"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  placeholder="e.g. Chicago, IL"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="employment_type">Employment Type</Label>
-                <Select
-                  name="employment_type"
-                  value={formData.employment_type}
-                  onValueChange={(value) => handleSelectChange("employment_type", value)}
-                  required
-                >
-                  <SelectTrigger id="employment_type">
-                    <SelectValue placeholder="Select employment type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="full_time">Full-time</SelectItem>
-                    <SelectItem value="part_time">Part-time</SelectItem>
-                    <SelectItem value="contract">Contract</SelectItem>
-                    <SelectItem value="temporary">Temporary</SelectItem>
-                    <SelectItem value="internship">Internship</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Switch id="is_remote" checked={isRemote} onCheckedChange={setIsRemote} />
-              <Label htmlFor="is_remote">Remote work available</Label>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Compensation & Benefits</CardTitle>
-            <CardDescription>Details about salary range and benefits offered.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="salary_min">Minimum Salary (USD)</Label>
-                <Input
-                  id="salary_min"
-                  name="salary_min"
-                  type="number"
-                  value={formData.salary_min}
-                  onChange={handleChange}
-                  placeholder="e.g. 40000"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="salary_max">Maximum Salary (USD)</Label>
-                <Input
-                  id="salary_max"
-                  name="salary_max"
-                  type="number"
-                  value={formData.salary_max}
-                  onChange={handleChange}
-                  placeholder="e.g. 60000"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="benefits">Benefits (One per line)</Label>
-              <Textarea
-                id="benefits"
-                name="benefits"
-                value={formData.benefits}
-                onChange={handleChange}
-                placeholder="e.g. Health insurance
-401(k) with company match
-Paid time off
-Professional development"
-                className="min-h-20"
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Requirements & Qualifications</CardTitle>
-            <CardDescription>Skills, experience, and qualifications needed for this role.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Label htmlFor="requirements">Requirements (One per line)</Label>
-              <Textarea
-                id="requirements"
-                name="requirements"
-                value={formData.requirements}
-                onChange={handleChange}
-                placeholder="e.g. High school diploma or equivalent
-1+ years of warehouse experience
-Ability to lift up to 50 pounds
-Valid driver's license"
-                className="min-h-32"
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Publishing Options</CardTitle>
-            <CardDescription>Choose whether to publish this job now or save as a draft.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  id="status_draft"
-                  name="status_option"
-                  value="draft"
-                  checked={formData.status === "draft"}
-                  onChange={() => handleSelectChange("status", "draft")}
-                  className="h-4 w-4 rounded-full border-gray-300 text-primary focus:ring-primary"
-                />
-                <div>
-                  <Label htmlFor="status_draft">Save as Draft</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Save this job posting but don't publish it yet. You can edit and publish it later.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  id="status_active"
-                  name="status_option"
-                  value="active"
-                  checked={formData.status === "active"}
-                  onChange={() => handleSelectChange("status", "active")}
-                  className="h-4 w-4 rounded-full border-gray-300 text-primary focus:ring-primary"
-                />
-                <div>
-                  <Label htmlFor="status_active">Publish Now</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Make this job posting visible to candidates immediately.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  id="status_closed"
-                  name="status_option"
-                  value="closed"
-                  checked={formData.status === "closed"}
-                  onChange={() => handleSelectChange("status", "closed")}
-                  className="h-4 w-4 rounded-full border-gray-300 text-primary focus:ring-primary"
-                />
-                <div>
-                  <Label htmlFor="status_closed">Close Job</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Mark this job as closed and no longer accepting applications.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="flex justify-end gap-4">
-          <Button variant="outline" type="button" onClick={() => router.back()}>
-            Cancel
-          </Button>
-          <Button type="submit" disabled={isSaving} className="flex items-center gap-2">
-            {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-            {formData.status === "active"
-              ? "Update & Publish"
-              : formData.status === "draft"
-                ? "Save as Draft"
-                : "Update Job"}
-          </Button>
-        </div>
-      </form>
-    </div>
+    </form>
   )
 }

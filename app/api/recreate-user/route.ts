@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 
-// Demo user credentials
 const DEMO_EMAIL = "demo@hopeandhire.com"
 const DEMO_PASSWORD = "Demo@123456"
 
 export async function GET(request: Request) {
-  // Check for the setup secret key to prevent unauthorized access
   const { searchParams } = new URL(request.url)
   const secretKey = searchParams.get("key")
   const userId = searchParams.get("userId")
@@ -20,7 +18,6 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Create a Supabase admin client
     const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
       auth: {
         autoRefreshToken: false,
@@ -28,7 +25,6 @@ export async function GET(request: Request) {
       },
     })
 
-    // Create the user with the specific ID
     const { data: userData, error: createError } = await supabase.auth.admin.createUser({
       email: DEMO_EMAIL,
       password: DEMO_PASSWORD,
@@ -37,7 +33,6 @@ export async function GET(request: Request) {
         company_name: "Demo Company",
         role: "employer",
       },
-      // This is the key part - we're using the ID from the JWT
       id: userId,
     })
 
@@ -46,7 +41,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Failed to create user: " + createError.message }, { status: 500 })
     }
 
-    // Create a company record for the user
     const { data: companyData, error: companyError } = await supabase
       .from("companies")
       .insert([
@@ -64,7 +58,7 @@ export async function GET(request: Request) {
 
     if (companyError) {
       console.error("Error creating company record:", companyError)
-      // Continue anyway, the user is created
+      // Non-blocking
     }
 
     return NextResponse.json({
@@ -73,7 +67,8 @@ export async function GET(request: Request) {
       email: DEMO_EMAIL,
     })
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
     console.error("Unexpected error:", error)
-    return NextResponse.json({ error: "An unexpected error occurred: " + error.message }, { status: 500 })
+    return NextResponse.json({ error: "An unexpected error occurred: " + message }, { status: 500 })
   }
 }

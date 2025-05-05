@@ -23,7 +23,8 @@ export default function EmergencyAccessPage() {
           setSessionInfo(data.session)
         }
       } catch (err) {
-        setError("Failed to check session: " + (err.message || String(err)))
+        const message = err instanceof Error ? err.message : String(err)
+        setError("Failed to check session: " + message)
       }
     }
 
@@ -49,7 +50,8 @@ export default function EmergencyAccessPage() {
       // Force redirect to dashboard without any checks
       window.location.href = "/employer/dashboard"
     } catch (err) {
-      setError("Failed to force access: " + (err.message || String(err)))
+      const message = err instanceof Error ? err.message : String(err)
+      setError("Failed to force access: " + message)
       setIsLoading(false)
     }
   }

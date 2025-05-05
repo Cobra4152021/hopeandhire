@@ -1,49 +1,155 @@
-export type Company = {
-  id: string
-  name: string
-  industry: string
-  description: string
-  size: string
-  founded_year: number
-  address: string
-  city: string
-  state: string
-  zip: string
-  country: string
-  website: string
-  phone: string
-  email: string
-  logo_url?: string
-  user_id: string
-  created_at: string
-  updated_at: string
-}
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
-export type JobListing = {
-  id: string
-  title: string
-  description: string
-  location: string
-  job_type: string
-  salary_min: number
-  salary_max: number
-  benefits: string[]
-  requirements: string[]
-  company_id: string
-  status: "draft" | "active" | "closed"
-  created_at: string
-  updated_at: string
-}
-
-export type HiringPreference = {
-  id: string
-  company_id: string
-  job_types: string[]
-  industries: string[]
-  open_to_all_records: boolean
-  background_restrictions: string
-  support_services: string[]
-  wotc_interest: boolean
-  created_at: string
-  updated_at: string
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          id: string
+          updated_at: string | null
+          username: string | null
+          full_name: string | null
+          avatar_url: string | null
+          website: string | null
+        }
+        Insert: {
+          id: string
+          updated_at?: string | null
+          username?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          website?: string | null
+        }
+        Update: {
+          id?: string
+          updated_at?: string | null
+          username?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      },
+      companies: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          industry: string | null
+          size: string | null
+          founded_year: number | null
+          address: string | null
+          city: string | null
+          state: string | null
+          zip: string | null
+          country: string | null
+          website: string | null
+          phone: string | null
+          email: string | null
+          user_id: string
+          created_at: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          industry?: string | null
+          size?: string | null
+          founded_year?: number | null
+          address?: string | null
+          city?: string | null
+          state?: string | null
+          zip?: string | null
+          country?: string | null
+          website?: string | null
+          phone?: string | null
+          email?: string | null
+          user_id: string
+          created_at?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          industry?: string | null
+          size?: string | null
+          founded_year?: number | null
+          address?: string | null
+          city?: string | null
+          state?: string | null
+          zip?: string | null
+          country?: string | null
+          website?: string | null
+          phone?: string | null
+          email?: string | null
+          user_id?: string
+          created_at?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      },
+      job_listings: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          location: string
+          job_type: string
+          salary_min: number
+          salary_max: number
+          benefits: string[]
+          requirements: string[]
+          company_id: string
+          status: "draft" | "active" | "closed"
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description: string
+          location: string
+          job_type: string
+          salary_min: number
+          salary_max: number
+          benefits?: string[]
+          requirements?: string[]
+          company_id: string
+          status?: "draft" | "active" | "closed"
+          created_at?: string
+          updated_at?: string
+        }
+        Update: Partial<Database["public"]["Tables"]["job_listings"]["Insert"]>
+        Relationships: [
+          {
+            foreignKeyName: "job_listings_company_id_fkey"
+            columns: ["company_id"]
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
 }

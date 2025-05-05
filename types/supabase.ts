@@ -3,8 +3,6 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      // Define your tables here
-      // This is a minimal placeholder
       profiles: {
         Row: {
           id: string
@@ -36,8 +34,119 @@ export interface Database {
             columns: ["id"]
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
+          }
         ]
+      },
+      companies: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          industry: string | null
+          size: string | null
+          founded_year: number | null
+          address: string | null
+          city: string | null
+          state: string | null
+          zip: string | null
+          country: string | null
+          website: string | null
+          phone: string | null
+          email: string | null
+          user_id: string
+          created_at: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          industry?: string | null
+          size?: string | null
+          founded_year?: number | null
+          address?: string | null
+          city?: string | null
+          state?: string | null
+          zip?: string | null
+          country?: string | null
+          website?: string | null
+          phone?: string | null
+          email?: string | null
+          user_id: string
+          created_at?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          industry?: string | null
+          size?: string | null
+          founded_year?: number | null
+          address?: string | null
+          city?: string | null
+          state?: string | null
+          zip?: string | null
+          country?: string | null
+          website?: string | null
+          phone?: string | null
+          email?: string | null
+          user_id?: string
+          created_at?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      },
+      job_listings: {
+        Row: {
+          id: string
+          title: string
+          description: string
+          location: string
+          job_type: string
+          salary_min: number
+          salary_max: number
+          benefits: string[]
+          requirements: string[]
+          company_id: string
+          is_remote: boolean
+          status: "draft" | "active" | "closed"
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          title: string
+          description: string
+          location: string
+          job_type: string
+          salary_min: number
+          salary_max: number
+          benefits?: string[]
+          requirements?: string[]
+          company_id: string
+          is_remote?: boolean
+          status?: "draft" | "active" | "closed"
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          title?: string
+          description?: string
+          location?: string
+          job_type?: string
+          salary_min?: number
+          salary_max?: number
+          benefits?: string[]
+          requirements?: string[]
+          company_id?: string
+          is_remote?: boolean
+          status?: "draft" | "active" | "closed"
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {

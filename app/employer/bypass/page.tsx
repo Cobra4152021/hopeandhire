@@ -7,17 +7,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { supabase } from "@/lib/supabase"
 
 export default function BypassPage() {
-  const [user, setUser] = useState(null)
-  const [session, setSession] = useState(null)
+  const [user, setUser] = useState<any>(null)
+  const [session, setSession] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function checkAuth() {
       try {
         setLoading(true)
 
-        // Get session
         const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
 
         if (sessionError) {
@@ -33,7 +32,6 @@ export default function BypassPage() {
           return
         }
 
-        // Get user
         const { data: userData, error: userError } = await supabase.auth.getUser()
 
         if (userError) {
@@ -43,7 +41,7 @@ export default function BypassPage() {
         }
 
         setUser(userData.user)
-      } catch (err) {
+      } catch (err: any) {
         console.error("Unexpected error:", err)
         setError(`Unexpected error: ${err.message}`)
       } finally {
@@ -65,14 +63,10 @@ export default function BypassPage() {
 
   const handleClearAuthCookies = () => {
     try {
-      // Clear Supabase auth cookies
       document.cookie = "sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=lax"
       document.cookie = "sb-refresh-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=lax"
-
-      // Clear any other potential auth cookies
       document.cookie = "supabase-auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; samesite=lax"
 
-      // Force reload the page
       window.location.href = "/employer/login?message=Auth cookies cleared. Please sign in again."
     } catch (error) {
       console.error("Error clearing cookies:", error)

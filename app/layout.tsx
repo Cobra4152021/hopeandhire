@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://hopeandhire.org",
+    url: "https://hopeandhire.net",
     title: "Hope And Hire",
     description: "Connecting formerly incarcerated individuals with employment opportunities",
     siteName: "Hope And Hire",
