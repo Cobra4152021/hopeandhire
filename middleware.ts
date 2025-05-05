@@ -1,47 +1,67 @@
-import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
   // Skip middleware for emergency access and static dashboard
   if (req.nextUrl.pathname === "/employer/emergency-access" || req.nextUrl.pathname === "/employer/static-dashboard") {
-    console.log("Middleware - Bypassing for special page")
-    return res
+    console.log("Middleware - Bypassing for special page");
+    return res;
   }
 
   try {
     // Create the Supabase client
-    const supabase = createMiddlewareClient({ req, res })
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return req.cookies.get(name)?.value;
+          },
+          set(name: string, value: string, options: CookieOptions) {
+            req.cookies.set({ name, value, ...options });
+            res.cookies.set({ name, value, ...options });
+          },
+          remove(name: string, options: CookieOptions) {
+            req.cookies.set({ name, value: "", ...options });
+            res.cookies.set({ name, value: "", ...options });
+          },
+        },
+      }
+    );
 
     // Get the session
     const {
       data: { session },
       error: sessionError,
-    } = await supabase.auth.getSession()
+    } = await supabase.auth.getSession();
 
     // Debug logging
-    console.log("Middleware - Path:", req.nextUrl.pathname)
-    console.log("Middleware - Session exists:", !!session)
+    console.log("Middleware - Path:", req.nextUrl.pathname);
+    console.log("Middleware - Session exists:", !!session);
 
     // Check for redirect loop
-    const url = new URL(req.url)
+    const url = new URL(req.url);
     const isRedirectLoop =
-      url.searchParams.has("message") && url.searchParams.has("next") && url.pathname === "/employer/login"
+      url.searchParams.has("message") &&
+      url.searchParams.has("next") &&
+      url.pathname === "/employer/login";
 
     if (isRedirectLoop) {
-      console.log("Middleware - Detected redirect loop, sending to static dashboard")
-      return NextResponse.redirect(new URL("/employer/static-dashboard", req.url))
+      console.log("Middleware - Detected redirect loop, sending to static dashboard");
+      return NextResponse.redirect(new URL("/employer/static-dashboard", req.url));
     }
 
     if (sessionError) {
-      console.error("Middleware - Session error:", sessionError.message)
+      console.error("Middleware - Session error:", sessionError.message);
 
       // If there's a JWT error, redirect to static dashboard
       if (sessionError.message.includes("User from sub claim in JWT does not exist")) {
-        console.log("Middleware - Invalid user in token, redirecting to static dashboard")
-        return NextResponse.redirect(new URL("/employer/static-dashboard", req.url))
+        console.log("Middleware - Invalid user in token, redirecting to static dashboard");
+        return NextResponse.redirect(new URL("/employer/static-dashboard", req.url));
       }
     }
 
@@ -52,20 +72,20 @@ export async function middleware(req: NextRequest) {
       req.nextUrl.pathname.includes("/reset-password") ||
       req.nextUrl.pathname.includes("/auth/callback")
     ) {
-      return res
+      return res;
     }
 
     // Protected routes - require authentication
     if (req.nextUrl.pathname.startsWith("/employer/dashboard")) {
       if (!session) {
-        console.log("Middleware - No session, redirecting to login")
-        const redirectUrl = new URL("/employer/login", req.url)
-        redirectUrl.searchParams.set("message", "Please sign in to access this page")
-        redirectUrl.searchParams.set("next", req.nextUrl.pathname)
-        return NextResponse.redirect(redirectUrl)
+        console.log("Middleware - No session, redirecting to login");
+        const redirectUrl = new URL("/employer/login", req.url);
+        redirectUrl.searchParams.set("message", "Please sign in to access this page");
+        redirectUrl.searchParams.set("next", req.nextUrl.pathname);
+        return NextResponse.redirect(redirectUrl);
       }
-      console.log("Middleware - Session exists, allowing dashboard access")
-      return res
+      console.log("Middleware - Session exists, allowing dashboard access");
+      return res;
     }
 
     // Auth pages - redirect to dashboard if already authenticated
@@ -75,16 +95,14 @@ export async function middleware(req: NextRequest) {
         req.nextUrl.pathname === "/employer/signup" ||
         req.nextUrl.pathname === "/employer/forgot-password")
     ) {
-      console.log("Middleware - Session exists, redirecting to static dashboard")
-      return NextResponse.redirect(new URL("/employer/static-dashboard", req.url))
+      console.log("Middleware - Session exists, redirecting to static dashboard");
+      return NextResponse.redirect(new URL("/employer/static-dashboard", req.url));
     }
 
-    return res
+    return res;
   } catch (error) {
-    console.error("Middleware - Unexpected error:", error)
-
-    // In case of any error, redirect to the static dashboard
-    return NextResponse.redirect(new URL("/employer/static-dashboard", req.url))
+    console.error("Middleware - Unexpected error:", error);
+    return NextResponse.redirect(new URL("/employer/static-dashboard", req.url));
   }
 }
 
@@ -101,4 +119,4 @@ export const config = {
     "/employer/reset-password",
     "/employer/auth/callback",
   ],
-}
+};

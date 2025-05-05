@@ -1,27 +1,43 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import { NextResponse } from "next/server"
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const requestUrl = new URL(request.url)
-  const secretKey = requestUrl.searchParams.get("secret")
+  const requestUrl = new URL(request.url);
+  const secretKey = requestUrl.searchParams.get("secret");
 
   if (!secretKey || secretKey !== process.env.SETUP_SECRET_KEY) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const cookieStore = cookies()
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+    const cookieStore = cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+          set(name: string, value: string, options: CookieOptions) {
+            cookieStore.set({ name, value, ...options });
+          },
+          remove(name: string, options: CookieOptions) {
+            cookieStore.set({ name, value: "", ...options });
+          },
+        },
+      }
+    );
 
     const { data: existingUser } = await supabase
       .from("profiles")
       .select("*")
       .eq("email", "demo@hopeandhire.com")
-      .single()
+      .single();
 
     if (existingUser) {
-      return NextResponse.json({ message: "Demo user already exists" })
+      return NextResponse.json({ message: "Demo user already exists" });
     }
 
     const { data, error } = await supabase.auth.admin.createUser({
@@ -32,18 +48,18 @@ export async function GET(request: Request) {
         company_name: "Demo Company",
         role: "employer",
       },
-    })
+    });
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({
       message: "Demo user created successfully",
       user: data.user,
-    })
+    });
   } catch (error) {
-    console.error("Error setting up demo user:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("Error setting up demo user:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
