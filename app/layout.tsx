@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default async function RootLayout({
@@ -54,11 +54,13 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={inter.className + " bg-background text-foreground"}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Suspense>
-            {children}
-            <Toaster />
+            <div className="container mx-auto px-4 max-w-screen-xl">
+              {children}
+              <Toaster />
+            </div>
           </Suspense>
         </ThemeProvider>
         <Analytics />
