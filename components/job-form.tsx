@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/utils/supabase/client"
+import createClientClient from "@/utils/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -20,18 +20,20 @@ interface JobFormProps {
 
 export function JobForm({ initialData, companyId }: JobFormProps) {
   const router = useRouter()
-  const supabase = createClient()
+  const supabase = createClientClient()
 
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
     location: initialData?.location || "",
     job_type: initialData?.job_type || "full-time",
-    salary_range: initialData?.salary_range || "",
+    salary_min: initialData?.salary_min || "",
+    salary_max: initialData?.salary_max || "",
     description: initialData?.description || "",
-    requirements: initialData?.requirements || "",
-    benefits: initialData?.benefits || "",
+    requirements: initialData?.requirements?.join("\n") || "",
+    benefits: initialData?.benefits?.join("\n") || "",
     status: initialData?.status || "active",
+    company_id: companyId,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -48,21 +50,25 @@ export function JobForm({ initialData, companyId }: JobFormProps) {
     setLoading(true)
 
     try {
+      // Process requirements and benefits as arrays
+      const processedData = {
+        ...formData,
+        requirements: formData.requirements.split("\n").filter(Boolean),
+        benefits: formData.benefits.split("\n").filter(Boolean),
+        salary_min: formData.salary_min ? Number(formData.salary_min) : 0,
+        salary_max: formData.salary_max ? Number(formData.salary_max) : 0,
+      }
+
       if (initialData) {
         // Update existing job
-        const { error } = await supabase.from("jobs").update(formData).eq("id", initialData.id)
+        const { error } = await supabase.from("job_listings").update(processedData).eq("id", initialData.id)
 
         if (error) throw error
 
         toast.success("Job updated successfully")
       } else {
         // Create new job
-        const { error } = await supabase.from("jobs").insert([
-          {
-            ...formData,
-            company_id: companyId,
-          },
-        ])
+        const { error } = await supabase.from("job_listings").insert([processedData])
 
         if (error) throw error
 
@@ -70,6 +76,7 @@ export function JobForm({ initialData, companyId }: JobFormProps) {
       }
 
       router.push("/employer/dashboard/jobs")
+      router.refresh()
     } catch (error) {
       console.error("Error saving job:", error)
       toast.error("Failed to save job")
@@ -114,15 +121,29 @@ export function JobForm({ initialData, companyId }: JobFormProps) {
           </Select>
         </div>
 
-        <div>
-          <Label htmlFor="salary_range">Salary Range (Optional)</Label>
-          <Input
-            id="salary_range"
-            name="salary_range"
-            value={formData.salary_range}
-            onChange={handleChange}
-            placeholder="e.g. $50,000 - $70,000"
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="salary_min">Minimum Salary</Label>
+            <Input
+              id="salary_min"
+              name="salary_min"
+              type="number"
+              value={formData.salary_min}
+              onChange={handleChange}
+              placeholder="e.g. 50000"
+            />
+          </div>
+          <div>
+            <Label htmlFor="salary_max">Maximum Salary</Label>
+            <Input
+              id="salary_max"
+              name="salary_max"
+              type="number"
+              value={formData.salary_max}
+              onChange={handleChange}
+              placeholder="e.g. 70000"
+            />
+          </div>
         </div>
 
         <div>
@@ -138,26 +159,26 @@ export function JobForm({ initialData, companyId }: JobFormProps) {
         </div>
 
         <div>
-          <Label htmlFor="requirements">Requirements</Label>
+          <Label htmlFor="requirements">Requirements (one per line)</Label>
           <Textarea
             id="requirements"
             name="requirements"
             value={formData.requirements}
             onChange={handleChange}
             rows={5}
-            placeholder="List the requirements for this position"
+            placeholder="List the requirements for this position, one per line"
           />
         </div>
 
         <div>
-          <Label htmlFor="benefits">Benefits (Optional)</Label>
+          <Label htmlFor="benefits">Benefits (one per line)</Label>
           <Textarea
             id="benefits"
             name="benefits"
             value={formData.benefits}
             onChange={handleChange}
             rows={5}
-            placeholder="List the benefits offered with this position"
+            placeholder="List the benefits offered with this position, one per line"
           />
         </div>
 
