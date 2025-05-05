@@ -22,7 +22,8 @@ export function PartnersSection() {
                 alt={partner.name}
                 width={120}
                 height={40}
-                className="h-10 w-auto object-contain"
+                className="h-auto w-auto max-h-10 object-contain"
+                sizes="(max-width: 768px) 100px, 120px"
               />
             </div>
           ))}

@@ -38,6 +38,8 @@ export function TestimonialsSection() {
                     alt={testimonial.name}
                     fill
                     className="object-cover"
+                    sizes="(max-width: 768px) 80px, 80px"
+                    priority={index === 0}
                   />
                 </div>
                 <blockquote className="text-xl italic">"{testimonial.quote}"</blockquote>
