@@ -20,7 +20,7 @@ export default async function JobDetailPage({ params }: PageParams) {
 
   const { data: job, error } = await supabase
     .from("job_listings")
-    .select("*, company(name)")
+    .select("*, companies(name)")
     .eq("id", params.id)
     .single()
 
@@ -43,7 +43,7 @@ export default async function JobDetailPage({ params }: PageParams) {
       <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-semibold">{job.company?.name}</h2>
+            <h2 className="text-xl font-semibold">{job.companies?.name}</h2>
             <p className="text-gray-600">{job.location}</p>
           </div>
           <div className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
