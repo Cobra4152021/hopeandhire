@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -11,55 +12,60 @@ export function Header() {
   return (
     <header className="bg-gray-50 shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-teal-600">HopeAndHire</span>
+        {/* Logo centered at the top */}
+        <div className="flex justify-center py-4">
+          <Link href="/">
+            <Image src="/logo.png" alt="Hope and Hire Logo" width={180} height={120} className="h-auto" priority />
           </Link>
+        </div>
+
+        <div className="flex justify-between items-center h-16">
+          {/* Empty div for spacing */}
+          <div className="w-40"></div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link
               href="/organizations"
-              className={`text-gray-700 hover:text-teal-600 ${
-                pathname === "/organizations" ? "font-semibold text-teal-600" : ""
+              className={`text-gray-700 hover:text-brand-teal-500 ${
+                pathname === "/organizations" ? "font-semibold text-brand-teal-500" : ""
               }`}
             >
               For Organizations
             </Link>
             <Link
               href="/volunteers"
-              className={`text-gray-700 hover:text-teal-600 ${
-                pathname === "/volunteers" ? "font-semibold text-teal-600" : ""
+              className={`text-gray-700 hover:text-brand-teal-500 ${
+                pathname === "/volunteers" ? "font-semibold text-brand-teal-500" : ""
               }`}
             >
               For Volunteers
             </Link>
             <Link
               href="/employers"
-              className={`text-gray-700 hover:text-teal-600 ${
-                pathname === "/employers" ? "font-semibold text-teal-600" : ""
+              className={`text-gray-700 hover:text-brand-teal-500 ${
+                pathname === "/employers" ? "font-semibold text-brand-teal-500" : ""
               }`}
             >
               For Employers
             </Link>
             <Link
               href="/faq"
-              className={`text-gray-700 hover:text-teal-600 ${pathname === "/faq" ? "font-semibold text-teal-600" : ""}`}
+              className={`text-gray-700 hover:text-brand-teal-500 ${pathname === "/faq" ? "font-semibold text-brand-teal-500" : ""}`}
             >
               FAQ
             </Link>
             <Link
               href="/contact"
-              className={`text-gray-700 hover:text-teal-600 ${
-                pathname === "/contact" ? "font-semibold text-teal-600" : ""
+              className={`text-gray-700 hover:text-brand-teal-500 ${
+                pathname === "/contact" ? "font-semibold text-brand-teal-500" : ""
               }`}
             >
               Contact
             </Link>
             <Link
               href="/donate"
-              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium"
+              className="bg-brand-yellow-500 hover:bg-brand-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium"
             >
               Donate
             </Link>
@@ -69,7 +75,7 @@ export function Header() {
           <div className="md:hidden">
             <button
               type="button"
-              className="text-gray-700 hover:text-teal-600"
+              className="text-gray-700 hover:text-brand-teal-500"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <svg
@@ -95,8 +101,8 @@ export function Header() {
             <nav className="flex flex-col space-y-4">
               <Link
                 href="/organizations"
-                className={`text-gray-700 hover:text-teal-600 ${
-                  pathname === "/organizations" ? "font-semibold text-teal-600" : ""
+                className={`text-gray-700 hover:text-brand-teal-500 ${
+                  pathname === "/organizations" ? "font-semibold text-brand-teal-500" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -104,8 +110,8 @@ export function Header() {
               </Link>
               <Link
                 href="/volunteers"
-                className={`text-gray-700 hover:text-teal-600 ${
-                  pathname === "/volunteers" ? "font-semibold text-teal-600" : ""
+                className={`text-gray-700 hover:text-brand-teal-500 ${
+                  pathname === "/volunteers" ? "font-semibold text-brand-teal-500" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -113,8 +119,8 @@ export function Header() {
               </Link>
               <Link
                 href="/employers"
-                className={`text-gray-700 hover:text-teal-600 ${
-                  pathname === "/employers" ? "font-semibold text-teal-600" : ""
+                className={`text-gray-700 hover:text-brand-teal-500 ${
+                  pathname === "/employers" ? "font-semibold text-brand-teal-500" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -122,8 +128,8 @@ export function Header() {
               </Link>
               <Link
                 href="/faq"
-                className={`text-gray-700 hover:text-teal-600 ${
-                  pathname === "/faq" ? "font-semibold text-teal-600" : ""
+                className={`text-gray-700 hover:text-brand-teal-500 ${
+                  pathname === "/faq" ? "font-semibold text-brand-teal-500" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -131,8 +137,8 @@ export function Header() {
               </Link>
               <Link
                 href="/contact"
-                className={`text-gray-700 hover:text-teal-600 ${
-                  pathname === "/contact" ? "font-semibold text-teal-600" : ""
+                className={`text-gray-700 hover:text-brand-teal-500 ${
+                  pathname === "/contact" ? "font-semibold text-brand-teal-500" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -140,7 +146,7 @@ export function Header() {
               </Link>
               <Link
                 href="/donate"
-                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium text-center"
+                className="bg-brand-yellow-500 hover:bg-brand-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Donate
