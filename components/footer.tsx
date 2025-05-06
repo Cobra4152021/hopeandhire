@@ -123,6 +123,14 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-200 mt-8 pt-8 text-center">
+          <div className="flex justify-center space-x-6 mb-4">
+            <Link href="/privacy-policy" className="text-gray-600 hover:text-teal transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-service" className="text-gray-600 hover:text-teal transition-colors">
+              Terms of Service
+            </Link>
+          </div>
           <p className="text-gray-600">&copy; {new Date().getFullYear()} Hope and Hire. All rights reserved.</p>
         </div>
       </div>

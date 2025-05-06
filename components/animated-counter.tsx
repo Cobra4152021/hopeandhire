@@ -1,58 +1,41 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useState, useEffect } from "react"
 
 interface AnimatedCounterProps {
   end: number
   duration?: number
-  className?: string
+  delay?: number
 }
 
-export default function AnimatedCounter({ end, duration = 2000, className = "" }: AnimatedCounterProps) {
+export default function AnimatedCounter({ end, duration = 2000, delay = 0 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0)
-  const countRef = useRef(0)
-  const startTimeRef = useRef<number | null>(null)
-  const frameRef = useRef<number | null>(null)
 
   useEffect(() => {
-    // Reset when end value changes
-    countRef.current = 0
-    startTimeRef.current = null
-    setCount(0)
+    // Wait for the specified delay before starting the animation
+    const delayTimeout = setTimeout(() => {
+      // Calculate the increment per step (every 500ms)
+      const steps = duration / 500
+      const increment = end / steps
+      let current = 0
 
-    const animate = (timestamp: number) => {
-      if (startTimeRef.current === null) {
-        startTimeRef.current = timestamp
-      }
+      // Set up the interval to update the count
+      const interval = setInterval(() => {
+        current += increment
+        if (current >= end) {
+          setCount(end)
+          clearInterval(interval)
+        } else {
+          setCount(Math.floor(current))
+        }
+      }, 500)
 
-      const elapsed = timestamp - startTimeRef.current
-      const progress = Math.min(elapsed / duration, 1)
+      // Clean up the interval on unmount
+      return () => clearInterval(interval)
+    }, delay)
 
-      // Easing function for smoother animation
-      const easedProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
+    return () => clearTimeout(delayTimeout)
+  }, [end, duration, delay])
 
-      const currentCount = Math.floor(easedProgress * end)
-
-      if (currentCount !== countRef.current) {
-        countRef.current = currentCount
-        setCount(currentCount)
-      }
-
-      if (progress < 1) {
-        frameRef.current = requestAnimationFrame(animate)
-      } else {
-        setCount(end) // Ensure we end exactly at the target number
-      }
-    }
-
-    frameRef.current = requestAnimationFrame(animate)
-
-    return () => {
-      if (frameRef.current !== null) {
-        cancelAnimationFrame(frameRef.current)
-      }
-    }
-  }, [end, duration])
-
-  return <span className={className}>{count.toLocaleString()}</span>
+  return <>{count.toLocaleString()}</>
 }

@@ -1,40 +1,39 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Users, Building, HandHelping } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import { CheckCircle, Building, Users, Handshake } from "lucide-react"
 
 export default function OrganizationsPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Logo Section - Centrally positioned below header */}
-      <div className="flex justify-center py-8 bg-white">
-        <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
-      </div>
-
       {/* Hero Section */}
-      <section className="bg-teal text-white py-16 md:py-24">
+      <section className="bg-teal-light/20 py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">Support Your Clients' Journey to Employment</h1>
-              <p className="text-lg mb-8">
-                Partner with Hope and Hire to provide your clients with access to job readiness resources, employer
-                connections, and volunteer support.
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-dark-text">
+                Partner With Us to Support Your Clients
+              </h1>
+              <p className="text-lg mb-8 text-gray-600">
+                Connect your clients with our network of volunteers and employers to enhance their employment
+                opportunities.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/organizations/register">
-                  <Button className="bg-white text-teal hover:bg-gray-100">Become a Partner</Button>
+                <Link href="https://www.hopeandhire.net/login">
+                  <Button className="bg-teal text-white hover:bg-teal-dark">Become a Partner</Button>
                 </Link>
-                <Link href="/organizations/login">
-                  <Button className="bg-teal-dark text-white hover:bg-teal-dark/90">Partner Login</Button>
+                <Link href="https://www.hopeandhire.net/login">
+                  <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+                    Organization Login
+                  </Button>
                 </Link>
               </div>
             </div>
             <div className="hidden md:block">
               <Image
-                src="/diverse-professionals-meeting.png"
-                alt="Organization partners in a meeting"
+                src="/organization-meeting.png"
+                alt="Organization team meeting"
                 width={500}
                 height={400}
                 className="rounded-lg shadow-lg"
@@ -44,12 +43,12 @@ export default function OrganizationsPage() {
         </div>
       </section>
 
-      {/* Partner Benefits */}
+      {/* Organization Benefits */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Why Partner With Us</h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Hope and Hire offers comprehensive support for organizations serving individuals seeking employment.
+            Discover how a partnership with Hope and Hire can benefit your organization and clients.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -58,22 +57,22 @@ export default function OrganizationsPage() {
                 <div className="rounded-full bg-teal-light/20 w-12 h-12 flex items-center justify-center mb-4">
                   <Users className="text-teal h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-dark-text">Expanded Resources</h3>
+                <h3 className="text-xl font-bold mb-2 text-dark-text">Enhanced Client Services</h3>
                 <p className="text-gray-600 mb-4">
-                  Access a network of volunteers, employers, and resources to enhance your existing programs.
+                  Expand your service offerings with specialized employment support for your clients.
                 </p>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-start">
                     <CheckCircle className="text-teal h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Professional volunteer network</span>
+                    <span className="text-gray-600">Professional resume development</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-teal h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Job readiness curriculum</span>
+                    <span className="text-gray-600">Interview preparation and coaching</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-teal h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Employer partnerships</span>
+                    <span className="text-gray-600">Direct connections to employers</span>
                   </li>
                 </ul>
               </CardContent>
@@ -84,22 +83,22 @@ export default function OrganizationsPage() {
                 <div className="rounded-full bg-yellow-light/20 w-12 h-12 flex items-center justify-center mb-4">
                   <Building className="text-yellow h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-dark-text">Employer Connections</h3>
+                <h3 className="text-xl font-bold mb-2 text-dark-text">Resource Network</h3>
                 <p className="text-gray-600 mb-4">
-                  Connect your clients with employers committed to providing second chances and meaningful employment.
+                  Access our extensive network of volunteers, employers, and support resources.
                 </p>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-start">
                     <CheckCircle className="text-yellow h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Direct employer referrals</span>
+                    <span className="text-gray-600">Skilled volunteer professionals</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-yellow h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Industry-specific opportunities</span>
+                    <span className="text-gray-600">Employer partnerships across industries</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-yellow h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Ongoing employment support</span>
+                    <span className="text-gray-600">Training and educational materials</span>
                   </li>
                 </ul>
               </CardContent>
@@ -108,24 +107,24 @@ export default function OrganizationsPage() {
             <Card className="border-t-4 border-teal">
               <CardContent className="pt-8">
                 <div className="rounded-full bg-teal-light/20 w-12 h-12 flex items-center justify-center mb-4">
-                  <HandHelping className="text-teal h-6 w-6" />
+                  <Handshake className="text-teal h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-dark-text">Comprehensive Support</h3>
+                <h3 className="text-xl font-bold mb-2 text-dark-text">Collaborative Impact</h3>
                 <p className="text-gray-600 mb-4">
-                  Provide your clients with holistic support throughout their employment journey.
+                  Join a community dedicated to creating meaningful employment opportunities.
                 </p>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-start">
                     <CheckCircle className="text-teal h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Resume and interview preparation</span>
+                    <span className="text-gray-600">Shared success metrics and reporting</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-teal h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Career counseling and planning</span>
+                    <span className="text-gray-600">Community of practice participation</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle className="text-teal h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-600">Post-employment mentorship</span>
+                    <span className="text-gray-600">Joint funding and grant opportunities</span>
                   </li>
                 </ul>
               </CardContent>
@@ -139,7 +138,7 @@ export default function OrganizationsPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">How It Works</h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Our partnership process is designed to seamlessly integrate with your existing programs.
+            Our partnership process is designed to be straightforward and impactful.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -147,7 +146,7 @@ export default function OrganizationsPage() {
               <div className="rounded-full bg-teal text-white w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 1
               </div>
-              <h3 className="text-lg font-bold mb-2 text-dark-text">Partner Registration</h3>
+              <h3 className="text-lg font-bold mb-2 text-dark-text">Partner</h3>
               <p className="text-gray-600">Complete our partnership application and meet with our team.</p>
             </div>
 
@@ -155,24 +154,24 @@ export default function OrganizationsPage() {
               <div className="rounded-full bg-teal text-white w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 2
               </div>
-              <h3 className="text-lg font-bold mb-2 text-dark-text">Client Referrals</h3>
-              <p className="text-gray-600">Refer your clients to our platform for job readiness services.</p>
+              <h3 className="text-lg font-bold mb-2 text-dark-text">Refer</h3>
+              <p className="text-gray-600">Connect your clients to our employment readiness services.</p>
             </div>
 
             <div className="text-center">
               <div className="rounded-full bg-teal text-white w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 3
               </div>
-              <h3 className="text-lg font-bold mb-2 text-dark-text">Collaborative Support</h3>
-              <p className="text-gray-600">Work together with our team to provide comprehensive client support.</p>
+              <h3 className="text-lg font-bold mb-2 text-dark-text">Support</h3>
+              <p className="text-gray-600">Collaborate with our team to provide comprehensive support.</p>
             </div>
 
             <div className="text-center">
               <div className="rounded-full bg-teal text-white w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 4
               </div>
-              <h3 className="text-lg font-bold mb-2 text-dark-text">Ongoing Partnership</h3>
-              <p className="text-gray-600">Maintain communication and collaboration for continued success.</p>
+              <h3 className="text-lg font-bold mb-2 text-dark-text">Succeed</h3>
+              <p className="text-gray-600">Celebrate client successes and strengthen our partnership.</p>
             </div>
           </div>
         </div>
@@ -181,37 +180,53 @@ export default function OrganizationsPage() {
       {/* Partner Testimonials */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Partner Success Stories</h2>
+          <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Partner Testimonials</h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Hear from organizations that have partnered with Hope and Hire to support their clients.
+            Hear from organizations that have partnered with Hope and Hire.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
-              <CardHeader>
-                <CardTitle>Community Reentry Services</CardTitle>
-              </CardHeader>
-              <CardContent>
+              <CardContent className="p-6">
+                <div className="flex items-start mb-4">
+                  <div className="mr-4">
+                    <div className="w-12 h-12 rounded-full bg-teal-light/20 flex items-center justify-center">
+                      <Building className="h-6 w-6 text-teal" />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-dark-text">Community Reentry Alliance</h3>
+                    <p className="text-gray-500">Reentry Support Organization</p>
+                  </div>
+                </div>
                 <blockquote className="border-l-4 border-teal pl-4 italic text-gray-600 mb-4">
-                  "Partnering with Hope and Hire has significantly enhanced our ability to support clients transitioning
-                  back into the workforce. The volunteer network and employer connections have been invaluable resources
-                  for our organization."
+                  "Our partnership with Hope and Hire has significantly enhanced our ability to support clients in their
+                  employment journey. The specialized resources and employer connections have been invaluable to our
+                  program participants."
                 </blockquote>
-                <p className="font-medium">- Maria Rodriguez, Executive Director</p>
+                <p className="font-medium">- James Wilson, Executive Director</p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle>Second Chance Coalition</CardTitle>
-              </CardHeader>
-              <CardContent>
+              <CardContent className="p-6">
+                <div className="flex items-start mb-4">
+                  <div className="mr-4">
+                    <div className="w-12 h-12 rounded-full bg-yellow-light/20 flex items-center justify-center">
+                      <Building className="h-6 w-6 text-yellow" />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-dark-text">Pathway to Success</h3>
+                    <p className="text-gray-500">Workforce Development Agency</p>
+                  </div>
+                </div>
                 <blockquote className="border-l-4 border-yellow pl-4 italic text-gray-600 mb-4">
-                  "Our partnership with Hope and Hire has opened doors for our clients that were previously closed. The
-                  comprehensive support system ensures that individuals receive the guidance they need throughout their
-                  employment journey."
+                  "The collaborative approach of Hope and Hire has allowed us to offer comprehensive employment services
+                  to our clients. Their volunteer network provides expertise that complements our existing programs
+                  perfectly."
                 </blockquote>
-                <p className="font-medium">- James Wilson, Program Director</p>
+                <p className="font-medium">- Maria Rodriguez, Program Director</p>
               </CardContent>
             </Card>
           </div>
@@ -227,7 +242,7 @@ export default function OrganizationsPage() {
             second chances.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/organizations/register">
+            <Link href="https://www.hopeandhire.net/login">
               <Button className="bg-teal text-white hover:bg-teal-dark">Become a Partner</Button>
             </Link>
             <Link href="/contact">

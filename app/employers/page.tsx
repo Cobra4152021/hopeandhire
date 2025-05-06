@@ -17,10 +17,10 @@ export default function EmployersPage() {
                 Connect with pre-screened candidates who are ready to contribute to your organization's success.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/employers/register">
+                <Link href="https://www.hopeandhire.net/login">
                   <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Hire Job-Ready Candidates</Button>
                 </Link>
-                <Link href="/employers/login">
+                <Link href="https://www.hopeandhire.net/login">
                   <Button variant="outline" className="border-yellow text-yellow hover:bg-yellow hover:text-dark-text">
                     Employer Login
                   </Button>
@@ -234,7 +234,7 @@ export default function EmployersPage() {
             Join our network of employers committed to creating opportunities and building stronger communities.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/employers/register">
+            <Link href="https://www.hopeandhire.net/login">
               <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Post a Job</Button>
             </Link>
             <Link href="/contact">

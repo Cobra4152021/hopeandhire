@@ -8,15 +8,15 @@ import AnimatedCounter from "@/components/animated-counter"
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Logo Section - Centrally positioned below header */}
-      <div className="flex justify-center py-8 bg-white">
-        <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
-      </div>
-
-      {/* Hero Section */}
+      {/* Hero Section with Logo */}
       <section className="bg-light-bg py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
+            {/* Logo positioned in the light green section */}
+            <div className="flex justify-center mb-8">
+              <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
+            </div>
+
             <div className="flex justify-center space-x-4 mb-6">
               <span className="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">
                 Empowering second chances
@@ -62,7 +62,7 @@ export default function Home() {
               <CardContent className="p-8">
                 <h3 className="text-center text-gray-600 mb-2">Resumes Written</h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={3250} duration={2500} />
+                  <AnimatedCounter end={3250} duration={5000} />
                 </p>
                 <p className="text-center text-gray-500 text-sm">Professional resumes created</p>
               </CardContent>
@@ -72,7 +72,7 @@ export default function Home() {
               <CardContent className="p-8">
                 <h3 className="text-center text-gray-600 mb-2">Interviews Conducted</h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={1875} duration={2500} />
+                  <AnimatedCounter end={1875} duration={5000} />
                 </p>
                 <p className="text-center text-gray-500 text-sm">Mock interviews with feedback</p>
               </CardContent>
@@ -82,7 +82,7 @@ export default function Home() {
               <CardContent className="p-8">
                 <h3 className="text-center text-gray-600 mb-2">Job Placements Made</h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={925} duration={2500} />
+                  <AnimatedCounter end={925} duration={5000} />
                 </p>
                 <p className="text-center text-gray-500 text-sm">Successful career placements</p>
               </CardContent>
@@ -118,8 +118,14 @@ export default function Home() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          👔
+                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                          <Image
+                            src="/team-member-1.jpg"
+                            alt="Sarah Johnson"
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <p className="font-medium">Sarah Johnson</p>
@@ -131,8 +137,14 @@ export default function Home() {
 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          👔
+                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                          <Image
+                            src="/team-member-2.jpg"
+                            alt="Michael Chen"
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <p className="font-medium">Michael Chen</p>
@@ -144,8 +156,14 @@ export default function Home() {
 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          👔
+                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                          <Image
+                            src="/team-member-3.jpg"
+                            alt="David Rodriguez"
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <p className="font-medium">David Rodriguez</p>
@@ -169,8 +187,14 @@ export default function Home() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          👔
+                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                          <Image
+                            src="/team-member-4.png"
+                            alt="Jennifer Williams"
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <p className="font-medium">Jennifer Williams</p>
@@ -184,8 +208,14 @@ export default function Home() {
 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          👔
+                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                          <Image
+                            src="/team-member-5.png"
+                            alt="Robert Taylor"
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <p className="font-medium">Robert Taylor</p>
@@ -199,8 +229,14 @@ export default function Home() {
 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
-                          👔
+                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                          <Image
+                            src="/team-member-6.jpg"
+                            alt="Lisa Martinez"
+                            width={40}
+                            height={40}
+                            className="object-cover"
+                          />
                         </div>
                         <div>
                           <p className="font-medium">Lisa Martinez</p>

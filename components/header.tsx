@@ -24,7 +24,7 @@ export default function Header() {
     { name: "For Volunteers", href: "/volunteers" },
     { name: "For Employers", href: "/employers" },
     { name: "FAQ", href: "/faq" },
-    { name: "Contact", href: "/contact" },
+    // Removed Contact link as requested
   ]
 
   const isActive = (path: string) => {
@@ -57,7 +57,7 @@ export default function Header() {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login">
+            <Link href="https://www.hopeandhire.net/login">
               <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
                 Login
               </Button>
@@ -103,7 +103,7 @@ export default function Header() {
               </Link>
             ))}
             <div className="mt-4 px-3 space-y-2">
-              <Link href="/login" className="block">
+              <Link href="https://www.hopeandhire.net/login" className="block">
                 <Button variant="outline" className="w-full border-teal text-teal hover:bg-teal hover:text-white">
                   Login
                 </Button>
