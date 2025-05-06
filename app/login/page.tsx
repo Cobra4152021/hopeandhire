@@ -3,139 +3,121 @@
 import type React from "react"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Image from "next/image"
-import Link from "next/link"
-import { Eye, EyeOff, Lock, Mail } from "lucide-react"
+import { createClientSupabaseClient } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from "next/navigation"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-export default function LoginPage() {
-  const router = useRouter()
+export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [activeTab, setActiveTab] = useState("volunteer")
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("")
+  const supabase = createClientSupabaseClient()
+  const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSignIn(e: React.FormEvent) {
     e.preventDefault()
-    setError("")
-    setIsLoading(true)
+    setLoading(true)
+    setMessage("")
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      if (activeTab === "volunteer") {
-        router.push("/volunteer/dashboard")
-      } else if (activeTab === "employer") {
+      const { error, data } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (error) throw error
+
+      // Check user role and redirect accordingly
+      const { data: userData } = await supabase.auth.getUser()
+      const role = userData.user?.user_metadata?.role
+
+      if (role === "employer") {
         router.push("/employer/dashboard")
       } else {
-        router.push("/organization/dashboard")
+        router.push("/dashboard")
       }
-    } catch (err) {
-      setError("Invalid email or password. Please try again.")
+    } catch (error: any) {
+      setMessage(error.message)
     } finally {
-      setIsLoading(false)
+      setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b">
-        <div className="container flex h-16 items-center px-4 sm:px-6">
-          <Link href="/" className="flex items-center">
-            <span className="text-xl font-bold">Hope & Hire</span>
-          </Link>
-        </div>
-      </header>
-
-      <main className="flex-1 flex items-center justify-center p-4 bg-muted/40">
-        <Card className="w-full max-w-md">
-          <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-            <CardDescription>Sign in to access your account</CardDescription>
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1 flex items-center justify-center py-12">
+        <Card className="w-full max-w-md mx-auto">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
+            <CardDescription>Enter your credentials to access your account</CardDescription>
           </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="volunteer" value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid grid-cols-3 mb-4">
-                <TabsTrigger value="volunteer">Volunteer</TabsTrigger>
-                <TabsTrigger value="employer">Employer</TabsTrigger>
-                <TabsTrigger value="organization">Organization</TabsTrigger>
-              </TabsList>
-              {["volunteer", "employer", "organization"].map((role) => (
-                <TabsContent value={role} key={role}>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    {error && (
-                      <div className="p-3 rounded-md bg-destructive/10 text-destructive text-sm">{error}</div>
-                    )}
-                    <div className="space-y-2">
-                      <Label htmlFor={`${role}-email`}>Email</Label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                        <Input
-                          id={`${role}-email`}
-                          type="email"
-                          placeholder={`you@${role}.com`}
-                          className="pl-10"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                      </div>
+          <Tabs defaultValue="jobseeker">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="jobseeker">Job Seeker</TabsTrigger>
+              <TabsTrigger value="employer">
+                <Link href="/employer/login" className="w-full h-full flex items-center justify-center">
+                  Employer
+                </Link>
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="jobseeker">
+              <form onSubmit={handleSignIn}>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="your.email@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="password">Password</Label>
+                      <Link href="/reset-password" className="text-sm text-primary hover:underline">
+                        Forgot password?
+                      </Link>
                     </div>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Label htmlFor={`${role}-password`}>Password</Label>
-                        <Link href="/forgot-password" className="text-sm text-primary hover:underline">
-                          Forgot password?
-                        </Link>
-                      </div>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                        <Input
-                          id={`${role}-password`}
-                          type={showPassword ? "text" : "password"}
-                          className="pl-10 pr-10"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          required
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground"
-                          tabIndex={-1}
-                        >
-                          {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                          <span className="sr-only">
-                            {showPassword ? "Hide password" : "Show password"}
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                    <Button type="submit" className="w-full" disabled={isLoading}>
-                      {isLoading ? "Signing in..." : "Sign In"}
-                    </Button>
-                  </form>
-                </TabsContent>
-              ))}
-            </Tabs>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-2">
-            <div className="text-center text-sm">
-              Don’t have an account?{' '}
-              <Link href="/register" className="text-primary hover:underline">
-                Sign up
-              </Link>
-            </div>
-          </CardFooter>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  {message && <p className="text-red-500 text-sm">{message}</p>}
+                </CardContent>
+                <CardFooter className="flex flex-col space-y-4">
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? "Signing in..." : "Sign In"}
+                  </Button>
+                  <p className="text-center text-sm text-muted-foreground">
+                    Don't have an account?{" "}
+                    <Link href="/register" className="text-primary hover:underline">
+                      Register
+                    </Link>
+                  </p>
+                </CardFooter>
+              </form>
+            </TabsContent>
+          </Tabs>
         </Card>
       </main>
+      <Footer />
     </div>
   )
 }

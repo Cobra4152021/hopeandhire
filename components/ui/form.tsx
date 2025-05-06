@@ -24,8 +24,8 @@ type FormFieldContextValue<
   name: TName
 }
 
-const FormFieldContext = React.createContext<FormFieldContextValue<any, any>>(
-  {} as FormFieldContextValue<any, any>
+const FormFieldContext = React.createContext<FormFieldContextValue>(
+  {} as FormFieldContextValue
 )
 
 const FormField = <
@@ -114,7 +114,9 @@ const FormControl = React.forwardRef<
       ref={ref}
       id={formItemId}
       aria-describedby={
-        !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
+        !error
+          ? `${formDescriptionId}`
+          : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!error}
       {...props}
@@ -147,7 +149,9 @@ const FormMessage = React.forwardRef<
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message) : children
 
-  if (!body) return null
+  if (!body) {
+    return null
+  }
 
   return (
     <p

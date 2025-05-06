@@ -1,118 +1,150 @@
 "use client"
 
-   import { useState, useEffect } from "react"
-   import type { User } from "@supabase/supabase-js"
-   import dynamic from "next/dynamic"
-   import { Button } from "@/components/ui/button"
-   import createClient from "@/utils/supabase/client"
-   import { useRouter } from "next/navigation"
-   import { CheckCircle2, XCircle } from "lucide-react"
+import { useEffect, useState } from "react"
+import { createClientSupabaseClient } from "@/lib/supabase"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
-   const Card = dynamic(() => import("@/components/ui/card").then(mod => mod.Card), { ssr: false })
-   const CardContent = dynamic(() => import("@/components/ui/card").then(mod => mod.CardContent), { ssr: false })
-   const CardDescription = dynamic(() => import("@/components/ui/card").then(mod => mod.CardDescription), { ssr: false })
-   const CardHeader = dynamic(() => import("@/components/ui/card").then(mod => mod.CardHeader), { ssr: false })
-   const CardTitle = dynamic(() => import("@/components/ui/card").then(mod => mod.CardTitle), { ssr: false })
+export default function TestAuth() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [message, setMessage] = useState("")
+  const supabase = createClientSupabaseClient()
 
-   export default function TestAuthPage() {
-     const router = useRouter()
-     const [user, setUser] = useState<User | null>(null)
-     const [loading, setLoading] = useState(true)
-     const [error, setError] = useState("")
-     const supabase = createClient()
+  useEffect(() => {
+    async function getUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      setUser(user)
+      setLoading(false)
+    }
+    getUser()
+  }, [supabase.auth])
 
-     useEffect(() => {
-       async function getUser() {
-         try {
-           setLoading(true)
-           const { data, error } = await supabase.auth.getUser()
+  async function handleSignUp() {
+    setMessage("")
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+      })
+      if (error) throw error
+      setMessage("Check your email for the confirmation link!")
+    } catch (error: any) {
+      setMessage(error.message)
+    }
+  }
 
-           if (error) {
-             throw error
-           }
+  async function handleSignIn() {
+    setMessage("")
+    try {
+      const { error, data } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      if (error) throw error
+      setUser(data.user)
+      setMessage("Sign in successful!")
+    } catch (error: any) {
+      setMessage(error.message)
+    }
+  }
 
-           setUser(data.user)
-         } catch (error: any) {
-           console.error("Error fetching user:", error)
-           setError(error.message)
-         } finally {
-           setLoading(false)
-         }
-       }
+  async function handleSignOut() {
+    setMessage("")
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+      setUser(null)
+      setMessage("Sign out successful!")
+    } catch (error: any) {
+      setMessage(error.message)
+    }
+  }
 
-       getUser()
-     }, [supabase])
+  if (loading) {
+    return <div className="p-8">Loading...</div>
+  }
 
-     if (loading) {
-       return (
-         <div className="container py-10">
-           <Card>
-             <CardHeader>
-               <CardTitle>Authentication Test</CardTitle>
-               <CardDescription>Checking authentication status...</CardDescription>
-             </CardHeader>
-             <CardContent>
-               <div className="flex items-center justify-center p-8">
-                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-               </div>
-             </CardContent>
-           </Card>
-         </div>
-       )
-     }
+  if (user) {
+    return (
+      <div className="p-8">
+        <Card className="w-full max-w-md mx-auto">
+          <CardHeader>
+            <CardTitle>You are signed in</CardTitle>
+            <CardDescription>Welcome back!</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <Label>Email</Label>
+                <div className="p-2 border rounded-md">{user.email}</div>
+              </div>
+              <div>
+                <Label>User ID</Label>
+                <div className="p-2 border rounded-md truncate">{user.id}</div>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button onClick={handleSignOut} className="w-full">
+              Sign Out
+            </Button>
+          </CardFooter>
+        </Card>
+        {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+      </div>
+    )
+  }
 
-     return (
-       <div className="container py-10">
-         <Card>
-           <CardHeader>
-             <CardTitle>Authentication Test</CardTitle>
-             <CardDescription>
-               This page verifies your authentication status and displays your user information.
-             </CardDescription>
-           </CardHeader>
-           <CardContent className="space-y-6">
-             {error ? (
-               <div className="rounded-lg bg-destructive/10 p-4 text-destructive">
-                 <div className="flex items-center gap-2">
-                   <XCircle className="h-5 w-5" />
-                   <h3 className="font-medium">Authentication Error</h3>
-                 </div>
-                 <p className="mt-1 text-sm">{error}</p>
-               </div>
-             ) : user ? (
-               <>
-                 <div className="rounded-lg bg-green-50 p-4 text-green-700 dark:bg-green-900/20 dark:text-green-400">
-                   <div className="flex items-center gap-2">
-                     <CheckCircle2 className="h-5 w-5" />
-                     <h3 className="font-medium">Authenticated</h3>
-                   </div>
-                   <p className="mt-1 text-sm">You are successfully logged in.</p>
-                 </div>
-
-                 <div className="space-y-4">
-                   <h3 className="text-lg font-medium">User Information</h3>
-                   <div className="rounded-md bg-muted p-4">
-                     <pre className="whitespace-pre-wrap text-sm">{JSON.stringify(user, null, 2)}</pre>
-                   </div>
-                 </div>
-
-                 <Button onClick={handleSignOut} variant="destructive">
-                   Sign Out
-                 </Button>
-               </>
-             ) : (
-               <div className="rounded-lg bg-destructive/10 p-4 text-destructive">
-                 <div className="flex items-center gap-2">
-                   <XCircle className="h-5 w-5" />
-                   <h3 className="font-medium">Not Authenticated</h3>
-                 </div>
-                 <p className="mt-1 text-sm">You are not logged in. Please sign in to access this page.</p>
-                 <Button className="mt-4" onClick={() => router.push("/employer/login")}>Go to Login</Button>
-               </div>
-             )}
-           </CardContent>
-         </Card>
-       </div>
-     )
-   }
-   }
+  return (
+    <div className="p-8">
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader>
+          <CardTitle>Authentication Test</CardTitle>
+          <CardDescription>Test Supabase authentication</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your.email@example.com"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-2">
+          <div className="flex space-x-2 w-full">
+            <Button onClick={handleSignIn} className="flex-1">
+              Sign In
+            </Button>
+            <Button onClick={handleSignUp} variant="outline" className="flex-1">
+              Sign Up
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+      {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+    </div>
+  )
+}
