@@ -24,8 +24,8 @@ function Header() {
     { name: "For Organizations", href: "/organizations" },
     { name: "For Volunteers", href: "/volunteers" },
     { name: "For Employers", href: "/employers" },
+    { name: "Resources", href: "/resources" },
     { name: "FAQ", href: "/faq" },
-    // Removed Contact link as requested
   ]
 
   const isActive = (path: string) => {

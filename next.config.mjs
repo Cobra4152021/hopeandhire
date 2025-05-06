@@ -7,8 +7,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    // Set default image quality (80% is a good balance between quality and file size)
-    quality: 80,
+    // Remove the quality option as it's not recognized in Next.js 15.2.4
     
     // Enable image optimization for all domains
     remotePatterns: [
