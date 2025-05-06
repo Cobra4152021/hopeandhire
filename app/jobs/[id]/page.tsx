@@ -9,6 +9,10 @@ type Props = {
   };
 };
 
+type JobWithCompany = Database['public']['Tables']['job_listings']['Row'] & {
+  companies: Pick<Database['public']['Tables']['companies']['Row'], 'id' | 'name'> | null;
+};
+
 export default async function JobPage({ params }: Props) {
   const supabase = createServerSupabaseClient();
 
@@ -21,10 +25,7 @@ export default async function JobPage({ params }: Props) {
       description,
       job_type,
       created_at,
-      companies (
-        id,
-        name
-      )
+      companies!job_listings_company_id_fkey(id, name)
     `)
     .eq('id', params.id)
     .single();
@@ -34,24 +35,13 @@ export default async function JobPage({ params }: Props) {
     notFound();
   }
 
-  const job = data as {
-    id: string;
-    title: string;
-    location: string;
-    description: string;
-    job_type: string;
-    created_at: string;
-    companies: {
-      id: string;
-      name: string;
-    } | null;
-  };
+  const job = data as JobWithCompany;
 
   return (
     <div className="max-w-3xl mx-auto py-12">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold">{job.companies?.name}</h2>
+          <h2 className="text-xl font-semibold">{job.companies?.name || "N/A"}</h2>
           <p className="text-gray-600">{job.location}</p>
         </div>
         <div className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">

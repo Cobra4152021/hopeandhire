@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { createClientClient } from "@/utils/supabase/client"
+import createClient from "@/utils/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -20,21 +20,24 @@ import {
 import { MoreHorizontal, Eye, Pencil, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { formatDistanceToNow } from "date-fns"
+import { Database } from "@/types/supabase"
+
+type Job = Database['public']['Tables']['job_listings']['Row'];
 
 interface JobsTableProps {
-  jobs: any[]
+  jobs: Job[]
 }
 
 export function JobsTable({ jobs }: JobsTableProps) {
   const router = useRouter()
-  const supabase = createClientClient()
+  const supabase = createClient()
   const [deleteJobId, setDeleteJobId] = useState<string | null>(null)
 
   const handleDeleteJob = async () => {
     if (!deleteJobId) return
 
     try {
-      const { error } = await supabase.from("jobs").delete().eq("id", deleteJobId)
+      const { error } = await supabase.from("job_listings").delete().eq("id", deleteJobId)
 
       if (error) throw error
 
