@@ -2,7 +2,17 @@ import type React from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { LayoutDashboard, Users, Briefcase, Calendar, MessageSquare, BarChart, Settings, LogOut } from "lucide-react"
+import {
+  LayoutDashboard,
+  Users,
+  Briefcase,
+  Calendar,
+  MessageSquare,
+  BarChart,
+  Settings,
+  LogOut,
+  FileText,
+} from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Dashboard - Hope and Hire",
@@ -18,8 +28,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
     { name: "Candidates", href: "/dashboard/candidates", icon: Users },
     { name: "Jobs", href: "/dashboard/jobs", icon: Briefcase },
+    { name: "Applications", href: "/dashboard/applications", icon: FileText },
     { name: "Schedule", href: "/dashboard/schedule", icon: Calendar },
-    { name: "Messages", href: "/dashboard/messages", icon: MessageSquare },
+    { name: "Messages", href: "/dashboard/messaging", icon: MessageSquare },
     { name: "Analytics", href: "/dashboard/analytics", icon: BarChart },
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
   ]
