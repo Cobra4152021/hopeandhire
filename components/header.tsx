@@ -20,6 +20,7 @@ export default function Header() {
   }
 
   const navigation = [
+    { name: "For Job Seekers", href: "/job-seekers" },
     { name: "For Organizations", href: "/organizations" },
     { name: "For Volunteers", href: "/volunteers" },
     { name: "For Employers", href: "/employers" },
@@ -57,7 +58,7 @@ export default function Header() {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="https://www.hopeandhire.net/login">
+            <Link href="/login">
               <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
                 Login
               </Button>
@@ -103,7 +104,7 @@ export default function Header() {
               </Link>
             ))}
             <div className="mt-4 px-3 space-y-2">
-              <Link href="https://www.hopeandhire.net/login" className="block">
+              <Link href="/login" className="block">
                 <Button variant="outline" className="w-full border-teal text-teal hover:bg-teal hover:text-white">
                   Login
                 </Button>

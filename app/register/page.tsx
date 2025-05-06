@@ -13,11 +13,13 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
+import ConfettiCelebration from "@/components/confetti-celebration"
 
 export default function RegisterPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [userType, setUserType] = useState("jobseeker")
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,12 +28,19 @@ export default function RegisterPage() {
     // Simulate registration - in a real app, this would call an API
     setTimeout(() => {
       setIsLoading(false)
-      router.push("/dashboard")
+      setShowConfetti(true) // Show confetti on successful registration
+
+      // Navigate to dashboard after a short delay to allow confetti to be seen
+      setTimeout(() => {
+        router.push("/dashboard")
+      }, 3000)
     }, 1500)
   }
 
   return (
     <div className="container flex items-center justify-center min-h-screen py-12">
+      {showConfetti && <ConfettiCelebration duration={4000} />}
+
       {/* Logo Section - Centrally positioned */}
       <div className="absolute top-24 left-1/2 transform -translate-x-1/2">
         <Image src="/logo.png" alt="Hope and Hire Logo" width={180} height={72} className="h-auto" priority />
@@ -84,11 +93,11 @@ export default function RegisterPage() {
                   <Checkbox id="terms" required />
                   <Label htmlFor="terms" className="text-sm">
                     I agree to the{" "}
-                    <Link href="/terms" className="text-teal hover:underline">
+                    <Link href="/terms-of-service" className="text-teal hover:underline">
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy" className="text-teal hover:underline">
+                    <Link href="/privacy-policy" className="text-teal hover:underline">
                       Privacy Policy
                     </Link>
                   </Label>
@@ -153,11 +162,11 @@ export default function RegisterPage() {
                   <Checkbox id="volunteerTerms" required />
                   <Label htmlFor="volunteerTerms" className="text-sm">
                     I agree to the{" "}
-                    <Link href="/terms" className="text-teal hover:underline">
+                    <Link href="/terms-of-service" className="text-teal hover:underline">
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy" className="text-teal hover:underline">
+                    <Link href="/privacy-policy" className="text-teal hover:underline">
                       Privacy Policy
                     </Link>
                   </Label>
@@ -229,11 +238,11 @@ export default function RegisterPage() {
                   <Checkbox id="employerTerms" required />
                   <Label htmlFor="employerTerms" className="text-sm">
                     I agree to the{" "}
-                    <Link href="/terms" className="text-teal hover:underline">
+                    <Link href="/terms-of-service" className="text-teal hover:underline">
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy" className="text-teal hover:underline">
+                    <Link href="/privacy-policy" className="text-teal hover:underline">
                       Privacy Policy
                     </Link>
                   </Label>

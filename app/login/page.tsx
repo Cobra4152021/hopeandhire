@@ -4,18 +4,21 @@ import type React from "react"
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import ConfettiCelebration from "@/components/confetti-celebration"
 
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,15 +27,25 @@ export default function LoginPage() {
     // Simulate login - in a real app, this would call an API
     setTimeout(() => {
       setIsLoading(false)
-      router.push("/dashboard")
+      setShowConfetti(true) // Show confetti on successful login
+
+      // Navigate to dashboard after a short delay to allow confetti to be seen
+      setTimeout(() => {
+        router.push("/dashboard")
+      }, 2000)
     }, 1000)
   }
 
   return (
     <div className="container flex items-center justify-center min-h-screen py-12">
+      {showConfetti && <ConfettiCelebration duration={3000} />}
+
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Hope and Hire</CardTitle>
+          <div className="flex justify-center mb-4">
+            <Image src="/logo.png" alt="Hope and Hire Logo" width={150} height={60} className="h-auto" priority />
+          </div>
+          <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
           <CardDescription className="text-center">Sign in to your account to access your dashboard</CardDescription>
         </CardHeader>
         <CardContent>
