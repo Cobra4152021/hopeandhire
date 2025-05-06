@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
 // Sample analytics data
 const analyticsData = {
@@ -162,131 +164,100 @@ export default function AnalyticsPageClient() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-12 text-teal-700">Analytics Dashboard</h1>
+    <div>
+      <Header />
+      <div className="container mx-auto px-4 py-12">
+        <h1 className="text-4xl font-bold text-center mb-12 text-teal-700">Analytics Dashboard</h1>
 
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100 mb-8">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold text-teal-800">Platform Overview</h2>
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100 mb-8">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold text-teal-800">Platform Overview</h2>
 
-            <div>
-              <select
-                value={timeRange}
-                onChange={(e) => setTimeRange(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-              >
-                <option value="month">Last Month</option>
-                <option value="quarter">Last Quarter</option>
-                <option value="year">Last Year</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
-            <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal-800">Job Seekers</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.jobSeekers.total}</p>
+                <select
+                  value={timeRange}
+                  onChange={(e) => setTimeRange(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                >
+                  <option value="month">Last Month</option>
+                  <option value="quarter">Last Quarter</option>
+                  <option value="year">Last Year</option>
+                </select>
               </div>
-              {renderGrowthIndicator(analyticsData.jobSeekers.growth)}
             </div>
-            {renderBarChart(analyticsData.jobSeekers.byMonth)}
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-semibold text-teal-800">Employers</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.employers.total}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-lg font-semibold text-teal-800">Job Seekers</h3>
+                  <p className="text-3xl font-bold mt-2">{analyticsData.jobSeekers.total}</p>
+                </div>
+                {renderGrowthIndicator(analyticsData.jobSeekers.growth)}
               </div>
-              {renderGrowthIndicator(analyticsData.employers.growth)}
+              {renderBarChart(analyticsData.jobSeekers.byMonth)}
             </div>
-            {renderBarChart(analyticsData.employers.byMonth)}
-          </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-semibold text-teal-800">Volunteers</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.volunteers.total}</p>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-lg font-semibold text-teal-800">Employers</h3>
+                  <p className="text-3xl font-bold mt-2">{analyticsData.employers.total}</p>
+                </div>
+                {renderGrowthIndicator(analyticsData.employers.growth)}
               </div>
-              {renderGrowthIndicator(analyticsData.volunteers.growth)}
+              {renderBarChart(analyticsData.employers.byMonth)}
             </div>
-            {renderBarChart(analyticsData.volunteers.byMonth)}
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-semibold text-teal-800">Job Postings</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.jobs.total}</p>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-lg font-semibold text-teal-800">Volunteers</h3>
+                  <p className="text-3xl font-bold mt-2">{analyticsData.volunteers.total}</p>
+                </div>
+                {renderGrowthIndicator(analyticsData.volunteers.growth)}
               </div>
-              {renderGrowthIndicator(analyticsData.jobs.growth)}
+              {renderBarChart(analyticsData.volunteers.byMonth)}
             </div>
-            {renderPieChart(analyticsData.jobs.byType)}
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-semibold text-teal-800">Appointments</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.appointments.total}</p>
-              </div>
-              {renderGrowthIndicator(analyticsData.appointments.growth)}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <h3 className="text-lg font-semibold text-teal-800 mb-4">Job Seekers by Status</h3>
+              {renderPieChart(analyticsData.jobSeekers.byStatus)}
             </div>
-            {renderPieChart(analyticsData.appointments.byType)}
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <h3 className="text-lg font-semibold text-teal-800 mb-4">Employers by Industry</h3>
+              {renderPieChart(analyticsData.employers.byIndustry)}
+            </div>
           </div>
-        </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100 mb-8">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-lg font-semibold text-teal-800">Successful Placements</h3>
-              <p className="text-3xl font-bold mt-2">{analyticsData.placements.total}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <h3 className="text-lg font-semibold text-teal-800 mb-4">Volunteers by Specialty</h3>
+              {renderPieChart(analyticsData.volunteers.bySpecialty)}
             </div>
-            {renderGrowthIndicator(analyticsData.placements.growth)}
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <h3 className="text-lg font-semibold text-teal-800 mb-4">Jobs by Type</h3>
+              {renderPieChart(analyticsData.jobs.byType)}
+            </div>
           </div>
-          <div className="mt-4">
-            <h4 className="text-sm font-medium text-gray-700 mb-2">By Industry</h4>
-            {renderPieChart(analyticsData.placements.byIndustry)}
-          </div>
-        </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
-          <h3 className="text-lg font-semibold text-teal-800 mb-4">Key Insights</h3>
-
-          <div className="space-y-4">
-            <div className="p-4 bg-teal-50 rounded-lg border border-teal-100">
-              <h4 className="font-medium text-teal-800">Growing Volunteer Base</h4>
-              <p className="text-gray-700 mt-1">
-                Our volunteer base has grown by {analyticsData.volunteers.growth}% in the last year, allowing us to
-                provide more personalized support to job seekers.
-              </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <h3 className="text-lg font-semibold text-teal-800 mb-4">Appointments by Type</h3>
+              {renderPieChart(analyticsData.appointments.byType)}
             </div>
-
-            <div className="p-4 bg-teal-50 rounded-lg border border-teal-100">
-              <h4 className="font-medium text-teal-800">Successful Placements</h4>
-              <p className="text-gray-700 mt-1">
-                We've helped {analyticsData.placements.total} job seekers find employment, with a{" "}
-                {analyticsData.placements.growth}% increase in successful placements compared to last year.
-              </p>
-            </div>
-
-            <div className="p-4 bg-teal-50 rounded-lg border border-teal-100">
-              <h4 className="font-medium text-teal-800">Popular Services</h4>
-              <p className="text-gray-700 mt-1">
-                Resume reviews continue to be our most requested service, followed by mock interviews and career
-                counseling.
-              </p>
+            <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+              <h3 className="text-lg font-semibold text-teal-800 mb-4">Placements by Industry</h3>
+              {renderPieChart(analyticsData.placements.byIndustry)}
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
