@@ -12,7 +12,7 @@ const sampleContacts = [
     id: 1,
     name: "Sarah Johnson",
     role: "HR Manager at TechCorp",
-    avatar: "/professional-woman-diverse.png",
+    avatar: "/stylized-letters-sj.png",
     lastMessage: "Thanks for sending those candidates over!",
     unread: true,
     time: "10:30 AM",
@@ -21,7 +21,7 @@ const sampleContacts = [
     id: 2,
     name: "Michael Chen",
     role: "Volunteer Career Coach",
-    avatar: "/professional-asian-man.png",
+    avatar: "/microphone-concert-stage.png",
     lastMessage: "I've reviewed the resume you sent. Let's discuss it tomorrow.",
     unread: false,
     time: "Yesterday",
@@ -30,7 +30,7 @@ const sampleContacts = [
     id: 3,
     name: "Jessica Williams",
     role: "Job Seeker",
-    avatar: "/diverse-person-portrait.png",
+    avatar: "/intertwined-letters.png",
     lastMessage: "Thank you for the interview tips!",
     unread: false,
     time: "Yesterday",
@@ -39,7 +39,7 @@ const sampleContacts = [
     id: 4,
     name: "Robert Garcia",
     role: "Hiring Manager at HealthPlus",
-    avatar: "/professional-latino-man.png",
+    avatar: "/abstract-geometric-rg.png",
     lastMessage: "We'd like to schedule a second interview with the candidate.",
     unread: false,
     time: "Monday",
@@ -48,7 +48,7 @@ const sampleContacts = [
     id: 5,
     name: "Lisa Thompson",
     role: "Volunteer Mentor",
-    avatar: "/profile-lisa.png",
+    avatar: "/letter-blocks-LT.png",
     lastMessage: "I can help with the resume workshop next week.",
     unread: false,
     time: "Last week",
@@ -134,7 +134,7 @@ export default function MessagingPageClient() {
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6 text-teal-700">Messaging</h1>
+      <h1 className="text-3xl font-bold mb-6 text-teal">Messaging</h1>
 
       <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
         <div className="flex h-[calc(80vh)]">
@@ -154,14 +154,14 @@ export default function MessagingPageClient() {
                 <div
                   key={contact.id}
                   className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors ${
-                    selectedContact.id === contact.id ? "bg-teal-50" : ""
+                    selectedContact.id === contact.id ? "bg-teal-light/10" : ""
                   }`}
                   onClick={() => setSelectedContact(contact)}
                 >
                   <div className="flex items-start">
                     <Avatar className="h-12 w-12">
                       <AvatarImage src={contact.avatar || "/placeholder.svg"} alt={contact.name} />
-                      <AvatarFallback>{contact.name.charAt(0)}</AvatarFallback>
+                      <AvatarFallback className="bg-teal-light/20 text-teal">{contact.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className="ml-4 flex-1">
                       <div className="flex justify-between items-start">
@@ -171,7 +171,7 @@ export default function MessagingPageClient() {
                       <p className="text-xs text-gray-500 mt-1">{contact.role}</p>
                       <p className="text-sm text-gray-600 mt-1 truncate">{contact.lastMessage}</p>
                     </div>
-                    {contact.unread && <div className="w-2 h-2 bg-teal-500 rounded-full mt-2"></div>}
+                    {contact.unread && <div className="w-2 h-2 bg-teal rounded-full mt-2"></div>}
                   </div>
                 </div>
               ))}
@@ -184,7 +184,7 @@ export default function MessagingPageClient() {
             <div className="p-4 border-b border-gray-200 flex items-center">
               <Avatar className="h-10 w-10">
                 <AvatarImage src={selectedContact.avatar || "/placeholder.svg"} alt={selectedContact.name} />
-                <AvatarFallback>{selectedContact.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback className="bg-teal-light/20 text-teal">{selectedContact.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="ml-4">
                 <h3 className="font-medium text-gray-900">{selectedContact.name}</h3>
@@ -200,12 +200,12 @@ export default function MessagingPageClient() {
                     <div
                       className={`max-w-[70%] rounded-lg p-3 ${
                         message.isMe
-                          ? "bg-teal-500 text-white rounded-tr-none"
+                          ? "bg-teal text-white rounded-tr-none"
                           : "bg-gray-100 text-gray-800 rounded-tl-none"
                       }`}
                     >
                       <p>{message.text}</p>
-                      <p className={`text-xs mt-1 ${message.isMe ? "text-teal-100" : "text-gray-500"}`}>
+                      <p className={`text-xs mt-1 ${message.isMe ? "text-teal-light/70" : "text-gray-500"}`}>
                         {message.timestamp}
                       </p>
                     </div>
@@ -228,7 +228,9 @@ export default function MessagingPageClient() {
                   }
                 }}
               />
-              <Button onClick={handleSendMessage}>Send</Button>
+              <Button onClick={handleSendMessage} className="bg-teal text-white hover:bg-teal-dark">
+                Send
+              </Button>
             </div>
           </div>
         </div>

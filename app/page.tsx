@@ -1,104 +1,230 @@
-import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Trophy } from "lucide-react"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-100 lg:p-4 lg:dark:bg-zinc-800/30">
-          Welcome to the landing page
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By <Image src="/vercel.svg" alt="Vercel Logo" className="dark:invert" width={100} height={24} priority />
-          </a>
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="bg-light-bg py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex justify-center space-x-4 mb-6">
+              <span className="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">
+                Empowering second chances
+              </span>
+              <span className="bg-teal-light/20 text-teal px-4 py-2 rounded-full text-sm">
+                Building bridges to opportunity
+              </span>
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-dark-text">
+              Bridging the Gap from
+              <span className="text-teal"> Hope </span>
+              to
+              <span className="text-yellow"> Hire</span>
+            </h1>
+
+            <p className="text-lg mb-12 text-gray-600 max-w-3xl mx-auto">
+              Empowering individuals with second chances through workforce readiness and meaningful employment.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/organizations">
+                <Button className="bg-teal text-white hover:bg-teal-dark">Support Your Clients</Button>
+              </Link>
+              <Link href="/volunteers">
+                <Button variant="outline" className="border-gray-300 hover:bg-gray-100">
+                  Start Volunteering
+                </Button>
+              </Link>
+              <Link href="/employers">
+                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Hire Job-Ready Candidates</Button>
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-tophalf before:via-top before:blur-3xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] dark:before:bg-gradient-to-br dark:before:from-transparent dark:before:via-blue-700 dark:before:opacity-10">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* Impact Stats */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="border-0 shadow-sm">
+              <CardContent className="p-8">
+                <h3 className="text-center text-gray-600 mb-2">Resumes Written</h3>
+                <p className="text-center text-teal text-5xl font-bold mb-2">3,250</p>
+                <p className="text-center text-gray-500 text-sm">Professional resumes created</p>
+              </CardContent>
+            </Card>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and&nbsp;API.
+            <Card className="border-0 shadow-sm">
+              <CardContent className="p-8">
+                <h3 className="text-center text-gray-600 mb-2">Interviews Conducted</h3>
+                <p className="text-center text-teal text-5xl font-bold mb-2">1,875</p>
+                <p className="text-center text-gray-500 text-sm">Mock interviews with feedback</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-sm">
+              <CardContent className="p-8">
+                <h3 className="text-center text-gray-600 mb-2">Job Placements Made</h3>
+                <p className="text-center text-teal text-5xl font-bold mb-2">925</p>
+                <p className="text-center text-gray-500 text-sm">Successful career placements</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Impact */}
+      <section className="py-16 bg-light-bg">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Our Impact</h2>
+          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+            Together, we're creating meaningful change in the lives of formerly incarcerated individuals.
           </p>
-        </a>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+          {/* Top Contributors */}
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Top Contributors</h2>
+            <p className="text-center text-gray-600 mb-12">
+              Recognizing the volunteers who are making a difference in our community.
+            </p>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Monthly Leaders */}
+              <Card className="border-t-4 border-teal">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-6">
+                    <Trophy className="text-teal mr-2" />
+                    <h3 className="text-xl font-bold text-dark-text">Monthly Leaders</h3>
+                  </div>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with&nbsp;Vercel.
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                          👔
+                        </div>
+                        <div>
+                          <p className="font-medium">Sarah Johnson</p>
+                          <p className="text-sm text-gray-500">HR Director</p>
+                        </div>
+                      </div>
+                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">42 resumes</div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                          👔
+                        </div>
+                        <div>
+                          <p className="font-medium">Michael Chen</p>
+                          <p className="text-sm text-gray-500">Recruiter</p>
+                        </div>
+                      </div>
+                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">37 resumes</div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                          👔
+                        </div>
+                        <div>
+                          <p className="font-medium">David Rodriguez</p>
+                          <p className="text-sm text-gray-500">Career Coach</p>
+                        </div>
+                      </div>
+                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">29 resumes</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Yearly Leaders */}
+              <Card className="border-t-4 border-yellow">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-6">
+                    <Trophy className="text-yellow mr-2" />
+                    <h3 className="text-xl font-bold text-dark-text">Yearly Leaders</h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                          👔
+                        </div>
+                        <div>
+                          <p className="font-medium">Jennifer Williams</p>
+                          <p className="text-sm text-gray-500">HR Manager</p>
+                        </div>
+                      </div>
+                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
+                        312 resumes
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                          👔
+                        </div>
+                        <div>
+                          <p className="font-medium">Robert Taylor</p>
+                          <p className="text-sm text-gray-500">Talent Acquisition</p>
+                        </div>
+                      </div>
+                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
+                        287 resumes
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <div className="bg-yellow-light/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                          👔
+                        </div>
+                        <div>
+                          <p className="font-medium">Lisa Martinez</p>
+                          <p className="text-sm text-gray-500">Career Specialist</p>
+                        </div>
+                      </div>
+                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
+                        253 resumes
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4 text-dark-text">Ready to Make a Difference?</h2>
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            Join our community of volunteers, employers, and organizations committed to creating second chances.
           </p>
-        </a>
-      </div>
-    </main>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/register">
+              <Button className="bg-teal text-white hover:bg-teal-dark">Get Started Today</Button>
+            </Link>
+            <Link href="/contact">
+              <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+                Contact Us
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

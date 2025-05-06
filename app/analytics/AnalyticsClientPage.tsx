@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 // Sample analytics data
 const analyticsData = {
@@ -106,7 +107,7 @@ export default function AnalyticsClientPage() {
         <div className="flex items-end h-40 space-x-2">
           {data.map((value, index) => (
             <div key={index} className="flex flex-col items-center flex-1">
-              <div className="w-full bg-teal-500 rounded-t" style={{ height: `${(value / max) * 100}%` }}></div>
+              <div className="w-full bg-teal rounded-t" style={{ height: `${(value / max) * 100}%` }}></div>
               <span className="text-xs mt-1 text-gray-500">{months[index]}</span>
             </div>
           ))}
@@ -117,7 +118,7 @@ export default function AnalyticsClientPage() {
 
   const renderPieChart = (data: { name: string; value: number }[]) => {
     const total = data.reduce((sum, item) => sum + item.value, 0)
-    const colors = ["bg-teal-500", "bg-blue-500", "bg-indigo-500", "bg-purple-500", "bg-pink-500", "bg-orange-500"]
+    const colors = ["bg-teal", "bg-teal-light", "bg-yellow", "bg-yellow-light", "bg-teal-dark", "bg-yellow-dark"]
 
     return (
       <div className="mt-4 flex flex-col md:flex-row items-center">
@@ -163,55 +164,56 @@ export default function AnalyticsClientPage() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-12 text-teal-700">Analytics Dashboard</h1>
+      <h1 className="text-4xl font-bold text-center mb-12 text-teal">Analytics Dashboard</h1>
 
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20 mb-8">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold text-teal-800">Platform Overview</h2>
+            <h2 className="text-2xl font-semibold text-dark-text">Platform Overview</h2>
 
             <div>
-              <select
-                value={timeRange}
-                onChange={(e) => setTimeRange(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-              >
-                <option value="month">Last Month</option>
-                <option value="quarter">Last Quarter</option>
-                <option value="year">Last Year</option>
-              </select>
+              <Select value={timeRange} onValueChange={(value) => setTimeRange(value)}>
+                <SelectTrigger className="w-[180px] border-teal-light/30">
+                  <SelectValue placeholder="Select time range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="month">Last Month</SelectItem>
+                  <SelectItem value="quarter">Last Quarter</SelectItem>
+                  <SelectItem value="year">Last Year</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal-800">Job Seekers</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.jobSeekers.total}</p>
+                <h3 className="text-lg font-semibold text-teal">Job Seekers</h3>
+                <p className="text-3xl font-bold mt-2 text-dark-text">{analyticsData.jobSeekers.total}</p>
               </div>
               {renderGrowthIndicator(analyticsData.jobSeekers.growth)}
             </div>
             {renderBarChart(analyticsData.jobSeekers.byMonth)}
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal-800">Employers</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.employers.total}</p>
+                <h3 className="text-lg font-semibold text-teal">Employers</h3>
+                <p className="text-3xl font-bold mt-2 text-dark-text">{analyticsData.employers.total}</p>
               </div>
               {renderGrowthIndicator(analyticsData.employers.growth)}
             </div>
             {renderBarChart(analyticsData.employers.byMonth)}
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal-800">Volunteers</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.volunteers.total}</p>
+                <h3 className="text-lg font-semibold text-teal">Volunteers</h3>
+                <p className="text-3xl font-bold mt-2 text-dark-text">{analyticsData.volunteers.total}</p>
               </div>
               {renderGrowthIndicator(analyticsData.volunteers.growth)}
             </div>
@@ -220,22 +222,22 @@ export default function AnalyticsClientPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal-800">Job Postings</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.jobs.total}</p>
+                <h3 className="text-lg font-semibold text-teal">Job Postings</h3>
+                <p className="text-3xl font-bold mt-2 text-dark-text">{analyticsData.jobs.total}</p>
               </div>
               {renderGrowthIndicator(analyticsData.jobs.growth)}
             </div>
             {renderPieChart(analyticsData.jobs.byType)}
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
+          <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal-800">Appointments</h3>
-                <p className="text-3xl font-bold mt-2">{analyticsData.appointments.total}</p>
+                <h3 className="text-lg font-semibold text-teal">Appointments</h3>
+                <p className="text-3xl font-bold mt-2 text-dark-text">{analyticsData.appointments.total}</p>
               </div>
               {renderGrowthIndicator(analyticsData.appointments.growth)}
             </div>
@@ -243,11 +245,11 @@ export default function AnalyticsClientPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20 mb-8">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="text-lg font-semibold text-teal-800">Successful Placements</h3>
-              <p className="text-3xl font-bold mt-2">{analyticsData.placements.total}</p>
+              <h3 className="text-lg font-semibold text-teal">Successful Placements</h3>
+              <p className="text-3xl font-bold mt-2 text-dark-text">{analyticsData.placements.total}</p>
             </div>
             {renderGrowthIndicator(analyticsData.placements.growth)}
           </div>
@@ -257,28 +259,28 @@ export default function AnalyticsClientPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100">
-          <h3 className="text-lg font-semibold text-teal-800 mb-4">Key Insights</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
+          <h3 className="text-lg font-semibold text-teal mb-4">Key Insights</h3>
 
           <div className="space-y-4">
-            <div className="p-4 bg-teal-50 rounded-lg border border-teal-100">
-              <h4 className="font-medium text-teal-800">Growing Volunteer Base</h4>
+            <div className="p-4 bg-teal-light/10 rounded-lg border border-teal-light/20">
+              <h4 className="font-medium text-teal">Growing Volunteer Base</h4>
               <p className="text-gray-700 mt-1">
                 Our volunteer base has grown by {analyticsData.volunteers.growth}% in the last year, allowing us to
                 provide more personalized support to job seekers.
               </p>
             </div>
 
-            <div className="p-4 bg-teal-50 rounded-lg border border-teal-100">
-              <h4 className="font-medium text-teal-800">Successful Placements</h4>
+            <div className="p-4 bg-teal-light/10 rounded-lg border border-teal-light/20">
+              <h4 className="font-medium text-teal">Successful Placements</h4>
               <p className="text-gray-700 mt-1">
                 We've helped {analyticsData.placements.total} job seekers find employment, with a{" "}
                 {analyticsData.placements.growth}% increase in successful placements compared to last year.
               </p>
             </div>
 
-            <div className="p-4 bg-teal-50 rounded-lg border border-teal-100">
-              <h4 className="font-medium text-teal-800">Popular Services</h4>
+            <div className="p-4 bg-teal-light/10 rounded-lg border border-teal-light/20">
+              <h4 className="font-medium text-teal">Popular Services</h4>
               <p className="text-gray-700 mt-1">
                 Resume reviews continue to be our most requested service, followed by mock interviews and career
                 counseling.

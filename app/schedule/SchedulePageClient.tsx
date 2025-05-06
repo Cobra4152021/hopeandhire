@@ -20,11 +20,11 @@ import { Textarea } from "@/components/ui/textarea"
 
 // Sample appointment types
 const appointmentTypes = [
-  { id: 1, name: "Resume Review", duration: 30, color: "bg-blue-100 border-blue-300" },
-  { id: 2, name: "Mock Interview", duration: 60, color: "bg-green-100 border-green-300" },
-  { id: 3, name: "Career Counseling", duration: 45, color: "bg-purple-100 border-purple-300" },
-  { id: 4, name: "Job Search Strategy", duration: 45, color: "bg-yellow-100 border-yellow-300" },
-  { id: 5, name: "Salary Negotiation", duration: 30, color: "bg-pink-100 border-pink-300" },
+  { id: 1, name: "Resume Review", duration: 30, color: "bg-teal-light/20 border-teal" },
+  { id: 2, name: "Mock Interview", duration: 60, color: "bg-yellow-light/20 border-yellow" },
+  { id: 3, name: "Career Counseling", duration: 45, color: "bg-teal-light/20 border-teal" },
+  { id: 4, name: "Job Search Strategy", duration: 45, color: "bg-yellow-light/20 border-yellow" },
+  { id: 5, name: "Salary Negotiation", duration: 30, color: "bg-teal-light/20 border-teal" },
 ]
 
 // Sample appointments
@@ -157,7 +157,7 @@ export default function SchedulePageClient() {
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6 text-teal-700">Schedule</h1>
+      <h1 className="text-3xl font-bold mb-6 text-teal">Schedule</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Calendar */}
@@ -167,11 +167,20 @@ export default function SchedulePageClient() {
             <CardDescription>Select a date to view or schedule appointments</CardDescription>
           </CardHeader>
           <CardContent>
-            <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} className="rounded-md border" />
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={setSelectedDate}
+              className="rounded-md border"
+              styles={{
+                day_selected: { backgroundColor: "var(--teal-primary)" },
+                day_today: { color: "var(--teal-primary)" },
+              }}
+            />
             <div className="mt-4">
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="w-full">Schedule New Appointment</Button>
+                  <Button className="w-full bg-teal text-white hover:bg-teal-dark">Schedule New Appointment</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
@@ -245,7 +254,11 @@ export default function SchedulePageClient() {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button type="submit" onClick={handleAddAppointment}>
+                    <Button
+                      type="submit"
+                      onClick={handleAddAppointment}
+                      className="bg-teal text-white hover:bg-teal-dark"
+                    >
                       Schedule
                     </Button>
                   </DialogFooter>
@@ -286,7 +299,11 @@ export default function SchedulePageClient() {
                           <p className="text-sm text-gray-600 mt-2">{appointment.description}</p>
                         </div>
                         <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-teal text-teal hover:bg-teal hover:text-white"
+                          >
                             Edit
                           </Button>
                           <Button variant="outline" size="sm" className="text-red-500 hover:text-red-700">
