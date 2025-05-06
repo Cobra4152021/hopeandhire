@@ -20,10 +20,10 @@ export default function OrganizationsPage() {
                 opportunities.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="https://www.hopeandhire.net/login">
+                <Link href="/login">
                   <Button className="bg-teal text-white hover:bg-teal-dark">Become a Partner</Button>
                 </Link>
-                <Link href="https://www.hopeandhire.net/login">
+                <Link href="/login">
                   <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
                     Organization Login
                   </Button>
@@ -37,6 +37,8 @@ export default function OrganizationsPage() {
                 width={500}
                 height={400}
                 className="rounded-lg shadow-lg"
+                priority
+                sizes="(max-width: 768px) 100vw, 500px"
               />
             </div>
           </div>
@@ -242,7 +244,7 @@ export default function OrganizationsPage() {
             second chances.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://www.hopeandhire.net/login">
+            <Link href="/login">
               <Button className="bg-teal text-white hover:bg-teal-dark">Become a Partner</Button>
             </Link>
             <Link href="/contact">

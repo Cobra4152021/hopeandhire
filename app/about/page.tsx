@@ -35,7 +35,15 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-screen">
       {/* Logo Section - Centrally positioned below header */}
       <div className="flex justify-center py-8 bg-white">
-        <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
+        <Image
+          src="/logo.png"
+          alt="Hope and Hire Logo"
+          width={200}
+          height={80}
+          className="h-auto"
+          priority
+          quality={90}
+        />
       </div>
 
       {/* Hero Section */}
@@ -79,6 +87,8 @@ export default function AboutPage() {
                 width={500}
                 height={400}
                 className="rounded-lg shadow-lg"
+                loading="eager"
+                sizes="(max-width: 768px) 100vw, 500px"
               />
             </div>
           </div>
@@ -137,6 +147,8 @@ export default function AboutPage() {
                         width={96}
                         height={96}
                         className="object-cover"
+                        loading="lazy"
+                        sizes="96px"
                       />
                     </div>
                   </div>

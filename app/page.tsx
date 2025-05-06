@@ -12,9 +12,17 @@ export default function Home() {
       <section className="bg-light-bg py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Logo positioned in the light green section */}
+            {/* Logo positioned in the light green section - priority loading for above-the-fold */}
             <div className="flex justify-center mb-8">
-              <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
+              <Image
+                src="/logo.png"
+                alt="Hope and Hire Logo"
+                width={200}
+                height={80}
+                className="h-auto"
+                priority
+                quality={90}
+              />
             </div>
 
             <div className="flex justify-center space-x-4 mb-6">
@@ -125,6 +133,8 @@ export default function Home() {
                             width={40}
                             height={40}
                             className="object-cover"
+                            loading="lazy"
+                            sizes="40px"
                           />
                         </div>
                         <div>
@@ -144,6 +154,8 @@ export default function Home() {
                             width={40}
                             height={40}
                             className="object-cover"
+                            loading="lazy"
+                            sizes="40px"
                           />
                         </div>
                         <div>
@@ -163,6 +175,8 @@ export default function Home() {
                             width={40}
                             height={40}
                             className="object-cover"
+                            loading="lazy"
+                            sizes="40px"
                           />
                         </div>
                         <div>
@@ -194,6 +208,8 @@ export default function Home() {
                             width={40}
                             height={40}
                             className="object-cover"
+                            loading="lazy"
+                            sizes="40px"
                           />
                         </div>
                         <div>
@@ -215,6 +231,8 @@ export default function Home() {
                             width={40}
                             height={40}
                             className="object-cover"
+                            loading="lazy"
+                            sizes="40px"
                           />
                         </div>
                         <div>
@@ -236,6 +254,8 @@ export default function Home() {
                             width={40}
                             height={40}
                             className="object-cover"
+                            loading="lazy"
+                            sizes="40px"
                           />
                         </div>
                         <div>

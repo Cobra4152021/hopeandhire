@@ -17,10 +17,10 @@ export default function EmployersPage() {
                 Connect with pre-screened candidates who are ready to contribute to your organization's success.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="https://www.hopeandhire.net/login">
+                <Link href="/login">
                   <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Hire Job-Ready Candidates</Button>
                 </Link>
-                <Link href="https://www.hopeandhire.net/login">
+                <Link href="/login">
                   <Button variant="outline" className="border-yellow text-yellow hover:bg-yellow hover:text-dark-text">
                     Employer Login
                   </Button>
@@ -34,6 +34,8 @@ export default function EmployersPage() {
                 width={500}
                 height={400}
                 className="rounded-lg shadow-lg"
+                priority
+                sizes="(max-width: 768px) 100vw, 500px"
               />
             </div>
           </div>

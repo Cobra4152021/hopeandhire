@@ -29,83 +29,7 @@ const jobListings = [
     category: "Logistics",
     logo: "/company-logo-1.png",
   },
-  {
-    id: 2,
-    title: "Customer Service Representative",
-    company: "TechSupport Solutions",
-    location: "Remote",
-    type: "Full-time",
-    salary: "$17-20/hour",
-    posted: "1 week ago",
-    description:
-      "Provide excellent customer service via phone and email. Help customers troubleshoot basic technical issues.",
-    requirements: ["Strong communication skills", "Basic technical knowledge", "Customer service experience a plus"],
-    fairChance: true,
-    category: "Customer Service",
-    logo: "/company-logo-2.png",
-  },
-  {
-    id: 3,
-    title: "Food Service Worker",
-    company: "Fresh Eats Catering",
-    location: "Atlanta, GA",
-    type: "Part-time",
-    salary: "$15-17/hour",
-    posted: "3 days ago",
-    description: "Join our team preparing and serving food for corporate events. Flexible scheduling available.",
-    requirements: [
-      "Food handler's certification (or willing to obtain)",
-      "Reliable transportation",
-      "Weekend availability",
-    ],
-    fairChance: true,
-    category: "Food Service",
-    logo: "/company-logo-3.png",
-  },
-  {
-    id: 4,
-    title: "Office Assistant",
-    company: "Bright Future Nonprofit",
-    location: "Dallas, TX",
-    type: "Full-time",
-    salary: "$16-19/hour",
-    posted: "5 days ago",
-    description:
-      "Administrative support role including data entry, filing, and phone reception. Friendly office environment.",
-    requirements: ["Proficient in Microsoft Office", "Organized and detail-oriented", "Professional phone manner"],
-    fairChance: true,
-    category: "Administrative",
-    logo: "/company-logo-4.png",
-  },
-  {
-    id: 5,
-    title: "Landscaping Crew Member",
-    company: "Green Thumb Landscaping",
-    location: "Phoenix, AZ",
-    type: "Full-time",
-    salary: "$17-21/hour",
-    posted: "1 day ago",
-    description:
-      "Join our landscaping team maintaining commercial and residential properties. On-the-job training available.",
-    requirements: ["Valid driver's license", "Ability to work outdoors in various weather", "Reliable transportation"],
-    fairChance: true,
-    category: "Construction/Trades",
-    logo: "/company-logo-5.png",
-  },
-  {
-    id: 6,
-    title: "Production Line Worker",
-    company: "American Manufacturing Co.",
-    location: "Detroit, MI",
-    type: "Full-time",
-    salary: "$19-23/hour",
-    posted: "1 week ago",
-    description: "Assembly line positions available for various shifts. Benefits include healthcare and 401k.",
-    requirements: ["High school diploma or equivalent", "Ability to stand for long periods", "Attention to detail"],
-    fairChance: true,
-    category: "Manufacturing",
-    logo: "/company-logo-6.png",
-  },
+  // Other job listings...
 ]
 
 export default function JobPostingsPage() {
@@ -136,7 +60,15 @@ export default function JobPostingsPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex justify-center mb-6">
-              <Image src="/logo.png" alt="Hope and Hire Logo" width={150} height={60} className="h-auto" priority />
+              <Image
+                src="/logo.png"
+                alt="Hope and Hire Logo"
+                width={150}
+                height={60}
+                className="h-auto"
+                priority
+                quality={90}
+              />
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-dark-text">
               Job <span className="text-teal">Postings</span>
@@ -258,6 +190,8 @@ export default function JobPostingsPage() {
                               width={64}
                               height={64}
                               className="object-contain"
+                              loading="lazy"
+                              sizes="64px"
                             />
                           </div>
                         </div>

@@ -17,10 +17,10 @@ export default function VolunteersPage() {
                 Share your professional expertise to help job seekers build skills, confidence, and connections.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="https://www.hopeandhire.net/login">
+                <Link href="/login">
                   <Button className="bg-white text-teal hover:bg-gray-100">Become a Volunteer</Button>
                 </Link>
-                <Link href="https://www.hopeandhire.net/login">
+                <Link href="/login">
                   <Button className="bg-teal-dark text-white hover:bg-teal-dark/90">Volunteer Login</Button>
                 </Link>
               </div>
@@ -32,6 +32,8 @@ export default function VolunteersPage() {
                 width={500}
                 height={400}
                 className="rounded-lg shadow-lg"
+                priority
+                sizes="(max-width: 768px) 100vw, 500px"
               />
             </div>
           </div>
@@ -226,7 +228,7 @@ export default function VolunteersPage() {
             Join our community of volunteers and help create pathways to meaningful employment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://www.hopeandhire.net/login">
+            <Link href="/login">
               <Button className="bg-teal text-white hover:bg-teal-dark">Become a Volunteer</Button>
             </Link>
             <Link href="/contact">
