@@ -5,7 +5,6 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
-import { createServerSupabaseClient } from "@/lib/supabase"
 import { Suspense } from "react"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -41,17 +40,11 @@ export const metadata: Metadata = {
   generator: "v0.dev",
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const supabase = createServerSupabaseClient()
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
