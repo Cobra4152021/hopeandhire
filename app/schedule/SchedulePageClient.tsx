@@ -45,7 +45,7 @@ export default function SchedulePageClient() {
       specialties: ["Resume Review", "Mock Interview", "Job Placement"],
       availability: ["Monday", "Wednesday", "Friday"],
       bio: "15+ years of HR experience with a focus on recruitment and talent acquisition.",
-      image: "/diverse-person-portrait.png",
+      image: "/professional-woman-diverse.png",
     },
     {
       id: "2",
@@ -54,7 +54,7 @@ export default function SchedulePageClient() {
       specialties: ["Resume Review", "Job Placement"],
       availability: ["Tuesday", "Thursday"],
       bio: "Technical recruiter with expertise in matching candidates with the right opportunities.",
-      image: "/diverse-person-portrait.png",
+      image: "/professional-asian-man.png",
     },
     {
       id: "3",
@@ -63,7 +63,7 @@ export default function SchedulePageClient() {
       specialties: ["Mock Interview", "Career Coaching"],
       availability: ["Monday", "Tuesday", "Thursday"],
       bio: "Certified career coach specializing in interview preparation and career transitions.",
-      image: "/diverse-person-portrait.png",
+      image: "/professional-latino-man.png",
     },
   ]
 
