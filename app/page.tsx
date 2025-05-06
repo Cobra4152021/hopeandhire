@@ -1,299 +1,227 @@
-import Link from "next/link"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Trophy } from "lucide-react"
-import AnimatedCounter from "@/components/animated-counter"
+import Link from "next/link"
+import { AnimatedCounter } from "@/components/animated-counter"
+import { ensureAbsoluteUrl } from "@/lib/image-url"
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section with Logo */}
-      <section className="bg-light-bg py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Logo positioned in the light green section - priority loading for above-the-fold */}
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/logo.png"
-                alt="Hope and Hire Logo"
-                width={200}
-                height={80}
-                className="h-auto"
-                priority
-                quality={90}
-              />
-            </div>
-
-            <div className="flex justify-center space-x-4 mb-6">
-              <span className="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">
-                Empowering second chances
-              </span>
-              <span className="bg-teal-light/20 text-teal px-4 py-2 rounded-full text-sm">
-                Building bridges to opportunity
-              </span>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-dark-text">
-              Bridging the Gap from
-              <span className="text-teal"> Hope </span>
-              to
-              <span className="text-yellow"> Hire</span>
-            </h1>
-
-            <p className="text-lg mb-12 text-gray-600 max-w-3xl mx-auto">
-              Empowering individuals with second chances through workforce readiness and meaningful employment.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/organizations">
-                <Button className="bg-teal text-white hover:bg-teal-dark">Support Your Clients</Button>
-              </Link>
-              <Link href="/volunteers">
-                <Button variant="outline" className="border-gray-300 hover:bg-gray-100">
-                  Start Volunteering
-                </Button>
-              </Link>
-              <Link href="/employers">
-                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Hire Job-Ready Candidates</Button>
-              </Link>
-            </div>
+    <main>
+      {/* Hero Section */}
+      <section className="relative bg-gray-50 py-20">
+        <div className="container mx-auto px-4 text-center">
+          <div className="mb-8 flex justify-center">
+            <Image
+              src={ensureAbsoluteUrl("/diverse-professionals-meeting.png") || "/placeholder.svg"}
+              alt="Diverse professionals in a meeting"
+              width={600}
+              height={400}
+              className="rounded-lg shadow-lg"
+              priority
+            />
           </div>
-        </div>
-      </section>
 
-      {/* Impact Stats */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-sm">
-              <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2">Resumes Written</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={3250} duration={5000} />
-                </p>
-                <p className="text-center text-gray-500 text-sm">Professional resumes created</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-sm">
-              <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2">Interviews Conducted</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={1875} duration={5000} />
-                </p>
-                <p className="text-center text-gray-500 text-sm">Mock interviews with feedback</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-sm">
-              <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2">Job Placements Made</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={925} duration={5000} />
-                </p>
-                <p className="text-center text-gray-500 text-sm">Successful career placements</p>
-              </CardContent>
-            </Card>
+          <div className="flex justify-center gap-4 mb-6">
+            <span className="bg-gray-200 text-gray-700 px-4 py-1 rounded-full text-sm">Empowering second chances</span>
+            <span className="bg-teal-100 text-teal-700 px-4 py-1 rounded-full text-sm">
+              Building bridges to opportunity
+            </span>
           </div>
-        </div>
-      </section>
 
-      {/* Our Impact */}
-      <section className="py-16 bg-light-bg">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Our Impact</h2>
-          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Together, we're creating meaningful change in the lives of formerly incarcerated individuals.
+          <h1 className="text-5xl font-bold mb-6">
+            Bridging the Gap from <span className="text-teal-500">Hope</span> to{" "}
+            <span className="text-amber-500">Hire</span>
+          </h1>
+
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+            Empowering individuals with second chances through workforce readiness and meaningful employment.
           </p>
 
-          {/* Top Contributors */}
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Top Contributors</h2>
-            <p className="text-center text-gray-600 mb-12">
-              Recognizing the volunteers who are making a difference in our community.
-            </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/organizations"
+              className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-md font-medium transition-colors"
+            >
+              Support Your Clients
+            </Link>
+            <Link
+              href="/volunteers"
+              className="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 px-6 py-3 rounded-md font-medium transition-colors"
+            >
+              Start Volunteering
+            </Link>
+            <Link
+              href="/employers"
+              className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-md font-medium transition-colors"
+            >
+              Hire Job-Ready Candidates
+            </Link>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Monthly Leaders */}
-              <Card className="border-t-4 border-teal">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-6">
-                    <Trophy className="text-teal mr-2" />
-                    <h3 className="text-xl font-bold text-dark-text">Monthly Leaders</h3>
-                  </div>
+      {/* Stats Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8 text-center">
+            <div>
+              <h3 className="text-gray-600 mb-2">Resumes Written</h3>
+              <AnimatedCounter end={0} className="text-5xl font-bold text-teal-500" />
+              <p className="text-gray-500">Professional resumes created</p>
+            </div>
+            <div>
+              <h3 className="text-gray-600 mb-2">Interviews Conducted</h3>
+              <AnimatedCounter end={0} className="text-5xl font-bold text-teal-500" />
+              <p className="text-gray-500">Mock interviews with feedback</p>
+            </div>
+            <div>
+              <h3 className="text-gray-600 mb-2">Job Placements Made</h3>
+              <AnimatedCounter end={0} className="text-5xl font-bold text-teal-500" />
+              <p className="text-gray-500">Successful career placements</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-1.jpg"
-                            alt="Sarah Johnson"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Sarah Johnson</p>
-                          <p className="text-sm text-gray-500">HR Director</p>
-                        </div>
-                      </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">42 resumes</div>
-                    </div>
+      {/* Services Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-2.jpg"
-                            alt="Michael Chen"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Michael Chen</p>
-                          <p className="text-sm text-gray-500">Recruiter</p>
-                        </div>
-                      </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">37 resumes</div>
-                    </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="mb-4">
+                <Image
+                  src={ensureAbsoluteUrl("/resume-review.png") || "/placeholder.svg"}
+                  alt="Resume Review"
+                  width={300}
+                  height={200}
+                  className="rounded-md w-full h-40 object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Resume Building</h3>
+              <p className="text-gray-600 mb-4">
+                Professional resume creation and optimization to highlight skills and experience.
+              </p>
+              <Link href="/services/resume-building" className="text-teal-500 hover:text-teal-700 font-medium">
+                Learn more →
+              </Link>
+            </div>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-3.jpg"
-                            alt="David Rodriguez"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">David Rodriguez</p>
-                          <p className="text-sm text-gray-500">Career Coach</p>
-                        </div>
-                      </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">29 resumes</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="mb-4">
+                <Image
+                  src={ensureAbsoluteUrl("/interview-coaching.png") || "/placeholder.svg"}
+                  alt="Interview Coaching"
+                  width={300}
+                  height={200}
+                  className="rounded-md w-full h-40 object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Interview Preparation</h3>
+              <p className="text-gray-600 mb-4">
+                Mock interviews and coaching to build confidence and improve interview skills.
+              </p>
+              <Link href="/services/interview-preparation" className="text-teal-500 hover:text-teal-700 font-medium">
+                Learn more →
+              </Link>
+            </div>
 
-              {/* Yearly Leaders */}
-              <Card className="border-t-4 border-yellow">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-6">
-                    <Trophy className="text-yellow mr-2" />
-                    <h3 className="text-xl font-bold text-dark-text">Yearly Leaders</h3>
-                  </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="mb-4">
+                <Image
+                  src={ensureAbsoluteUrl("/skills-development.png") || "/placeholder.svg"}
+                  alt="Skills Development"
+                  width={300}
+                  height={200}
+                  className="rounded-md w-full h-40 object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Skills Development</h3>
+              <p className="text-gray-600 mb-4">
+                Training and workshops to develop essential workplace and technical skills.
+              </p>
+              <Link href="/services/skills-development" className="text-teal-500 hover:text-teal-700 font-medium">
+                Learn more →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-4.png"
-                            alt="Jennifer Williams"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Jennifer Williams</p>
-                          <p className="text-sm text-gray-500">HR Manager</p>
-                        </div>
-                      </div>
-                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
-                        312 resumes
-                      </div>
-                    </div>
+      {/* Testimonials Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Success Stories</h2>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-5.png"
-                            alt="Robert Taylor"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Robert Taylor</p>
-                          <p className="text-sm text-gray-500">Talent Acquisition</p>
-                        </div>
-                      </div>
-                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
-                        287 resumes
-                      </div>
-                    </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="flex items-center mb-4">
+                <Image
+                  src={ensureAbsoluteUrl("/stylized-letters-mj.png") || "/placeholder.svg"}
+                  alt="MJ"
+                  width={60}
+                  height={60}
+                  className="rounded-full mr-4"
+                />
+                <div>
+                  <h3 className="font-semibold">Michael J.</h3>
+                  <p className="text-gray-600 text-sm">Software Developer</p>
+                </div>
+              </div>
+              <p className="text-gray-700 italic">
+                "The resume building and interview coaching services were instrumental in helping me secure a position
+                as a software developer. The team's support and guidance made all the difference."
+              </p>
+            </div>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-6.jpg"
-                            alt="Lisa Martinez"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Lisa Martinez</p>
-                          <p className="text-sm text-gray-500">Career Specialist</p>
-                        </div>
-                      </div>
-                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
-                        253 resumes
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="flex items-center mb-4">
+                <Image
+                  src={ensureAbsoluteUrl("/stylized-letters-sw.png") || "/placeholder.svg"}
+                  alt="SW"
+                  width={60}
+                  height={60}
+                  className="rounded-full mr-4"
+                />
+                <div>
+                  <h3 className="font-semibold">Sarah W.</h3>
+                  <p className="text-gray-600 text-sm">Administrative Assistant</p>
+                </div>
+              </div>
+              <p className="text-gray-700 italic">
+                "After struggling to find employment, Hope and Hire helped me develop the skills and confidence I
+                needed. Their holistic approach addressed all aspects of my job search."
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-teal-500 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-dark-text">Ready to Make a Difference?</h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join our community of volunteers, employers, and organizations committed to creating second chances.
+          <h2 className="text-3xl font-bold mb-6">Ready to Make a Difference?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Join our community of job seekers, employers, and volunteers to create meaningful opportunities and
+            transform lives.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register">
-              <Button className="bg-teal text-white hover:bg-teal-dark">Get Started Today</Button>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/register"
+              className="bg-white text-teal-500 hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition-colors"
+            >
+              Get Started Today
             </Link>
-            <Link href="/contact">
-              <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
-                Contact Us
-              </Button>
+            <Link
+              href="/contact"
+              className="bg-transparent hover:bg-teal-600 text-white border border-white px-6 py-3 rounded-md font-medium transition-colors"
+            >
+              Contact Us
             </Link>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   )
 }
