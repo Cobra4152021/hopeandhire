@@ -1,51 +1,121 @@
-import Link from "next/link"
-import Image from "next/image"
-import { ensureAbsoluteUrl } from "@/lib/image-url"
+"use client"
 
-export function Header() {
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Menu, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [pathname])
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const navigation = [
+    { name: "For Job Seekers", href: "/job-seekers" },
+    { name: "For Organizations", href: "/organizations" },
+    { name: "For Volunteers", href: "/volunteers" },
+    { name: "For Employers", href: "/employers" },
+    { name: "FAQ", href: "/faq" },
+    // Removed Contact link as requested
+  ]
+
+  const isActive = (path: string) => {
+    return pathname === path || pathname?.startsWith(`${path}/`)
+  }
+
   return (
-    <header className="bg-white py-4 px-6 flex justify-between items-center shadow-sm">
-      <div className="flex items-center">
-        <Link href="/" className="flex items-center">
-          <Image
-            src={ensureAbsoluteUrl("/logo.png") || "/placeholder.svg"}
-            alt="Hope And Hire Logo"
-            width={50}
-            height={50}
-            className="mr-2"
-            priority
-          />
-          <span className="text-teal-500 text-xl font-semibold">HopeAndHire</span>
-        </Link>
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center">
+              <span className="text-teal font-bold text-xl">HopeAndHire</span>
+            </Link>
+          </div>
+
+          {/* Desktop navigation */}
+          <nav className="hidden md:flex space-x-8">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`font-medium transition-colors ${
+                  isActive(item.href) ? "text-teal" : "text-gray-700 hover:text-teal"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden md:flex items-center space-x-4">
+            <Link href="/login">
+              <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+                Login
+              </Button>
+            </Link>
+            <Link href="/donate">
+              <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Donate</Button>
+            </Link>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              type="button"
+              className="text-gray-700 hover:text-teal"
+              onClick={toggleMenu}
+              aria-expanded={isMenuOpen}
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMenuOpen ? (
+                <X className="h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
-      <nav className="hidden md:flex space-x-6">
-        <Link href="/job-seekers" className="text-gray-600 hover:text-teal-500 transition-colors">
-          For Job Seekers
-        </Link>
-        <Link href="/organizations" className="text-gray-600 hover:text-teal-500 transition-colors">
-          For Organizations
-        </Link>
-        <Link href="/volunteers" className="text-gray-600 hover:text-teal-500 transition-colors">
-          For Volunteers
-        </Link>
-        <Link href="/employers" className="text-gray-600 hover:text-teal-500 transition-colors">
-          For Employers
-        </Link>
-        <Link href="/faq" className="text-gray-600 hover:text-teal-500 transition-colors">
-          FAQ
-        </Link>
-      </nav>
-      <div className="flex space-x-2">
-        <Link
-          href="/login"
-          className="border border-teal-500 text-teal-500 px-4 py-2 rounded hover:bg-teal-50 transition-colors"
-        >
-          Login
-        </Link>
-        <Link href="/donate" className="bg-amber-500 text-white px-4 py-2 rounded hover:bg-amber-600 transition-colors">
-          Donate
-        </Link>
-      </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="space-y-1 px-2 pb-3 pt-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`block px-3 py-2 text-base font-medium rounded-md ${
+                  isActive(item.href) ? "bg-teal-light/10 text-teal" : "text-gray-700 hover:bg-gray-50 hover:text-teal"
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="mt-4 px-3 space-y-2">
+              <Link href="/login" className="block">
+                <Button variant="outline" className="w-full border-teal text-teal hover:bg-teal hover:text-white">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/donate" className="block">
+                <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">Donate</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

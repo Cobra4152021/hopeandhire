@@ -1,185 +1,212 @@
 import Image from "next/image"
-import { ensureAbsoluteUrl } from "@/lib/image-url"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function AboutPage() {
   const teamMembers = [
     {
-      name: "Dr. Sarah Johnson",
-      role: "Founder & Executive Director",
-      bio: "With over 15 years of experience in workforce development and social services, Dr. Johnson founded Hope and Hire to address the employment gap for individuals seeking second chances.",
-      image: "/team-member-1.jpg",
+      name: "Sarah Johnson",
+      role: "Executive Director",
+      image: "/stylized-letters-sj.png",
+      bio: "Sarah has over 15 years of experience in workforce development and is passionate about creating pathways to employment for underserved communities.",
     },
     {
-      name: "Marcus Chen",
+      name: "Michael Chen",
       role: "Director of Employer Relations",
-      bio: "Marcus builds partnerships with employers committed to inclusive hiring practices, creating pathways to meaningful employment for our program participants.",
       image: "/stylized-letters-mc.png",
+      bio: "Michael brings extensive experience in corporate partnerships and job placement, helping to build our network of employer partners.",
     },
     {
-      name: "Danielle Rodriguez",
-      role: "Career Services Manager",
-      bio: "Danielle oversees our resume building, interview preparation, and job placement services, ensuring participants receive comprehensive support.",
-      image: "/stylized-letters-dr.png",
-    },
-    {
-      name: "James Wilson",
-      role: "Skills Development Coordinator",
-      bio: "James designs and implements our skills training programs, focusing on both technical and soft skills essential for workplace success.",
+      name: "Jennifer Williams",
+      role: "Volunteer Program Manager",
       image: "/stylized-letters-jw.png",
+      bio: "Jennifer coordinates our volunteer program, ensuring that job seekers receive quality support from our dedicated volunteers.",
     },
     {
-      name: "Emily Roberts",
-      role: "Volunteer Coordinator",
-      bio: "Emily recruits, trains, and manages our network of volunteer mentors and coaches who provide personalized support to program participants.",
-      image: "/stylized-letters-er.png",
-    },
-    {
-      name: "David Carter",
-      role: "Community Outreach Specialist",
-      bio: "David builds relationships with community organizations and social service agencies to connect individuals with our employment services.",
-      image: "/stylized-letters-dc.png",
+      name: "David Rodriguez",
+      role: "Career Services Director",
+      image: "/stylized-letters-dr.png",
+      bio: "David oversees our career services programs, bringing expertise in career counseling and job readiness training.",
     },
   ]
 
   return (
-    <main className="py-12">
-      <section className="container mx-auto px-4 mb-16">
-        <h1 className="text-4xl font-bold text-center mb-12">About Hope and Hire</h1>
+    <div className="flex flex-col min-h-screen">
+      {/* Logo Section - Centrally positioned below header */}
+      <div className="flex justify-center py-8 bg-white">
+        <Image
+          src="/logo.png"
+          alt="Hope and Hire Logo"
+          width={200}
+          height={80}
+          className="h-auto"
+          priority
+          quality={90}
+        />
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-            <p className="text-gray-700 mb-4">
-              Hope and Hire is dedicated to empowering individuals seeking second chances through comprehensive
-              employment services, skills development, and supportive community connections.
-            </p>
-            <p className="text-gray-700 mb-4">
-              We believe that meaningful employment is a pathway to stability, dignity, and personal growth. Our
-              programs bridge the gap between hope and opportunity, connecting motivated job seekers with employers
-              committed to inclusive hiring practices.
-            </p>
-            <p className="text-gray-700">
-              Through personalized support, skills training, and community partnerships, we create sustainable pathways
-              to employment success.
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <Image
-              src={ensureAbsoluteUrl("/diverse-professionals-meeting.png") || "/placeholder.svg"}
-              alt="Diverse professionals in a meeting"
-              width={500}
-              height={350}
-              className="rounded-lg shadow-lg"
-            />
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-          <div className="order-2 md:order-1 flex justify-center">
-            <Image
-              src={ensureAbsoluteUrl("/organization-meeting.png") || "/placeholder.svg"}
-              alt="Organization team meeting"
-              width={500}
-              height={350}
-              className="rounded-lg shadow-lg"
-            />
-          </div>
-          <div className="order-1 md:order-2">
-            <h2 className="text-2xl font-semibold mb-4">Our Approach</h2>
-            <p className="text-gray-700 mb-4">
-              We take a holistic, person-centered approach to employment services, recognizing that each individual
-              brings unique strengths, challenges, and goals to their job search.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Our comprehensive services include resume building, interview preparation, skills development, job
-              placement assistance, and ongoing support after employment.
-            </p>
-            <p className="text-gray-700">
-              We collaborate with employers, community organizations, and volunteers to create a supportive ecosystem
-              that fosters employment success and career growth.
+      {/* Hero Section */}
+      <section className="bg-light-bg py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-dark-text">Our Mission</h1>
+            <p className="text-lg mb-8 text-gray-600">
+              Hope and Hire is dedicated to empowering individuals with second chances through workforce readiness and
+              meaningful employment opportunities. We believe that everyone deserves the opportunity to build a stable
+              and fulfilling career.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="bg-gray-50 py-16">
+      {/* Our Story */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Team</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6 text-dark-text">Our Story</h2>
+              <p className="text-gray-600 mb-4">
+                Hope and Hire was founded in 2018 by a group of professionals who recognized the significant barriers to
+                employment faced by individuals with justice involvement, gaps in employment history, and other
+                challenges.
+              </p>
+              <p className="text-gray-600 mb-4">
+                What began as a small volunteer initiative has grown into a comprehensive program that connects job
+                seekers with volunteer professionals, supportive employers, and community resources.
+              </p>
+              <p className="text-gray-600">
+                Today, Hope and Hire serves hundreds of job seekers annually, providing resume assistance, interview
+                coaching, career counseling, and job matching services to help individuals build sustainable careers.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <Image
+                src="/diverse-professionals-meeting.png"
+                alt="Hope and Hire team meeting"
+                width={500}
+                height={400}
+                className="rounded-lg shadow-lg"
+                loading="eager"
+                sizes="(max-width: 768px) 100vw, 500px"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Our Values */}
+      <section className="py-16 bg-light-bg">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">Our Values</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="border-t-4 border-teal">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold mb-4 text-dark-text">Dignity and Respect</h3>
+                <p className="text-gray-600">
+                  We believe in treating every individual with dignity and respect, recognizing their inherent worth and
+                  potential regardless of their past experiences or current circumstances.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-t-4 border-yellow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold mb-4 text-dark-text">Opportunity and Growth</h3>
+                <p className="text-gray-600">
+                  We are committed to creating opportunities for growth and development, empowering individuals to build
+                  skills, confidence, and connections that lead to sustainable employment.
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-t-4 border-teal">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold mb-4 text-dark-text">Community and Collaboration</h3>
+                <p className="text-gray-600">
+                  We believe in the power of community and collaboration, working together with volunteers, employers,
+                  organizations, and job seekers to create pathways to meaningful employment.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Team */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">Our Team</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {teamMembers.map((member, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                <div className="flex justify-center mb-4">
-                  <Image
-                    src={ensureAbsoluteUrl(member.image) || "/placeholder.svg"}
-                    alt={member.name}
-                    width={120}
-                    height={120}
-                    className="rounded-full"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold text-center mb-1">{member.name}</h3>
-                <p className="text-teal-600 text-center mb-4">{member.role}</p>
-                <p className="text-gray-600 text-center">{member.bio}</p>
-              </div>
+              <Card key={index}>
+                <CardContent className="p-6 text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-24 h-24 rounded-full overflow-hidden">
+                      <Image
+                        src={member.image || "/placeholder.svg"}
+                        alt={member.name}
+                        width={96}
+                        height={96}
+                        className="object-cover"
+                        loading="lazy"
+                        sizes="96px"
+                      />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-bold text-dark-text">{member.name}</h3>
+                  <p className="text-teal font-medium mb-2">{member.role}</p>
+                  <p className="text-gray-600 text-sm">{member.bio}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Our Values</h2>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-teal-50 p-6 rounded-lg border-l-4 border-teal-500">
-            <h3 className="text-xl font-semibold mb-3">Dignity & Respect</h3>
-            <p className="text-gray-700">
-              We honor the inherent worth and potential of every individual, treating all with respect and dignity
-              regardless of background or circumstances.
-            </p>
-          </div>
-
-          <div className="bg-amber-50 p-6 rounded-lg border-l-4 border-amber-500">
-            <h3 className="text-xl font-semibold mb-3">Empowerment</h3>
-            <p className="text-gray-700">
-              We believe in equipping individuals with the tools, skills, and confidence to achieve their employment
-              goals and build sustainable careers.
-            </p>
-          </div>
-
-          <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
-            <h3 className="text-xl font-semibold mb-3">Community</h3>
-            <p className="text-gray-700">
-              We foster a supportive community of job seekers, employers, volunteers, and partners working together to
-              create pathways to employment.
-            </p>
-          </div>
-
-          <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
-            <h3 className="text-xl font-semibold mb-3">Growth</h3>
-            <p className="text-gray-700">
-              We embrace continuous learning and development, supporting individuals in their journey of personal and
-              professional growth.
-            </p>
-          </div>
-
-          <div className="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-500">
-            <h3 className="text-xl font-semibold mb-3">Inclusion</h3>
-            <p className="text-gray-700">
-              We champion inclusive workplaces and practices that recognize the value of diverse perspectives,
-              experiences, and backgrounds.
-            </p>
-          </div>
-
-          <div className="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
-            <h3 className="text-xl font-semibold mb-3">Accountability</h3>
-            <p className="text-gray-700">
-              We hold ourselves accountable for delivering high-quality services and measuring our impact through
-              meaningful outcomes.
-            </p>
+      {/* Impact */}
+      <section className="py-16 bg-light-bg">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-6 text-dark-text">Our Impact</h2>
+          <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
+            Since our founding, Hope and Hire has made a significant impact in the lives of job seekers and the broader
+            community.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <p className="text-teal text-5xl font-bold mb-2">3,250+</p>
+              <p className="text-gray-600">Resumes created and optimized</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <p className="text-teal text-5xl font-bold mb-2">1,875+</p>
+              <p className="text-gray-600">Mock interviews conducted</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <p className="text-teal text-5xl font-bold mb-2">925+</p>
+              <p className="text-gray-600">Successful job placements</p>
+            </div>
           </div>
         </div>
       </section>
-    </main>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4 text-dark-text">Join Our Mission</h2>
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            Whether you're a job seeker, volunteer, employer, or organization, there are many ways to get involved with
+            Hope and Hire.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/register">
+              <Button className="bg-teal text-white hover:bg-teal-dark">Get Started Today</Button>
+            </Link>
+            <Link href="/contact">
+              <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+                Contact Us
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
