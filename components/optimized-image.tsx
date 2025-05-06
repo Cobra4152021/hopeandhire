@@ -7,7 +7,7 @@ interface OptimizedImageProps extends Omit<ImageProps, "onError"> {
   fallbackSrc?: string
 }
 
-export default function OptimizedImage({
+function OptimizedImage({
   src,
   alt,
   fallbackSrc = "/placeholder.svg",
@@ -39,3 +39,7 @@ export default function OptimizedImage({
     </div>
   )
 }
+
+// Export both as default and named export
+export default OptimizedImage
+export { OptimizedImage }

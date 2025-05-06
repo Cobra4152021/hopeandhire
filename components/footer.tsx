@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react"
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className="bg-light-bg">
       <div className="container mx-auto px-4 py-12">
@@ -137,3 +137,7 @@ export default function Footer() {
     </footer>
   )
 }
+
+// Export both as default and named export
+export default Footer
+export { Footer }

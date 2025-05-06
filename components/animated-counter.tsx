@@ -8,7 +8,7 @@ interface AnimatedCounterProps {
   delay?: number
 }
 
-export default function AnimatedCounter({ end, duration = 2000, delay = 0 }: AnimatedCounterProps) {
+function AnimatedCounter({ end, duration = 2000, delay = 0 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -39,3 +39,7 @@ export default function AnimatedCounter({ end, duration = 2000, delay = 0 }: Ani
 
   return <>{count.toLocaleString()}</>
 }
+
+// Export both as default and named export
+export default AnimatedCounter
+export { AnimatedCounter }

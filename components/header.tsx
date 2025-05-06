@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export default function Header() {
+function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
 
@@ -119,3 +119,7 @@ export default function Header() {
     </header>
   )
 }
+
+// Export both as default and named export
+export default Header
+export { Header }
