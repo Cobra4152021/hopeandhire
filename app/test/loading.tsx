@@ -1,46 +1,43 @@
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-
-export default function TestPageLoading() {
+export default function TestLoading() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#f8faf9]">
-      <Header />
-      <main className="flex-1 py-8">
-        <div className="container mx-auto px-4">
-          <div className="mb-6">
-            <Skeleton className="h-8 w-64 mb-2" />
-            <Skeleton className="h-5 w-full max-w-md" />
-          </div>
+    <div className="container mx-auto px-4 py-12">
+      <h1 className="text-4xl font-bold text-center mb-12 text-teal-700">Application Testing</h1>
 
-          <div className="max-w-4xl mx-auto">
-            <Card className="border-0 shadow-md">
-              <CardHeader>
-                <CardTitle>
-                  <Skeleton className="h-6 w-48" />
-                </CardTitle>
-                <CardDescription>
-                  <Skeleton className="h-4 w-64" />
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <Skeleton className="h-10 w-32" />
-                  <Skeleton className="h-10 w-64" />
-                </div>
-
-                <div className="space-y-2">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Skeleton key={i} className="h-20 w-full" />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white p-6 rounded-lg shadow-md border border-teal-100 mb-8">
+          <div className="flex justify-between items-center">
+            <div className="h-8 w-48 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-10 w-32 bg-gray-200 rounded animate-pulse"></div>
           </div>
         </div>
-      </main>
-      <Footer />
+
+        <div className="mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-gray-100 p-4 rounded-lg border border-gray-200">
+                <div className="h-6 w-24 bg-gray-200 rounded animate-pulse mb-2"></div>
+                <div className="h-8 w-12 bg-gray-200 rounded animate-pulse"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="bg-gray-100 p-4 rounded-lg border border-gray-200">
+              <div className="flex justify-between items-start">
+                <div className="flex items-start">
+                  <div className="mr-3 h-5 w-5 bg-gray-200 rounded-full animate-pulse"></div>
+                  <div>
+                    <div className="h-6 w-48 bg-gray-200 rounded animate-pulse mb-2"></div>
+                    <div className="h-4 w-64 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
