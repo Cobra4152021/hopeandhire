@@ -1,173 +1,194 @@
+import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export default function TermsOfServicePage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-dark-text">Terms of Service</h1>
-
-        <div className="prose prose-gray max-w-none">
-          <p className="text-gray-600">Last Updated: May 5, 2023</p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">1. Agreement to Terms</h2>
-          <p className="text-gray-600">
-            These Terms of Service constitute a legally binding agreement made between you and Hope and Hire ("we,"
-            "us," or "our"), concerning your access to and use of the hopeandhire.net website and any other media form,
-            media channel, mobile website or mobile application related, linked, or otherwise connected thereto
-            (collectively, the "Site").
-          </p>
-          <p className="text-gray-600">
-            You agree that by accessing the Site, you have read, understood, and agree to be bound by all of these Terms
-            of Service. If you do not agree with all of these Terms of Service, then you are expressly prohibited from
-            using the Site and you must discontinue use immediately.
-          </p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">2. Intellectual Property Rights</h2>
-          <p className="text-gray-600">
-            Unless otherwise indicated, the Site is our proprietary property and all source code, databases,
-            functionality, software, website designs, audio, video, text, photographs, and graphics on the Site
-            (collectively, the "Content") and the trademarks, service marks, and logos contained therein (the "Marks")
-            are owned or controlled by us or licensed to us, and are protected by copyright and trademark laws and
-            various other intellectual property rights.
-          </p>
-          <p className="text-gray-600">
-            The Content and Marks are provided on the Site "AS IS" for your information and personal use only. Except as
-            expressly provided in these Terms of Service, no part of the Site and no Content or Marks may be copied,
-            reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted,
-            distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our
-            express prior written permission.
-          </p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">3. User Representations</h2>
-          <p className="text-gray-600">By using the Site, you represent and warrant that:</p>
-          <ul className="list-disc pl-6 mt-2 mb-4 text-gray-600">
-            <li>All registration information you submit will be true, accurate, current, and complete</li>
-            <li>
-              You will maintain the accuracy of such information and promptly update such registration information as
-              necessary
-            </li>
-            <li>You have the legal capacity and you agree to comply with these Terms of Service</li>
-            <li>You are not a minor in the jurisdiction in which you reside</li>
-            <li>You will not access the Site through automated or non-human means</li>
-            <li>You will not use the Site for any illegal or unauthorized purpose</li>
-            <li>Your use of the Site will not violate any applicable law or regulation</li>
-          </ul>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">4. User Registration</h2>
-          <p className="text-gray-600">
-            You may be required to register with the Site. You agree to keep your password confidential and will be
-            responsible for all use of your account and password. We reserve the right to remove, reclaim, or change a
-            username you select if we determine, in our sole discretion, that such username is inappropriate, obscene,
-            or otherwise objectionable.
-          </p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">5. Prohibited Activities</h2>
-          <p className="text-gray-600">
-            You may not access or use the Site for any purpose other than that for which we make the Site available. The
-            Site may not be used in connection with any commercial endeavors except those that are specifically endorsed
-            or approved by us.
-          </p>
-          <p className="text-gray-600">As a user of the Site, you agree not to:</p>
-          <ul className="list-disc pl-6 mt-2 mb-4 text-gray-600">
-            <li>
-              Systematically retrieve data or other content from the Site to create or compile, directly or indirectly,
-              a collection, compilation, database, or directory
-            </li>
-            <li>
-              Trick, defraud, or mislead us and other users, especially in any attempt to learn sensitive account
-              information
-            </li>
-            <li>Circumvent, disable, or otherwise interfere with security-related features of the Site</li>
-            <li>Use any information obtained from the Site in order to harass, abuse, or harm another person</li>
-            <li>Make improper use of our support services or submit false reports of abuse or misconduct</li>
-            <li>Use the Site in a manner inconsistent with any applicable laws or regulations</li>
-            <li>
-              Upload or transmit viruses, Trojan horses, or other material that interferes with any party's use of the
-              Site
-            </li>
-            <li>Attempt to bypass any measures of the Site designed to prevent or restrict access</li>
-          </ul>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">6. User Generated Contributions</h2>
-          <p className="text-gray-600">
-            The Site may invite you to chat, contribute to, or participate in blogs, message boards, online forums, and
-            other functionality, and may provide you with the opportunity to create, submit, post, display, transmit,
-            perform, publish, distribute, or broadcast content and materials to us or on the Site, including but not
-            limited to text, writings, video, audio, photographs, graphics, comments, suggestions, or personal
-            information or other material (collectively, "Contributions").
-          </p>
-          <p className="text-gray-600">
-            Any Contributions you transmit to the Site will be treated as non-confidential and non-proprietary. By
-            creating Contributions, you grant us a perpetual, non-exclusive, worldwide, royalty-free license to use,
-            reproduce, modify, perform, display, distribute, and otherwise disclose to third parties any such material.
-          </p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">7. Submissions</h2>
-          <p className="text-gray-600">
-            You acknowledge and agree that any questions, comments, suggestions, ideas, feedback, or other information
-            regarding the Site ("Submissions") provided by you to us are non-confidential and shall become our sole
-            property. We shall own exclusive rights, including all intellectual property rights, and shall be entitled
-            to the unrestricted use and dissemination of these Submissions for any lawful purpose, commercial or
-            otherwise, without acknowledgment or compensation to you.
-          </p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">8. Site Management</h2>
-          <p className="text-gray-600">We reserve the right, but not the obligation, to:</p>
-          <ul className="list-disc pl-6 mt-2 mb-4 text-gray-600">
-            <li>Monitor the Site for violations of these Terms of Service</li>
-            <li>
-              Take appropriate legal action against anyone who, in our sole discretion, violates the law or these Terms
-              of Service
-            </li>
-            <li>Remove or refuse to post any Contributions for any or no reason in our sole discretion</li>
-            <li>
-              Terminate or deny access to and use of the Site to any person for any reason, in our sole discretion
-            </li>
-            <li>Modify or discontinue all or part of the Site without notice at any time</li>
-          </ul>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">9. Modifications and Interruptions</h2>
-          <p className="text-gray-600">
-            We reserve the right to change, modify, or remove the contents of the Site at any time or for any reason at
-            our sole discretion without notice. We also reserve the right to modify or discontinue all or part of the
-            Site without notice at any time.
-          </p>
-          <p className="text-gray-600">
-            We will not be liable to you or any third party for any modification, suspension, or discontinuance of the
-            Site.
-          </p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">10. Governing Law</h2>
-          <p className="text-gray-600">
-            These Terms of Service and your use of the Site are governed by and construed in accordance with the laws of
-            the State of [State], applicable to agreements made and to be entirely performed within the State of
-            [State], without regard to its conflict of law principles.
-          </p>
-
-          <h2 className="text-xl font-semibold mt-8 mb-4 text-dark-text">11. Contact Us</h2>
-          <p className="text-gray-600">
-            If you have questions or concerns about these Terms of Service, please contact us at:
-          </p>
-          <p className="text-gray-600">
-            Hope and Hire
-            <br />
-            123 Hope Street
-            <br />
-            Opportunity City
-            <br />
-            Email: legal@hopeandhire.org
-            <br />
-            Phone: (555) 123-4567
-          </p>
-        </div>
-
-        <div className="mt-12 text-center">
-          <Link href="/">
-            <Button className="bg-teal text-white hover:bg-teal-dark">Return to Home</Button>
-          </Link>
-        </div>
+    <div className="flex flex-col min-h-screen">
+      {/* Logo Section - Centrally positioned below header */}
+      <div className="flex justify-center py-8 bg-white">
+        <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
       </div>
+
+      {/* Hero Section */}
+      <section className="bg-light-bg py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl font-bold mb-6 text-dark-text">Terms of Service</h1>
+            <p className="text-lg text-gray-600">Last Updated: May 5, 2023</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Terms of Service Content */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="prose prose-lg max-w-none">
+              <h2>Introduction</h2>
+              <p>
+                Welcome to Hope and Hire. These Terms of Service ("Terms") govern your access to and use of the Hope and
+                Hire website and services. By accessing or using our services, you agree to be bound by these Terms. If
+                you do not agree to these Terms, please do not use our services.
+              </p>
+
+              <h2>Definitions</h2>
+              <p>Throughout these Terms, the following definitions apply:</p>
+              <ul>
+                <li>"Hope and Hire," "we," "us," or "our" refers to Hope and Hire organization.</li>
+                <li>"Services" refers to the website, platform, and all services provided by Hope and Hire.</li>
+                <li>"User," "you," or "your" refers to any individual or entity that accesses or uses our Services.</li>
+                <li>"Job Seeker" refers to individuals using our Services to find employment opportunities.</li>
+                <li>"Employer" refers to organizations or individuals using our Services to find candidates.</li>
+                <li>"Volunteer" refers to individuals providing professional services through our platform.</li>
+                <li>"Organization" refers to partner organizations that refer clients to our Services.</li>
+              </ul>
+
+              <h2>Account Registration and Eligibility</h2>
+              <p>
+                To access certain features of our Services, you may need to register for an account. When you register,
+                you agree to provide accurate, current, and complete information. You are responsible for maintaining
+                the confidentiality of your account credentials and for all activities that occur under your account.
+              </p>
+              <p>
+                You must be at least 18 years old to use our Services. By using our Services, you represent and warrant
+                that you meet this eligibility requirement.
+              </p>
+
+              <h2>User Responsibilities</h2>
+              <h3>All Users</h3>
+              <p>As a user of our Services, you agree to:</p>
+              <ul>
+                <li>Comply with all applicable laws and regulations</li>
+                <li>Provide accurate and truthful information</li>
+                <li>Respect the privacy and rights of other users</li>
+                <li>Use our Services in a manner consistent with their intended purpose</li>
+                <li>Not engage in any activity that could harm, disable, or impair our Services</li>
+              </ul>
+
+              <h3>Job Seekers</h3>
+              <p>As a Job Seeker, you additionally agree to:</p>
+              <ul>
+                <li>Provide accurate information about your skills, experience, and qualifications</li>
+                <li>Engage professionally with Employers, Volunteers, and Organizations</li>
+                <li>Attend scheduled appointments and interviews or provide timely notice of cancellation</li>
+              </ul>
+
+              <h3>Employers</h3>
+              <p>As an Employer, you additionally agree to:</p>
+              <ul>
+                <li>Provide accurate information about job opportunities and your organization</li>
+                <li>Comply with all applicable employment laws and regulations</li>
+                <li>Treat Job Seekers with respect and dignity</li>
+                <li>Provide timely feedback on applications and interviews</li>
+              </ul>
+
+              <h3>Volunteers</h3>
+              <p>As a Volunteer, you additionally agree to:</p>
+              <ul>
+                <li>Provide professional services to the best of your ability</li>
+                <li>Maintain confidentiality of Job Seeker information</li>
+                <li>Attend scheduled appointments or provide timely notice of cancellation</li>
+              </ul>
+
+              <h2>Prohibited Activities</h2>
+              <p>You agree not to engage in any of the following prohibited activities:</p>
+              <ul>
+                <li>Violating any applicable laws or regulations</li>
+                <li>Impersonating another person or entity</li>
+                <li>Harassing, threatening, or intimidating other users</li>
+                <li>Posting or sharing discriminatory, offensive, or inappropriate content</li>
+                <li>Attempting to gain unauthorized access to our systems or other users' accounts</li>
+                <li>Using our Services for any illegal or unauthorized purpose</li>
+                <li>Interfering with or disrupting the integrity or performance of our Services</li>
+              </ul>
+
+              <h2>Intellectual Property</h2>
+              <p>
+                Our Services and their contents, features, and functionality are owned by Hope and Hire and are
+                protected by copyright, trademark, and other intellectual property laws. You may not reproduce,
+                distribute, modify, create derivative works of, publicly display, publicly perform, republish, download,
+                store, or transmit any of the material on our Services without our prior written consent.
+              </p>
+
+              <h2>User Content</h2>
+              <p>
+                You retain ownership of any content you submit to our Services ("User Content"). By submitting User
+                Content, you grant us a non-exclusive, worldwide, royalty-free license to use, reproduce, modify, adapt,
+                publish, translate, and distribute your User Content in connection with providing and promoting our
+                Services.
+              </p>
+              <p>
+                You represent and warrant that your User Content does not violate any third-party rights and complies
+                with these Terms and all applicable laws.
+              </p>
+
+              <h2>Disclaimer of Warranties</h2>
+              <p>
+                OUR SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS
+                OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT
+                LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+                NON-INFRINGEMENT.
+              </p>
+
+              <h2>Limitation of Liability</h2>
+              <p>
+                TO THE FULLEST EXTENT PERMITTED BY LAW, IN NO EVENT WILL HOPE AND HIRE BE LIABLE FOR ANY INDIRECT,
+                INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATING TO YOUR USE OF OR
+                INABILITY TO USE OUR SERVICES.
+              </p>
+
+              <h2>Indemnification</h2>
+              <p>
+                You agree to indemnify, defend, and hold harmless Hope and Hire and its officers, directors, employees,
+                agents, and affiliates from and against any and all claims, liabilities, damages, losses, costs,
+                expenses, or fees (including reasonable attorneys' fees) arising from or relating to your use of our
+                Services, your User Content, or your violation of these Terms.
+              </p>
+
+              <h2>Termination</h2>
+              <p>
+                We may terminate or suspend your account and access to our Services at any time, without prior notice or
+                liability, for any reason, including if you violate these Terms. Upon termination, your right to use our
+                Services will immediately cease.
+              </p>
+
+              <h2>Changes to These Terms</h2>
+              <p>
+                We may update these Terms from time to time. We will notify you of any changes by posting the new Terms
+                on this page and updating the "Last Updated" date. You are advised to review these Terms periodically
+                for any changes.
+              </p>
+
+              <h2>Governing Law</h2>
+              <p>
+                These Terms shall be governed by and construed in accordance with the laws of the state where Hope and
+                Hire is headquartered, without regard to its conflict of law provisions.
+              </p>
+
+              <h2>Contact Us</h2>
+              <p>If you have questions or concerns about these Terms, please contact us at:</p>
+              <p>
+                Hope and Hire
+                <br />
+                123 Hope Street
+                <br />
+                Opportunity City, ST 12345
+                <br />
+                Email: legal@hopeandhire.org
+                <br />
+                Phone: (555) 123-4567
+              </p>
+            </div>
+
+            <div className="mt-12 text-center">
+              <Link href="/">
+                <Button className="bg-teal text-white hover:bg-teal-dark">Return to Home</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
