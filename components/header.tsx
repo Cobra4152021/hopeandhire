@@ -1,12 +1,19 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [pathname])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -20,8 +27,12 @@ export default function Header() {
     { name: "Contact", href: "/contact" },
   ]
 
+  const isActive = (path: string) => {
+    return pathname === path || pathname?.startsWith(`${path}/`)
+  }
+
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-shrink-0">
@@ -36,14 +47,21 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-teal font-medium transition-colors"
+                className={`font-medium transition-colors ${
+                  isActive(item.href) ? "text-teal" : "text-gray-700 hover:text-teal"
+                }`}
               >
                 {item.name}
               </Link>
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center space-x-4">
+            <Link href="/login">
+              <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+                Login
+              </Button>
+            </Link>
             <Link href="/donate">
               <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Donate</Button>
             </Link>
@@ -76,14 +94,21 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-teal rounded-md"
+                className={`block px-3 py-2 text-base font-medium rounded-md ${
+                  isActive(item.href) ? "bg-teal-light/10 text-teal" : "text-gray-700 hover:bg-gray-50 hover:text-teal"
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="mt-4 px-3">
-              <Link href="/donate">
+            <div className="mt-4 px-3 space-y-2">
+              <Link href="/login" className="block">
+                <Button variant="outline" className="w-full border-teal text-teal hover:bg-teal hover:text-white">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/donate" className="block">
                 <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">Donate</Button>
               </Link>
             </div>

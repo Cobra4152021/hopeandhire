@@ -1,11 +1,18 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Trophy } from "lucide-react"
+import AnimatedCounter from "@/components/animated-counter"
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Logo Section - Centrally positioned below header */}
+      <div className="flex justify-center py-8 bg-white">
+        <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
+      </div>
+
       {/* Hero Section */}
       <section className="bg-light-bg py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -54,7 +61,9 @@ export default function Home() {
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
                 <h3 className="text-center text-gray-600 mb-2">Resumes Written</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">3,250</p>
+                <p className="text-center text-teal text-5xl font-bold mb-2">
+                  <AnimatedCounter end={3250} duration={2500} />
+                </p>
                 <p className="text-center text-gray-500 text-sm">Professional resumes created</p>
               </CardContent>
             </Card>
@@ -62,7 +71,9 @@ export default function Home() {
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
                 <h3 className="text-center text-gray-600 mb-2">Interviews Conducted</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">1,875</p>
+                <p className="text-center text-teal text-5xl font-bold mb-2">
+                  <AnimatedCounter end={1875} duration={2500} />
+                </p>
                 <p className="text-center text-gray-500 text-sm">Mock interviews with feedback</p>
               </CardContent>
             </Card>
@@ -70,7 +81,9 @@ export default function Home() {
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
                 <h3 className="text-center text-gray-600 mb-2">Job Placements Made</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">925</p>
+                <p className="text-center text-teal text-5xl font-bold mb-2">
+                  <AnimatedCounter end={925} duration={2500} />
+                </p>
                 <p className="text-center text-gray-500 text-sm">Successful career placements</p>
               </CardContent>
             </Card>
