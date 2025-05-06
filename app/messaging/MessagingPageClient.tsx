@@ -1,313 +1,235 @@
 "use client"
 
 import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
-// Sample conversation data
-const initialConversations = [
+// Sample message data
+const sampleContacts = [
   {
-    id: "1",
-    with: {
-      name: "Sarah Johnson",
-      avatar: "/professional-woman-diverse.png",
-      role: "Volunteer Recruiter",
-    },
-    lastMessage: {
-      text: "I reviewed your resume and have some suggestions for improvements.",
-      timestamp: "2023-04-15T14:30:00",
-      isRead: true,
-      sender: "them",
-    },
-    messages: [
-      {
-        id: "m1",
-        text: "Hello! I saw that you scheduled an appointment for a resume review. Is there anything specific you would like me to focus on?",
-        timestamp: "2023-04-14T10:15:00",
-        sender: "them",
-      },
-      {
-        id: "m2",
-        text: "Hi Sarah, thanks for reaching out! I would appreciate feedback on how to better highlight my technical skills and project experience.",
-        timestamp: "2023-04-14T10:30:00",
-        sender: "you",
-      },
-      {
-        id: "m3",
-        text: "I reviewed your resume and have some suggestions for improvements.",
-        timestamp: "2023-04-15T14:30:00",
-        sender: "them",
-      },
-    ],
+    id: 1,
+    name: "Sarah Johnson",
+    role: "HR Manager at TechCorp",
+    avatar: "/professional-woman-diverse.png",
+    lastMessage: "Thanks for sending those candidates over!",
+    unread: true,
+    time: "10:30 AM",
   },
   {
-    id: "2",
-    with: {
-      name: "Michael Chen",
-      avatar: "/professional-asian-man.png",
-      role: "HR Specialist",
-    },
-    lastMessage: {
-      text: "Looking forward to our mock interview session tomorrow!",
-      timestamp: "2023-04-16T09:45:00",
-      isRead: false,
-      sender: "them",
-    },
-    messages: [
-      {
-        id: "m1",
-        text: "Hello! I will be conducting your mock interview session. Do you have any specific companies or roles you are targeting?",
-        timestamp: "2023-04-15T11:20:00",
-        sender: "them",
-      },
-      {
-        id: "m2",
-        text: "Hi Michael, I am preparing for a product manager interview at a tech company. I would like to focus on behavioral questions and product case studies.",
-        timestamp: "2023-04-15T13:05:00",
-        sender: "you",
-      },
-      {
-        id: "m3",
-        text: "Perfect! I will prepare some relevant questions for our session. We will cover both behavioral questions and product case studies.",
-        timestamp: "2023-04-16T08:30:00",
-        sender: "them",
-      },
-      {
-        id: "m4",
-        text: "Looking forward to our mock interview session tomorrow!",
-        timestamp: "2023-04-16T09:45:00",
-        sender: "them",
-      },
-    ],
+    id: 2,
+    name: "Michael Chen",
+    role: "Volunteer Career Coach",
+    avatar: "/professional-asian-man.png",
+    lastMessage: "I've reviewed the resume you sent. Let's discuss it tomorrow.",
+    unread: false,
+    time: "Yesterday",
   },
   {
-    id: "3",
-    with: {
-      name: "Acme Corporation",
-      avatar: "/generic-company-logo.png",
-      role: "Employer",
-    },
-    lastMessage: {
-      text: "Thank you for your application. We would like to schedule an interview.",
-      timestamp: "2023-04-17T15:10:00",
-      isRead: false,
-      sender: "them",
-    },
-    messages: [
-      {
-        id: "m1",
-        text: "Thank you for your application to the Senior Software Engineer position at Acme Corporation.",
-        timestamp: "2023-04-17T15:10:00",
-        sender: "them",
-      },
-      {
-        id: "m2",
-        text: "Thank you for your application. We would like to schedule an interview.",
-        timestamp: "2023-04-17T15:10:00",
-        sender: "them",
-      },
-    ],
+    id: 3,
+    name: "Jessica Williams",
+    role: "Job Seeker",
+    avatar: "/diverse-person-portrait.png",
+    lastMessage: "Thank you for the interview tips!",
+    unread: false,
+    time: "Yesterday",
+  },
+  {
+    id: 4,
+    name: "Robert Garcia",
+    role: "Hiring Manager at HealthPlus",
+    avatar: "/professional-latino-man.png",
+    lastMessage: "We'd like to schedule a second interview with the candidate.",
+    unread: false,
+    time: "Monday",
+  },
+  {
+    id: 5,
+    name: "Lisa Thompson",
+    role: "Volunteer Mentor",
+    avatar: "/profile-lisa.png",
+    lastMessage: "I can help with the resume workshop next week.",
+    unread: false,
+    time: "Last week",
+  },
+]
+
+const sampleMessages = [
+  {
+    id: 1,
+    senderId: 1,
+    text: "Hi there! I'm looking for candidates with experience in software development.",
+    timestamp: "10:30 AM",
+    isMe: false,
+  },
+  {
+    id: 2,
+    senderId: "me",
+    text: "Hello Sarah! I have several qualified candidates I can recommend. What specific skills are you looking for?",
+    timestamp: "10:32 AM",
+    isMe: true,
+  },
+  {
+    id: 3,
+    senderId: 1,
+    text: "We need someone with React, Node.js, and experience with cloud platforms like AWS.",
+    timestamp: "10:35 AM",
+    isMe: false,
+  },
+  {
+    id: 4,
+    senderId: "me",
+    text: "Great! I have 3 candidates who match those requirements. I'll send you their profiles right away.",
+    timestamp: "10:38 AM",
+    isMe: true,
+  },
+  {
+    id: 5,
+    senderId: 1,
+    text: "That would be perfect. We're looking to fill the position within the next two weeks.",
+    timestamp: "10:40 AM",
+    isMe: false,
+  },
+  {
+    id: 6,
+    senderId: "me",
+    text: "I'll make sure they're available for interviews soon. All three candidates are actively looking and could start quickly.",
+    timestamp: "10:42 AM",
+    isMe: true,
+  },
+  {
+    id: 7,
+    senderId: 1,
+    text: "Thanks for sending those candidates over!",
+    timestamp: "10:45 AM",
+    isMe: false,
   },
 ]
 
 export default function MessagingPageClient() {
-  const [conversations, setConversations] = useState(initialConversations)
-  const [activeConversation, setActiveConversation] = useState(conversations[0].id)
-  const [newMessage, setNewMessage] = useState("")
+  const [selectedContact, setSelectedContact] = useState(sampleContacts[0])
+  const [messageText, setMessageText] = useState("")
+  const [messages, setMessages] = useState(sampleMessages)
   const [searchTerm, setSearchTerm] = useState("")
 
-  const filteredConversations = conversations.filter((convo) =>
-    convo.with.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredContacts = sampleContacts.filter((contact) =>
+    contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  const currentConversation = conversations.find((convo) => convo.id === activeConversation)
-
   const handleSendMessage = () => {
-    if (!newMessage.trim()) return
+    if (messageText.trim() === "") return
 
-    const updatedConversations = conversations.map((convo) => {
-      if (convo.id === activeConversation) {
-        const newMsg = {
-          id: `m${convo.messages.length + 1}`,
-          text: newMessage,
-          timestamp: new Date().toISOString(),
-          sender: "you",
-        }
-
-        return {
-          ...convo,
-          messages: [...convo.messages, newMsg],
-          lastMessage: {
-            text: newMessage,
-            timestamp: new Date().toISOString(),
-            isRead: true,
-            sender: "you",
-          },
-        }
-      }
-      return convo
-    })
-
-    setConversations(updatedConversations)
-    setNewMessage("")
-  }
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    const now = new Date()
-    const yesterday = new Date(now)
-    yesterday.setDate(yesterday.getDate() - 1)
-
-    if (date.toDateString() === now.toDateString()) {
-      return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-    } else if (date.toDateString() === yesterday.toDateString()) {
-      return "Yesterday"
-    } else {
-      return date.toLocaleDateString([], { month: "short", day: "numeric" })
+    const newMessage = {
+      id: messages.length + 1,
+      senderId: "me",
+      text: messageText,
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      isMe: true,
     }
+
+    setMessages([...messages, newMessage])
+    setMessageText("")
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-12 text-teal-700">Messages</h1>
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-6 text-teal-700">Messaging</h1>
 
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden border border-teal-100">
-        <div className="flex flex-col md:flex-row h-[600px]">
-          {/* Conversation List */}
-          <div className="w-full md:w-1/3 border-r border-gray-200">
+      <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+        <div className="flex h-[calc(80vh)]">
+          {/* Contacts sidebar */}
+          <div className="w-1/3 border-r border-gray-200 flex flex-col">
             <div className="p-4 border-b border-gray-200">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search conversations..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <Input
+                type="text"
+                placeholder="Search conversations..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full"
+              />
+            </div>
+            <ScrollArea className="flex-1">
+              {filteredContacts.map((contact) => (
+                <div
+                  key={contact.id}
+                  className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors ${
+                    selectedContact.id === contact.id ? "bg-teal-50" : ""
+                  }`}
+                  onClick={() => setSelectedContact(contact)}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div className="overflow-y-auto h-[calc(600px-64px)]">
-              {filteredConversations.length === 0 ? (
-                <div className="p-4 text-center text-gray-500">No conversations found</div>
-              ) : (
-                filteredConversations.map((convo) => (
-                  <div
-                    key={convo.id}
-                    className={`p-4 border-b border-gray-200 cursor-pointer transition-colors ${
-                      activeConversation === convo.id ? "bg-teal-50" : "hover:bg-gray-50"
-                    }`}
-                    onClick={() => setActiveConversation(convo.id)}
-                  >
-                    <div className="flex items-center">
-                      <img
-                        src={convo.with.avatar || "/placeholder.svg"}
-                        alt={convo.with.name}
-                        className="w-12 h-12 rounded-full object-cover mr-3"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-baseline">
-                          <h3 className="text-sm font-medium text-gray-900 truncate">{convo.with.name}</h3>
-                          <span className="text-xs text-gray-500">{formatDate(convo.lastMessage.timestamp)}</span>
-                        </div>
-                        <p className="text-xs text-gray-500">{convo.with.role}</p>
-                        <p
-                          className={`text-sm truncate ${
-                            !convo.lastMessage.isRead && convo.lastMessage.sender === "them"
-                              ? "font-semibold text-gray-900"
-                              : "text-gray-500"
-                          }`}
-                        >
-                          {convo.lastMessage.sender === "you" ? "You: " : ""}
-                          {convo.lastMessage.text}
-                        </p>
+                  <div className="flex items-start">
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage src={contact.avatar || "/placeholder.svg"} alt={contact.name} />
+                      <AvatarFallback>{contact.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="ml-4 flex-1">
+                      <div className="flex justify-between items-start">
+                        <h3 className="font-medium text-gray-900">{contact.name}</h3>
+                        <span className="text-xs text-gray-500">{contact.time}</span>
                       </div>
-                      {!convo.lastMessage.isRead && convo.lastMessage.sender === "them" && (
-                        <span className="ml-2 w-3 h-3 bg-teal-500 rounded-full"></span>
-                      )}
+                      <p className="text-xs text-gray-500 mt-1">{contact.role}</p>
+                      <p className="text-sm text-gray-600 mt-1 truncate">{contact.lastMessage}</p>
                     </div>
+                    {contact.unread && <div className="w-2 h-2 bg-teal-500 rounded-full mt-2"></div>}
                   </div>
-                ))
-              )}
-            </div>
+                </div>
+              ))}
+            </ScrollArea>
           </div>
 
-          {/* Conversation */}
-          <div className="w-full md:w-2/3 flex flex-col">
-            {currentConversation ? (
-              <>
-                {/* Conversation Header */}
-                <div className="p-4 border-b border-gray-200 flex items-center">
-                  <img
-                    src={currentConversation.with.avatar || "/placeholder.svg"}
-                    alt={currentConversation.with.name}
-                    className="w-10 h-10 rounded-full object-cover mr-3"
-                  />
-                  <div>
-                    <h3 className="font-medium text-gray-900">{currentConversation.with.name}</h3>
-                    <p className="text-xs text-gray-500">{currentConversation.with.role}</p>
-                  </div>
-                </div>
-
-                {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  {currentConversation.messages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${message.sender === "you" ? "justify-end" : "justify-start"}`}
-                    >
-                      <div
-                        className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 ${
-                          message.sender === "you" ? "bg-teal-600 text-white" : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        <p>{message.text}</p>
-                        <p className={`text-xs mt-1 ${message.sender === "you" ? "text-teal-100" : "text-gray-500"}`}>
-                          {new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Message Input */}
-                <div className="p-4 border-t border-gray-200">
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      placeholder="Type a message..."
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                      className="flex-1 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    />
-                    <button
-                      onClick={handleSendMessage}
-                      disabled={!newMessage.trim()}
-                      className="px-4 py-2 bg-teal-600 text-white rounded-r-md hover:bg-teal-700 transition-colors disabled:opacity-50"
-                    >
-                      Send
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-gray-500">Select a conversation to start messaging</p>
+          {/* Chat area */}
+          <div className="w-2/3 flex flex-col">
+            {/* Chat header */}
+            <div className="p-4 border-b border-gray-200 flex items-center">
+              <Avatar className="h-10 w-10">
+                <AvatarImage src={selectedContact.avatar || "/placeholder.svg"} alt={selectedContact.name} />
+                <AvatarFallback>{selectedContact.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div className="ml-4">
+                <h3 className="font-medium text-gray-900">{selectedContact.name}</h3>
+                <p className="text-xs text-gray-500">{selectedContact.role}</p>
               </div>
-            )}
+            </div>
+
+            {/* Messages */}
+            <ScrollArea className="flex-1 p-4">
+              <div className="space-y-4">
+                {messages.map((message) => (
+                  <div key={message.id} className={`flex ${message.isMe ? "justify-end" : "justify-start"}`}>
+                    <div
+                      className={`max-w-[70%] rounded-lg p-3 ${
+                        message.isMe
+                          ? "bg-teal-500 text-white rounded-tr-none"
+                          : "bg-gray-100 text-gray-800 rounded-tl-none"
+                      }`}
+                    >
+                      <p>{message.text}</p>
+                      <p className={`text-xs mt-1 ${message.isMe ? "text-teal-100" : "text-gray-500"}`}>
+                        {message.timestamp}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+
+            {/* Message input */}
+            <div className="p-4 border-t border-gray-200 flex">
+              <Input
+                type="text"
+                placeholder="Type a message..."
+                className="flex-1 mr-2"
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSendMessage()
+                  }
+                }}
+              />
+              <Button onClick={handleSendMessage}>Send</Button>
+            </div>
           </div>
         </div>
       </div>
