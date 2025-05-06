@@ -1,32 +1,24 @@
-import Image from "next/image"
-
 export function PartnersSection() {
-  const partners = [
-    { name: "Forbes", logo: "/forbes-logo.png" },
-    { name: "TechCrunch", logo: "/techcrunch-logo.png" },
-    { name: "NPR", logo: "/npr-logo.png" },
-    { name: "Wall Street Journal", logo: "/wsj-logo.png" },
-  ]
-
   return (
-    <section className="py-16 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl font-bold">Featured In</h2>
+    <section className="py-16">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold">Our Partners</h2>
+        <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+          We work with leading organizations committed to supporting second chances.
+        </p>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="h-20 bg-muted/30 rounded flex items-center justify-center">
+          <span className="text-muted-foreground">Partner 1</span>
         </div>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-          {partners.map((partner, index) => (
-            <div key={index} className="grayscale hover:grayscale-0 transition-all">
-              <Image
-                src={partner.logo || "/placeholder.svg"}
-                alt={partner.name}
-                width={120}
-                height={40}
-                className="h-auto w-auto max-h-10 object-contain"
-                sizes="(max-width: 768px) 100px, 120px"
-              />
-            </div>
-          ))}
+        <div className="h-20 bg-muted/30 rounded flex items-center justify-center">
+          <span className="text-muted-foreground">Partner 2</span>
+        </div>
+        <div className="h-20 bg-muted/30 rounded flex items-center justify-center">
+          <span className="text-muted-foreground">Partner 3</span>
+        </div>
+        <div className="h-20 bg-muted/30 rounded flex items-center justify-center">
+          <span className="text-muted-foreground">Partner 4</span>
         </div>
       </div>
     </section>

@@ -1,26 +1,67 @@
 import type React from "react"
-import type { Metadata } from "next"
 import "./globals.css"
-import { Navbar } from "@/app/components/navbar"
-import { Footer } from "@/app/components/footer"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
+import { Analytics } from "@vercel/analytics/react"
+import { createServerSupabaseClient } from "@/lib/supabase"
+import { Suspense } from "react"
+
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Hope and Hire - Empowering Second Chances",
-  description: "Empowering individuals with second chances through workforce readiness and meaningful employment.",
-  generator: "Next.js",
+  title: {
+    default: "Hope And Hire",
+    template: "%s | Hope And Hire",
+  },
+  description: "Connecting formerly incarcerated individuals with employment opportunities",
+  keywords: ["employment", "jobs", "hiring", "second chance", "reentry", "rehabilitation"],
+  authors: [{ name: "Hope And Hire Team" }],
+  creator: "Hope And Hire",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://hopeandhire.net",
+    title: "Hope And Hire",
+    description: "Connecting formerly incarcerated individuals with employment opportunities",
+    siteName: "Hope And Hire",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hope And Hire",
+    description: "Connecting formerly incarcerated individuals with employment opportunities",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  generator: "v0.dev",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
+  const supabase = createServerSupabaseClient()
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
   return (
-    <html lang="en">
-      <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <div className="flex-grow">{children}</div>
-        <Footer />
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          <Suspense>
+            {children}
+            <Toaster />
+          </Suspense>
+        </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
