@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { createClientSupabaseClient } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,20 +12,30 @@ export default function TestAuth() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState("")
-  const supabase = createClientSupabaseClient()
+  const [supabase, setSupabase] = useState<any>(null)
 
+  // Initialize Supabase client only on the client side
   useEffect(() => {
-    async function getUser() {
+    const initializeSupabase = async () => {
+      // Dynamically import to prevent server-side execution
+      const { createClientSupabaseClient } = await import("@/lib/supabase")
+      const supabaseClient = createClientSupabaseClient()
+      setSupabase(supabaseClient)
+
+      // Get user after initializing supabase
       const {
         data: { user },
-      } = await supabase.auth.getUser()
+      } = await supabaseClient.auth.getUser()
       setUser(user)
       setLoading(false)
     }
-    getUser()
-  }, [supabase.auth])
+
+    initializeSupabase()
+  }, [])
 
   async function handleSignUp() {
+    if (!supabase) return // Guard against supabase not being initialized
+
     setMessage("")
     try {
       const { error } = await supabase.auth.signUp({
@@ -41,6 +50,8 @@ export default function TestAuth() {
   }
 
   async function handleSignIn() {
+    if (!supabase) return // Guard against supabase not being initialized
+
     setMessage("")
     try {
       const { error, data } = await supabase.auth.signInWithPassword({
@@ -56,6 +67,8 @@ export default function TestAuth() {
   }
 
   async function handleSignOut() {
+    if (!supabase) return // Guard against supabase not being initialized
+
     setMessage("")
     try {
       const { error } = await supabase.auth.signOut()
@@ -135,10 +148,10 @@ export default function TestAuth() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-2">
           <div className="flex space-x-2 w-full">
-            <Button onClick={handleSignIn} className="flex-1">
+            <Button onClick={handleSignIn} className="flex-1" disabled={!supabase}>
               Sign In
             </Button>
-            <Button onClick={handleSignUp} variant="outline" className="flex-1">
+            <Button onClick={handleSignUp} variant="outline" className="flex-1" disabled={!supabase}>
               Sign Up
             </Button>
           </div>

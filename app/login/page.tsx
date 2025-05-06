@@ -2,8 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { createClientSupabaseClient } from "@/lib/supabase"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -19,11 +18,24 @@ export default function Login() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
-  const supabase = createClientSupabaseClient()
+  const [supabase, setSupabase] = useState<any>(null)
   const router = useRouter()
+
+  // Initialize Supabase client only on the client side
+  useEffect(() => {
+    const initializeSupabase = async () => {
+      // Dynamically import to prevent server-side execution
+      const { createClientSupabaseClient } = await import("@/lib/supabase")
+      setSupabase(createClientSupabaseClient())
+    }
+
+    initializeSupabase()
+  }, [])
 
   async function handleSignIn(e: React.FormEvent) {
     e.preventDefault()
+    if (!supabase) return // Guard against supabase not being initialized
+
     setLoading(true)
     setMessage("")
 
@@ -102,7 +114,7 @@ export default function Login() {
                   {message && <p className="text-red-500 text-sm">{message}</p>}
                 </CardContent>
                 <CardFooter className="flex flex-col space-y-4">
-                  <Button type="submit" className="w-full" disabled={loading}>
+                  <Button type="submit" className="w-full" disabled={loading || !supabase}>
                     {loading ? "Signing in..." : "Sign In"}
                   </Button>
                   <p className="text-center text-sm text-muted-foreground">

@@ -1,26 +1,14 @@
 import { createClient } from "@supabase/supabase-js"
 
-// This is a safe import that won't be bundled with client components
-let serverComponentCookies: () => {
-  get: (name: string) => { value: string } | undefined
-}
-
-// Only import cookies from next/headers in a server context
-if (typeof window === "undefined") {
-  // Dynamic import to prevent bundling with client components
-  serverComponentCookies = () => {
-    // Using require instead of import to avoid bundling issues
-    const { cookies } = require("next/headers")
-    return cookies()
-  }
-}
-
-export function createServerSupabaseClient() {
+// Server-side Supabase client
+export async function createServerSupabaseClient() {
   if (typeof window !== "undefined") {
     throw new Error("createServerSupabaseClient can only be used on the server")
   }
 
-  const cookieStore = serverComponentCookies()
+  // Dynamic import to prevent bundling with client components
+  const { cookies } = await import("next/headers")
+  const cookieStore = cookies()
 
   return createClient(
     process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "",
@@ -35,20 +23,11 @@ export function createServerSupabaseClient() {
   )
 }
 
-// Client-side singleton to prevent multiple instances
-let clientSupabase: ReturnType<typeof createClient> | null = null
-
+// Client-side Supabase client
 export function createClientSupabaseClient() {
   if (typeof window === "undefined") {
     throw new Error("createClientSupabaseClient should only be used on the client")
   }
 
-  if (clientSupabase) return clientSupabase
-
-  clientSupabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
-  )
-
-  return clientSupabase
+  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || "", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "")
 }
