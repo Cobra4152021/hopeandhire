@@ -8,82 +8,62 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
 
-  const isActive = (path: string) => {
-    return pathname === path
-  }
-
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-gray-50 shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-teal-600">Hope&Hire</span>
+            <span className="text-2xl font-bold text-teal-600">HopeAndHire</span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link
-              href="/"
-              className={`text-gray-700 hover:text-teal-600 ${isActive("/") ? "font-semibold text-teal-600" : ""}`}
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className={`text-gray-700 hover:text-teal-600 ${isActive("/about") ? "font-semibold text-teal-600" : ""}`}
-            >
-              About
-            </Link>
-            <Link
-              href="/employer"
+              href="/organizations"
               className={`text-gray-700 hover:text-teal-600 ${
-                isActive("/employer") ? "font-semibold text-teal-600" : ""
+                pathname === "/organizations" ? "font-semibold text-teal-600" : ""
               }`}
             >
-              Employers
+              For Organizations
             </Link>
             <Link
-              href="/volunteer"
+              href="/volunteers"
               className={`text-gray-700 hover:text-teal-600 ${
-                isActive("/volunteer") ? "font-semibold text-teal-600" : ""
+                pathname === "/volunteers" ? "font-semibold text-teal-600" : ""
               }`}
             >
-              Volunteers
+              For Volunteers
             </Link>
             <Link
-              href="/schedule"
+              href="/employers"
               className={`text-gray-700 hover:text-teal-600 ${
-                isActive("/schedule") ? "font-semibold text-teal-600" : ""
+                pathname === "/employers" ? "font-semibold text-teal-600" : ""
               }`}
             >
-              Schedule
+              For Employers
+            </Link>
+            <Link
+              href="/faq"
+              className={`text-gray-700 hover:text-teal-600 ${pathname === "/faq" ? "font-semibold text-teal-600" : ""}`}
+            >
+              FAQ
             </Link>
             <Link
               href="/contact"
               className={`text-gray-700 hover:text-teal-600 ${
-                isActive("/contact") ? "font-semibold text-teal-600" : ""
+                pathname === "/contact" ? "font-semibold text-teal-600" : ""
               }`}
             >
               Contact
             </Link>
+            <Link
+              href="/donate"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Donate
+            </Link>
           </nav>
-
-          {/* Login/Dashboard Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link
-              href="/employer/login"
-              className="text-gray-700 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium"
-            >
-              Login
-            </Link>
-            <Link
-              href="/employer/dashboard"
-              className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-            >
-              Dashboard
-            </Link>
-          </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -114,73 +94,57 @@ export function Header() {
           <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-4">
               <Link
-                href="/"
-                className={`text-gray-700 hover:text-teal-600 ${isActive("/") ? "font-semibold text-teal-600" : ""}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                href="/about"
+                href="/organizations"
                 className={`text-gray-700 hover:text-teal-600 ${
-                  isActive("/about") ? "font-semibold text-teal-600" : ""
+                  pathname === "/organizations" ? "font-semibold text-teal-600" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                About
+                For Organizations
               </Link>
               <Link
-                href="/employer"
+                href="/volunteers"
                 className={`text-gray-700 hover:text-teal-600 ${
-                  isActive("/employer") ? "font-semibold text-teal-600" : ""
+                  pathname === "/volunteers" ? "font-semibold text-teal-600" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Employers
+                For Volunteers
               </Link>
               <Link
-                href="/volunteer"
+                href="/employers"
                 className={`text-gray-700 hover:text-teal-600 ${
-                  isActive("/volunteer") ? "font-semibold text-teal-600" : ""
+                  pathname === "/employers" ? "font-semibold text-teal-600" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Volunteers
+                For Employers
               </Link>
               <Link
-                href="/schedule"
+                href="/faq"
                 className={`text-gray-700 hover:text-teal-600 ${
-                  isActive("/schedule") ? "font-semibold text-teal-600" : ""
+                  pathname === "/faq" ? "font-semibold text-teal-600" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Schedule
+                FAQ
               </Link>
               <Link
                 href="/contact"
                 className={`text-gray-700 hover:text-teal-600 ${
-                  isActive("/contact") ? "font-semibold text-teal-600" : ""
+                  pathname === "/contact" ? "font-semibold text-teal-600" : ""
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact
               </Link>
-              <div className="pt-4 border-t border-gray-200 flex flex-col space-y-2">
-                <Link
-                  href="/employer/login"
-                  className="text-gray-700 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/employer/dashboard"
-                  className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-sm font-medium inline-block"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Dashboard
-                </Link>
-              </div>
+              <Link
+                href="/donate"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium text-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Donate
+              </Link>
             </nav>
           </div>
         )}
