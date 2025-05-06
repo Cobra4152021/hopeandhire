@@ -39,12 +39,12 @@ export default function VolunteerLogin() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-[#f8faf9]">
       <Header />
       <main className="flex-1 flex items-center justify-center py-12">
-        <Card className="w-full max-w-md mx-auto">
+        <Card className="w-full max-w-md mx-auto border-0 shadow-md">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">Volunteer Login</CardTitle>
+            <CardTitle className="text-2xl font-bold text-gray-800">Volunteer Login</CardTitle>
             <CardDescription>Sign in to access your volunteer dashboard</CardDescription>
           </CardHeader>
           <form onSubmit={handleLogin}>
@@ -58,10 +58,16 @@ export default function VolunteerLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  className="border-gray-200 focus:border-[#26a69a] focus:ring-[#26a69a]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password">Password</Label>
+                  <Link href="/volunteer/reset-password" className="text-sm text-[#26a69a] hover:underline">
+                    Forgot password?
+                  </Link>
+                </div>
                 <Input
                   id="password"
                   type="password"
@@ -69,17 +75,13 @@ export default function VolunteerLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  className="border-gray-200 focus:border-[#26a69a] focus:ring-[#26a69a]"
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
-              <div className="flex items-center justify-between">
-                <Link href="/volunteer/reset-password" className="text-sm text-primary hover:underline">
-                  Forgot password?
-                </Link>
-              </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button type="submit" className="w-full bg-[#26a69a] hover:bg-[#1e8e82] text-white" disabled={loading}>
                 {loading ? "Signing in..." : "Sign In"}
               </Button>
               <div className="relative">
@@ -90,13 +92,13 @@ export default function VolunteerLogin() {
                   <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
                 </div>
               </div>
-              <Button variant="outline" className="w-full" type="button">
-                <Linkedin className="mr-2 h-4 w-4" />
+              <Button variant="outline" className="w-full border-gray-200 text-gray-700 hover:bg-gray-50" type="button">
+                <Linkedin className="mr-2 h-4 w-4 text-[#0077b5]" />
                 Sign in with LinkedIn
               </Button>
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="text-center text-sm text-gray-600">
                 Don't have an account?{" "}
-                <Link href="/volunteer/register" className="text-primary hover:underline">
+                <Link href="/volunteer/register" className="text-[#26a69a] hover:underline">
                   Register
                 </Link>
               </p>

@@ -57,13 +57,13 @@ export default function EmployerLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="border-gray-200 focus:border-[#26a69a] focus:ring-[#26a69a]"
+                  className="border-gray-200 focus:border-[#f2b01e] focus:ring-[#f2b01e]"
                 />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <Link href="/employer/reset-password" className="text-sm text-[#26a69a] hover:underline">
+                  <Link href="/employer/reset-password" className="text-sm text-[#f2b01e] hover:underline">
                     Forgot password?
                   </Link>
                 </div>
@@ -74,7 +74,7 @@ export default function EmployerLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="border-gray-200 focus:border-[#26a69a] focus:ring-[#26a69a]"
+                  className="border-gray-200 focus:border-[#f2b01e] focus:ring-[#f2b01e]"
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -85,7 +85,7 @@ export default function EmployerLogin() {
               </Button>
               <p className="text-center text-sm text-gray-600">
                 Don't have an account?{" "}
-                <Link href="/employer/register" className="text-[#26a69a] hover:underline">
+                <Link href="/employer/register" className="text-[#f2b01e] hover:underline">
                   Register
                 </Link>
               </p>
