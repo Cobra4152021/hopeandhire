@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="225" viewBox="0 0 800 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with gradient -->
+  <rect width="800" height="225" fill="url(#gradient-bg)"/>
+  
+  <!-- H Icon with enhanced visibility -->
+  <g transform="translate(100, 79)">
+    <!-- Background circle -->
+    <circle cx="50" cy="50" r="50" fill="#4FD1C5" fill-opacity="0.2"/>
+    
+    <!-- H letter with enhanced stroke -->
+    <path d="M30 20h40M30 50h40M30 80h40" stroke="#4FD1C5" stroke-width="10" stroke-linecap="round"/>
+    <path d="M50 20v60" stroke="#4FD1C5" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Text content -->
+  <g transform="translate(200, 117)">
+    <!-- Main title -->
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#2D3748">
+      Hope and Hire
+    </text>
+    <!-- Tagline -->
+    <text x="0" y="40" font-family="Arial, sans-serif" font-size="24" fill="#4A5568">
+      Building Better Futures
+    </text>
+  </g>
+  
+  <!-- Decorative elements -->
+  <g transform="translate(567, 117)">
+    <path d="M0 0L25 12.5L0 25" fill="#4FD1C5" fill-opacity="0.3"/>
+    <path d="M10 0L35 12.5L10 25" fill="#4FD1C5" fill-opacity="0.2"/>
+  </g>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="gradient-bg" x1="0" y1="0" x2="800" y2="225" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F7FAFC"/>
+      <stop offset="100%" stop-color="#EDF2F7"/>
+    </linearGradient>
+  </defs>
+</svg> 

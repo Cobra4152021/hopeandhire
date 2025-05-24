@@ -15,7 +15,10 @@ import { CheckCircle, Heart, Users, Briefcase, Calendar } from "lucide-react"
 export default function DonatePage() {
   const [donationAmount, setDonationAmount] = useState<string>("50")
   const [customAmount, setCustomAmount] = useState<string>("")
+<<<<<<< HEAD
   const [donationType, setDonationType] = useState<string>("one-time")
+=======
+>>>>>>> 999b990 (updates)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -48,7 +51,11 @@ export default function DonatePage() {
     <div className="flex flex-col min-h-screen">
       {/* Logo Section - Centrally positioned below header */}
       <div className="flex justify-center py-8 bg-white">
+<<<<<<< HEAD
         <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
+=======
+        <Image src="/logo.svg" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
+>>>>>>> 999b990 (updates)
       </div>
 
       {/* Hero Section */}
@@ -100,7 +107,11 @@ export default function DonatePage() {
                     <CardTitle>Make a Donation</CardTitle>
                   </CardHeader>
                   <CardContent>
+<<<<<<< HEAD
                     <Tabs defaultValue="one-time" onValueChange={(value) => setDonationType(value)}>
+=======
+                    <Tabs defaultValue="one-time" onValueChange={(value) => setDonationAmount(value)}>
+>>>>>>> 999b990 (updates)
                       <TabsList className="grid w-full grid-cols-2 mb-6">
                         <TabsTrigger value="one-time">One-Time</TabsTrigger>
                         <TabsTrigger value="monthly">Monthly</TabsTrigger>

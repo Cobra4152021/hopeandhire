@@ -1,4 +1,8 @@
 import * as React from "react"
+<<<<<<< HEAD
+=======
+import PropTypes from "prop-types"
+>>>>>>> 999b990 (updates)
 
 import { cn } from "@/lib/utils"
 
@@ -15,6 +19,12 @@ const Table = React.forwardRef<
   </div>
 ))
 Table.displayName = "Table"
+<<<<<<< HEAD
+=======
+Table.propTypes = {
+  className: PropTypes.string,
+}
+>>>>>>> 999b990 (updates)
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
@@ -80,6 +90,12 @@ const TableHead = React.forwardRef<
   />
 ))
 TableHead.displayName = "TableHead"
+<<<<<<< HEAD
+=======
+TableHead.propTypes = {
+  className: PropTypes.string,
+}
+>>>>>>> 999b990 (updates)
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,

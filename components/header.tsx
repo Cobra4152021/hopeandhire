@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+<<<<<<< HEAD
+=======
+import Image from "next/image"
+>>>>>>> 999b990 (updates)
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -20,10 +24,17 @@ function Header() {
   }
 
   const navigation = [
+<<<<<<< HEAD
     { name: "For Job Seekers", href: "/job-seekers" },
     { name: "For Organizations", href: "/organizations" },
     { name: "For Volunteers", href: "/volunteers" },
     { name: "For Employers", href: "/employers" },
+=======
+    { name: "Job Seekers", href: "/job-seekers" },
+    { name: "Organizations", href: "/organizations" },
+    { name: "Volunteers", href: "/volunteers" },
+    { name: "Employers", href: "/employers" },
+>>>>>>> 999b990 (updates)
     { name: "Resources", href: "/resources" },
     { name: "FAQ", href: "/faq" },
   ]
@@ -37,7 +48,20 @@ function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-shrink-0">
+<<<<<<< HEAD
             <Link href="/" className="flex items-center">
+=======
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="relative w-12 h-12">
+                <Image
+                  src="/logo.jpg"
+                  alt="Hope and Hire Logo"
+                  fill
+                  className="object-cover rounded-full border border-gray-200 shadow"
+                  priority
+                />
+              </div>
+>>>>>>> 999b990 (updates)
               <span className="text-teal font-bold text-xl">HopeAndHire</span>
             </Link>
           </div>

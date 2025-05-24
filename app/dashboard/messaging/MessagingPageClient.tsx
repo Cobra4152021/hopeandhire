@@ -7,6 +7,10 @@ import { Card, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Search, Send, Phone, Video, MoreVertical, PaperclipIcon } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+<<<<<<< HEAD
+=======
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog"
+>>>>>>> 999b990 (updates)
 
 // Sample data for conversations
 const conversations = [
@@ -102,6 +106,12 @@ export default function MessagingPageClient() {
   const [messages, setMessages] = useState(sampleMessages)
   const [newMessage, setNewMessage] = useState("")
   const [searchTerm, setSearchTerm] = useState("")
+<<<<<<< HEAD
+=======
+  const [isNewChatOpen, setIsNewChatOpen] = useState(false)
+  const [newChatName, setNewChatName] = useState("")
+  const [newChatPhone, setNewChatPhone] = useState("")
+>>>>>>> 999b990 (updates)
 
   const filteredConversations = conversations.filter((conversation) =>
     conversation.name.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -137,6 +147,28 @@ export default function MessagingPageClient() {
     )
   }
 
+<<<<<<< HEAD
+=======
+  const handleAddNewChat = () => {
+    if (!newChatName.trim()) return
+    const newConv = {
+      id: conversations.length + 1,
+      name: newChatName,
+      avatar: "",
+      lastMessage: "",
+      time: "Now",
+      unread: 0,
+      online: false,
+      phone: newChatPhone,
+    }
+    setActiveConversation(newConv)
+    setMessages([])
+    setIsNewChatOpen(false)
+    setNewChatName("")
+    setNewChatPhone("")
+  }
+
+>>>>>>> 999b990 (updates)
   useEffect(() => {
     // Scroll to bottom of messages when messages change
     const messagesContainer = document.getElementById("messages-container")
@@ -164,6 +196,29 @@ export default function MessagingPageClient() {
             </CardHeader>
             <ScrollArea className="h-[calc(100vh-200px)]">
               <div className="p-2">
+<<<<<<< HEAD
+=======
+                <div className="flex justify-between items-center px-4 py-2 border-b">
+                  <span className="font-bold text-lg">Messages</span>
+                  <Dialog open={isNewChatOpen} onOpenChange={setIsNewChatOpen}>
+                    <DialogTrigger asChild>
+                      <Button size="sm" className="bg-teal text-white">New Chat</Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Start New Chat</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <Input placeholder="Name" value={newChatName} onChange={e => setNewChatName(e.target.value)} />
+                        <Input placeholder="Phone (for WhatsApp)" value={newChatPhone} onChange={e => setNewChatPhone(e.target.value)} />
+                      </div>
+                      <DialogFooter>
+                        <Button onClick={handleAddNewChat} className="bg-teal text-white">Start Chat</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+>>>>>>> 999b990 (updates)
                 {filteredConversations.map((conversation) => (
                   <div
                     key={conversation.id}
@@ -224,11 +279,35 @@ export default function MessagingPageClient() {
                 </div>
               </div>
               <div className="flex space-x-2">
+<<<<<<< HEAD
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Phone className="h-5 w-5 text-gray-500" />
                 </Button>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Video className="h-5 w-5 text-gray-500" />
+=======
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    if (activeConversation.phone) {
+                      window.open(`https://wa.me/${activeConversation.phone.replace(/[^\d]/g, "")}`)
+                    } else {
+                      alert("No phone number available for WhatsApp chat.")
+                    }
+                  }}
+                  title="WhatsApp Chat"
+                >
+                  <Phone className="text-gray-500" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => window.open("https://meet.google.com/new", "_blank")}
+                  title="Google Meet Video Call"
+                >
+                  <Video className="text-gray-500" />
+>>>>>>> 999b990 (updates)
                 </Button>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <MoreVertical className="h-5 w-5 text-gray-500" />

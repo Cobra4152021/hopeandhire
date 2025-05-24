@@ -19,7 +19,11 @@ const sampleApplications = [
     candidate: {
       id: 1,
       name: "Michael Johnson",
+<<<<<<< HEAD
       avatar: "/stylized-letters-mj.png",
+=======
+      avatar: "/avatars/michael-johnson.jpg",
+>>>>>>> 999b990 (updates)
     },
     status: "Screening",
     appliedDate: "May 5, 2023",
@@ -33,7 +37,11 @@ const sampleApplications = [
     candidate: {
       id: 2,
       name: "Sarah Williams",
+<<<<<<< HEAD
       avatar: "/stylized-letters-sw.png",
+=======
+      avatar: "/avatars/sarah-williams.jpg",
+>>>>>>> 999b990 (updates)
     },
     status: "Interview",
     appliedDate: "May 3, 2023",
@@ -47,7 +55,11 @@ const sampleApplications = [
     candidate: {
       id: 3,
       name: "David Chen",
+<<<<<<< HEAD
       avatar: "/stylized-letters-dc.png",
+=======
+      avatar: "/avatars/david-chen.jpg",
+>>>>>>> 999b990 (updates)
     },
     status: "Offer",
     appliedDate: "April 28, 2023",
@@ -61,7 +73,11 @@ const sampleApplications = [
     candidate: {
       id: 4,
       name: "Emily Rodriguez",
+<<<<<<< HEAD
       avatar: "/stylized-letters-er.png",
+=======
+      avatar: "/avatars/emily-rodriguez.jpg",
+>>>>>>> 999b990 (updates)
     },
     status: "New",
     appliedDate: "May 6, 2023",
@@ -75,7 +91,11 @@ const sampleApplications = [
     candidate: {
       id: 5,
       name: "James Wilson",
+<<<<<<< HEAD
       avatar: "/stylized-letters-jw.png",
+=======
+      avatar: "/avatars/james-wilson.jpg",
+>>>>>>> 999b990 (updates)
     },
     status: "Rejected",
     appliedDate: "April 25, 2023",

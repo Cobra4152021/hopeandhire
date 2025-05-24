@@ -62,7 +62,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <Link href="/" className="flex items-center">
               <div className="relative h-8 w-8 mr-2">
+<<<<<<< HEAD
                 <Image src="/logo.png" alt="Hope and Hire Logo" fill className="object-contain" />
+=======
+                <Image src="/logo.svg" alt="Hope and Hire Logo" fill className="object-contain" />
+>>>>>>> 999b990 (updates)
               </div>
               <span className="text-teal font-bold text-lg">HopeAndHire</span>
             </Link>

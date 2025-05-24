@@ -183,7 +183,11 @@ export default function SkillsAssessmentTool() {
         <div className="text-center">
           <h3 className="text-xl font-bold text-teal mb-2">Assessment Complete!</h3>
           <p className="text-gray-600">
+<<<<<<< HEAD
             Based on your responses, we've identified the following strengths and opportunities:
+=======
+            Based on your responses, we&apos;ve identified the following strengths and opportunities:
+>>>>>>> 999b990 (updates)
           </p>
         </div>
 

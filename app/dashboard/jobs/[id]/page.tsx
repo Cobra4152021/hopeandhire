@@ -60,7 +60,11 @@ const jobData = {
       id: 1,
       name: "Michael Johnson",
       role: "Senior Frontend Developer",
+<<<<<<< HEAD
       avatar: "/stylized-letters-mj.png",
+=======
+      avatar: "/avatars/michael-johnson.jpg",
+>>>>>>> 999b990 (updates)
       status: "Reviewed",
       applied: "1 day ago",
       match: 92,
@@ -69,7 +73,11 @@ const jobData = {
       id: 2,
       name: "Sarah Williams",
       role: "Full Stack Developer",
+<<<<<<< HEAD
       avatar: "/stylized-letters-sw.png",
+=======
+      avatar: "/avatars/sarah-williams.jpg",
+>>>>>>> 999b990 (updates)
       status: "Interviewing",
       applied: "2 days ago",
       match: 88,
@@ -78,7 +86,11 @@ const jobData = {
       id: 3,
       name: "David Chen",
       role: "Software Engineer",
+<<<<<<< HEAD
       avatar: "/stylized-letters-dc.png",
+=======
+      avatar: "/avatars/david-chen.jpg",
+>>>>>>> 999b990 (updates)
       status: "New",
       applied: "12 hours ago",
       match: 85,
@@ -87,7 +99,11 @@ const jobData = {
       id: 4,
       name: "Emily Rodriguez",
       role: "Frontend Developer",
+<<<<<<< HEAD
       avatar: "/stylized-letters-er.png",
+=======
+      avatar: "/avatars/emily-rodriguez.jpg",
+>>>>>>> 999b990 (updates)
       status: "New",
       applied: "1 day ago",
       match: 78,
@@ -95,7 +111,11 @@ const jobData = {
   ],
 }
 
+<<<<<<< HEAD
 export default function JobDetailPage({ params }: { params: { id: string } }) {
+=======
+export default function JobDetailPage() {
+>>>>>>> 999b990 (updates)
   const router = useRouter()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 

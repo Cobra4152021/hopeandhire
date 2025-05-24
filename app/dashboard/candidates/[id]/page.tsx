@@ -35,7 +35,11 @@ const candidateData = {
   experience: "8 years",
   education: "B.S. Computer Science, Stanford University",
   status: "Available",
+<<<<<<< HEAD
   avatar: "/stylized-letters-mj.png",
+=======
+  avatar: "/avatars/michael-johnson.jpg",
+>>>>>>> 999b990 (updates)
   bio: "Experienced frontend developer with a passion for creating intuitive user interfaces and optimizing web performance. Skilled in modern JavaScript frameworks and design systems.",
   skills: [
     { name: "React", level: 95 },
@@ -130,11 +134,15 @@ const candidateData = {
   ],
 }
 
+<<<<<<< HEAD
 export default function CandidateDetailPage({
   params,
 }: {
   params: { id: string }
 }) {
+=======
+export default function CandidateDetailPage() {
+>>>>>>> 999b990 (updates)
   const router = useRouter()
 
   return (

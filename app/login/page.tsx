@@ -43,7 +43,11 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-4">
+<<<<<<< HEAD
             <Image src="/logo.png" alt="Hope and Hire Logo" width={150} height={60} className="h-auto" priority />
+=======
+            <Image src="/logo.svg" alt="Hope and Hire Logo" width={150} height={60} className="h-auto" priority />
+>>>>>>> 999b990 (updates)
           </div>
           <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
           <CardDescription className="text-center">Sign in to your account to access your dashboard</CardDescription>

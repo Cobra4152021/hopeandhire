@@ -24,7 +24,11 @@ const sampleCandidates = [
     education: "B.S. Computer Science",
     skills: ["React", "TypeScript", "Node.js", "GraphQL"],
     status: "Available",
+<<<<<<< HEAD
     avatar: "/stylized-letters-mj.png",
+=======
+    avatar: "/avatars/michael-johnson.jpg",
+>>>>>>> 999b990 (updates)
     matchScore: 92,
     lastActive: "2 hours ago",
     featured: true,
@@ -38,7 +42,11 @@ const sampleCandidates = [
     education: "M.S. Software Engineering",
     skills: ["JavaScript", "Python", "React", "Django"],
     status: "Available",
+<<<<<<< HEAD
     avatar: "/stylized-letters-sw.png",
+=======
+    avatar: "/avatars/sarah-williams.jpg",
+>>>>>>> 999b990 (updates)
     matchScore: 88,
     lastActive: "1 day ago",
     featured: false,
@@ -52,7 +60,11 @@ const sampleCandidates = [
     education: "B.S. Computer Engineering",
     skills: ["Java", "Spring Boot", "React", "AWS"],
     status: "Interviewing",
+<<<<<<< HEAD
     avatar: "/stylized-letters-dc.png",
+=======
+    avatar: "/avatars/david-chen.jpg",
+>>>>>>> 999b990 (updates)
     matchScore: 85,
     lastActive: "3 days ago",
     featured: false,
@@ -66,7 +78,11 @@ const sampleCandidates = [
     education: "B.A. Design",
     skills: ["HTML/CSS", "JavaScript", "React", "UI/UX"],
     status: "Available",
+<<<<<<< HEAD
     avatar: "/stylized-letters-er.png",
+=======
+    avatar: "/avatars/emily-rodriguez.jpg",
+>>>>>>> 999b990 (updates)
     matchScore: 78,
     lastActive: "5 hours ago",
     featured: true,
@@ -80,7 +96,11 @@ const sampleCandidates = [
     education: "M.S. Computer Science",
     skills: ["Python", "Django", "PostgreSQL", "Docker"],
     status: "Placed",
+<<<<<<< HEAD
     avatar: "/stylized-letters-jw.png",
+=======
+    avatar: "/avatars/james-wilson.jpg",
+>>>>>>> 999b990 (updates)
     matchScore: 75,
     lastActive: "1 week ago",
     featured: false,

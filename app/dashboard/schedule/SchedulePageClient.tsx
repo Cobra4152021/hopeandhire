@@ -21,6 +21,10 @@ import { TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Clock, MapPin, Users, Plus, CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react"
+<<<<<<< HEAD
+=======
+import { Tabs } from "@/components/ui/tabs"
+>>>>>>> 999b990 (updates)
 
 // Sample events data
 const initialEvents = [
@@ -353,6 +357,7 @@ export default function SchedulePageClient() {
               <CardTitle>Schedule</CardTitle>
             </div>
             <div className="flex items-center space-x-2">
+<<<<<<< HEAD
               <TabsList>
                 <TabsTrigger value="day" onClick={() => setView("day")}>
                   Day
@@ -364,6 +369,15 @@ export default function SchedulePageClient() {
                   Month
                 </TabsTrigger>
               </TabsList>
+=======
+              <Tabs value={view} onValueChange={setView}>
+                <TabsList>
+                  <TabsTrigger value="day">Day</TabsTrigger>
+                  <TabsTrigger value="week">Week</TabsTrigger>
+                  <TabsTrigger value="month">Month</TabsTrigger>
+                </TabsList>
+              </Tabs>
+>>>>>>> 999b990 (updates)
             </div>
           </CardHeader>
           <CardContent>

@@ -4,11 +4,34 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Trophy } from "lucide-react"
 import { AnimatedCounter } from "@/components/animated-counter"
+<<<<<<< HEAD
+=======
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Hope and Hire - Building Better Futures",
+  description: "Empowering individuals with second chances through workforce readiness and meaningful employment. Join our mission to bridge the gap from hope to hire.",
+  keywords: "second chances, employment, workforce readiness, job placement, career development, reentry support",
+  openGraph: {
+    title: "Hope and Hire - Building Better Futures",
+    description: "Empowering individuals with second chances through workforce readiness and meaningful employment.",
+    images: [
+      {
+        url: "/logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Hope and Hire Logo",
+      },
+    ],
+  },
+}
+>>>>>>> 999b990 (updates)
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section with Logo */}
+<<<<<<< HEAD
       <section className="bg-light-bg py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
@@ -26,6 +49,50 @@ export default function Home() {
             </div>
 
             <div className="flex justify-center space-x-4 mb-6">
+=======
+      <section className="bg-light-bg py-12 md:py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Logo positioned in the light green section - priority loading for above-the-fold */}
+            <div
+              className="relative w-full max-w-3xl mx-auto mb-8 aspect-[16/5] rounded-2xl shadow-2xl border border-gray-200 flex items-center justify-center overflow-hidden bg-white"
+            >
+              {/* Left image */}
+              <div className="h-full flex items-center z-0" style={{ width: '28%' }}>
+                <img
+                  src="/612x612.jpg"
+                  alt="Diverse workers left"
+                  className="h-full w-full object-cover rounded-l-2xl"
+                  style={{ objectPosition: 'right center' }}
+                  loading="lazy"
+                />
+              </div>
+              {/* Center logo */}
+              <div className="flex-1 flex items-center justify-center h-full z-10">
+                <Image
+                  src="/logo.png"
+                  alt="Hope and Hire - Building Better Futures"
+                  fill
+                  className="object-contain"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 600px"
+                  quality={90}
+                />
+              </div>
+              {/* Right image */}
+              <div className="h-full flex items-center z-0" style={{ width: '28%' }}>
+                <img
+                  src="/1612x612.jpg"
+                  alt="Diverse workers right"
+                  className="h-full w-full object-cover rounded-r-2xl"
+                  style={{ objectPosition: 'left center' }}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
+>>>>>>> 999b990 (updates)
               <span className="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm">
                 Empowering second chances
               </span>
@@ -34,28 +101,51 @@ export default function Home() {
               </span>
             </div>
 
+<<<<<<< HEAD
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-dark-text">
+=======
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-dark-text">
+>>>>>>> 999b990 (updates)
               Bridging the Gap from
               <span className="text-teal"> Hope </span>
               to
               <span className="text-yellow"> Hire</span>
             </h1>
 
+<<<<<<< HEAD
             <p className="text-lg mb-12 text-gray-600 max-w-3xl mx-auto">
+=======
+            <p className="text-base md:text-lg mb-8 md:mb-12 text-gray-600 max-w-3xl mx-auto">
+>>>>>>> 999b990 (updates)
               Empowering individuals with second chances through workforce readiness and meaningful employment.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/organizations">
+<<<<<<< HEAD
                 <Button className="bg-teal text-white hover:bg-teal-dark">Support Your Clients</Button>
               </Link>
               <Link href="/volunteers">
                 <Button variant="outline" className="border-gray-300 hover:bg-gray-100">
+=======
+                <Button className="w-full sm:w-auto bg-teal text-white hover:bg-teal-dark">
+                  Support Your Clients
+                </Button>
+              </Link>
+              <Link href="/volunteers">
+                <Button variant="outline" className="w-full sm:w-auto border-gray-300 hover:bg-gray-100">
+>>>>>>> 999b990 (updates)
                   Start Volunteering
                 </Button>
               </Link>
               <Link href="/employers">
+<<<<<<< HEAD
                 <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Hire Job-Ready Candidates</Button>
+=======
+                <Button className="w-full sm:w-auto bg-yellow text-dark-text hover:bg-yellow-dark">
+                  Hire Job-Ready Candidates
+                </Button>
+>>>>>>> 999b990 (updates)
               </Link>
             </div>
           </div>
