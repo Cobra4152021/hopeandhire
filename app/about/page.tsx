@@ -2,14 +2,32 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About Us | Hope and Hire",
+  description: "Learn about Hope and Hire's mission, story, values, and team. We are dedicated to empowering individuals with second chances through workforce readiness and meaningful employment opportunities.",
+  openGraph: {
+    title: "About Us | Hope and Hire",
+    description: "Learn about Hope and Hire's mission, story, values, and team. We are dedicated to empowering individuals with second chances through workforce readiness and meaningful employment opportunities.",
+    images: [
+      {
+        url: "/diverse-professionals-meeting.png",
+        width: 500,
+        height: 400,
+        alt: "Hope and Hire team meeting",
+      },
+    ],
+  },
+}
 
 export default function AboutPage() {
   const teamMembers = [
     {
       name: "Ken Lomba",
       role: "Executive Director",
-      image: "/stylized-letters-sj.png",
-      bio: "Ken has over 10 years of experience in workforce development, has successfully turned a weak union into a powerful and thriving union, and is highly experienced in building charitable nonprofit organizations. He is passionate about creating pathways to employment for underserved communities.",
+      image: "/Ken.jpg",
+      bio: "Ken brings over a decade of experience in workforce development, where he has transformed a struggling union into a strong, effective, and respected organization. He also has extensive expertise in building and leading charitable nonprofit organizations. Driven by a deep commitment to equity, Ken is passionate about creating meaningful employment pathways for underserved communities.",
     },
     {
       name: "Mark Lu",
