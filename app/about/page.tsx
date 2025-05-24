@@ -6,28 +6,28 @@ import { Card, CardContent } from "@/components/ui/card"
 export default function AboutPage() {
   const teamMembers = [
     {
-      name: "Sarah Johnson",
+      name: "Ken Lomba",
       role: "Executive Director",
       image: "/stylized-letters-sj.png",
-      bio: "Sarah has over 15 years of experience in workforce development and is passionate about creating pathways to employment for underserved communities.",
+      bio: "Ken has over 10 years of experience in workforce development, has successfully turned a weak union into a powerful and thriving union, and is highly experienced in building charitable nonprofit organizations. He is passionate about creating pathways to employment for underserved communities.",
     },
     {
-      name: "Michael Chen",
+      name: "Mark Lu",
       role: "Director of Employer Relations",
       image: "/stylized-letters-mc.png",
-      bio: "Michael brings extensive experience in corporate partnerships and job placement, helping to build our network of employer partners.",
+      bio: "Mark brings extensive experience in corporate partnerships and job placement, helping to build our network of employer partners.",
     },
     {
-      name: "Jennifer Williams",
+      name: "Terry Uyeda",
       role: "Volunteer Program Manager",
       image: "/stylized-letters-jw.png",
-      bio: "Jennifer coordinates our volunteer program, ensuring that job seekers receive quality support from our dedicated volunteers.",
+      bio: "Terry coordinates our volunteer program, ensuring that job seekers receive quality support from our dedicated volunteers.",
     },
     {
-      name: "David Rodriguez",
+      name: "Open",
       role: "Career Services Director",
       image: "/stylized-letters-dr.png",
-      bio: "David oversees our career services programs, bringing expertise in career counseling and job readiness training.",
+      bio: "We are seeking a dedicated professional to oversee our career services programs, bringing expertise in career counseling and job readiness training.",
     },
   ]
 
@@ -67,7 +67,7 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold mb-6 text-dark-text">Our Story</h2>
               <p className="text-gray-600 mb-4">
-                Hope and Hire was founded in 2018 by a group of professionals who recognized the significant barriers to
+                Hope and Hire was founded in March of 2025 by a group of professionals who recognized the significant barriers to
                 employment faced by individuals with justice involvement, gaps in employment history, and other
                 challenges.
               </p>
