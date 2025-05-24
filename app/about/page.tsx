@@ -27,7 +27,7 @@ export default function AboutPage() {
       name: "Ken Lomba",
       role: "Executive Director",
       image: "/Ken.jpg",
-      bio: "Ken brings over a decade of experience in workforce development, where he has transformed a struggling union into a strong, effective, and respected organization. He also has extensive expertise in building and leading charitable nonprofit organizations. Driven by a deep commitment to equity, Ken is passionate about creating meaningful employment pathways for underserved communities.",
+      bio: "Ken is a seasoned union leader with over 10 years of workforce development experience. He rebuilt a struggling union into a powerful force and has led successful nonprofit efforts to expand job opportunities for underserved communities.",
     },
     {
       name: "Mark Lu",
