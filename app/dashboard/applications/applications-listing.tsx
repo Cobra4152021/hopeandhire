@@ -19,15 +19,17 @@ const sampleApplications = [
     candidate: {
       id: 1,
       name: "Michael Johnson",
-<<<<<<< HEAD
-      avatar: "/stylized-letters-mj.png",
-=======
       avatar: "/avatars/michael-johnson.jpg",
->>>>>>> 999b990 (updates)
+      role: "Senior Frontend Developer",
+      experience: "8 years",
+      education: "B.S. Computer Science, Stanford University",
+      status: "Available",
+      matchScore: 95,
+      lastActive: "2 days ago",
+      featured: true,
     },
-    status: "Screening",
-    appliedDate: "May 5, 2023",
-    lastUpdated: "2 days ago",
+    status: "Under Review",
+    appliedDate: "May 15, 2023",
     matchScore: 92,
   },
   {
@@ -37,16 +39,18 @@ const sampleApplications = [
     candidate: {
       id: 2,
       name: "Sarah Williams",
-<<<<<<< HEAD
-      avatar: "/stylized-letters-sw.png",
-=======
       avatar: "/avatars/sarah-williams.jpg",
->>>>>>> 999b990 (updates)
+      role: "Full Stack Developer",
+      experience: "6 years",
+      education: "M.S. Software Engineering, MIT",
+      status: "Available",
+      matchScore: 88,
+      lastActive: "1 day ago",
+      featured: false,
     },
-    status: "Interview",
-    appliedDate: "May 3, 2023",
-    lastUpdated: "1 day ago",
-    matchScore: 88,
+    status: "Interview Scheduled",
+    appliedDate: "May 10, 2023",
+    matchScore: 85,
   },
   {
     id: 3,
@@ -55,16 +59,18 @@ const sampleApplications = [
     candidate: {
       id: 3,
       name: "David Chen",
-<<<<<<< HEAD
-      avatar: "/stylized-letters-dc.png",
-=======
       avatar: "/avatars/david-chen.jpg",
->>>>>>> 999b990 (updates)
+      role: "Backend Developer",
+      experience: "5 years",
+      education: "B.S. Computer Engineering, UC Berkeley",
+      status: "Interviewing",
+      matchScore: 82,
+      lastActive: "3 days ago",
+      featured: false,
     },
-    status: "Offer",
-    appliedDate: "April 28, 2023",
-    lastUpdated: "12 hours ago",
-    matchScore: 85,
+    status: "Rejected",
+    appliedDate: "April 25, 2023",
+    matchScore: 78,
   },
   {
     id: 4,
@@ -73,16 +79,18 @@ const sampleApplications = [
     candidate: {
       id: 4,
       name: "Emily Rodriguez",
-<<<<<<< HEAD
-      avatar: "/stylized-letters-er.png",
-=======
       avatar: "/avatars/emily-rodriguez.jpg",
->>>>>>> 999b990 (updates)
+      role: "UI/UX Designer",
+      experience: "4 years",
+      education: "B.A. Design, RISD",
+      status: "Available",
+      matchScore: 90,
+      lastActive: "1 week ago",
+      featured: true,
     },
     status: "New",
-    appliedDate: "May 6, 2023",
-    lastUpdated: "5 hours ago",
-    matchScore: 78,
+    appliedDate: "May 20, 2023",
+    matchScore: 88,
   },
   {
     id: 5,
@@ -91,16 +99,18 @@ const sampleApplications = [
     candidate: {
       id: 5,
       name: "James Wilson",
-<<<<<<< HEAD
-      avatar: "/stylized-letters-jw.png",
-=======
       avatar: "/avatars/james-wilson.jpg",
->>>>>>> 999b990 (updates)
+      role: "DevOps Engineer",
+      experience: "7 years",
+      education: "M.S. Computer Science, Georgia Tech",
+      status: "Placed",
+      matchScore: 75,
+      lastActive: "1 week ago",
+      featured: false,
     },
     status: "Rejected",
     appliedDate: "April 25, 2023",
-    lastUpdated: "1 week ago",
-    matchScore: 75,
+    matchScore: 72,
   },
 ]
 

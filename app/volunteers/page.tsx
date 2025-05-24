@@ -45,11 +45,7 @@ export default function VolunteersPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Volunteer Opportunities</h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-<<<<<<< HEAD
-            Choose how you'd like to contribute based on your skills and availability.
-=======
             Choose how you&apos;d like to contribute based on your skills and availability.
->>>>>>> 999b990 (updates)
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -146,11 +142,7 @@ export default function VolunteersPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Benefits for Volunteers</CardTitle>
-<<<<<<< HEAD
-                <CardDescription>What you'll gain from the experience</CardDescription>
-=======
                 <CardDescription>What you&apos;ll gain from the experience</CardDescription>
->>>>>>> 999b990 (updates)
               </CardHeader>
               <CardContent>
                 <ul className="space-y-4">
@@ -172,11 +164,7 @@ export default function VolunteersPage() {
                     <CheckCircle className="text-teal h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-medium text-dark-text">Community Impact</p>
-<<<<<<< HEAD
-                      <p className="text-gray-600">Make a tangible difference in people's lives and communities</p>
-=======
                       <p className="text-gray-600">Make a tangible difference in people&apos;s lives and communities</p>
->>>>>>> 999b990 (updates)
                     </div>
                   </li>
                   <li className="flex items-start">

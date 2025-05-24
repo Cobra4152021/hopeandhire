@@ -15,10 +15,7 @@ import { CheckCircle, Heart, Users, Briefcase, Calendar } from "lucide-react"
 export default function DonatePage() {
   const [donationAmount, setDonationAmount] = useState<string>("50")
   const [customAmount, setCustomAmount] = useState<string>("")
-<<<<<<< HEAD
   const [donationType, setDonationType] = useState<string>("one-time")
-=======
->>>>>>> 999b990 (updates)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -51,11 +48,7 @@ export default function DonatePage() {
     <div className="flex flex-col min-h-screen">
       {/* Logo Section - Centrally positioned below header */}
       <div className="flex justify-center py-8 bg-white">
-<<<<<<< HEAD
         <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
-=======
-        <Image src="/logo.svg" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
->>>>>>> 999b990 (updates)
       </div>
 
       {/* Hero Section */}
@@ -107,11 +100,7 @@ export default function DonatePage() {
                     <CardTitle>Make a Donation</CardTitle>
                   </CardHeader>
                   <CardContent>
-<<<<<<< HEAD
                     <Tabs defaultValue="one-time" onValueChange={(value) => setDonationType(value)}>
-=======
-                    <Tabs defaultValue="one-time" onValueChange={(value) => setDonationAmount(value)}>
->>>>>>> 999b990 (updates)
                       <TabsList className="grid w-full grid-cols-2 mb-6">
                         <TabsTrigger value="one-time">One-Time</TabsTrigger>
                         <TabsTrigger value="monthly">Monthly</TabsTrigger>
@@ -210,7 +199,7 @@ export default function DonatePage() {
                                     htmlFor={`monthly-${amount}`}
                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-teal [&:has([data-state=checked])]:border-teal"
                                   >
-                                    {amount === "custom" ? "Custom" : <span>${amount}/mo</span>}
+                                    {amount === "custom" ? "Custom" : <span>${amount}</span>}
                                   </Label>
                                 </div>
                               ))}
@@ -218,13 +207,13 @@ export default function DonatePage() {
 
                             {donationAmount === "custom" && (
                               <div className="mt-4">
-                                <Label htmlFor="customMonthlyAmount">Enter Custom Monthly Amount</Label>
+                                <Label htmlFor="customAmount">Enter Custom Amount</Label>
                                 <div className="relative mt-1">
                                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <span className="text-gray-500">$</span>
                                   </div>
                                   <Input
-                                    id="customMonthlyAmount"
+                                    id="customAmount"
                                     type="number"
                                     min="1"
                                     step="1"
@@ -242,18 +231,18 @@ export default function DonatePage() {
                           <div className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                               <div className="space-y-2">
-                                <Label htmlFor="firstNameMonthly">First Name</Label>
-                                <Input id="firstNameMonthly" required />
+                                <Label htmlFor="firstName">First Name</Label>
+                                <Input id="firstName" required />
                               </div>
                               <div className="space-y-2">
-                                <Label htmlFor="lastNameMonthly">Last Name</Label>
-                                <Input id="lastNameMonthly" required />
+                                <Label htmlFor="lastName">Last Name</Label>
+                                <Input id="lastName" required />
                               </div>
                             </div>
 
                             <div className="space-y-2">
-                              <Label htmlFor="emailMonthly">Email Address</Label>
-                              <Input id="emailMonthly" type="email" required />
+                              <Label htmlFor="email">Email Address</Label>
+                              <Input id="email" type="email" required />
                             </div>
                           </div>
 
@@ -265,7 +254,7 @@ export default function DonatePage() {
                             >
                               {isSubmitting
                                 ? "Processing..."
-                                : `Donate $${donationAmount === "custom" ? customAmount : donationAmount}/month`}
+                                : `Donate $${donationAmount === "custom" ? customAmount : donationAmount}`}
                             </Button>
                           </div>
                         </form>
@@ -274,98 +263,6 @@ export default function DonatePage() {
                   </CardContent>
                 </Card>
               )}
-            </div>
-
-            {/* Impact Information */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-2xl font-bold mb-6 text-dark-text">Your Donation Makes a Difference</h2>
-                <div className="space-y-6">
-                  <div className="flex items-start">
-                    <div className="bg-teal-light/20 p-3 rounded-full mr-4">
-                      <Users className="h-6 w-6 text-teal" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-dark-text">Support Job Seekers</h3>
-                      <p className="text-gray-600">
-                        Your donation helps provide resume assistance, interview coaching, and career counseling to
-                        individuals facing barriers to employment.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-yellow-light/20 p-3 rounded-full mr-4">
-                      <Briefcase className="h-6 w-6 text-yellow" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-dark-text">Expand Employer Partnerships</h3>
-                      <p className="text-gray-600">
-                        Your contribution helps us build relationships with employers committed to providing meaningful
-                        employment opportunities.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-teal-light/20 p-3 rounded-full mr-4">
-                      <Calendar className="h-6 w-6 text-teal" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-dark-text">Fund Skills Development</h3>
-                      <p className="text-gray-600">
-                        Your generosity supports workshops and training programs that help job seekers develop the
-                        skills needed for today's workforce.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Donation Impact</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-teal mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600">
-                        <span className="font-medium text-dark-text">$25</span> provides resume review and optimization
-                        for one job seeker
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-teal mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600">
-                        <span className="font-medium text-dark-text">$50</span> funds a mock interview session with
-                        professional feedback
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-teal mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600">
-                        <span className="font-medium text-dark-text">$100</span> supports a career counseling session
-                        and job search strategy
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-teal mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600">
-                        <span className="font-medium text-dark-text">$250</span> provides a skills development workshop
-                        for multiple job seekers
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-teal mr-2 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-600">
-                        <span className="font-medium text-dark-text">$500</span> funds employer outreach and job
-                        matching services
-                      </span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </div>

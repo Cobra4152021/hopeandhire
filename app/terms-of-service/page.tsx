@@ -27,11 +27,7 @@ export default function TermsOfServicePage() {
             <div className="prose prose-lg max-w-none">
               <h2>Introduction</h2>
               <p>
-<<<<<<< HEAD
-                Welcome to Hope and Hire. These Terms of Service ("Terms") govern your access to and use of the Hope and
-=======
                 Welcome to Hope and Hire. These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Hope and
->>>>>>> 999b990 (updates)
                 Hire website and services. By accessing or using our services, you agree to be bound by these Terms. If
                 you do not agree to these Terms, please do not use our services.
               </p>
@@ -39,15 +35,6 @@ export default function TermsOfServicePage() {
               <h2>Definitions</h2>
               <p>Throughout these Terms, the following definitions apply:</p>
               <ul>
-<<<<<<< HEAD
-                <li>"Hope and Hire," "we," "us," or "our" refers to Hope and Hire organization.</li>
-                <li>"Services" refers to the website, platform, and all services provided by Hope and Hire.</li>
-                <li>"User," "you," or "your" refers to any individual or entity that accesses or uses our Services.</li>
-                <li>"Job Seeker" refers to individuals using our Services to find employment opportunities.</li>
-                <li>"Employer" refers to organizations or individuals using our Services to find candidates.</li>
-                <li>"Volunteer" refers to individuals providing professional services through our platform.</li>
-                <li>"Organization" refers to partner organizations that refer clients to our Services.</li>
-=======
                 <li>&quot;Hope and Hire,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot; refers to Hope and Hire organization.</li>
                 <li>&quot;Services&quot; refers to the website, platform, and all services provided by Hope and Hire.</li>
                 <li>&quot;User,&quot; &quot;you,&quot; or &quot;your&quot; refers to any individual or entity that accesses or uses our Services.</li>
@@ -55,7 +42,6 @@ export default function TermsOfServicePage() {
                 <li>&quot;Employer&quot; refers to organizations or individuals using our Services to find candidates.</li>
                 <li>&quot;Volunteer&quot; refers to individuals providing professional services through our platform.</li>
                 <li>&quot;Organization&quot; refers to partner organizations that refer clients to our Services.</li>
->>>>>>> 999b990 (updates)
               </ul>
 
               <h2>Account Registration and Eligibility</h2>
@@ -112,11 +98,7 @@ export default function TermsOfServicePage() {
                 <li>Impersonating another person or entity</li>
                 <li>Harassing, threatening, or intimidating other users</li>
                 <li>Posting or sharing discriminatory, offensive, or inappropriate content</li>
-<<<<<<< HEAD
-                <li>Attempting to gain unauthorized access to our systems or other users' accounts</li>
-=======
                 <li>Attempting to gain unauthorized access to our systems or other users&apos; accounts</li>
->>>>>>> 999b990 (updates)
                 <li>Using our Services for any illegal or unauthorized purpose</li>
                 <li>Interfering with or disrupting the integrity or performance of our Services</li>
               </ul>
@@ -131,11 +113,7 @@ export default function TermsOfServicePage() {
 
               <h2>User Content</h2>
               <p>
-<<<<<<< HEAD
-                You retain ownership of any content you submit to our Services ("User Content"). By submitting User
-=======
                 You retain ownership of any content you submit to our Services (&quot;User Content&quot;). By submitting User
->>>>>>> 999b990 (updates)
                 Content, you grant us a non-exclusive, worldwide, royalty-free license to use, reproduce, modify, adapt,
                 publish, translate, and distribute your User Content in connection with providing and promoting our
                 Services.
@@ -147,11 +125,7 @@ export default function TermsOfServicePage() {
 
               <h2>Disclaimer of Warranties</h2>
               <p>
-<<<<<<< HEAD
-                OUR SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS
-=======
                 OUR SERVICES ARE PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS
->>>>>>> 999b990 (updates)
                 OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT
                 LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
                 NON-INFRINGEMENT.
@@ -168,11 +142,7 @@ export default function TermsOfServicePage() {
               <p>
                 You agree to indemnify, defend, and hold harmless Hope and Hire and its officers, directors, employees,
                 agents, and affiliates from and against any and all claims, liabilities, damages, losses, costs,
-<<<<<<< HEAD
-                expenses, or fees (including reasonable attorneys' fees) arising from or relating to your use of our
-=======
                 expenses, or fees (including reasonable attorneys&apos; fees) arising from or relating to your use of our
->>>>>>> 999b990 (updates)
                 Services, your User Content, or your violation of these Terms.
               </p>
 
@@ -186,11 +156,7 @@ export default function TermsOfServicePage() {
               <h2>Changes to These Terms</h2>
               <p>
                 We may update these Terms from time to time. We will notify you of any changes by posting the new Terms
-<<<<<<< HEAD
-                on this page and updating the "Last Updated" date. You are advised to review these Terms periodically
-=======
                 on this page and updating the &quot;Last Updated&quot; date. You are advised to review these Terms periodically
->>>>>>> 999b990 (updates)
                 for any changes.
               </p>
 

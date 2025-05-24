@@ -18,92 +18,67 @@ const sampleCandidates = [
   {
     id: 1,
     name: "Michael Johnson",
-    title: "Senior Frontend Developer",
-    location: "San Francisco, CA",
-    experience: "8 years",
-    education: "B.S. Computer Science",
-    skills: ["React", "TypeScript", "Node.js", "GraphQL"],
-    status: "Available",
-<<<<<<< HEAD
-    avatar: "/stylized-letters-mj.png",
-=======
     avatar: "/avatars/michael-johnson.jpg",
->>>>>>> 999b990 (updates)
-    matchScore: 92,
-    lastActive: "2 hours ago",
+    role: "Senior Frontend Developer",
+    experience: "8 years",
+    education: "B.S. Computer Science, Stanford University",
+    status: "Available",
+    matchScore: 95,
+    lastActive: "2 days ago",
     featured: true,
+    skills: ["React", "TypeScript", "CSS", "HTML"],
   },
   {
     id: 2,
     name: "Sarah Williams",
-    title: "Full Stack Developer",
-    location: "Remote",
-    experience: "5 years",
-    education: "M.S. Software Engineering",
-    skills: ["JavaScript", "Python", "React", "Django"],
-    status: "Available",
-<<<<<<< HEAD
-    avatar: "/stylized-letters-sw.png",
-=======
     avatar: "/avatars/sarah-williams.jpg",
->>>>>>> 999b990 (updates)
+    role: "Full Stack Developer",
+    experience: "6 years",
+    education: "M.S. Software Engineering, MIT",
+    status: "Available",
     matchScore: 88,
     lastActive: "1 day ago",
     featured: false,
+    skills: ["Node.js", "React", "GraphQL", "MongoDB"],
   },
   {
     id: 3,
     name: "David Chen",
-    title: "Software Engineer",
-    location: "Boston, MA",
-    experience: "3 years",
-    education: "B.S. Computer Engineering",
-    skills: ["Java", "Spring Boot", "React", "AWS"],
-    status: "Interviewing",
-<<<<<<< HEAD
-    avatar: "/stylized-letters-dc.png",
-=======
     avatar: "/avatars/david-chen.jpg",
->>>>>>> 999b990 (updates)
-    matchScore: 85,
+    role: "Backend Developer",
+    experience: "5 years",
+    education: "B.S. Computer Engineering, UC Berkeley",
+    status: "Interviewing",
+    matchScore: 82,
     lastActive: "3 days ago",
     featured: false,
+    skills: ["Node.js", "Express", "PostgreSQL", "Docker"],
   },
   {
     id: 4,
     name: "Emily Rodriguez",
-    title: "Frontend Developer",
-    location: "Chicago, IL",
-    experience: "4 years",
-    education: "B.A. Design",
-    skills: ["HTML/CSS", "JavaScript", "React", "UI/UX"],
-    status: "Available",
-<<<<<<< HEAD
-    avatar: "/stylized-letters-er.png",
-=======
     avatar: "/avatars/emily-rodriguez.jpg",
->>>>>>> 999b990 (updates)
-    matchScore: 78,
-    lastActive: "5 hours ago",
+    role: "UI/UX Designer",
+    experience: "4 years",
+    education: "B.A. Design, RISD",
+    status: "Available",
+    matchScore: 90,
+    lastActive: "1 week ago",
     featured: true,
+    skills: ["Figma", "Sketch", "Adobe XD", "CSS"],
   },
   {
     id: 5,
     name: "James Wilson",
-    title: "Backend Developer",
-    location: "Seattle, WA",
-    experience: "6 years",
-    education: "M.S. Computer Science",
-    skills: ["Python", "Django", "PostgreSQL", "Docker"],
-    status: "Placed",
-<<<<<<< HEAD
-    avatar: "/stylized-letters-jw.png",
-=======
     avatar: "/avatars/james-wilson.jpg",
->>>>>>> 999b990 (updates)
+    role: "DevOps Engineer",
+    experience: "7 years",
+    education: "M.S. Computer Science, Georgia Tech",
+    status: "Placed",
     matchScore: 75,
     lastActive: "1 week ago",
     featured: false,
+    skills: ["AWS", "Docker", "Kubernetes", "Terraform"],
   },
 ]
 
@@ -120,7 +95,7 @@ export default function CandidatesListingPage() {
       // Search filter
       const matchesSearch =
         candidate.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        candidate.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        candidate.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
         candidate.skills.some((skill) => skill.toLowerCase().includes(searchTerm.toLowerCase()))
 
       // Status filter
@@ -259,7 +234,7 @@ export default function CandidatesListingPage() {
                             {candidate.status}
                           </Badge>
                         </div>
-                        <p className="text-gray-600">{candidate.title}</p>
+                        <p className="text-gray-600">{candidate.role}</p>
                         <div className="flex flex-wrap gap-y-2 text-sm text-gray-500 mt-1">
                           <div className="flex items-center mr-4">
                             <MapPin className="mr-1 h-4 w-4" />

@@ -18,10 +18,7 @@ import ConfettiCelebration from "@/components/confetti-celebration"
 export default function RegisterPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-<<<<<<< HEAD
   const [userType, setUserType] = useState("jobseeker")
-=======
->>>>>>> 999b990 (updates)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const handleRegister = (e: React.FormEvent) => {
@@ -46,11 +43,7 @@ export default function RegisterPage() {
 
       {/* Logo Section - Centrally positioned */}
       <div className="absolute top-24 left-1/2 transform -translate-x-1/2">
-<<<<<<< HEAD
         <Image src="/logo.png" alt="Hope and Hire Logo" width={180} height={72} className="h-auto" priority />
-=======
-        <Image src="/logo.svg" alt="Hope and Hire Logo" width={180} height={72} className="h-auto" priority />
->>>>>>> 999b990 (updates)
       </div>
 
       <Card className="w-full max-w-md mt-16">
