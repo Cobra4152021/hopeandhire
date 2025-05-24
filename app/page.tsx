@@ -31,38 +31,36 @@ export default function Home() {
       <section className="bg-light-bg py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Logo positioned in the light green section - priority loading for above-the-fold */}
-            <div
-              className="relative w-full max-w-3xl mx-auto mb-8 aspect-[16/5] rounded-2xl shadow-2xl border border-gray-200 flex items-center justify-center overflow-hidden bg-white"
-            >
+            {/* Hero image row: left, logo, right (touching, no gaps) */}
+            <div className="flex justify-center items-center mb-8 w-full max-w-3xl mx-auto rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
               {/* Left image */}
-              <div className="h-full flex items-center z-0" style={{ width: '28%' }}>
+              <div className="h-full flex items-center" style={{ width: '28%' }}>
                 <img
                   src="/612x612.jpg"
                   alt="Diverse workers left"
-                  className="h-full w-full object-cover rounded-l-2xl"
+                  className="h-full w-full object-cover"
                   style={{ objectPosition: 'right center' }}
                   loading="lazy"
                 />
               </div>
               {/* Center logo */}
-              <div className="flex-1 flex items-center justify-center h-full z-10">
+              <div className="flex items-center justify-center bg-white" style={{ width: '44%', minWidth: 0 }}>
                 <Image
                   src="/logo.png"
-                  alt="Hope and Hire - Building Better Futures"
-                  fill
-                  className="object-contain"
+                  alt="Hope and Hire Logo"
+                  width={200}
+                  height={80}
+                  className="h-auto w-full object-contain"
                   priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 600px"
                   quality={90}
                 />
               </div>
               {/* Right image */}
-              <div className="h-full flex items-center z-0" style={{ width: '28%' }}>
+              <div className="h-full flex items-center" style={{ width: '28%' }}>
                 <img
                   src="/1612x612.jpg"
                   alt="Diverse workers right"
-                  className="h-full w-full object-cover rounded-r-2xl"
+                  className="h-full w-full object-cover"
                   style={{ objectPosition: 'left center' }}
                   loading="lazy"
                 />
