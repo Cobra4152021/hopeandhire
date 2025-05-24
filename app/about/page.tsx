@@ -38,8 +38,8 @@ export default function AboutPage() {
     {
       name: "Terry Uyeda",
       role: "Volunteer Program Manager",
-      image: "/stylized-letters-jw.png",
-      bio: "Terry coordinates our volunteer program, ensuring that job seekers receive quality support from our dedicated volunteers.",
+      image: "/Terry_Uyeda.jpg",
+      bio: "Terry, a military veteran and community advocate, coordinates our volunteer program to ensure job seekers receive compassionate, effective support. He's dedicated to public safety and helping others build better futures.",
     },
     {
       name: "Open",
