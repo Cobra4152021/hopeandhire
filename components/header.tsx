@@ -41,7 +41,7 @@ function Header() {
             <Link href="/" className="flex items-center space-x-3">
               <div className="relative w-12 h-12">
                 <Image
-                  src="/logo.jpg"
+                  src="/logo.png"
                   alt="Hope and Hire Logo"
                   fill
                   className="object-cover rounded-full border border-gray-200 shadow"
