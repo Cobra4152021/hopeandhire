@@ -108,15 +108,15 @@ function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <MapPin size={16} className="mr-2 text-teal" />
-                <span className="text-gray-600">123 Hope Street, Opportunity City</span>
+                <span className="text-gray-600">35 Gilbert Street, San Francisco CA 94103</span>
               </li>
               <li className="flex items-center">
                 <Phone size={16} className="mr-2 text-teal" />
-                <span className="text-gray-600">(555) 123-4567</span>
+                <span className="text-gray-600">415-696-2428</span>
               </li>
               <li className="flex items-center">
                 <Mail size={16} className="mr-2 text-teal" />
-                <span className="text-gray-600">info@hopeandhire.org</span>
+                <span className="text-gray-600">email@protectingsanfrancisco.com</span>
               </li>
             </ul>
           </div>
@@ -131,7 +131,7 @@ function Footer() {
               Terms of Service
             </Link>
           </div>
-          <p className="text-gray-600">&copy; {new Date().getFullYear()} Hope and Hire. All rights reserved.</p>
+          <p className="text-gray-600">&copy; 2025 Hope and Hire by Protecting San Francisco 501(c)3. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -177,7 +177,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-medium text-dark-text">Email</h3>
-                      <p className="text-gray-600">info@hopeandhire.org</p>
+                      <p className="text-gray-600">email@protectingsanfrancisco.com</p>
                     </div>
                   </div>
 
@@ -187,7 +187,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-medium text-dark-text">Phone</h3>
-                      <p className="text-gray-600">(555) 123-4567</p>
+                      <p className="text-gray-600">415-696-2428</p>
                     </div>
                   </div>
 
@@ -198,9 +198,9 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-medium text-dark-text">Address</h3>
                       <p className="text-gray-600">
-                        123 Hope Street
+                        35 Gilbert Street
                         <br />
-                        Opportunity City, ST 12345
+                        San Francisco CA 94103
                       </p>
                     </div>
                   </div>

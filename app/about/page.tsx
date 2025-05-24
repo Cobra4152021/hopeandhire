@@ -79,6 +79,9 @@ export default function AboutPage() {
                 Today, Hope and Hire serves hundreds of job seekers annually, providing resume assistance, interview
                 coaching, career counseling, and job matching services to help individuals build sustainable careers.
               </p>
+              <p className="text-gray-600 mt-4">
+                The Hope and Hire rehabilitation program was created by the charitable nonprofit <a href="https://protectingsanfrancisco.com/" target="_blank" rel="noopener noreferrer" className="text-teal hover:underline">Protecting San Francisco</a>, an organization formed by deputy sheriffs and community members dedicated to giving back to San Francisco and enhancing public safety. Our mission with Hope and Hire is to assist incarcerated and formerly incarcerated individuals in successfully re-entering society by providing pathways to employment. By supporting job readiness and placement, we help participants reintegrate productively and lawfully, reducing recidivism and strengthening our community.
+              </p>
             </div>
             <div className="hidden md:block">
               <Image

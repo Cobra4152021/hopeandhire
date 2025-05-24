@@ -125,13 +125,13 @@ export default function PrivacyPolicyPage() {
               <p>
                 Hope and Hire
                 <br />
-                123 Hope Street
+                35 Gilbert Street
                 <br />
-                Opportunity City, ST 12345
+                San Francisco CA 94103
                 <br />
-                Email: privacy@hopeandhire.org
+                Email: email@protectingsanfrancisco.com
                 <br />
-                Phone: (555) 123-4567
+                Phone: 415-696-2428
               </p>
             </div>
 
