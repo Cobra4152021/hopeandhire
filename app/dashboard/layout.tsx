@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -22,21 +22,33 @@ import {
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sidebar, SidebarProvider } from "@/components/ui/sidebar"
+import { supabase } from "@/lib/supabase"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [userRole, setUserRole] = useState<string | null>(null)
   const pathname = usePathname()
 
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUserRole(data?.user?.user_metadata?.role || null))
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserRole(session?.user?.user_metadata?.role || null)
+    })
+    return () => { listener?.subscription?.unsubscribe?.() }
+  }, [])
+
   const navigation = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Jobs", href: "/dashboard/jobs", icon: Briefcase },
-    { name: "Candidates", href: "/dashboard/candidates", icon: Users },
-    { name: "Applications", href: "/dashboard/applications", icon: FileText },
-    { name: "Messaging", href: "/dashboard/messaging", icon: MessageSquare },
-    { name: "Schedule", href: "/dashboard/schedule", icon: Calendar },
-    { name: "Analytics", href: "/dashboard/analytics", icon: BarChart },
-    { name: "Settings", href: "/dashboard/settings", icon: Settings },
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, roles: ["jobseeker", "employer", "volunteer"] },
+    { name: "Jobs", href: "/dashboard/jobs", icon: Briefcase, roles: ["jobseeker", "employer"] },
+    { name: "Candidates", href: "/dashboard/candidates", icon: Users, roles: ["employer", "volunteer"] },
+    { name: "Applications", href: "/dashboard/applications", icon: FileText, roles: ["jobseeker", "employer"] },
+    { name: "Messaging", href: "/dashboard/messaging", icon: MessageSquare, roles: ["jobseeker", "employer", "volunteer"] },
+    { name: "Schedule", href: "/dashboard/schedule", icon: Calendar, roles: ["employer", "volunteer"] },
+    { name: "Analytics", href: "/dashboard/analytics", icon: BarChart, roles: ["employer"] },
+    { name: "Settings", href: "/dashboard/settings", icon: Settings, roles: ["jobseeker", "employer", "volunteer"] },
   ]
+
+  const filteredNavigation = navigation.filter(item => userRole && item.roles.includes(userRole))
 
   const isActive = (path: string) => {
     return pathname === path || pathname?.startsWith(`${path}/`)
@@ -55,7 +67,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
             <ScrollArea className="flex-1">
               <div className="space-y-1 p-2">
-                {navigation.map((item) => (
+                {(userRole ? filteredNavigation : navigation).map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}

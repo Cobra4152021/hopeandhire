@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -132,6 +132,23 @@ export default function JobsListingPage() {
     salary: "",
     description: "",
   })
+
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        const res = await fetch("/api/jobs")
+        if (res.ok) {
+          const data = await res.json()
+          if (Array.isArray(data) && data.length > 0) {
+            setJobs(data)
+          }
+        }
+      } catch (e) {
+        // fallback to sampleJobs
+      }
+    }
+    fetchJobs()
+  }, [])
 
   // Filter and sort jobs
   const filteredJobs = jobs

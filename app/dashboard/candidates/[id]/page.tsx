@@ -35,7 +35,7 @@ const candidateData = {
   experience: "8 years",
   education: "B.S. Computer Science, Stanford University",
   status: "Available",
-  avatar: "/avatars/michael-johnson.jpg",
+  avatar: "/team-member-1.jpg",
   bio: "Experienced frontend developer with a passion for creating intuitive user interfaces and optimizing web performance. Skilled in modern JavaScript frameworks and design systems.",
   skills: [
     { name: "React", level: 95 },

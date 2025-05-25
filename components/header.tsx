@@ -6,10 +6,50 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { supabase } from "@/lib/supabase"
+
+function UserMenu({ user }: { user: any }) {
+  const [open, setOpen] = useState(false)
+  const initials = user?.email?.slice(0, 2).toUpperCase() || "U"
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    window.location.reload()
+  }
+
+  return (
+    <div className="relative">
+      <button onClick={() => setOpen((v) => !v)} className="focus:outline-none">
+        <Avatar className="h-10 w-10">
+          <AvatarImage src={user?.user_metadata?.avatar_url || undefined} alt={user?.email} />
+          <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
+      </button>
+      {open && (
+        <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
+          <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100">Dashboard</Link>
+          <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>
+          <Link href="/dashboard/settings" className="block px-4 py-2 hover:bg-gray-100">Settings</Link>
+          <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
+        </div>
+      )}
+    </div>
+  )
+}
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
   const pathname = usePathname()
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data?.user || null))
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+    return () => { listener?.subscription?.unsubscribe?.() }
+  }, [])
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -68,11 +108,15 @@ function Header() {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login">
-              <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
-                Login
-              </Button>
-            </Link>
+            {user ? (
+              <UserMenu user={user} />
+            ) : (
+              <Link href="/login">
+                <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+                  Login
+                </Button>
+              </Link>
+            )}
             <Link href="/donate">
               <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">Donate</Button>
             </Link>
@@ -114,11 +158,15 @@ function Header() {
               </Link>
             ))}
             <div className="mt-4 px-3 space-y-2">
-              <Link href="/login" className="block">
-                <Button variant="outline" className="w-full border-teal text-teal hover:bg-teal hover:text-white">
-                  Login
-                </Button>
-              </Link>
+              {user ? (
+                <UserMenu user={user} />
+              ) : (
+                <Link href="/login" className="block">
+                  <Button variant="outline" className="w-full border-teal text-teal hover:bg-teal hover:text-white">
+                    Login
+                  </Button>
+                </Link>
+              )}
               <Link href="/donate" className="block">
                 <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">Donate</Button>
               </Link>

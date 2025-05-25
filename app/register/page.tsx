@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import ConfettiCelebration from "@/components/confetti-celebration"
+import { supabase } from "@/lib/supabase"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -21,20 +22,42 @@ export default function RegisterPage() {
   const [userType, setUserType] = useState("jobseeker")
   const [showConfetti, setShowConfetti] = useState(false)
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulate registration - in a real app, this would call an API
-    setTimeout(() => {
-      setIsLoading(false)
-      setShowConfetti(true) // Show confetti on successful registration
+    // Get form values based on userType
+    let email = ""
+    let password = ""
+    if (userType === "jobseeker") {
+      email = (document.getElementById("email") as HTMLInputElement)?.value
+      password = (document.getElementById("password") as HTMLInputElement)?.value
+    } else if (userType === "volunteer") {
+      email = (document.getElementById("volunteerEmail") as HTMLInputElement)?.value
+      password = (document.getElementById("volunteerPassword") as HTMLInputElement)?.value
+    } else if (userType === "employer") {
+      email = (document.getElementById("employerEmail") as HTMLInputElement)?.value
+      password = (document.getElementById("employerPassword") as HTMLInputElement)?.value
+    }
 
-      // Navigate to dashboard after a short delay to allow confetti to be seen
+    // Register with Supabase and store role in user_metadata
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { role: userType }
+      }
+    })
+
+    setIsLoading(false)
+    if (!error) {
+      setShowConfetti(true)
       setTimeout(() => {
         router.push("/dashboard")
       }, 3000)
-    }, 1500)
+    } else {
+      alert(error.message)
+    }
   }
 
   return (
