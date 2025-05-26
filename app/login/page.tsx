@@ -44,20 +44,29 @@ export default function LoginPage() {
       if (error) throw error;
 
       if (data.user) {
-        // Set the user role cookie with proper attributes
-        document.cookie = `user-role=${data.user.user_metadata.role}; path=/; SameSite=Lax`;
+        // Get the user's role from metadata
+        const role = data.user.user_metadata.role || userType;
         
-        // Wait for the cookie to be set
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Set the user role cookie with proper attributes
+        document.cookie = `user-role=${role}; path=/; SameSite=Lax`;
+        
+        // Show success message
+        toast({
+          title: "Success!",
+          description: "You've been logged in successfully.",
+        });
         
         setShowConfetti(true);
         
-        // Redirect to the role-specific dashboard directly
-        const role = data.user.user_metadata.role;
-        const dashboardPath = `/dashboard/${role}`;
-        router.push(dashboardPath);
+        // Wait for cookie to be set and confetti to show
+        setTimeout(() => {
+          // Redirect to the role-specific dashboard
+          const dashboardPath = `/dashboard/${role}`;
+          router.push(dashboardPath);
+        }, 1000);
       }
     } catch (error: any) {
+      console.error('Login error:', error);
       toast({
         title: 'Error',
         description: error.message || 'Failed to sign in',
