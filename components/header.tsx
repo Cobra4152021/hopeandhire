@@ -197,16 +197,19 @@ export default function Header() {
             />
           </Link>
 
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/about" className="text-gray-600 hover:text-teal">
-              About
-            </Link>
-            <Link href="/services" className="text-gray-600 hover:text-teal">
-              Services
-            </Link>
-            <Link href="/contact" className="text-gray-600 hover:text-teal">
-              Contact
-            </Link>
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`text-gray-600 hover:text-teal ${
+                  isActive(item.href) ? 'text-teal font-medium' : ''
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
 
           <div className="flex items-center space-x-4">
@@ -288,22 +291,44 @@ export default function Header() {
             ))}
             <div className="mt-4 px-3 space-y-2">
               {user ? (
-                <UserMenu user={user} />
-              ) : (
-                <Link href="/login" className="block">
+                <>
+                  <Link href={`/dashboard/${userRole}`} className="block">
+                    <Button variant="outline" className="w-full">
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Link href={`/profile/${userRole}`} className="block">
+                    <Button variant="outline" className="w-full">
+                      Profile
+                    </Button>
+                  </Link>
+                  <Link href={`/settings/${userRole}`} className="block">
+                    <Button variant="outline" className="w-full">
+                      Settings
+                    </Button>
+                  </Link>
                   <Button
                     variant="outline"
-                    className="w-full border-teal text-teal hover:bg-teal hover:text-white"
+                    className="w-full text-red-600"
+                    onClick={handleSignOut}
                   >
-                    Login
+                    Sign out
                   </Button>
-                </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="block">
+                    <Button variant="outline" className="w-full">
+                      Sign in
+                    </Button>
+                  </Link>
+                  <Link href="/register" className="block">
+                    <Button className="w-full bg-teal text-white hover:bg-teal-dark">
+                      Sign up
+                    </Button>
+                  </Link>
+                </>
               )}
-              <Link href="/donate" className="block">
-                <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">
-                  Donate
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
