@@ -3,19 +3,47 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { supabase } from '@/lib/supabase';
+import { useToast } from '@/components/ui/use-toast';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 function UserMenu({ user }: { user: any }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
   const initials = user?.email?.slice(0, 2).toUpperCase() || 'U';
+  const role = user?.user_metadata?.role || 'jobseeker';
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.reload();
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Success",
+        description: "You've been logged out successfully.",
+      });
+      router.push('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to log out. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleNavigation = (path: string) => {
+    setOpen(false);
+    router.push(path);
   };
 
   return (
@@ -31,21 +59,27 @@ function UserMenu({ user }: { user: any }) {
       </button>
       {open && (
         <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
-          <Link href="/dashboard" className="block px-4 py-2 hover:bg-gray-100">
+          <button
+            onClick={() => handleNavigation(`/dashboard/${role}`)}
+            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+          >
             Dashboard
-          </Link>
-          <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">
+          </button>
+          <button
+            onClick={() => handleNavigation('/profile')}
+            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+          >
             Profile
-          </Link>
-          <Link
-            href="/dashboard/settings"
-            className="block px-4 py-2 hover:bg-gray-100"
+          </button>
+          <button
+            onClick={() => handleNavigation('/settings')}
+            className="w-full text-left px-4 py-2 hover:bg-gray-100"
           >
             Settings
-          </Link>
+          </button>
           <button
             onClick={handleLogout}
-            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+            className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
           >
             Logout
           </button>
@@ -55,21 +89,35 @@ function UserMenu({ user }: { user: any }) {
   );
 }
 
-function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+export default function Header() {
+  const router = useRouter();
   const pathname = usePathname();
+  const { toast } = useToast();
+  const [user, setUser] = useState<any>(null);
+  const [userRole, setUserRole] = useState<string>('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Get initial user state
-    supabase.auth.getUser().then(({ data }) => setUser(data?.user || null));
-
-    // Subscribe to auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null);
+    // Get initial session
+    const getInitialSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setUser(session.user);
+        setUserRole(session.user.user_metadata.role || 'jobseeker');
       }
-    );
+    };
+    getInitialSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+        setUserRole(session.user.user_metadata.role || 'jobseeker');
+      } else {
+        setUser(null);
+        setUserRole('');
+      }
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -98,60 +146,107 @@ function Header() {
     return pathname === path || pathname?.startsWith(`${path}/`);
   };
 
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast({
+        title: "Success",
+        description: "You've been signed out successfully.",
+      });
+      
+      router.push('/login');
+    } catch (error: any) {
+      console.error('Sign out error:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to sign out',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const getDashboardPath = () => {
+    if (!userRole) return '/login';
+    return `/dashboard/${userRole}`;
+  };
+
+  const getProfilePath = () => {
+    if (!userRole) return '/login';
+    return `/profile/${userRole}`;
+  };
+
+  const getSettingsPath = () => {
+    if (!userRole) return '/login';
+    return `/settings/${userRole}`;
+  };
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="relative w-12 h-12">
-                <Image
-                  src="/logo.png"
-                  alt="Hope and Hire Logo"
-                  fill
-                  className="object-cover rounded-full border border-gray-200 shadow"
-                  priority
-                />
-              </div>
-              <span className="text-teal font-bold text-xl">HopeAndHire</span>
-            </Link>
-          </div>
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="flex items-center space-x-2">
+            <Image
+              src="/logo.png"
+              alt="Hope and Hire Logo"
+              width={120}
+              height={48}
+              className="h-auto"
+              priority
+            />
+          </Link>
 
-          {/* Desktop navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`font-medium transition-colors ${
-                  isActive(item.href)
-                    ? 'text-teal'
-                    : 'text-gray-700 hover:text-teal'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link href="/about" className="text-gray-600 hover:text-teal">
+              About
+            </Link>
+            <Link href="/services" className="text-gray-600 hover:text-teal">
+              Services
+            </Link>
+            <Link href="/contact" className="text-gray-600 hover:text-teal">
+              Contact
+            </Link>
           </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="flex items-center space-x-4">
             {user ? (
-              <UserMenu user={user} />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <span className="sr-only">Open user menu</span>
+                    <div className="h-8 w-8 rounded-full bg-teal flex items-center justify-center text-white">
+                      {user.email?.[0].toUpperCase()}
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuItem asChild>
+                    <Link href={getDashboardPath()}>Dashboard</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href={getProfilePath()}>Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href={getSettingsPath()}>Settings</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
-              <Link href="/login">
-                <Button
-                  variant="outline"
-                  className="border-teal text-teal hover:bg-teal hover:text-white"
-                >
-                  Login
-                </Button>
-              </Link>
+              <>
+                <Link href="/login">
+                  <Button variant="ghost">Sign in</Button>
+                </Link>
+                <Link href="/register">
+                  <Button className="bg-teal text-white hover:bg-teal-dark">
+                    Sign up
+                  </Button>
+                </Link>
+              </>
             )}
-            <Link href="/donate">
-              <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">
-                Donate
-              </Button>
-            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -218,5 +313,4 @@ function Header() {
 }
 
 // Export both as default and named export
-export default Header;
 export { Header };

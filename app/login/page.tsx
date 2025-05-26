@@ -1,8 +1,7 @@
 'use client';
 
 import type React from 'react';
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -30,6 +29,18 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [userType, setUserType] = useState('jobseeker');
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        const role = session.user.user_metadata.role || 'jobseeker';
+        router.push(`/dashboard/${role}`);
+      }
+    };
+    checkUser();
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,7 +135,7 @@ export default function LoginPage() {
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
                     <Link
-                      href="/forgot-password"
+                      href="/reset-password"
                       className="text-sm text-teal hover:underline"
                     >
                       Forgot password?
@@ -164,7 +175,7 @@ export default function LoginPage() {
                   <div className="flex items-center justify-between">
                     <Label htmlFor="volunteer-password">Password</Label>
                     <Link
-                      href="/forgot-password"
+                      href="/reset-password"
                       className="text-sm text-teal hover:underline"
                     >
                       Forgot password?
@@ -204,7 +215,7 @@ export default function LoginPage() {
                   <div className="flex items-center justify-between">
                     <Label htmlFor="employer-password">Password</Label>
                     <Link
-                      href="/forgot-password"
+                      href="/reset-password"
                       className="text-sm text-teal hover:underline"
                     >
                       Forgot password?
