@@ -19,28 +19,53 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ConfettiCelebration from '@/components/confetti-celebration';
+import { supabase } from '@/lib/supabase';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [userType, setUserType] = useState('jobseeker');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate login - in a real app, this would call an API
-    setTimeout(() => {
-      setIsLoading(false);
-      setShowConfetti(true); // Show confetti on successful login
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-      // Navigate to dashboard after a short delay to allow confetti to be seen
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 2000);
-    }, 1000);
+      if (error) throw error;
+
+      if (data.user) {
+        // Set the user role cookie with proper attributes
+        document.cookie = `user-role=${data.user.user_metadata.role}; path=/; SameSite=Lax`;
+        
+        // Wait for the cookie to be set
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        setShowConfetti(true);
+        
+        // Redirect to the role-specific dashboard directly
+        const role = data.user.user_metadata.role;
+        const dashboardPath = `/dashboard/${role}`;
+        router.push(dashboardPath);
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to sign in',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,7 +92,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="jobseeker" className="w-full">
+          <Tabs defaultValue="jobseeker" className="w-full" onValueChange={setUserType}>
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="jobseeker">Job Seeker</TabsTrigger>
               <TabsTrigger value="volunteer">Volunteer</TabsTrigger>
