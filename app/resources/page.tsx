@@ -1,6 +1,13 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 export default function ResourcesPage() {
   return (
@@ -8,15 +15,17 @@ export default function ResourcesPage() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-dark-text">Resources</h1>
         <p className="text-gray-600 mb-8">
-          We've compiled a collection of resources to help job seekers, employers, and organizations navigate the
-          employment landscape.
+          We&apos;ve compiled a collection of resources to help job seekers,
+          employers, and organizations navigate the employment landscape.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <Card>
             <CardHeader>
               <CardTitle>For Job Seekers</CardTitle>
-              <CardDescription>Resources to help you in your job search</CardDescription>
+              <CardDescription>
+                Resources to help you in your job search
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
@@ -40,7 +49,9 @@ export default function ResourcesPage() {
             </CardContent>
             <CardFooter>
               <Link href="/job-seekers">
-                <Button className="bg-teal text-white hover:bg-teal-dark">View Job Seeker Resources</Button>
+                <Button className="bg-teal text-white hover:bg-teal-dark">
+                  View Job Seeker Resources
+                </Button>
               </Link>
             </CardFooter>
           </Card>
@@ -48,7 +59,9 @@ export default function ResourcesPage() {
           <Card>
             <CardHeader>
               <CardTitle>For Employers</CardTitle>
-              <CardDescription>Resources to help you find qualified candidates</CardDescription>
+              <CardDescription>
+                Resources to help you find qualified candidates
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
@@ -72,7 +85,9 @@ export default function ResourcesPage() {
             </CardContent>
             <CardFooter>
               <Link href="/employers">
-                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">View Employer Resources</Button>
+                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">
+                  View Employer Resources
+                </Button>
               </Link>
             </CardFooter>
           </Card>
@@ -82,7 +97,9 @@ export default function ResourcesPage() {
           <Card>
             <CardHeader>
               <CardTitle>For Organizations</CardTitle>
-              <CardDescription>Resources to help your clients succeed</CardDescription>
+              <CardDescription>
+                Resources to help your clients succeed
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
@@ -106,7 +123,9 @@ export default function ResourcesPage() {
             </CardContent>
             <CardFooter>
               <Link href="/organizations">
-                <Button className="bg-teal text-white hover:bg-teal-dark">View Organization Resources</Button>
+                <Button className="bg-teal text-white hover:bg-teal-dark">
+                  View Organization Resources
+                </Button>
               </Link>
             </CardFooter>
           </Card>
@@ -114,7 +133,9 @@ export default function ResourcesPage() {
           <Card>
             <CardHeader>
               <CardTitle>For Volunteers</CardTitle>
-              <CardDescription>Resources to help you make an impact</CardDescription>
+              <CardDescription>
+                Resources to help you make an impact
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2">
@@ -138,25 +159,33 @@ export default function ResourcesPage() {
             </CardContent>
             <CardFooter>
               <Link href="/volunteers">
-                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">View Volunteer Resources</Button>
+                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">
+                  View Volunteer Resources
+                </Button>
               </Link>
             </CardFooter>
           </Card>
         </div>
 
         <div className="mt-12 p-6 bg-light-bg rounded-lg">
-          <h2 className="text-2xl font-bold mb-4 text-dark-text">Need Additional Resources?</h2>
+          <h2 className="text-2xl font-bold mb-4 text-dark-text">
+            Need Additional Resources?
+          </h2>
           <p className="text-gray-600 mb-4">
-            If you're looking for specific resources that aren't listed here, please contact us. We're happy to help you
-            find what you need.
+            If you&apos;re looking for specific resources that aren&apos;t
+            listed here, please contact us. We&apos;re happy to help you find
+            what you need.
           </p>
           <Link href="/contact">
-            <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+            <Button
+              variant="outline"
+              className="border-teal text-teal hover:bg-teal hover:text-white"
+            >
               Contact Us
             </Button>
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }

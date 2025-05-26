@@ -1,43 +1,63 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import ConfettiCelebration from "@/components/confetti-celebration"
-import { supabase } from "@/lib/supabase"
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import ConfettiCelebration from '@/components/confetti-celebration';
+import { supabase } from '@/lib/supabase';
 
 export default function RegisterPage() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [userType, setUserType] = useState("jobseeker")
-  const [showConfetti, setShowConfetti] = useState(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [userType, setUserType] = useState('jobseeker');
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     // Get form values based on userType
-    let email = ""
-    let password = ""
-    if (userType === "jobseeker") {
-      email = (document.getElementById("email") as HTMLInputElement)?.value
-      password = (document.getElementById("password") as HTMLInputElement)?.value
-    } else if (userType === "volunteer") {
-      email = (document.getElementById("volunteerEmail") as HTMLInputElement)?.value
-      password = (document.getElementById("volunteerPassword") as HTMLInputElement)?.value
-    } else if (userType === "employer") {
-      email = (document.getElementById("employerEmail") as HTMLInputElement)?.value
-      password = (document.getElementById("employerPassword") as HTMLInputElement)?.value
+    let email = '';
+    let password = '';
+    if (userType === 'jobseeker') {
+      email = (document.getElementById('email') as HTMLInputElement)?.value;
+      password = (document.getElementById('password') as HTMLInputElement)
+        ?.value;
+    } else if (userType === 'volunteer') {
+      email = (document.getElementById('volunteerEmail') as HTMLInputElement)
+        ?.value;
+      password = (
+        document.getElementById('volunteerPassword') as HTMLInputElement
+      )?.value;
+    } else if (userType === 'employer') {
+      email = (document.getElementById('employerEmail') as HTMLInputElement)
+        ?.value;
+      password = (
+        document.getElementById('employerPassword') as HTMLInputElement
+      )?.value;
     }
 
     // Register with Supabase and store role in user_metadata
@@ -45,20 +65,20 @@ export default function RegisterPage() {
       email,
       password,
       options: {
-        data: { role: userType }
-      }
-    })
+        data: { role: userType },
+      },
+    });
 
-    setIsLoading(false)
+    setIsLoading(false);
     if (!error) {
-      setShowConfetti(true)
+      setShowConfetti(true);
       setTimeout(() => {
-        router.push("/dashboard")
-      }, 3000)
+        router.push('/dashboard');
+      }, 3000);
     } else {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 
   return (
     <div className="container flex items-center justify-center min-h-screen py-12">
@@ -66,12 +86,21 @@ export default function RegisterPage() {
 
       {/* Logo Section - Centrally positioned */}
       <div className="absolute top-24 left-1/2 transform -translate-x-1/2">
-        <Image src="/logo.png" alt="Hope and Hire Logo" width={180} height={72} className="h-auto" priority />
+        <Image
+          src="/logo.png"
+          alt="Hope and Hire Logo"
+          width={180}
+          height={72}
+          className="h-auto"
+          priority
+        />
       </div>
 
       <Card className="w-full max-w-md mt-16">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Create an Account</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">
+            Create an Account
+          </CardTitle>
           <CardDescription className="text-center">
             Join Hope and Hire to connect with opportunities and resources
           </CardDescription>
@@ -115,19 +144,29 @@ export default function RegisterPage() {
                 <div className="flex items-center space-x-2">
                   <Checkbox id="terms" required />
                   <Label htmlFor="terms" className="text-sm">
-                    I agree to the{" "}
-                    <Link href="/terms-of-service" className="text-teal hover:underline">
+                    I agree to the{' '}
+                    <Link
+                      href="/terms-of-service"
+                      className="text-teal hover:underline"
+                    >
                       Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link href="/privacy-policy" className="text-teal hover:underline">
+                    </Link>{' '}
+                    and{' '}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-teal hover:underline"
+                    >
                       Privacy Policy
                     </Link>
                   </Label>
                 </div>
 
-                <Button type="submit" className="w-full bg-teal text-white hover:bg-teal-dark" disabled={isLoading}>
-                  {isLoading ? "Creating Account..." : "Create Account"}
+                <Button
+                  type="submit"
+                  className="w-full bg-teal text-white hover:bg-teal-dark"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </form>
             </TabsContent>
@@ -165,7 +204,9 @@ export default function RegisterPage() {
                       <SelectItem value="resume">Resume Review</SelectItem>
                       <SelectItem value="interview">Mock Interviews</SelectItem>
                       <SelectItem value="career">Career Counseling</SelectItem>
-                      <SelectItem value="jobsearch">Job Search Strategy</SelectItem>
+                      <SelectItem value="jobsearch">
+                        Job Search Strategy
+                      </SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
@@ -177,26 +218,42 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="volunteerConfirmPassword">Confirm Password</Label>
-                  <Input id="volunteerConfirmPassword" type="password" required />
+                  <Label htmlFor="volunteerConfirmPassword">
+                    Confirm Password
+                  </Label>
+                  <Input
+                    id="volunteerConfirmPassword"
+                    type="password"
+                    required
+                  />
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Checkbox id="volunteerTerms" required />
                   <Label htmlFor="volunteerTerms" className="text-sm">
-                    I agree to the{" "}
-                    <Link href="/terms-of-service" className="text-teal hover:underline">
+                    I agree to the{' '}
+                    <Link
+                      href="/terms-of-service"
+                      className="text-teal hover:underline"
+                    >
                       Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link href="/privacy-policy" className="text-teal hover:underline">
+                    </Link>{' '}
+                    and{' '}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-teal hover:underline"
+                    >
                       Privacy Policy
                     </Link>
                   </Label>
                 </div>
 
-                <Button type="submit" className="w-full bg-teal text-white hover:bg-teal-dark" disabled={isLoading}>
-                  {isLoading ? "Creating Account..." : "Create Account"}
+                <Button
+                  type="submit"
+                  className="w-full bg-teal text-white hover:bg-teal-dark"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </form>
             </TabsContent>
@@ -238,7 +295,9 @@ export default function RegisterPage() {
                     <SelectContent>
                       <SelectItem value="technology">Technology</SelectItem>
                       <SelectItem value="healthcare">Healthcare</SelectItem>
-                      <SelectItem value="manufacturing">Manufacturing</SelectItem>
+                      <SelectItem value="manufacturing">
+                        Manufacturing
+                      </SelectItem>
                       <SelectItem value="retail">Retail</SelectItem>
                       <SelectItem value="finance">Finance</SelectItem>
                       <SelectItem value="education">Education</SelectItem>
@@ -253,19 +312,31 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="employerConfirmPassword">Confirm Password</Label>
-                  <Input id="employerConfirmPassword" type="password" required />
+                  <Label htmlFor="employerConfirmPassword">
+                    Confirm Password
+                  </Label>
+                  <Input
+                    id="employerConfirmPassword"
+                    type="password"
+                    required
+                  />
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Checkbox id="employerTerms" required />
                   <Label htmlFor="employerTerms" className="text-sm">
-                    I agree to the{" "}
-                    <Link href="/terms-of-service" className="text-teal hover:underline">
+                    I agree to the{' '}
+                    <Link
+                      href="/terms-of-service"
+                      className="text-teal hover:underline"
+                    >
                       Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link href="/privacy-policy" className="text-teal hover:underline">
+                    </Link>{' '}
+                    and{' '}
+                    <Link
+                      href="/privacy-policy"
+                      className="text-teal hover:underline"
+                    >
                       Privacy Policy
                     </Link>
                   </Label>
@@ -276,7 +347,7 @@ export default function RegisterPage() {
                   className="w-full bg-yellow text-dark-text hover:bg-yellow-dark"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Creating Account..." : "Create Account"}
+                  {isLoading ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </form>
             </TabsContent>
@@ -284,7 +355,7 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-center text-sm text-gray-500">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Link href="/login" className="text-teal hover:underline">
               Sign in
             </Link>
@@ -292,5 +363,5 @@ export default function RegisterPage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

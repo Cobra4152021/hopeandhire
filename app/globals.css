@@ -86,77 +86,103 @@
   }
 }
 
-/* Custom utility classes for Hope and Hire */
-.bg-teal {
-  background-color: var(--teal-primary);
-}
+@layer components {
+  .bg-teal {
+    background-color: var(--teal-primary);
+  }
 
-.bg-teal-light {
-  background-color: var(--teal-light);
-}
+  .bg-teal-light {
+    background-color: var(--teal-light);
+  }
 
-.bg-teal-dark {
-  background-color: var(--teal-dark);
-}
+  .bg-teal-dark {
+    background-color: var(--teal-dark);
+  }
 
-.bg-yellow {
-  background-color: var(--yellow-primary);
-}
+  .bg-yellow {
+    background-color: var(--yellow-primary);
+  }
 
-.bg-yellow-light {
-  background-color: var(--yellow-light);
-}
+  .bg-yellow-light {
+    background-color: var(--yellow-light);
+  }
 
-.bg-yellow-dark {
-  background-color: var(--yellow-dark);
-}
+  .bg-yellow-dark {
+    background-color: var(--yellow-dark);
+  }
 
-.bg-light {
-  background-color: var(--light-bg);
-}
+  .bg-light {
+    background-color: var(--light-bg);
+  }
 
-.text-teal {
-  color: var(--teal-primary);
-}
+  .text-teal {
+    color: var(--teal-primary);
+  }
 
-.text-yellow {
-  color: var(--yellow-primary);
-}
+  .text-yellow {
+    color: var(--yellow-primary);
+  }
 
-.text-dark {
-  color: var(--dark-text);
-}
+  .text-dark {
+    color: var(--dark-text);
+  }
 
-.border-teal {
-  border-color: var(--teal-primary);
-}
+  .border-teal {
+    border-color: var(--teal-primary);
+  }
 
-.border-yellow {
-  border-color: var(--yellow-primary);
-}
+  .border-yellow {
+    border-color: var(--yellow-primary);
+  }
 
-.hover-teal:hover {
-  background-color: var(--teal-primary);
-  color: white;
-}
+  .hover-teal:hover {
+    background-color: var(--teal-primary);
+    color: white;
+  }
 
-.hover-yellow:hover {
-  background-color: var(--yellow-primary);
-  color: var(--dark-text);
-}
+  .hover-yellow:hover {
+    background-color: var(--yellow-primary);
+    color: var(--dark-text);
+  }
 
-.btn-teal {
-  @apply bg-teal text-white hover:bg-teal-dark transition-colors;
-}
+  .btn-teal {
+    background-color: var(--teal-primary);
+    color: white;
+    transition-property:
+      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-duration: 150ms;
+  }
 
-.btn-yellow {
-  @apply bg-yellow text-dark hover:bg-yellow-dark transition-colors;
-}
+  .btn-teal:hover {
+    background-color: var(--teal-dark);
+  }
 
-.btn-outline-teal {
-  @apply border border-teal text-teal hover:bg-teal hover:text-white transition-colors;
-}
+  .btn-yellow {
+    background-color: var(--yellow-primary);
+    color: var(--dark-text);
+    transition-property:
+      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-duration: 150ms;
+  }
 
-.gradient-light {
-  background: linear-gradient(to right, var(--light-bg), white);
+  .btn-yellow:hover {
+    background-color: var(--yellow-dark);
+  }
+
+  .btn-outline-teal {
+    border: 1px solid var(--teal-primary);
+    color: var(--teal-primary);
+    transition-property:
+      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-duration: 150ms;
+  }
+
+  .btn-outline-teal:hover {
+    background-color: var(--teal-primary);
+    color: white;
+  }
+
+  .gradient-light {
+    background: linear-gradient(to right, var(--light-bg), white);
+  }
 }

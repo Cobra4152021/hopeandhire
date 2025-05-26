@@ -1,5 +1,5 @@
-import CandidatesListingPage from "./candidates-listing"
+import CandidatesListingPage from './candidates-listing';
 
 export default function CandidatesPage() {
-  return <CandidatesListingPage />
+  return <CandidatesListingPage />;
 }

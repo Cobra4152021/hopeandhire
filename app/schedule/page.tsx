@@ -1,5 +1,5 @@
-import SchedulePageClient from "./SchedulePageClient"
+import SchedulePageClient from './SchedulePageClient';
 
 export default function SchedulePage() {
-  return <SchedulePageClient />
+  return <SchedulePageClient />;
 }

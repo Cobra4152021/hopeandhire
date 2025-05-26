@@ -1,45 +1,59 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Switch } from "@/components/ui/switch"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { User, Bell, Shield, CreditCard } from "lucide-react"
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { User, Bell, Shield, CreditCard } from 'lucide-react';
 
 export default function SettingsPage() {
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [isUpdated, setIsUpdated] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const handleUpdate = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsUpdating(true)
+    e.preventDefault();
+    setIsUpdating(true);
 
     // Simulate update
     setTimeout(() => {
-      setIsUpdating(false)
-      setIsUpdated(true)
+      setIsUpdating(false);
+      setIsUpdated(true);
 
       // Reset notification
       setTimeout(() => {
-        setIsUpdated(false)
-      }, 3000)
-    }, 1000)
-  }
+        setIsUpdated(false);
+      }, 3000);
+    }, 1000);
+  };
 
   return (
     <div className="container mx-auto py-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your account settings and preferences</p>
+          <p className="mt-1 text-sm text-gray-500">
+            Manage your account settings and preferences
+          </p>
         </div>
       </div>
 
@@ -55,7 +69,10 @@ export default function SettingsPage() {
             <User className="h-4 w-4" />
             <span className="hidden md:inline">Profile</span>
           </TabsTrigger>
-          <TabsTrigger value="notifications" className="flex items-center gap-2">
+          <TabsTrigger
+            value="notifications"
+            className="flex items-center gap-2"
+          >
             <Bell className="h-4 w-4" />
             <span className="hidden md:inline">Notifications</span>
           </TabsTrigger>
@@ -74,7 +91,9 @@ export default function SettingsPage() {
             <Card className="md:col-span-2">
               <CardHeader>
                 <CardTitle>Profile Information</CardTitle>
-                <CardDescription>Update your personal information and profile details</CardDescription>
+                <CardDescription>
+                  Update your personal information and profile details
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleUpdate} className="space-y-6">
@@ -92,7 +111,11 @@ export default function SettingsPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address</Label>
-                      <Input id="email" type="email" defaultValue="john.doe@example.com" />
+                      <Input
+                        id="email"
+                        type="email"
+                        defaultValue="john.doe@example.com"
+                      />
                     </div>
 
                     <div className="space-y-2">
@@ -116,8 +139,12 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <Button type="submit" className="bg-teal text-white hover:bg-teal-dark" disabled={isUpdating}>
-                    {isUpdating ? "Updating..." : "Update Profile"}
+                  <Button
+                    type="submit"
+                    className="bg-teal text-white hover:bg-teal-dark"
+                    disabled={isUpdating}
+                  >
+                    {isUpdating ? 'Updating...' : 'Update Profile'}
                   </Button>
                 </form>
               </CardContent>
@@ -138,7 +165,10 @@ export default function SettingsPage() {
                   <Button variant="outline" className="w-full">
                     Upload New Picture
                   </Button>
-                  <Button variant="outline" className="w-full text-red-500 hover:text-red-700">
+                  <Button
+                    variant="outline"
+                    className="w-full text-red-500 hover:text-red-700"
+                  >
                     Remove Picture
                   </Button>
                 </div>
@@ -151,7 +181,9 @@ export default function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>Manage how and when you receive notifications</CardDescription>
+              <CardDescription>
+                Manage how and when you receive notifications
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -162,25 +194,37 @@ export default function SettingsPage() {
                       <Label htmlFor="email-messages" className="font-medium">
                         New Messages
                       </Label>
-                      <p className="text-sm text-gray-500">Receive email notifications for new messages</p>
+                      <p className="text-sm text-gray-500">
+                        Receive email notifications for new messages
+                      </p>
                     </div>
                     <Switch id="email-messages" defaultChecked />
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label htmlFor="email-applications" className="font-medium">
+                      <Label
+                        htmlFor="email-applications"
+                        className="font-medium"
+                      >
                         Job Applications
                       </Label>
-                      <p className="text-sm text-gray-500">Receive email notifications for job application updates</p>
+                      <p className="text-sm text-gray-500">
+                        Receive email notifications for job application updates
+                      </p>
                     </div>
                     <Switch id="email-applications" defaultChecked />
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label htmlFor="email-appointments" className="font-medium">
+                      <Label
+                        htmlFor="email-appointments"
+                        className="font-medium"
+                      >
                         Appointment Reminders
                       </Label>
-                      <p className="text-sm text-gray-500">Receive email reminders for upcoming appointments</p>
+                      <p className="text-sm text-gray-500">
+                        Receive email reminders for upcoming appointments
+                      </p>
                     </div>
                     <Switch id="email-appointments" defaultChecked />
                   </div>
@@ -195,7 +239,9 @@ export default function SettingsPage() {
                       <Label htmlFor="app-messages" className="font-medium">
                         New Messages
                       </Label>
-                      <p className="text-sm text-gray-500">Show in-app notifications for new messages</p>
+                      <p className="text-sm text-gray-500">
+                        Show in-app notifications for new messages
+                      </p>
                     </div>
                     <Switch id="app-messages" defaultChecked />
                   </div>
@@ -204,7 +250,9 @@ export default function SettingsPage() {
                       <Label htmlFor="app-applications" className="font-medium">
                         Job Applications
                       </Label>
-                      <p className="text-sm text-gray-500">Show in-app notifications for job application updates</p>
+                      <p className="text-sm text-gray-500">
+                        Show in-app notifications for job application updates
+                      </p>
                     </div>
                     <Switch id="app-applications" defaultChecked />
                   </div>
@@ -213,7 +261,9 @@ export default function SettingsPage() {
                       <Label htmlFor="app-appointments" className="font-medium">
                         Appointment Reminders
                       </Label>
-                      <p className="text-sm text-gray-500">Show in-app reminders for upcoming appointments</p>
+                      <p className="text-sm text-gray-500">
+                        Show in-app reminders for upcoming appointments
+                      </p>
                     </div>
                     <Switch id="app-appointments" defaultChecked />
                   </div>
@@ -238,8 +288,12 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <Button className="bg-teal text-white hover:bg-teal-dark" onClick={handleUpdate} disabled={isUpdating}>
-                {isUpdating ? "Saving..." : "Save Preferences"}
+              <Button
+                className="bg-teal text-white hover:bg-teal-dark"
+                onClick={handleUpdate}
+                disabled={isUpdating}
+              >
+                {isUpdating ? 'Saving...' : 'Save Preferences'}
               </Button>
             </CardContent>
           </Card>
@@ -250,7 +304,9 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Change Password</CardTitle>
-                <CardDescription>Update your password to keep your account secure</CardDescription>
+                <CardDescription>
+                  Update your password to keep your account secure
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleUpdate} className="space-y-4">
@@ -263,11 +319,17 @@ export default function SettingsPage() {
                     <Input id="new-password" type="password" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="confirm-password">Confirm New Password</Label>
+                    <Label htmlFor="confirm-password">
+                      Confirm New Password
+                    </Label>
                     <Input id="confirm-password" type="password" />
                   </div>
-                  <Button type="submit" className="bg-teal text-white hover:bg-teal-dark" disabled={isUpdating}>
-                    {isUpdating ? "Updating..." : "Update Password"}
+                  <Button
+                    type="submit"
+                    className="bg-teal text-white hover:bg-teal-dark"
+                    disabled={isUpdating}
+                  >
+                    {isUpdating ? 'Updating...' : 'Update Password'}
                   </Button>
                 </form>
               </CardContent>
@@ -276,13 +338,17 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Two-Factor Authentication</CardTitle>
-                <CardDescription>Add an extra layer of security to your account</CardDescription>
+                <CardDescription>
+                  Add an extra layer of security to your account
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">Two-Factor Authentication</p>
-                    <p className="text-sm text-gray-500">Protect your account with 2FA</p>
+                    <p className="text-sm text-gray-500">
+                      Protect your account with 2FA
+                    </p>
                   </div>
                   <Switch id="2fa" />
                 </div>
@@ -295,28 +361,43 @@ export default function SettingsPage() {
             <Card className="md:col-span-2">
               <CardHeader>
                 <CardTitle>Login Sessions</CardTitle>
-                <CardDescription>Manage your active sessions and sign out from other devices</CardDescription>
+                <CardDescription>
+                  Manage your active sessions and sign out from other devices
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
                       <p className="font-medium">Current Session</p>
-                      <p className="text-sm text-gray-500">San Francisco, CA • Chrome on Windows • Active now</p>
+                      <p className="text-sm text-gray-500">
+                        San Francisco, CA • Chrome on Windows • Active now
+                      </p>
                     </div>
-                    <div className="text-sm text-green-600 font-medium">Current</div>
+                    <div className="text-sm text-green-600 font-medium">
+                      Current
+                    </div>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
                       <p className="font-medium">Mobile App</p>
-                      <p className="text-sm text-gray-500">San Francisco, CA • iOS App • Last active 2 hours ago</p>
+                      <p className="text-sm text-gray-500">
+                        San Francisco, CA • iOS App • Last active 2 hours ago
+                      </p>
                     </div>
-                    <Button variant="outline" size="sm" className="text-red-500 hover:text-red-700">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-red-500 hover:text-red-700"
+                    >
                       Sign Out
                     </Button>
                   </div>
                 </div>
-                <Button variant="outline" className="text-red-500 hover:text-red-700">
+                <Button
+                  variant="outline"
+                  className="text-red-500 hover:text-red-700"
+                >
                   Sign Out From All Devices
                 </Button>
               </CardContent>
@@ -328,7 +409,9 @@ export default function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Billing Information</CardTitle>
-              <CardDescription>Manage your billing information and subscription</CardDescription>
+              <CardDescription>
+                Manage your billing information and subscription
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
@@ -337,9 +420,13 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <p className="font-medium text-lg">Free Plan</p>
-                      <p className="text-sm text-gray-500">Basic features for individual use</p>
+                      <p className="text-sm text-gray-500">
+                        Basic features for individual use
+                      </p>
                     </div>
-                    <Button className="bg-teal text-white hover:bg-teal-dark">Upgrade Plan</Button>
+                    <Button className="bg-teal text-white hover:bg-teal-dark">
+                      Upgrade Plan
+                    </Button>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center">
@@ -406,12 +493,14 @@ export default function SettingsPage() {
 
               <div className="space-y-4">
                 <h3 className="text-lg font-medium">Billing History</h3>
-                <p className="text-sm text-gray-500">No billing history available.</p>
+                <p className="text-sm text-gray-500">
+                  No billing history available.
+                </p>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

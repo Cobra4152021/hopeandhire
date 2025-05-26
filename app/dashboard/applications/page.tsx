@@ -1,5 +1,5 @@
-import ApplicationsPage from "./applications-listing"
+import ApplicationsPage from './applications-listing';
 
 export default function ApplicationsMainPage() {
-  return <ApplicationsPage />
+  return <ApplicationsPage />;
 }

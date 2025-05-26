@@ -18,10 +18,7 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement
 }
 
-<<<<<<< HEAD
-=======
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
->>>>>>> 999b990 (updates)
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
   UPDATE_TOAST: "UPDATE_TOAST",
@@ -131,10 +128,7 @@ export const reducer = (state: State, action: Action): State => {
         toasts: state.toasts.filter((t) => t.id !== action.toastId),
       }
   }
-<<<<<<< HEAD
-=======
   return state;
->>>>>>> 999b990 (updates)
 }
 
 const listeners: Array<(state: State) => void> = []

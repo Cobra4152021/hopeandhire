@@ -1,28 +1,31 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Trophy } from "lucide-react"
-import { AnimatedCounter } from "@/components/animated-counter"
-import { Metadata } from "next"
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Trophy } from 'lucide-react';
+import { AnimatedCounter } from '@/components/animated-counter';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Hope and Hire - Building Better Futures",
-  description: "Empowering individuals with second chances through workforce readiness and meaningful employment. Join our mission to bridge the gap from hope to hire.",
-  keywords: "second chances, employment, workforce readiness, job placement, career development, reentry support",
+  title: 'Hope and Hire - Building Better Futures',
+  description:
+    'Empowering individuals with second chances through workforce readiness and meaningful employment. Join our mission to bridge the gap from hope to hire.',
+  keywords:
+    'second chances, employment, workforce readiness, job placement, career development, reentry support',
   openGraph: {
-    title: "Hope and Hire - Building Better Futures",
-    description: "Empowering individuals with second chances through workforce readiness and meaningful employment.",
+    title: 'Hope and Hire - Building Better Futures',
+    description:
+      'Empowering individuals with second chances through workforce readiness and meaningful employment.',
     images: [
       {
-        url: "/logo.jpg",
+        url: '/logo.jpg',
         width: 1200,
         height: 630,
-        alt: "Hope and Hire Logo",
+        alt: 'Hope and Hire Logo',
       },
     ],
   },
-}
+};
 
 export default function Home() {
   return (
@@ -34,7 +37,10 @@ export default function Home() {
             {/* Hero image row: left, logo, right (touching, no gaps) */}
             <div className="flex justify-center items-center mb-8 w-full max-w-3xl mx-auto rounded-2xl shadow-2xl border border-gray-200 overflow-hidden bg-white">
               {/* Left image */}
-              <div className="h-full flex items-center" style={{ width: '28%' }}>
+              <div
+                className="h-full flex items-center"
+                style={{ width: '28%' }}
+              >
                 <img
                   src="/612x612.jpg"
                   alt="Diverse workers left"
@@ -44,7 +50,10 @@ export default function Home() {
                 />
               </div>
               {/* Center logo */}
-              <div className="flex items-center justify-center bg-white" style={{ width: '44%', minWidth: 0 }}>
+              <div
+                className="flex items-center justify-center bg-white"
+                style={{ width: '44%', minWidth: 0 }}
+              >
                 <Image
                   src="/logo.png"
                   alt="Hope and Hire Logo"
@@ -56,7 +65,10 @@ export default function Home() {
                 />
               </div>
               {/* Right image */}
-              <div className="h-full flex items-center" style={{ width: '28%' }}>
+              <div
+                className="h-full flex items-center"
+                style={{ width: '28%' }}
+              >
                 <img
                   src="/1612x612.jpg"
                   alt="Diverse workers right"
@@ -84,7 +96,8 @@ export default function Home() {
             </h1>
 
             <p className="text-base md:text-lg mb-8 md:mb-12 text-gray-600 max-w-3xl mx-auto">
-              Empowering individuals with second chances through workforce readiness and meaningful employment.
+              Empowering individuals with second chances through workforce
+              readiness and meaningful employment.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -94,7 +107,10 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/volunteers">
-                <Button variant="outline" className="w-full sm:w-auto border-gray-300 hover:bg-gray-100">
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto border-gray-300 hover:bg-gray-100"
+                >
                   Start Volunteering
                 </Button>
               </Link>
@@ -114,31 +130,43 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2">Resumes Written</h3>
+                <h3 className="text-center text-gray-600 mb-2">
+                  Resumes Written
+                </h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
                   <AnimatedCounter end={3250} duration={5000} />
                 </p>
-                <p className="text-center text-gray-500 text-sm">Professional resumes created</p>
+                <p className="text-center text-gray-500 text-sm">
+                  Professional resumes created
+                </p>
               </CardContent>
             </Card>
 
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2">Interviews Conducted</h3>
+                <h3 className="text-center text-gray-600 mb-2">
+                  Interviews Conducted
+                </h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
                   <AnimatedCounter end={1875} duration={5000} />
                 </p>
-                <p className="text-center text-gray-500 text-sm">Mock interviews with feedback</p>
+                <p className="text-center text-gray-500 text-sm">
+                  Mock interviews with feedback
+                </p>
               </CardContent>
             </Card>
 
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2">Job Placements Made</h3>
+                <h3 className="text-center text-gray-600 mb-2">
+                  Job Placements Made
+                </h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
                   <AnimatedCounter end={925} duration={5000} />
                 </p>
-                <p className="text-center text-gray-500 text-sm">Successful career placements</p>
+                <p className="text-center text-gray-500 text-sm">
+                  Successful career placements
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -148,16 +176,22 @@ export default function Home() {
       {/* Our Impact */}
       <section className="py-16 bg-light-bg">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Our Impact</h2>
+          <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">
+            Our Impact
+          </h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Together, we're creating meaningful change in the lives of formerly incarcerated individuals.
+            Together, we're creating meaningful change in the lives of formerly
+            incarcerated individuals.
           </p>
 
           {/* Top Contributors */}
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">Top Contributors</h2>
+            <h2 className="text-3xl font-bold text-center mb-4 text-dark-text">
+              Top Contributors
+            </h2>
             <p className="text-center text-gray-600 mb-12">
-              Recognizing the volunteers who are making a difference in our community.
+              Recognizing the volunteers who are making a difference in our
+              community.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -166,7 +200,9 @@ export default function Home() {
                 <CardContent className="p-6">
                   <div className="flex items-center mb-6">
                     <Trophy className="text-teal mr-2" />
-                    <h3 className="text-xl font-bold text-dark-text">Monthly Leaders</h3>
+                    <h3 className="text-xl font-bold text-dark-text">
+                      Monthly Leaders
+                    </h3>
                   </div>
 
                   <div className="space-y-4">
@@ -188,7 +224,9 @@ export default function Home() {
                           <p className="text-sm text-gray-500">HR Director</p>
                         </div>
                       </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">42 resumes</div>
+                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">
+                        42 resumes
+                      </div>
                     </div>
 
                     <div className="flex items-center justify-between">
@@ -209,7 +247,9 @@ export default function Home() {
                           <p className="text-sm text-gray-500">Recruiter</p>
                         </div>
                       </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">37 resumes</div>
+                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">
+                        37 resumes
+                      </div>
                     </div>
 
                     <div className="flex items-center justify-between">
@@ -230,7 +270,9 @@ export default function Home() {
                           <p className="text-sm text-gray-500">Career Coach</p>
                         </div>
                       </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">29 resumes</div>
+                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">
+                        29 resumes
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -241,7 +283,9 @@ export default function Home() {
                 <CardContent className="p-6">
                   <div className="flex items-center mb-6">
                     <Trophy className="text-yellow mr-2" />
-                    <h3 className="text-xl font-bold text-dark-text">Yearly Leaders</h3>
+                    <h3 className="text-xl font-bold text-dark-text">
+                      Yearly Leaders
+                    </h3>
                   </div>
 
                   <div className="space-y-4">
@@ -283,7 +327,9 @@ export default function Home() {
                         </div>
                         <div>
                           <p className="font-medium">Robert Taylor</p>
-                          <p className="text-sm text-gray-500">Talent Acquisition</p>
+                          <p className="text-sm text-gray-500">
+                            Talent Acquisition
+                          </p>
                         </div>
                       </div>
                       <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
@@ -306,7 +352,9 @@ export default function Home() {
                         </div>
                         <div>
                           <p className="font-medium">Lisa Martinez</p>
-                          <p className="text-sm text-gray-500">Career Specialist</p>
+                          <p className="text-sm text-gray-500">
+                            Career Specialist
+                          </p>
                         </div>
                       </div>
                       <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
@@ -324,16 +372,24 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-dark-text">Ready to Make a Difference?</h2>
+          <h2 className="text-3xl font-bold mb-4 text-dark-text">
+            Ready to Make a Difference?
+          </h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join our community of volunteers, employers, and organizations committed to creating second chances.
+            Join our community of volunteers, employers, and organizations
+            committed to creating second chances.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register">
-              <Button className="bg-teal text-white hover:bg-teal-dark">Get Started Today</Button>
+              <Button className="bg-teal text-white hover:bg-teal-dark">
+                Get Started Today
+              </Button>
             </Link>
             <Link href="/contact">
-              <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+              <Button
+                variant="outline"
+                className="border-teal text-teal hover:bg-teal hover:text-white"
+              >
                 Contact Us
               </Button>
             </Link>
@@ -341,5 +397,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  )
+  );
 }

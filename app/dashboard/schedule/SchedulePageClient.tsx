@@ -1,213 +1,225 @@
-"use client"
+'use client';
 
-import React, { useState, ChangeEvent } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar } from "@/components/ui/calendar"
+import React, { useState, ChangeEvent } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Clock, MapPin, Users, Plus, CalendarIcon, ChevronLeft, ChevronRight, Trash2 } from "lucide-react"
-import { Tabs } from "@/components/ui/tabs"
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      [elemName: string]: any
-    }
-  }
-}
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import {
+  MapPin,
+  Plus,
+  CalendarIcon,
+  ChevronLeft,
+  ChevronRight,
+  Trash2,
+} from 'lucide-react';
+import { Tabs } from '@/components/ui/tabs';
 
 interface Event {
-  id: number
-  title: string
-  date: Date
-  time: string
-  duration: number
-  type: string
-  location: string
-  attendees: any[]
+  id: number;
+  title: string;
+  date: Date;
+  time: string;
+  duration: number;
+  type: string;
+  location: string;
+  attendees: any[];
 }
 
 // Sample events data
 const initialEvents = [
   {
     id: 1,
-    title: "Interview with Michael Johnson",
-    date: new Date("2023-05-15"),
-    time: "10:00 AM - 11:00 AM",
-    type: "Interview",
-    location: "Virtual (Zoom)",
-    description: "Initial interview for the Software Developer position",
+    title: 'Interview with Michael Johnson',
+    date: new Date('2023-05-15'),
+    time: '10:00 AM - 11:00 AM',
+    type: 'Interview',
+    location: 'Virtual (Zoom)',
+    description: 'Initial interview for the Software Developer position',
     attendees: [
       {
-        name: "Michael Johnson",
-        avatar: "/stylized-letters-mj.png",
-        role: "Candidate",
+        name: 'Michael Johnson',
+        avatar: '/stylized-letters-mj.png',
+        role: 'Candidate',
       },
       {
-        name: "Sarah Thompson",
-        avatar: "/team-member-1.jpg",
-        role: "HR Manager",
+        name: 'Sarah Thompson',
+        avatar: '/team-member-1.jpg',
+        role: 'HR Manager',
       },
     ],
   },
   {
     id: 2,
-    title: "Resume Review Session",
-    date: new Date("2023-05-17"),
-    time: "2:00 PM - 3:00 PM",
-    type: "Resume Review",
-    location: "Office - Room 203",
-    description: "Review resumes for the Marketing Specialist position",
+    title: 'Resume Review Session',
+    date: new Date('2023-05-17'),
+    time: '2:00 PM - 3:00 PM',
+    type: 'Resume Review',
+    location: 'Office - Room 203',
+    description: 'Review resumes for the Marketing Specialist position',
     attendees: [
       {
-        name: "David Chen",
-        avatar: "/stylized-letters-dc.png",
-        role: "Hiring Manager",
+        name: 'David Chen',
+        avatar: '/stylized-letters-dc.png',
+        role: 'Hiring Manager',
       },
       {
-        name: "Emily Rodriguez",
-        avatar: "/stylized-letters-er.png",
-        role: "Marketing Director",
+        name: 'Emily Rodriguez',
+        avatar: '/stylized-letters-er.png',
+        role: 'Marketing Director',
       },
     ],
   },
   {
     id: 3,
-    title: "Team Hiring Meeting",
-    date: new Date("2023-05-20"),
-    time: "11:00 AM - 12:00 PM",
-    type: "Meeting",
-    location: "Conference Room A",
-    description: "Discuss hiring strategy for Q3",
+    title: 'Team Hiring Meeting',
+    date: new Date('2023-05-20'),
+    time: '11:00 AM - 12:00 PM',
+    type: 'Meeting',
+    location: 'Conference Room A',
+    description: 'Discuss hiring strategy for Q3',
     attendees: [
       {
-        name: "Sarah Thompson",
-        avatar: "/team-member-1.jpg",
-        role: "HR Manager",
+        name: 'Sarah Thompson',
+        avatar: '/team-member-1.jpg',
+        role: 'HR Manager',
       },
       {
-        name: "David Chen",
-        avatar: "/stylized-letters-dc.png",
-        role: "Hiring Manager",
+        name: 'David Chen',
+        avatar: '/stylized-letters-dc.png',
+        role: 'Hiring Manager',
       },
       {
-        name: "Emily Rodriguez",
-        avatar: "/stylized-letters-er.png",
-        role: "Marketing Director",
+        name: 'Emily Rodriguez',
+        avatar: '/stylized-letters-er.png',
+        role: 'Marketing Director',
       },
     ],
   },
-]
+];
 
 export default function SchedulePageClient() {
-  const [view, setView] = useState<"day" | "week" | "month">("week")
-  const [currentDate, setCurrentDate] = useState(new Date())
-  const [events, setEvents] = useState(initialEvents)
-  const [selectedEvent, setSelectedEvent] = useState<any | null>(null)
-  const [isAddEventOpen, setIsAddEventOpen] = useState(false)
+  const [view, setView] = useState<'day' | 'week' | 'month'>('week');
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [events, setEvents] = useState(initialEvents);
+  const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
+  const [isAddEventOpen, setIsAddEventOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({
-    title: "",
+    title: '',
     date: new Date(),
-    time: "09:00",
+    time: '09:00',
     duration: 60,
-    type: "interview",
-    location: "",
+    type: 'interview',
+    location: '',
+    description: '',
     attendees: [],
-  })
+  });
 
   const handleAddEvent = () => {
-    const [hours, minutes] = newEvent.time.split(":").map(Number)
-    const eventDate = new Date(newEvent.date)
-    eventDate.setHours(hours, minutes)
+    const [hours, minutes] = newEvent.time.split(':').map(Number);
+    const eventDate = new Date(newEvent.date);
+    eventDate.setHours(hours, minutes);
 
     const newEventWithId = {
       ...newEvent,
       id: events.length + 1,
       date: eventDate,
-    }
+      description: newEvent.description || '',
+      attendees: newEvent.attendees || [],
+    };
 
-    setEvents([...events, newEventWithId])
-    setIsAddEventOpen(false)
+    setEvents([...events, newEventWithId]);
+    setIsAddEventOpen(false);
     setNewEvent({
-      title: "",
+      title: '',
       date: new Date(),
-      time: "09:00",
+      time: '09:00',
       duration: 60,
-      type: "interview",
-      location: "",
+      type: 'interview',
+      location: '',
+      description: '',
       attendees: [],
-    })
-  }
+    });
+  };
 
   const handleDeleteEvent = (eventId: number) => {
-    setEvents(events.filter((event) => event.id !== eventId))
-  }
+    setEvents(events.filter((event) => event.id !== eventId));
+  };
 
   const handlePrevious = () => {
-    const newDate = new Date(currentDate)
-    if (view === "day") {
-      newDate.setDate(newDate.getDate() - 1)
-    } else if (view === "week") {
-      newDate.setDate(newDate.getDate() - 7)
+    const newDate = new Date(currentDate);
+    if (view === 'day') {
+      newDate.setDate(newDate.getDate() - 1);
+    } else if (view === 'week') {
+      newDate.setDate(newDate.getDate() - 7);
     } else {
-      newDate.setMonth(newDate.getMonth() - 1)
+      newDate.setMonth(newDate.getMonth() - 1);
     }
-    setCurrentDate(newDate)
-  }
+    setCurrentDate(newDate);
+  };
 
   const handleNext = () => {
-    const newDate = new Date(currentDate)
-    if (view === "day") {
-      newDate.setDate(newDate.getDate() + 1)
-    } else if (view === "week") {
-      newDate.setDate(newDate.getDate() + 7)
+    const newDate = new Date(currentDate);
+    if (view === 'day') {
+      newDate.setDate(newDate.getDate() + 1);
+    } else if (view === 'week') {
+      newDate.setDate(newDate.getDate() + 7);
     } else {
-      newDate.setMonth(newDate.getMonth() + 1)
+      newDate.setMonth(newDate.getMonth() + 1);
     }
-    setCurrentDate(newDate)
-  }
+    setCurrentDate(newDate);
+  };
 
   const handleToday = () => {
-    setCurrentDate(new Date())
-  }
+    setCurrentDate(new Date());
+  };
 
   const getEventTypeColor = (type: string) => {
     switch (type) {
-      case "Interview":
-        return "bg-teal text-white"
-      case "Resume Review":
-        return "bg-yellow text-dark-text"
-      case "Meeting":
-        return "bg-blue-500 text-white"
+      case 'Interview':
+        return 'bg-teal text-white';
+      case 'Resume Review':
+        return 'bg-yellow text-dark-text';
+      case 'Meeting':
+        return 'bg-blue-500 text-white';
       default:
-        return "bg-gray-500 text-white"
+        return 'bg-gray-500 text-white';
     }
-  }
+  };
 
   return (
     <div className="container mx-auto py-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Schedule</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your interviews and meetings</p>
+          <p className="mt-1 text-sm text-gray-500">
+            Manage your interviews and meetings
+          </p>
         </div>
         <div className="flex items-center space-x-2">
-          <Tabs value={view} onValueChange={setView}>
+          <Tabs
+            value={view}
+            onValueChange={(val) => setView(val as 'day' | 'week' | 'month')}
+          >
             <TabsList>
               <TabsTrigger value="day">Day</TabsTrigger>
               <TabsTrigger value="week">Week</TabsTrigger>
@@ -231,10 +243,18 @@ export default function SchedulePageClient() {
             <CardTitle>Calendar</CardTitle>
           </CardHeader>
           <CardContent>
-            <Calendar mode="single" selected={currentDate} onSelect={setCurrentDate} className="rounded-md border" initialFocus />
+            <Calendar
+              mode="single"
+              selected={currentDate}
+              onSelect={(date) => date && setCurrentDate(date)}
+              className="rounded-md border"
+              initialFocus
+            />
 
             <div className="mt-6">
-              <h3 className="font-medium text-gray-900 mb-3">Upcoming Events</h3>
+              <h3 className="font-medium text-gray-900 mb-3">
+                Upcoming Events
+              </h3>
               <div className="space-y-3">
                 {events.slice(0, 3).map((event) => (
                   <div
@@ -244,11 +264,11 @@ export default function SchedulePageClient() {
                   >
                     <div
                       className={`w-3 h-3 rounded-full mr-3 ${
-                        event.type === "Interview"
-                          ? "bg-teal"
-                          : event.type === "Resume Review"
-                            ? "bg-yellow"
-                            : "bg-blue-500"
+                        event.type === 'Interview'
+                          ? 'bg-teal'
+                          : event.type === 'Resume Review'
+                            ? 'bg-yellow'
+                            : 'bg-blue-500'
                       }`}
                     ></div>
                     <div>
@@ -278,17 +298,17 @@ export default function SchedulePageClient() {
                 Today
               </Button>
               <h2 className="text-lg font-semibold">
-                {currentDate.toLocaleDateString("en-US", {
-                  month: "long",
-                  year: "numeric",
-                  ...(view === "day" && { day: "numeric" }),
+                {currentDate.toLocaleDateString('en-US', {
+                  month: 'long',
+                  year: 'numeric',
+                  ...(view === 'day' && { day: 'numeric' }),
                 })}
               </h2>
             </div>
           </CardHeader>
           <CardContent>
             <div className="h-[600px] overflow-y-auto">
-              {view === "day" && (
+              {view === 'day' && (
                 <div className="space-y-4">
                   {events
                     .filter(
@@ -301,9 +321,9 @@ export default function SchedulePageClient() {
                           <div>
                             <h3 className="font-semibold">{event.title}</h3>
                             <p className="text-sm text-gray-500">
-                              {event.date.toLocaleTimeString("en-US", {
-                                hour: "numeric",
-                                minute: "numeric",
+                              {event.date.toLocaleTimeString('en-US', {
+                                hour: 'numeric',
+                                minute: 'numeric',
                               })}
                             </p>
                             <p className="text-sm text-gray-500">
@@ -325,18 +345,20 @@ export default function SchedulePageClient() {
                     ))}
                 </div>
               )}
-              {view === "week" && (
+              {view === 'week' && (
                 <div className="grid grid-cols-7 gap-4">
                   {Array.from({ length: 7 }, (_, i) => {
-                    const date = new Date(currentDate)
-                    date.setDate(date.getDate() - date.getDay() + i)
+                    const date = new Date(currentDate);
+                    date.setDate(date.getDate() - date.getDay() + i);
                     return (
                       <div key={i} className="space-y-2">
                         <div className="text-center font-semibold">
-                          {date.toLocaleDateString("en-US", { weekday: "short" })}
+                          {date.toLocaleDateString('en-US', {
+                            weekday: 'short',
+                          })}
                         </div>
                         <div className="text-center text-sm text-gray-500">
-                          {date.toLocaleDateString("en-US", { day: "numeric" })}
+                          {date.toLocaleDateString('en-US', { day: 'numeric' })}
                         </div>
                         {events
                           .filter(
@@ -349,38 +371,38 @@ export default function SchedulePageClient() {
                                 {event.title}
                               </h3>
                               <p className="text-xs text-gray-500">
-                                {event.date.toLocaleTimeString("en-US", {
-                                  hour: "numeric",
-                                  minute: "numeric",
+                                {event.date.toLocaleTimeString('en-US', {
+                                  hour: 'numeric',
+                                  minute: 'numeric',
                                 })}
                               </p>
                             </Card>
                           ))}
                       </div>
-                    )
+                    );
                   })}
                 </div>
               )}
-              {view === "month" && (
+              {view === 'month' && (
                 <div className="grid grid-cols-7 gap-4">
                   {Array.from({ length: 35 }, (_, i) => {
                     const date = new Date(
                       currentDate.getFullYear(),
                       currentDate.getMonth(),
                       1
-                    )
-                    date.setDate(date.getDate() + i)
+                    );
+                    date.setDate(date.getDate() + i);
                     return (
                       <div
                         key={i}
                         className={`p-2 ${
                           date.getMonth() === currentDate.getMonth()
-                            ? "bg-white"
-                            : "bg-gray-50"
+                            ? 'bg-white'
+                            : 'bg-gray-50'
                         }`}
                       >
                         <div className="text-center font-semibold">
-                          {date.toLocaleDateString("en-US", { day: "numeric" })}
+                          {date.toLocaleDateString('en-US', { day: 'numeric' })}
                         </div>
                         {events
                           .filter(
@@ -396,7 +418,7 @@ export default function SchedulePageClient() {
                             </div>
                           ))}
                       </div>
-                    )
+                    );
                   })}
                 </div>
               )}
@@ -407,17 +429,25 @@ export default function SchedulePageClient() {
 
       {/* Event Details Dialog */}
       {selectedEvent && (
-        <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
+        <Dialog
+          open={!!selectedEvent}
+          onOpenChange={() => setSelectedEvent(null)}
+        >
           <DialogContent className="sm:max-w-[550px]">
             <DialogHeader>
               <DialogTitle>{selectedEvent.title}</DialogTitle>
-              <Badge className={`mt-2 ${getEventTypeColor(selectedEvent.type)}`}>{selectedEvent.type}</Badge>
+              <Badge
+                className={`mt-2 ${getEventTypeColor(selectedEvent.type)}`}
+              >
+                {selectedEvent.type}
+              </Badge>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="flex items-center">
                 <CalendarIcon className="h-5 w-5 text-gray-400 mr-2" />
                 <span>
-                  {selectedEvent.date.toLocaleDateString()} • {selectedEvent.time}
+                  {selectedEvent.date.toLocaleDateString()} •{' '}
+                  {selectedEvent.time}
                 </span>
               </div>
               <div className="flex items-center">
@@ -431,23 +461,30 @@ export default function SchedulePageClient() {
               <div>
                 <h4 className="font-medium mb-2">Attendees</h4>
                 <div className="space-y-2">
-                  {selectedEvent.attendees.map((attendee: any, index: number) => (
-                    <div key={index} className="flex items-center">
-                      <Avatar className="h-8 w-8 mr-2">
-                        <AvatarImage src={attendee.avatar || "/placeholder.svg"} alt={attendee.name} />
-                        <AvatarFallback className="bg-teal-light/20 text-teal">
-                          {attendee.name
-                            .split(" ")
-                            .map((n: string) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-medium">{attendee.name}</p>
-                        <p className="text-xs text-gray-500">{attendee.role}</p>
+                  {selectedEvent.attendees.map(
+                    (attendee: any, index: number) => (
+                      <div key={index} className="flex items-center">
+                        <Avatar className="h-8 w-8 mr-2">
+                          <AvatarImage
+                            src={attendee.avatar || '/placeholder.svg'}
+                            alt={attendee.name}
+                          />
+                          <AvatarFallback className="bg-teal-light/20 text-teal">
+                            {attendee.name
+                              .split(' ')
+                              .map((n: string) => n[0])
+                              .join('')}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">{attendee.name}</p>
+                          <p className="text-xs text-gray-500">
+                            {attendee.role}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               </div>
             </div>
@@ -455,7 +492,9 @@ export default function SchedulePageClient() {
               <Button variant="outline" onClick={() => setSelectedEvent(null)}>
                 Close
               </Button>
-              <Button className="bg-teal text-white hover:bg-teal-dark">Edit Event</Button>
+              <Button className="bg-teal text-white hover:bg-teal-dark">
+                Edit Event
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -482,7 +521,7 @@ export default function SchedulePageClient() {
               <Input
                 id="date"
                 type="date"
-                value={newEvent.date.toISOString().split("T")[0]}
+                value={newEvent.date.toISOString().split('T')[0]}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setNewEvent({
                     ...newEvent,
@@ -556,5 +595,5 @@ export default function SchedulePageClient() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

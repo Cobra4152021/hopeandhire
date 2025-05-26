@@ -1,15 +1,17 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import Confetti from "react-confetti"
+import { useState, useEffect } from 'react';
+import Confetti from 'react-confetti';
 
 interface ConfettiCelebrationProps {
-  duration?: number
+  duration?: number;
 }
 
-export default function ConfettiCelebration({ duration = 5000 }: ConfettiCelebrationProps) {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-  const [showConfetti, setShowConfetti] = useState(true)
+export default function ConfettiCelebration({
+  duration = 5000,
+}: ConfettiCelebrationProps) {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
     // Set dimensions to window size
@@ -17,28 +19,28 @@ export default function ConfettiCelebration({ duration = 5000 }: ConfettiCelebra
       setDimensions({
         width: window.innerWidth,
         height: window.innerHeight,
-      })
-    }
+      });
+    };
 
     // Initial dimensions
-    updateDimensions()
+    updateDimensions();
 
     // Update dimensions on resize
-    window.addEventListener("resize", updateDimensions)
+    window.addEventListener('resize', updateDimensions);
 
     // Set timer to hide confetti
     const timer = setTimeout(() => {
-      setShowConfetti(false)
-    }, duration)
+      setShowConfetti(false);
+    }, duration);
 
     // Cleanup
     return () => {
-      window.removeEventListener("resize", updateDimensions)
-      clearTimeout(timer)
-    }
-  }, [duration])
+      window.removeEventListener('resize', updateDimensions);
+      clearTimeout(timer);
+    };
+  }, [duration]);
 
-  if (!showConfetti) return null
+  if (!showConfetti) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50">
@@ -48,8 +50,8 @@ export default function ConfettiCelebration({ duration = 5000 }: ConfettiCelebra
         recycle={false}
         numberOfPieces={500}
         gravity={0.15}
-        colors={["#38B2AC", "#F6E05E", "#4FD1C5", "#FFD700", "#FFFFFF"]}
+        colors={['#38B2AC', '#F6E05E', '#4FD1C5', '#FFD700', '#FFFFFF']}
       />
     </div>
-  )
+  );
 }

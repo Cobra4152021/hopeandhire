@@ -1,5 +1,5 @@
-import AnalyticsClientPage from "./AnalyticsClientPage"
+import AnalyticsClientPage from './AnalyticsClientPage';
 
 export default function AnalyticsPage() {
-  return <AnalyticsClientPage />
+  return <AnalyticsClientPage />;
 }

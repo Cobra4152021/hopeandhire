@@ -1,70 +1,88 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Mail, Phone, MapPin, Clock } from "lucide-react"
+import { useState } from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    inquiryType: "",
-    message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+    name: '',
+    email: '',
+    phone: '',
+    inquiryType: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, inquiryType: value }))
-  }
+    setFormData((prev) => ({ ...prev, inquiryType: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     // Simulate form submission
     setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
+      setIsSubmitting(false);
+      setIsSubmitted(true);
       setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        inquiryType: "",
-        message: "",
-      })
-    }, 1500)
-  }
+        name: '',
+        email: '',
+        phone: '',
+        inquiryType: '',
+        message: '',
+      });
+    }, 1500);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
       {/* Logo Section - Centrally positioned below header */}
       <div className="flex justify-center py-8 bg-white">
-        <Image src="/logo.png" alt="Hope and Hire Logo" width={200} height={80} className="h-auto" priority />
+        <Image
+          src="/logo.png"
+          alt="Hope and Hire Logo"
+          width={200}
+          height={80}
+          className="h-auto"
+          priority
+        />
       </div>
 
       {/* Hero Section */}
       <section className="bg-light-bg py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl font-bold mb-6 text-dark-text">Contact Us</h1>
+            <h1 className="text-4xl font-bold mb-6 text-dark-text">
+              Contact Us
+            </h1>
             <p className="text-lg text-gray-600">
-              Have questions or want to learn more about Hope and Hire? We're here to help. Reach out to our team using
-              the form below.
+              Have questions or want to learn more about Hope and Hire?
+              We&apos;re here to help. Reach out to our team using the form
+              below.
             </p>
           </div>
         </div>
@@ -78,12 +96,17 @@ export default function ContactPage() {
             <div>
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-bold mb-6 text-dark-text">Send Us a Message</h2>
+                  <h2 className="text-2xl font-bold mb-6 text-dark-text">
+                    Send Us a Message
+                  </h2>
 
                   {isSubmitted ? (
                     <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-lg">
                       <h3 className="font-bold text-lg mb-2">Thank You!</h3>
-                      <p>Your message has been sent successfully. Our team will get back to you shortly.</p>
+                      <p>
+                        Your message has been sent successfully. Our team will
+                        get back to you shortly.
+                      </p>
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -125,16 +148,29 @@ export default function ContactPage() {
 
                       <div className="space-y-2">
                         <Label htmlFor="inquiryType">Inquiry Type</Label>
-                        <Select value={formData.inquiryType} onValueChange={handleSelectChange}>
+                        <Select
+                          value={formData.inquiryType}
+                          onValueChange={handleSelectChange}
+                        >
                           <SelectTrigger id="inquiryType">
                             <SelectValue placeholder="Select inquiry type" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="job_seeker">Job Seeker Support</SelectItem>
-                            <SelectItem value="volunteer">Volunteer Information</SelectItem>
-                            <SelectItem value="employer">Employer Partnership</SelectItem>
-                            <SelectItem value="organization">Organization Partnership</SelectItem>
-                            <SelectItem value="donation">Donation Inquiry</SelectItem>
+                            <SelectItem value="job_seeker">
+                              Job Seeker Support
+                            </SelectItem>
+                            <SelectItem value="volunteer">
+                              Volunteer Information
+                            </SelectItem>
+                            <SelectItem value="employer">
+                              Employer Partnership
+                            </SelectItem>
+                            <SelectItem value="organization">
+                              Organization Partnership
+                            </SelectItem>
+                            <SelectItem value="donation">
+                              Donation Inquiry
+                            </SelectItem>
                             <SelectItem value="other">Other</SelectItem>
                           </SelectContent>
                         </Select>
@@ -158,7 +194,7 @@ export default function ContactPage() {
                         className="w-full bg-teal text-white hover:bg-teal-dark"
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? "Sending..." : "Send Message"}
+                        {isSubmitting ? 'Sending...' : 'Send Message'}
                       </Button>
                     </form>
                   )}
@@ -169,7 +205,9 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-2xl font-bold mb-6 text-dark-text">Contact Information</h2>
+                <h2 className="text-2xl font-bold mb-6 text-dark-text">
+                  Contact Information
+                </h2>
                 <div className="space-y-4">
                   <div className="flex items-start">
                     <div className="bg-teal-light/20 p-3 rounded-full mr-4">
@@ -177,7 +215,9 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-medium text-dark-text">Email</h3>
-                      <p className="text-gray-600">email@protectingsanfrancisco.com</p>
+                      <p className="text-gray-600">
+                        email@protectingsanfrancisco.com
+                      </p>
                     </div>
                   </div>
 
@@ -222,9 +262,12 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold mb-6 text-dark-text">Connect With Us</h2>
+                <h2 className="text-2xl font-bold mb-6 text-dark-text">
+                  Connect With Us
+                </h2>
                 <p className="text-gray-600 mb-4">
-                  Follow us on social media to stay updated on our latest news, events, and success stories.
+                  Follow us on social media to stay updated on our latest news,
+                  events, and success stories.
                 </p>
                 <div className="flex space-x-4">
                   <a
@@ -281,7 +324,14 @@ export default function ContactPage() {
                       strokeLinejoin="round"
                       className="h-6 w-6"
                     >
-                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                      <rect
+                        x="2"
+                        y="2"
+                        width="20"
+                        height="20"
+                        rx="5"
+                        ry="5"
+                      ></rect>
                       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
@@ -314,5 +364,5 @@ export default function ContactPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }
