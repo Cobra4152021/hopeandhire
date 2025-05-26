@@ -1,154 +1,195 @@
 'use client';
 
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { supabase } from '@/lib/supabase';
 import {
   Briefcase,
+  FileText,
+  User,
+  Building,
   TrendingUp,
-  Target,
-  Award,
-  BookOpen,
-  Users,
-  MessageSquare,
-  Calendar,
+  Clock,
 } from 'lucide-react';
 
-interface JobMatch {
-  id: string;
-  title: string;
-  company: string;
-  match_score: number;
-  matching_skills: string[];
-  missing_skills: string[];
-}
-
-interface SkillGap {
-  skill: string;
-  demand: number;
-  relevance: number;
-  learning_resources: string[];
+interface DashboardStats {
+  total_jobs: number;
+  total_applications: number;
+  total_resumes: number;
+  total_companies: number;
+  recent_jobs: {
+    id: string;
+    title: string;
+    company: string;
+    location: string;
+    posted_date: string;
+  }[];
+  recent_applications: {
+    id: string;
+    job_title: string;
+    company: string;
+    status: string;
+    applied_date: string;
+  }[];
 }
 
 export default function DashboardPage() {
-  // Fetch user profile and stats
-  const { data: profile } = useQuery({
-    queryKey: ['profile'],
+  // Fetch dashboard stats
+  const { data: stats, isLoading } = useQuery({
+    queryKey: ['dashboard-stats'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
-        .from('profiles')
+      // Get total jobs
+      const { count: totalJobs } = await supabase
+        .from('jobs')
+        .select('*', { count: 'exact', head: true });
+
+      // Get total applications
+      const { count: totalApplications } = await supabase
+        .from('applications')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      // Get total resumes
+      const { count: totalResumes } = await supabase
+        .from('resumes')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      // Get total companies
+      const { count: totalCompanies } = await supabase
+        .from('companies')
+        .select('*', { count: 'exact', head: true });
+
+      // Get recent jobs
+      const { data: recentJobs } = await supabase
+        .from('jobs')
         .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (error) throw error;
-      return data;
-    },
-  });
-
-  // Fetch AI-matched jobs
-  const { data: matchedJobs } = useQuery({
-    queryKey: ['matched-jobs'],
-    queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const { data, error } = await supabase
-        .from('job_matches')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('match_score', { ascending: false })
+        .order('posted_date', { ascending: false })
         .limit(5);
 
-      if (error) throw error;
-      return data as JobMatch[];
-    },
-  });
-
-  // Fetch skill gaps analysis
-  const { data: skillGaps } = useQuery({
-    queryKey: ['skill-gaps'],
-    queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const { data, error } = await supabase
-        .from('skill_gaps')
-        .select('*')
+      // Get recent applications
+      const { data: recentApplications } = await supabase
+        .from('applications')
+        .select('*, jobs(title, company)')
         .eq('user_id', user.id)
-        .order('demand', { ascending: false });
+        .order('applied_date', { ascending: false })
+        .limit(5);
 
-      if (error) throw error;
-      return data as SkillGap[];
+      return {
+        total_jobs: totalJobs || 0,
+        total_applications: totalApplications || 0,
+        total_resumes: totalResumes || 0,
+        total_companies: totalCompanies || 0,
+        recent_jobs: recentJobs || [],
+        recent_applications: recentApplications?.map((app) => ({
+          id: app.id,
+          job_title: app.jobs.title,
+          company: app.jobs.company,
+          status: app.status,
+          applied_date: app.applied_date,
+        })) || [],
+      } as DashboardStats;
     },
   });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Profile Completion */}
+    <div className="space-y-6">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
-          <CardHeader>
-            <CardTitle>Profile Completion</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Jobs</CardTitle>
+            <Briefcase className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <Progress value={profile?.completion_percentage || 0} />
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">Resume</span>
-                  <span className="text-sm font-medium">
-                    {profile?.has_resume ? '✓' : '✗'}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">Skills</span>
-                  <span className="text-sm font-medium">
-                    {profile?.skills?.length || 0} skills
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">Experience</span>
-                  <span className="text-sm font-medium">
-                    {profile?.has_experience ? '✓' : '✗'}
-                  </span>
-                </div>
-              </div>
-            </div>
+            <div className="text-2xl font-bold">{stats?.total_jobs}</div>
+            <p className="text-xs text-gray-500">
+              Available job opportunities
+            </p>
           </CardContent>
         </Card>
 
-        {/* AI Job Matches */}
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Your Applications
+            </CardTitle>
+            <FileText className="h-4 w-4 text-gray-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {stats?.total_applications}
+            </div>
+            <p className="text-xs text-gray-500">
+              Total applications submitted
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Your Resumes</CardTitle>
+            <User className="h-4 w-4 text-gray-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats?.total_resumes}</div>
+            <p className="text-xs text-gray-500">
+              Resumes in your profile
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Companies
+            </CardTitle>
+            <Building className="h-4 w-4 text-gray-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {stats?.total_companies}
+            </div>
+            <p className="text-xs text-gray-500">
+              Companies on the platform
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* Recent Jobs */}
         <Card>
           <CardHeader>
-            <CardTitle>AI Job Matches</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" />
+              Recent Job Postings
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {matchedJobs?.map((job) => (
-                <div key={job.id} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium">{job.title}</h3>
-                    <span className="text-sm text-teal">
-                      {job.match_score}% match
-                    </span>
+              {stats?.recent_jobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="flex items-start justify-between border-b pb-4 last:border-0 last:pb-0"
+                >
+                  <div>
+                    <p className="font-medium">{job.title}</p>
+                    <p className="text-sm text-gray-500">
+                      {job.company} • {job.location}
+                    </p>
                   </div>
-                  <p className="text-sm text-gray-500">{job.company}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {job.matching_skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2 py-1 bg-teal/10 text-teal rounded-full text-xs"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Clock className="h-4 w-4" />
+                    {new Date(job.posted_date).toLocaleDateString()}
                   </div>
                 </div>
               ))}
@@ -156,148 +197,45 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Skill Gap Analysis */}
+        {/* Recent Applications */}
         <Card>
           <CardHeader>
-            <CardTitle>Skill Gap Analysis</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Your Recent Applications
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {skillGaps?.map((gap) => (
-                <div key={gap.skill} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium">{gap.skill}</h3>
+              {stats?.recent_applications.map((application) => (
+                <div
+                  key={application.id}
+                  className="flex items-start justify-between border-b pb-4 last:border-0 last:pb-0"
+                >
+                  <div>
+                    <p className="font-medium">{application.job_title}</p>
+                    <p className="text-sm text-gray-500">
+                      {application.company}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`rounded-full px-2 py-1 text-xs font-medium ${
+                        application.status === 'pending'
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : application.status === 'accepted'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}
+                    >
+                      {application.status}
+                    </span>
                     <span className="text-sm text-gray-500">
-                      {gap.demand}% demand
+                      {new Date(application.applied_date).toLocaleDateString()}
                     </span>
-                  </div>
-                  <Progress value={gap.relevance} />
-                  <div className="flex flex-wrap gap-2">
-                    {gap.learning_resources.map((resource) => (
-                      <a
-                        key={resource}
-                        href={resource}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-teal hover:underline"
-                      >
-                        Learn {gap.skill}
-                      </a>
-                    ))}
                   </div>
                 </div>
               ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Quick Actions */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" className="h-auto py-4">
-                <div className="flex flex-col items-center gap-2">
-                  <Briefcase className="h-6 w-6" />
-                  <span>Find Jobs</span>
-                </div>
-              </Button>
-              <Button variant="outline" className="h-auto py-4">
-                <div className="flex flex-col items-center gap-2">
-                  <BookOpen className="h-6 w-6" />
-                  <span>Learning</span>
-                </div>
-              </Button>
-              <Button variant="outline" className="h-auto py-4">
-                <div className="flex flex-col items-center gap-2">
-                  <MessageSquare className="h-6 w-6" />
-                  <span>Messages</span>
-                </div>
-              </Button>
-              <Button variant="outline" className="h-auto py-4">
-                <div className="flex flex-col items-center gap-2">
-                  <Calendar className="h-6 w-6" />
-                  <span>Schedule</span>
-                </div>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Career Insights */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Career Insights</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <TrendingUp className="h-8 w-8 text-teal" />
-                <div>
-                  <h3 className="font-medium">Industry Trends</h3>
-                  <p className="text-sm text-gray-500">
-                    Top growing skills in your field
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Target className="h-8 w-8 text-teal" />
-                <div>
-                  <h3 className="font-medium">Career Goals</h3>
-                  <p className="text-sm text-gray-500">
-                    Track your progress
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Award className="h-8 w-8 text-teal" />
-                <div>
-                  <h3 className="font-medium">Achievements</h3>
-                  <p className="text-sm text-gray-500">
-                    Your milestones and badges
-                  </p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Network Activity */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Network Activity</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <Users className="h-8 w-8 text-teal" />
-                <div>
-                  <h3 className="font-medium">Connections</h3>
-                  <p className="text-sm text-gray-500">
-                    {profile?.connections_count || 0} professional connections
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <MessageSquare className="h-8 w-8 text-teal" />
-                <div>
-                  <h3 className="font-medium">Messages</h3>
-                  <p className="text-sm text-gray-500">
-                    {profile?.unread_messages || 0} unread messages
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Calendar className="h-8 w-8 text-teal" />
-                <div>
-                  <h3 className="font-medium">Upcoming Meetings</h3>
-                  <p className="text-sm text-gray-500">
-                    {profile?.upcoming_meetings || 0} scheduled meetings
-                  </p>
-                </div>
-              </div>
             </div>
           </CardContent>
         </Card>

@@ -1,13 +1,31 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/lib/supabase';
-import { Pencil, Trash2, Send } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import {
+  MessageSquare,
+  Send,
+  User,
+  Search,
+  Clock,
+  Check,
+  CheckCheck,
+} from 'lucide-react';
+
+interface Volunteer {
+  id: string;
+  full_name: string;
+  expertise: string[];
+  avatar_url: string;
+  is_online: boolean;
+  last_seen: string;
+}
 
 interface Message {
   id: string;
@@ -15,218 +33,235 @@ interface Message {
   receiver_id: string;
   content: string;
   created_at: string;
-  sender: {
-    email: string;
-    user_metadata: {
-      role: string;
-    };
-  };
-  receiver: {
-    email: string;
-    user_metadata: {
-      role: string;
-    };
-  };
+  is_read: boolean;
 }
 
 export default function MessagesPage() {
-  const [selectedRecipient, setSelectedRecipient] = useState<string | null>(null);
-  const [messageContent, setMessageContent] = useState('');
-  const [editingMessage, setEditingMessage] = useState<Message | null>(null);
-  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const [selectedVolunteer, setSelectedVolunteer] = useState<string>();
+  const [message, setMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Fetch volunteers
+  const { data: volunteers, isLoading: isLoadingVolunteers } = useQuery({
+    queryKey: ['volunteers'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('volunteers')
+        .select('*')
+        .eq('is_available', true);
+
+      if (error) throw error;
+      return data as Volunteer[];
+    },
+  });
 
   // Fetch messages
-  const { data: messages } = useQuery({
-    queryKey: ['messages'],
+  const { data: messages, isLoading: isLoadingMessages } = useQuery({
+    queryKey: ['messages', selectedVolunteer],
     queryFn: async () => {
+      if (!selectedVolunteer) return [];
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
         .from('messages')
-        .select(`
-          *,
-          sender:sender_id (email, user_metadata),
-          receiver:receiver_id (email, user_metadata)
-        `)
-        .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
-        .order('created_at', { ascending: false });
+        .select('*')
+        .or(`and(sender_id.eq.${user.id},receiver_id.eq.${selectedVolunteer}),and(sender_id.eq.${selectedVolunteer},receiver_id.eq.${user.id})`)
+        .order('created_at', { ascending: true });
 
       if (error) throw error;
       return data as Message[];
     },
-  });
-
-  // Fetch volunteers
-  const { data: volunteers } = useQuery({
-    queryKey: ['volunteers'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('role', 'volunteer');
-
-      if (error) throw error;
-      return data;
-    },
+    enabled: !!selectedVolunteer,
   });
 
   // Send message mutation
   const sendMessage = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (content: string) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user || !selectedRecipient) throw new Error('Missing data');
+      if (!user || !selectedVolunteer) throw new Error('Not authenticated');
 
-      const { error } = await supabase.from('messages').insert({
-        sender_id: user.id,
-        receiver_id: selectedRecipient,
-        content: messageContent,
+      const { error } = await supabase
+        .from('messages')
+        .insert({
+          sender_id: user.id,
+          receiver_id: selectedVolunteer,
+          content,
+          is_read: false,
+        });
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      setMessage('');
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: 'Failed to send message',
+        variant: 'destructive',
       });
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      setMessageContent('');
-      queryClient.invalidateQueries({ queryKey: ['messages'] });
     },
   });
 
-  // Edit message mutation
-  const editMessage = useMutation({
-    mutationFn: async () => {
-      if (!editingMessage) throw new Error('No message selected');
+  // Filter volunteers based on search query
+  const filteredVolunteers = volunteers?.filter((volunteer) =>
+    volunteer.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    volunteer.expertise.some((skill) =>
+      skill.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
-      const { error } = await supabase
-        .from('messages')
-        .update({ content: messageContent })
-        .eq('id', editingMessage.id);
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      setMessageContent('');
-      setEditingMessage(null);
-      queryClient.invalidateQueries({ queryKey: ['messages'] });
-    },
-  });
-
-  // Delete message mutation
-  const deleteMessage = useMutation({
-    mutationFn: async (messageId: string) => {
-      const { error } = await supabase
-        .from('messages')
-        .delete()
-        .eq('id', messageId);
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['messages'] });
-    },
-  });
-
-  const handleSendMessage = () => {
-    if (editingMessage) {
-      editMessage.mutate();
-    } else {
-      sendMessage.mutate();
-    }
-  };
+  if (isLoadingVolunteers) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto py-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Volunteers List */}
-        <Card className="md:col-span-1">
+        <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle>Volunteers</CardTitle>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                placeholder="Search volunteers..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9"
+              />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {volunteers?.map((volunteer) => (
-                <Button
+              {filteredVolunteers?.map((volunteer) => (
+                <button
                   key={volunteer.id}
-                  variant={selectedRecipient === volunteer.id ? 'default' : 'ghost'}
-                  className="w-full justify-start"
-                  onClick={() => setSelectedRecipient(volunteer.id)}
+                  onClick={() => setSelectedVolunteer(volunteer.id)}
+                  className={`w-full p-3 rounded-lg flex items-center gap-3 hover:bg-gray-100 transition-colors ${
+                    selectedVolunteer === volunteer.id ? 'bg-gray-100' : ''
+                  }`}
                 >
-                  {volunteer.email}
-                </Button>
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+                      {volunteer.avatar_url ? (
+                        <img
+                          src={volunteer.avatar_url}
+                          alt={volunteer.full_name}
+                          className="w-full h-full rounded-full object-cover"
+                        />
+                      ) : (
+                        <User className="w-6 h-6 text-gray-400" />
+                      )}
+                    </div>
+                    {volunteer.is_online && (
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
+                    )}
+                  </div>
+                  <div className="flex-1 text-left">
+                    <div className="font-medium">{volunteer.full_name}</div>
+                    <div className="text-sm text-gray-500">
+                      {volunteer.expertise.join(', ')}
+                    </div>
+                  </div>
+                  {!volunteer.is_online && (
+                    <div className="text-xs text-gray-400">
+                      {new Date(volunteer.last_seen).toLocaleTimeString()}
+                    </div>
+                  )}
+                </button>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Messages */}
-        <Card className="md:col-span-2">
+        {/* Chat Area */}
+        <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Messages</CardTitle>
+            <CardTitle>
+              {selectedVolunteer
+                ? volunteers?.find((v) => v.id === selectedVolunteer)?.full_name
+                : 'Select a volunteer to start chatting'}
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {/* Message List */}
-              <div className="space-y-4 max-h-[400px] overflow-y-auto">
-                {messages?.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`p-4 rounded-lg ${
-                      message.sender_id === (supabase.auth.getUser() as any)?.data?.user?.id
-                        ? 'bg-teal/10 ml-auto'
-                        : 'bg-gray-100'
-                    } max-w-[80%]`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="text-sm text-gray-500">
-                        {message.sender.email}
-                      </span>
-                      {message.sender_id === (supabase.auth.getUser() as any)?.data?.user?.id && (
-                        <div className="space-x-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              setEditingMessage(message);
-                              setMessageContent(message.content);
-                            }}
+            {selectedVolunteer ? (
+              <div className="flex flex-col h-[600px]">
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto space-y-4 mb-4">
+                  {messages?.map((msg) => {
+                    const isSender = msg.sender_id === selectedVolunteer;
+                    return (
+                      <div
+                        key={msg.id}
+                        className={`flex ${
+                          isSender ? 'justify-start' : 'justify-end'
+                        }`}
+                      >
+                        <div
+                          className={`max-w-[70%] p-3 rounded-lg ${
+                            isSender
+                              ? 'bg-gray-100'
+                              : 'bg-blue-500 text-white'
+                          }`}
+                        >
+                          <p>{msg.content}</p>
+                          <div
+                            className={`text-xs mt-1 flex items-center gap-1 ${
+                              isSender ? 'text-gray-500' : 'text-blue-100'
+                            }`}
                           >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => deleteMessage.mutate(message.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                            <Clock className="w-3 h-3" />
+                            {new Date(msg.created_at).toLocaleTimeString()}
+                            {!isSender && (
+                              <span>
+                                {msg.is_read ? (
+                                  <CheckCheck className="w-3 h-3" />
+                                ) : (
+                                  <Check className="w-3 h-3" />
+                                )}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      )}
-                    </div>
-                    <p>{message.content}</p>
-                    <span className="text-xs text-gray-500">
-                      {new Date(message.created_at).toLocaleString()}
-                    </span>
-                  </div>
-                ))}
-              </div>
+                      </div>
+                    );
+                  })}
+                </div>
 
-              {/* Message Input */}
-              <div className="space-y-2">
-                <Textarea
-                  placeholder="Type your message..."
-                  value={messageContent}
-                  onChange={(e) => setMessageContent(e.target.value)}
-                  className="min-h-[100px]"
-                />
-                <Button
-                  className="w-full"
-                  onClick={handleSendMessage}
-                  disabled={!messageContent.trim() || !selectedRecipient}
+                {/* Message Input */}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (message.trim()) {
+                      sendMessage.mutate(message);
+                    }
+                  }}
+                  className="flex gap-2"
                 >
-                  <Send className="h-4 w-4 mr-2" />
-                  {editingMessage ? 'Update Message' : 'Send Message'}
-                </Button>
+                  <Textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type your message..."
+                    className="flex-1"
+                    rows={1}
+                  />
+                  <Button type="submit" disabled={!message.trim()}>
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </form>
               </div>
-            </div>
+            ) : (
+              <div className="h-[600px] flex items-center justify-center text-gray-500">
+                <div className="text-center">
+                  <MessageSquare className="w-12 h-12 mx-auto mb-4" />
+                  <p>Select a volunteer to start chatting</p>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

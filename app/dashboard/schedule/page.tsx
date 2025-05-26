@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar } from '@/components/ui/calendar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -12,57 +14,64 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/lib/supabase';
-import { Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Calendar as CalendarIcon,
+  Clock,
+  Users,
+  MessageSquare,
+  Video,
+} from 'lucide-react';
+
+interface Volunteer {
+  id: string;
+  full_name: string;
+  expertise: string[];
+  availability: {
+    days: string[];
+    time_slots: string[];
+  };
+  rating: number;
+  sessions_completed: number;
+}
 
 interface Meeting {
   id: string;
-  job_seeker_id: string;
   volunteer_id: string;
+  user_id: string;
   date: string;
   time: string;
-  status: 'pending' | 'accepted' | 'rejected';
+  type: 'video' | 'chat';
+  status: 'scheduled' | 'completed' | 'cancelled';
   notes: string;
-  volunteer: {
-    email: string;
-  };
 }
 
-const timeSlots = [
-  '09:00 AM',
-  '10:00 AM',
-  '11:00 AM',
-  '12:00 PM',
-  '01:00 PM',
-  '02:00 PM',
-  '03:00 PM',
-  '04:00 PM',
-];
-
 export default function SchedulePage() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [selectedTime, setSelectedTime] = useState<string>('');
-  const [selectedVolunteer, setSelectedVolunteer] = useState<string>('');
-  const [meetingNotes, setMeetingNotes] = useState('');
-  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedTime, setSelectedTime] = useState<string>();
+  const [selectedVolunteer, setSelectedVolunteer] = useState<string>();
+  const [meetingType, setMeetingType] = useState<'video' | 'chat'>('video');
+  const [notes, setNotes] = useState('');
 
   // Fetch volunteers
-  const { data: volunteers } = useQuery({
+  const { data: volunteers, isLoading: isLoadingVolunteers } = useQuery({
     queryKey: ['volunteers'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('profiles')
+        .from('volunteers')
         .select('*')
-        .eq('role', 'volunteer');
+        .eq('is_available', true);
 
       if (error) throw error;
-      return data;
+      return data as Volunteer[];
     },
   });
 
-  // Fetch scheduled meetings
-  const { data: meetings } = useQuery({
+  // Fetch user's meetings
+  const { data: meetings, isLoading: isLoadingMeetings } = useQuery({
     queryKey: ['meetings'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -70,11 +79,8 @@ export default function SchedulePage() {
 
       const { data, error } = await supabase
         .from('meetings')
-        .select(`
-          *,
-          volunteer:volunteer_id (email)
-        `)
-        .eq('job_seeker_id', user.id)
+        .select('*')
+        .eq('user_id', user.id)
         .order('date', { ascending: true });
 
       if (error) throw error;
@@ -84,44 +90,79 @@ export default function SchedulePage() {
 
   // Schedule meeting mutation
   const scheduleMeeting = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (meetingData: Partial<Meeting>) => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user || !selectedDate || !selectedTime || !selectedVolunteer) {
-        throw new Error('Missing required fields');
-      }
+      if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase.from('meetings').insert({
-        job_seeker_id: user.id,
-        volunteer_id: selectedVolunteer,
-        date: selectedDate.toISOString().split('T')[0],
-        time: selectedTime,
-        status: 'pending',
-        notes: meetingNotes,
-      });
+      const { error } = await supabase
+        .from('meetings')
+        .insert({
+          ...meetingData,
+          user_id: user.id,
+          status: 'scheduled',
+        });
 
       if (error) throw error;
     },
     onSuccess: () => {
-      setSelectedTime('');
-      setMeetingNotes('');
-      queryClient.invalidateQueries({ queryKey: ['meetings'] });
+      toast({
+        title: 'Success',
+        description: 'Meeting scheduled successfully',
+      });
+      // Reset form
+      setSelectedDate(undefined);
+      setSelectedTime(undefined);
+      setSelectedVolunteer(undefined);
+      setMeetingType('video');
+      setNotes('');
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: 'Failed to schedule meeting',
+        variant: 'destructive',
+      });
     },
   });
 
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedDate || !selectedTime || !selectedVolunteer) {
+      toast({
+        title: 'Error',
+        description: 'Please fill in all required fields',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    scheduleMeeting.mutate({
+      volunteer_id: selectedVolunteer,
+      date: selectedDate.toISOString(),
+      time: selectedTime,
+      type: meetingType,
+      notes,
+    });
+  };
+
+  if (isLoadingVolunteers || isLoadingMeetings) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="container mx-auto py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Schedule Meeting */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Schedule Meeting Form */}
         <Card>
           <CardHeader>
             <CardTitle>Schedule a Meeting</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">
-                  Select Volunteer
-                </label>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Volunteer Selection */}
+              <div className="space-y-2">
+                <Label>Select Volunteer</Label>
                 <Select
                   value={selectedVolunteer}
                   onValueChange={setSelectedVolunteer}
@@ -132,17 +173,21 @@ export default function SchedulePage() {
                   <SelectContent>
                     {volunteers?.map((volunteer) => (
                       <SelectItem key={volunteer.id} value={volunteer.id}>
-                        {volunteer.email}
+                        <div className="flex items-center gap-2">
+                          <span>{volunteer.full_name}</span>
+                          <span className="text-sm text-gray-500">
+                            ({volunteer.expertise.join(', ')})
+                          </span>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">
-                  Select Date
-                </label>
+              {/* Date Selection */}
+              <div className="space-y-2">
+                <Label>Select Date</Label>
                 <Calendar
                   mode="single"
                   selected={selectedDate}
@@ -151,92 +196,133 @@ export default function SchedulePage() {
                 />
               </div>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">
-                  Select Time
-                </label>
+              {/* Time Selection */}
+              <div className="space-y-2">
+                <Label>Select Time</Label>
                 <Select value={selectedTime} onValueChange={setSelectedTime}>
                   <SelectTrigger>
                     <SelectValue placeholder="Choose a time slot" />
                   </SelectTrigger>
                   <SelectContent>
-                    {timeSlots.map((time) => (
-                      <SelectItem key={time} value={time}>
-                        {time}
-                      </SelectItem>
-                    ))}
+                    {selectedVolunteer && volunteers
+                      ?.find((v) => v.id === selectedVolunteer)
+                      ?.availability.time_slots.map((time) => (
+                        <SelectItem key={time} value={time}>
+                          {time}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              <div>
-                <label className="text-sm font-medium mb-2 block">
-                  Meeting Notes
-                </label>
+              {/* Meeting Type */}
+              <div className="space-y-2">
+                <Label>Meeting Type</Label>
+                <div className="flex gap-4">
+                  <Button
+                    type="button"
+                    variant={meetingType === 'video' ? 'default' : 'outline'}
+                    onClick={() => setMeetingType('video')}
+                    className="flex-1"
+                  >
+                    <Video className="w-4 h-4 mr-2" />
+                    Video Call
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={meetingType === 'chat' ? 'default' : 'outline'}
+                    onClick={() => setMeetingType('chat')}
+                    className="flex-1"
+                  >
+                    <MessageSquare className="w-4 h-4 mr-2" />
+                    Chat
+                  </Button>
+                </div>
+              </div>
+
+              {/* Notes */}
+              <div className="space-y-2">
+                <Label>Notes (Optional)</Label>
                 <Textarea
-                  placeholder="Add any notes or topics you'd like to discuss..."
-                  value={meetingNotes}
-                  onChange={(e) => setMeetingNotes(e.target.value)}
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Add any additional notes or topics you'd like to discuss"
+                  rows={4}
                 />
               </div>
 
-              <Button
-                className="w-full"
-                onClick={() => scheduleMeeting.mutate()}
-                disabled={!selectedDate || !selectedTime || !selectedVolunteer}
-              >
+              <Button type="submit" className="w-full">
                 Schedule Meeting
               </Button>
-            </div>
+            </form>
           </CardContent>
         </Card>
 
-        {/* Scheduled Meetings */}
+        {/* Upcoming Meetings */}
         <Card>
           <CardHeader>
-            <CardTitle>Your Scheduled Meetings</CardTitle>
+            <CardTitle>Upcoming Meetings</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {meetings?.map((meeting) => (
-                <div
-                  key={meeting.id}
-                  className="p-4 border rounded-lg space-y-2"
-                >
-                  <div className="flex items-center gap-2">
-                    <CalendarIcon className="h-4 w-4 text-gray-500" />
-                    <span>{new Date(meeting.date).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-gray-500" />
-                    <span>{meeting.time}</span>
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">With: </span>
-                    <span>{meeting.volunteer.email}</span>
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">Status: </span>
-                    <span
-                      className={`capitalize ${
-                        meeting.status === 'accepted'
-                          ? 'text-green-600'
-                          : meeting.status === 'rejected'
-                          ? 'text-red-600'
-                          : 'text-yellow-600'
-                      }`}
-                    >
-                      {meeting.status}
-                    </span>
-                  </div>
-                  {meeting.notes && (
-                    <div>
-                      <span className="text-sm font-medium">Notes: </span>
-                      <p className="text-sm text-gray-600">{meeting.notes}</p>
+              {meetings?.map((meeting) => {
+                const volunteer = volunteers?.find(
+                  (v) => v.id === meeting.volunteer_id
+                );
+                return (
+                  <div
+                    key={meeting.id}
+                    className="p-4 border rounded-lg space-y-2"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 text-gray-400" />
+                        <span className="font-medium">
+                          {volunteer?.full_name}
+                        </span>
+                      </div>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs ${
+                          meeting.status === 'scheduled'
+                            ? 'bg-blue-100 text-blue-700'
+                            : meeting.status === 'completed'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-red-100 text-red-700'
+                        }`}
+                      >
+                        {meeting.status.charAt(0).toUpperCase() +
+                          meeting.status.slice(1)}
+                      </span>
                     </div>
-                  )}
-                </div>
-              ))}
+                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <CalendarIcon className="w-4 h-4" />
+                        {new Date(meeting.date).toLocaleDateString()}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {meeting.time}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {meeting.type === 'video' ? (
+                          <Video className="w-4 h-4" />
+                        ) : (
+                          <MessageSquare className="w-4 h-4" />
+                        )}
+                        {meeting.type === 'video' ? 'Video Call' : 'Chat'}
+                      </div>
+                    </div>
+                    {meeting.notes && (
+                      <p className="text-sm text-gray-500">{meeting.notes}</p>
+                    )}
+                  </div>
+                );
+              })}
+              {meetings?.length === 0 && (
+                <p className="text-center text-gray-500">
+                  No upcoming meetings scheduled
+                </p>
+              )}
             </div>
           </CardContent>
         </Card>
