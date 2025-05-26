@@ -12,6 +12,8 @@ import {
   Settings,
   Menu,
   X,
+  MessageSquare,
+  Calendar,
 } from 'lucide-react';
 
 const navigation = [
@@ -29,6 +31,16 @@ const navigation = [
     name: 'Resumes',
     href: '/dashboard/resumes',
     icon: FileText,
+  },
+  {
+    name: 'Messages',
+    href: '/dashboard/messages',
+    icon: MessageSquare,
+  },
+  {
+    name: 'Schedule',
+    href: '/dashboard/schedule',
+    icon: Calendar,
   },
   {
     name: 'Profile',
