@@ -61,14 +61,18 @@ function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Get initial user state
     supabase.auth.getUser().then(({ data }) => setUser(data?.user || null));
-    const { data: listener } = supabase.auth.onAuthStateChange(
+
+    // Subscribe to auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUser(session?.user ?? null);
       }
     );
+
     return () => {
-      listener?.subscription?.unsubscribe?.();
+      subscription.unsubscribe();
     };
   }, []);
 

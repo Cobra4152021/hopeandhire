@@ -22,6 +22,87 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sidebar, SidebarProvider } from '@/components/ui/sidebar';
 import { supabase } from '@/lib/supabase';
 
+const navigation = [
+  {
+    name: 'Dashboard',
+    href: '/dashboard',
+    icon: LayoutDashboard,
+  },
+  {
+    name: 'My Applications',
+    href: '/dashboard/applications',
+    icon: FileText,
+  },
+  {
+    name: 'My Resumes',
+    href: '/dashboard/resumes',
+    icon: FileText,
+  },
+  {
+    name: 'Job Search',
+    href: '/dashboard/jobs',
+    icon: Briefcase,
+  },
+  {
+    name: 'Messages',
+    href: '/dashboard/messages',
+    icon: MessageSquare,
+  },
+  {
+    name: 'Schedule Meeting',
+    href: '/dashboard/schedule',
+    icon: Calendar,
+  },
+  {
+    name: 'Profile',
+    href: '/dashboard/profile',
+    icon: Users,
+  },
+  {
+    name: 'Settings',
+    href: '/dashboard/settings',
+    icon: Settings,
+  },
+];
+
+const volunteerNavigation = [
+  {
+    name: 'Dashboard',
+    href: '/dashboard',
+    icon: LayoutDashboard,
+  },
+  {
+    name: 'Candidates',
+    href: '/dashboard/candidates',
+    icon: Users,
+  },
+  {
+    name: 'Jobs',
+    href: '/dashboard/jobs',
+    icon: Briefcase,
+  },
+  {
+    name: 'Messages',
+    href: '/dashboard/messages',
+    icon: MessageSquare,
+  },
+  {
+    name: 'Calendar',
+    href: '/dashboard/calendar',
+    icon: Calendar,
+  },
+  {
+    name: 'Reports',
+    href: '/dashboard/reports',
+    icon: BarChart,
+  },
+  {
+    name: 'Settings',
+    href: '/dashboard/settings',
+    icon: Settings,
+  },
+];
+
 export default function DashboardLayout({
   children,
 }: {
@@ -34,70 +115,17 @@ export default function DashboardLayout({
     supabase.auth
       .getUser()
       .then(({ data }) => setUserRole(data?.user?.user_metadata?.role || null));
-    const { data: listener } = supabase.auth.onAuthStateChange(
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUserRole(session?.user?.user_metadata?.role || null);
       }
     );
     return () => {
-      listener?.subscription?.unsubscribe?.();
+      subscription.unsubscribe();
     };
   }, []);
 
-  const navigation = [
-    {
-      name: 'Dashboard',
-      href: '/dashboard',
-      icon: LayoutDashboard,
-      roles: ['jobseeker', 'employer', 'volunteer'],
-    },
-    {
-      name: 'Jobs',
-      href: '/dashboard/jobs',
-      icon: Briefcase,
-      roles: ['jobseeker', 'employer'],
-    },
-    {
-      name: 'Candidates',
-      href: '/dashboard/candidates',
-      icon: Users,
-      roles: ['employer', 'volunteer'],
-    },
-    {
-      name: 'Applications',
-      href: '/dashboard/applications',
-      icon: FileText,
-      roles: ['jobseeker', 'employer'],
-    },
-    {
-      name: 'Messaging',
-      href: '/dashboard/messaging',
-      icon: MessageSquare,
-      roles: ['jobseeker', 'employer', 'volunteer'],
-    },
-    {
-      name: 'Schedule',
-      href: '/dashboard/schedule',
-      icon: Calendar,
-      roles: ['employer', 'volunteer'],
-    },
-    {
-      name: 'Analytics',
-      href: '/dashboard/analytics',
-      icon: BarChart,
-      roles: ['employer'],
-    },
-    {
-      name: 'Settings',
-      href: '/dashboard/settings',
-      icon: Settings,
-      roles: ['jobseeker', 'employer', 'volunteer'],
-    },
-  ];
-
-  const filteredNavigation = navigation.filter(
-    (item) => userRole && item.roles.includes(userRole)
-  );
+  const filteredNavigation = userRole === 'volunteer' ? volunteerNavigation : navigation;
 
   const isActive = (path: string) => {
     return pathname === path || pathname?.startsWith(`${path}/`);
@@ -116,7 +144,7 @@ export default function DashboardLayout({
             </div>
             <ScrollArea className="flex-1">
               <div className="space-y-1 p-2">
-                {(userRole ? filteredNavigation : navigation).map((item) => (
+                {filteredNavigation.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -133,7 +161,14 @@ export default function DashboardLayout({
               </div>
             </ScrollArea>
             <div className="border-t p-4">
-              <Button variant="ghost" className="w-full justify-start gap-2">
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start gap-2"
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  window.location.href = '/';
+                }}
+              >
                 <LogOut className="h-4 w-4" />
                 Logout
               </Button>
