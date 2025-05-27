@@ -30,25 +30,6 @@ export default function LoginPage() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [userType, setUserType] = useState('jobseeker');
 
-  // Check if user is already logged in
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        if (error) throw error;
-        
-        if (session?.user) {
-          const role = session.user.user_metadata.role || 'jobseeker';
-          // Use replace instead of push to prevent back button issues
-          router.replace(`/dashboard/${role}`);
-        }
-      } catch (error) {
-        console.error('Session check error:', error);
-      }
-    };
-    checkUser();
-  }, [router]);
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -73,11 +54,8 @@ export default function LoginPage() {
         
         setShowConfetti(true);
         
-        // Wait for confetti to show and then redirect
-        setTimeout(() => {
-          // Use replace instead of push to prevent back button issues
-          router.replace(`/dashboard/${role}`);
-        }, 1000);
+        // Redirect to the role-specific dashboard
+        window.location.href = `/dashboard/${role}`;
       }
     } catch (error: any) {
       console.error('Login error:', error);
@@ -90,20 +68,6 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
-
-  // Listen for auth state changes
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session?.user) {
-        const role = session.user.user_metadata.role || 'jobseeker';
-        router.replace(`/dashboard/${role}`);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [router]);
 
   return (
     <div className="container flex items-center justify-center min-h-screen py-12">
