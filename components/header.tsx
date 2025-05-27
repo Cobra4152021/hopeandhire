@@ -96,33 +96,58 @@ export default function Header() {
   const [user, setUser] = useState<any>(null);
   const [userRole, setUserRole] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        setUser(session.user);
-        setUserRole(session.user.user_metadata.role || 'jobseeker');
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        
+        if (session?.user) {
+          // Verify the session is still valid
+          const { data: { user }, error: userError } = await supabase.auth.getUser();
+          if (userError || !user) {
+            // Session is invalid, clear it
+            await supabase.auth.signOut();
+            setUser(null);
+            setUserRole('');
+            return;
+          }
+          
+          setUser(session.user);
+          setUserRole(session.user.user_metadata.role || 'jobseeker');
+        } else {
+          setUser(null);
+          setUserRole('');
+        }
+      } catch (error) {
+        console.error('Session error:', error);
+        setUser(null);
+        setUserRole('');
+      } finally {
+        setIsLoading(false);
       }
     };
     getInitialSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser(session.user);
-        setUserRole(session.user.user_metadata.role || 'jobseeker');
-      } else {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT') {
         setUser(null);
         setUserRole('');
+        router.push('/login');
+      } else if (session?.user) {
+        setUser(session.user);
+        setUserRole(session.user.user_metadata.role || 'jobseeker');
       }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [router]);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -150,6 +175,9 @@ export default function Header() {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
+      
+      // Clear any local storage or cookies
+      localStorage.removeItem('supabase.auth.token');
       
       toast({
         title: "Success",
@@ -181,6 +209,10 @@ export default function Header() {
     if (!userRole) return '/login';
     return `/settings/${userRole}`;
   };
+
+  if (isLoading) {
+    return null; // or a loading spinner
+  }
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">

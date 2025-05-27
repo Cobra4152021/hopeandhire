@@ -13,7 +13,7 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
   const router = useRouter();
   const { toast } = useToast();
   const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -24,22 +24,48 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
   });
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.user) {
+    const validateSession = async () => {
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) throw sessionError;
+
+        if (!session?.user) {
+          router.push('/login');
+          return;
+        }
+
+        // Verify the session is still valid
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
+          await supabase.auth.signOut();
+          router.push('/login');
+          return;
+        }
+
+        // Verify user role matches the page role
+        const userRole = user.user_metadata.role || 'jobseeker';
+        if (userRole !== params.role) {
+          router.push(`/settings/${userRole}`);
+          return;
+        }
+
+        setUser(user);
+        setFormData(prev => ({
+          ...prev,
+          fullName: user.user_metadata.full_name || '',
+          email: user.email || '',
+          phone: user.user_metadata.phone || '',
+        }));
+      } catch (error) {
+        console.error('Session validation error:', error);
         router.push('/login');
-        return;
+      } finally {
+        setLoading(false);
       }
-      setUser(session.user);
-      setFormData(prev => ({
-        ...prev,
-        fullName: session.user.user_metadata.full_name || '',
-        email: session.user.email || '',
-        phone: session.user.user_metadata.phone || '',
-      }));
     };
-    getUser();
-  }, [router]);
+
+    validateSession();
+  }, [router, params.role]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -123,6 +149,16 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
       setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal"></div>
+        </div>
+      </div>
+    );
+  }
 
   if (!user) {
     return null;
