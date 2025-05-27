@@ -33,10 +33,16 @@ export default function LoginPage() {
   // Check if user is already logged in
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        const role = session.user.user_metadata.role || 'jobseeker';
-        router.push(`/dashboard/${role}`);
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        
+        if (session?.user) {
+          const role = session.user.user_metadata.role || 'jobseeker';
+          router.push(`/dashboard/${role}`);
+        }
+      } catch (error) {
+        console.error('Session check error:', error);
       }
     };
     checkUser();
@@ -58,9 +64,6 @@ export default function LoginPage() {
         // Get the user's role from metadata
         const role = data.user.user_metadata.role || userType;
         
-        // Set the user role cookie with proper attributes
-        document.cookie = `user-role=${role}; path=/; SameSite=Lax`;
-        
         // Show success message
         toast({
           title: "Success!",
@@ -69,11 +72,9 @@ export default function LoginPage() {
         
         setShowConfetti(true);
         
-        // Wait for cookie to be set and confetti to show
+        // Wait for confetti to show and then redirect
         setTimeout(() => {
-          // Redirect to the role-specific dashboard
-          const dashboardPath = `/dashboard/${role}`;
-          router.push(dashboardPath);
+          router.push(`/dashboard/${role}`);
         }, 1000);
       }
     } catch (error: any) {
