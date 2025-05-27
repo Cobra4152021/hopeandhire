@@ -4,17 +4,18 @@ A modern job board platform built with Next.js, Supabase, and Tailwind CSS.
 
 ## Features
 
-- 🔐 Authentication and Authorization
-- 👤 User Profiles
+- 🔐 Authentication and Authorization with Supabase
+- 👤 Role-based User Profiles (Job Seekers, Volunteer Recruiters, Employers)
 - 🔍 Job Search and Filtering
-- 📝 Job Applications
+- 📝 Job Applications and Resume Management
 - 💬 Messaging System
+- 📅 Google Calendar/Meet Integration
 - 🔔 Real-time Notifications
 - ⚙️ User Settings
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14, React, Tailwind CSS
+- **Frontend**: Next.js 14, React 18, Tailwind CSS
 - **Backend**: Supabase
 - **Database**: PostgreSQL
 - **Authentication**: Supabase Auth
@@ -33,7 +34,7 @@ A modern job board platform built with Next.js, Supabase, and Tailwind CSS.
 2. Install dependencies:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 3. Set up environment variables:
@@ -47,7 +48,7 @@ A modern job board platform built with Next.js, Supabase, and Tailwind CSS.
 4. Run the development server:
 
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -91,10 +92,10 @@ A modern job board platform built with Next.js, Supabase, and Tailwind CSS.
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-4. Deploy:
-   ```bash
-   vercel --prod
-   ```
+4. The deployment will automatically start as we have configured vercel.json with the following settings:
+   - Build Command: `pnpm run build`
+   - Install Command: `pnpm install`
+   - Framework Preset: Next.js
 
 ## Database Schema
 
