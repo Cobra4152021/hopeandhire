@@ -148,17 +148,17 @@ export default function DonatePage() {
                                       id={`amount-${amount}`}
                                       className="peer sr-only"
                                     />
-                                    <Label
-                                      htmlFor={`amount-${amount}`}
-                                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-teal [&:has([data-state=checked])]:border-teal"
-                                    >
+                                  <Label
+                                    htmlFor={`amount-${amount}`}
+                                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-teal [&:has([data-state=checked])]:border-teal"
+                                  >
                                       {amount === 'custom' ? (
                                         'Custom'
                                       ) : (
                                         <span>${amount}</span>
                                       )}
-                                    </Label>
-                                  </div>
+                                  </Label>
+                                </div>
                                 )
                               )}
                             </RadioGroup>
@@ -243,17 +243,17 @@ export default function DonatePage() {
                                       id={`monthly-${amount}`}
                                       className="peer sr-only"
                                     />
-                                    <Label
-                                      htmlFor={`monthly-${amount}`}
-                                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-teal [&:has([data-state=checked])]:border-teal"
-                                    >
+                                  <Label
+                                    htmlFor={`monthly-${amount}`}
+                                    className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-teal [&:has([data-state=checked])]:border-teal"
+                                  >
                                       {amount === 'custom' ? (
                                         'Custom'
                                       ) : (
                                         <span>${amount}</span>
                                       )}
-                                    </Label>
-                                  </div>
+                                  </Label>
+                                </div>
                                 )
                               )}
                             </RadioGroup>

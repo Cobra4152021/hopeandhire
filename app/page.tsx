@@ -54,15 +54,15 @@ export default function Home() {
                 className="flex items-center justify-center bg-white"
                 style={{ width: '44%', minWidth: 0 }}
               >
-                <Image
-                  src="/logo.png"
-                  alt="Hope and Hire Logo"
-                  width={200}
-                  height={80}
+              <Image
+                src="/logo.png"
+                alt="Hope and Hire Logo"
+                width={200}
+                height={80}
                   className="h-auto w-full object-contain"
-                  priority
-                  quality={90}
-                />
+                priority
+                quality={90}
+              />
               </div>
               {/* Right image */}
               <div

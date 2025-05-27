@@ -227,7 +227,7 @@ export default function Header() {
               className="h-auto"
               priority
             />
-          </Link>
+            </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
@@ -272,14 +272,14 @@ export default function Header() {
               </DropdownMenu>
             ) : (
               <>
-                <Link href="/login">
+            <Link href="/login">
                   <Button variant="ghost">Sign in</Button>
                 </Link>
                 <Link href="/register">
                   <Button className="bg-teal text-white hover:bg-teal-dark">
                     Sign up
-                  </Button>
-                </Link>
+              </Button>
+            </Link>
               </>
             )}
           </div>
@@ -349,16 +349,16 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <Link href="/login" className="block">
+              <Link href="/login" className="block">
                     <Button variant="outline" className="w-full">
                       Sign in
-                    </Button>
-                  </Link>
+                </Button>
+              </Link>
                   <Link href="/register" className="block">
                     <Button className="w-full bg-teal text-white hover:bg-teal-dark">
                       Sign up
                     </Button>
-                  </Link>
+              </Link>
                 </>
               )}
             </div>

@@ -1,26 +1,63 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 export async function middleware(req: NextRequest) {
   // Get the Supabase auth cookie
-  const supabaseToken = req.cookies.get('sb-token')?.value;
+  const supabaseToken = req.cookies.get('sb-access-token')?.value;
+  const supabaseRefreshToken = req.cookies.get('sb-refresh-token')?.value;
 
-  console.log('Middleware Debug:', {
-    path: req.nextUrl.pathname,
-    hasToken: !!supabaseToken,
-  });
+  // Initialize Supabase client
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: {
+        persistSession: false,
+      },
+    }
+  );
 
-  // If trying to access protected routes without auth, redirect to login
-  if (
-    (req.nextUrl.pathname.startsWith('/dashboard') || 
-     req.nextUrl.pathname.startsWith('/messages') ||
-     req.nextUrl.pathname.startsWith('/meetings') ||
-     req.nextUrl.pathname.startsWith('/applications') ||
-     req.nextUrl.pathname.startsWith('/resumes')) && 
-    !supabaseToken
-  ) {
-    console.log('No auth token, redirecting to login');
-    return NextResponse.redirect(new URL('/login', req.url));
+  // Set the access token if it exists
+  if (supabaseToken) {
+    supabase.auth.setSession({
+      access_token: supabaseToken,
+      refresh_token: supabaseRefreshToken || '',
+    });
+  }
+
+  // Check if trying to access protected routes
+  if (req.nextUrl.pathname.startsWith('/dashboard')) {
+    // If no token, redirect to login
+    if (!supabaseToken) {
+      console.log('No auth token, redirecting to login');
+      return NextResponse.redirect(new URL('/login', req.url));
+    }
+
+    try {
+      // Verify the session and get user data
+      const { data: { user }, error } = await supabase.auth.getUser(supabaseToken);
+      
+      if (error || !user) {
+        console.log('Invalid session, redirecting to login');
+        return NextResponse.redirect(new URL('/login', req.url));
+      }
+
+      // Get the role from the URL (e.g., /dashboard/jobseeker -> jobseeker)
+      const urlRole = req.nextUrl.pathname.split('/')[2];
+      
+      // Get user's role from metadata
+      const userRole = user.user_metadata?.role || 'jobseeker';
+
+      // If trying to access a role-specific dashboard that doesn't match the user's role
+      if (urlRole && urlRole !== userRole) {
+        console.log('Role mismatch, redirecting to correct dashboard');
+        return NextResponse.redirect(new URL(`/dashboard/${userRole}`, req.url));
+      }
+    } catch (error) {
+      console.error('Auth error:', error);
+      return NextResponse.redirect(new URL('/login', req.url));
+    }
   }
 
   // Allow access to public pages

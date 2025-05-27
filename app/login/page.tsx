@@ -44,7 +44,19 @@ export default function LoginPage() {
 
       if (data.user) {
         // Get the user's role from metadata
-        const role = data.user.user_metadata.role || userType;
+        const userRole = data.user.user_metadata?.role;
+        
+        // If no role in metadata, update it with the selected userType
+        if (!userRole) {
+          const { error: updateError } = await supabase.auth.updateUser({
+            data: { role: userType }
+          });
+          
+          if (updateError) throw updateError;
+        }
+        
+        // Use the role from metadata if it exists, otherwise use the selected userType
+        const role = userRole || userType;
         
         // Show success message
         toast({
@@ -54,8 +66,10 @@ export default function LoginPage() {
         
         setShowConfetti(true);
         
-        // Redirect to the role-specific dashboard
-        window.location.href = `/dashboard/${role}`;
+        // Use Next.js router for client-side navigation after a short delay
+        setTimeout(() => {
+          router.push(`/dashboard/${role}`);
+        }, 1000); // Short delay to show the confetti
       }
     } catch (error: any) {
       console.error('Login error:', error);

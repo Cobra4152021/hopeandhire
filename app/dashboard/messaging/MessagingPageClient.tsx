@@ -304,32 +304,32 @@ export default function MessagingPageClient() {
                   </Dialog>
                 )}
             </div>
-            <Input
-              placeholder="Search conversations..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+                <Input
+                  placeholder="Search conversations..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
               className="mb-4"
-            />
+                />
             <div className="space-y-2">
-              {filteredConversations.map((conversation) => (
-                <div
-                  key={conversation.id}
+                {filteredConversations.map((conversation) => (
+                  <div
+                    key={conversation.id}
                   className={`flex items-center p-2 rounded-lg cursor-pointer ${
                     activeConversation?.id === conversation.id
                       ? 'bg-teal-light/10'
                       : 'hover:bg-gray-100'
-                  }`}
-                  onClick={() => setActiveConversation(conversation)}
-                >
-                  <Avatar className="h-10 w-10">
+                    }`}
+                    onClick={() => setActiveConversation(conversation)}
+                  >
+                      <Avatar className="h-10 w-10">
                     <AvatarImage
                       src={conversation.avatar}
                       alt={conversation.name}
                     />
                     <AvatarFallback>
                       {conversation.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
+                        </AvatarFallback>
+                      </Avatar>
                   <div className="ml-3 flex-1">
                     <div className="flex items-center justify-between">
                       <span className="font-medium">{conversation.name}</span>
@@ -340,22 +340,22 @@ export default function MessagingPageClient() {
                     <p className="text-sm text-gray-500 truncate">
                       {conversation.lastMessage}
                     </p>
-                  </div>
-                  {conversation.unread > 0 && (
+                    </div>
+                    {conversation.unread > 0 && (
                     <Badge variant="secondary" className="ml-2">
-                      {conversation.unread}
+                        {conversation.unread}
                     </Badge>
-                  )}
-                </div>
-              ))}
-            </div>
+                    )}
+                  </div>
+                ))}
+              </div>
           </div>
           {/* Chat Area */}
           <div className="md:col-span-2 flex flex-col">
             {activeConversation ? (
               <>
                 <div className="flex items-center justify-between p-4 border-b">
-                  <div className="flex items-center">
+              <div className="flex items-center">
                     <Avatar className="h-10 w-10">
                       <AvatarImage
                         src={activeConversation.avatar}
@@ -363,18 +363,18 @@ export default function MessagingPageClient() {
                       />
                       <AvatarFallback>
                         {activeConversation.name.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="ml-3">
+                  </AvatarFallback>
+                </Avatar>
+                <div className="ml-3">
                       <div className="font-medium">
                         {activeConversation.name}
                       </div>
                       <div className="text-sm text-gray-500">
                         {activeConversation.online ? 'Online' : 'Offline'}
                       </div>
-                    </div>
-                  </div>
-                  <div className="flex space-x-2">
+                </div>
+              </div>
+              <div className="flex space-x-2">
                     <Dialog
                       open={isScheduleOpen}
                       onOpenChange={setIsScheduleOpen}
@@ -410,7 +410,7 @@ export default function MessagingPageClient() {
                             className="bg-teal text-white"
                           >
                             Schedule
-                          </Button>
+                </Button>
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
@@ -421,12 +421,12 @@ export default function MessagingPageClient() {
                       title="Google Meet Video Call"
                     >
                       <Calendar className="text-gray-500" />
-                    </Button>
+                </Button>
                     <Button variant="ghost" size="icon" title="More options">
                       <MoreVertical className="text-gray-500" />
-                    </Button>
-                  </div>
-                </div>
+                </Button>
+              </div>
+            </div>
                 <div
                   id="messages-container"
                   className="flex-1 overflow-y-auto p-4 space-y-4"
@@ -445,20 +445,20 @@ export default function MessagingPageClient() {
                       >
                         {message.content}
                       </div>
-                    </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
                 <div className="p-4 border-t">
                   <form onSubmit={handleSendMessage} className="flex space-x-2">
-                    <Input
-                      placeholder="Type a message..."
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      className="flex-1"
-                    />
+                <Input
+                  placeholder="Type a message..."
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  className="flex-1"
+                />
                     <Button type="submit" className="bg-teal text-white">
                       Send
-                    </Button>
+                </Button>
                   </form>
                 </div>
               </>
