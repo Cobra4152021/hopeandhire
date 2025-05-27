@@ -39,7 +39,8 @@ export default function LoginPage() {
         
         if (session?.user) {
           const role = session.user.user_metadata.role || 'jobseeker';
-          router.push(`/dashboard/${role}`);
+          // Use replace instead of push to prevent back button issues
+          router.replace(`/dashboard/${role}`);
         }
       } catch (error) {
         console.error('Session check error:', error);
@@ -74,7 +75,8 @@ export default function LoginPage() {
         
         // Wait for confetti to show and then redirect
         setTimeout(() => {
-          router.push(`/dashboard/${role}`);
+          // Use replace instead of push to prevent back button issues
+          router.replace(`/dashboard/${role}`);
         }, 1000);
       }
     } catch (error: any) {
@@ -88,6 +90,20 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
+
+  // Listen for auth state changes
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        const role = session.user.user_metadata.role || 'jobseeker';
+        router.replace(`/dashboard/${role}`);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router]);
 
   return (
     <div className="container flex items-center justify-center min-h-screen py-12">
