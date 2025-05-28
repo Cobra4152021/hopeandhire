@@ -79,8 +79,7 @@ export default function FAQPage() {
             'Register as an employer on our platform, complete your company profile, and submit your job openings with detailed requirements. Our team will help match qualified candidates to your positions.',
         },
         {
-          question:
-            'Is there a cost for employers to use Hope and Hire services?',
+          question: 'Is there a cost for employers to use Hope and Hire services?',
           answer:
             'Our basic services are provided at no cost to employers. We may offer premium services for a fee, but our primary goal is to create successful employment matches that benefit both employers and job seekers.',
         },
@@ -95,8 +94,7 @@ export default function FAQPage() {
             "Organizations can partner with us by referring clients, collaborating on programming, sharing resources, or providing financial support. Contact us to discuss partnership opportunities tailored to your organization's goals.",
         },
         {
-          question:
-            'What types of organizations does Hope and Hire partner with?',
+          question: 'What types of organizations does Hope and Hire partner with?',
           answer:
             'We partner with a diverse range of organizations, including community-based organizations, reentry programs, workforce development agencies, educational institutions, and government agencies that serve individuals facing barriers to employment.',
         },
@@ -132,13 +130,10 @@ export default function FAQPage() {
       <section className="bg-light-bg py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl font-bold mb-6 text-dark-text">
-              Frequently Asked Questions
-            </h1>
+            <h1 className="text-4xl font-bold mb-6 text-dark-text">Frequently Asked Questions</h1>
             <p className="text-lg text-gray-600">
-              Find answers to common questions about Hope and Hire&apos;s
-              services and how we support job seekers, volunteers, employers,
-              and partner organizations.
+              Find answers to common questions about Hope and Hire&apos;s services and how we
+              support job seekers, volunteers, employers, and partner organizations.
             </p>
           </div>
         </div>
@@ -150,9 +145,7 @@ export default function FAQPage() {
           <div className="max-w-4xl mx-auto">
             {faqs.map((category, index) => (
               <div key={index} className="mb-10">
-                <h2 className="text-2xl font-bold mb-6 text-teal">
-                  {category.category}
-                </h2>
+                <h2 className="text-2xl font-bold mb-6 text-teal">{category.category}</h2>
                 <Accordion type="single" collapsible className="space-y-4">
                   {category.questions.map((faq, faqIndex) => (
                     <AccordionItem
@@ -178,18 +171,14 @@ export default function FAQPage() {
       {/* Still Have Questions */}
       <section className="py-12 bg-light-bg">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-dark-text">
-            Still Have Questions?
-          </h2>
+          <h2 className="text-3xl font-bold mb-4 text-dark-text">Still Have Questions?</h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            We&apos;re here to help. Contact our team for more information about
-            our services and how we can support you.
+            We&apos;re here to help. Contact our team for more information about our services and
+            how we can support you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact">
-              <Button className="bg-teal text-white hover:bg-teal-dark">
-                Contact Us
-              </Button>
+              <Button className="bg-teal text-white hover:bg-teal-dark">Contact Us</Button>
             </Link>
           </div>
         </div>

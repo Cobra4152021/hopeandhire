@@ -1,12 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
+import { useToast } from '@/components/ui/use-toast';
 
 interface Resume {
   id: string;
@@ -18,18 +17,14 @@ interface Resume {
   created_at: string;
 }
 
-export default function ResumeReview() {
-  const router = useRouter();
+export default function ResumeReviewPage() {
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [resumes, setResumes] = useState<Resume[]>([]);
   const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
   const [feedback, setFeedback] = useState('');
 
-  useEffect(() => {
-    fetchResumes();
-  }, []);
-
-  const fetchResumes = async () => {
+  const fetchResumes = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('resumes')
@@ -41,9 +36,13 @@ export default function ResumeReview() {
       setResumes(data || []);
     } catch (error) {
       console.error('Error fetching resumes:', error);
-      toast.error('Failed to fetch resumes');
+      toast({ title: 'Error', description: 'Failed to fetch resumes', variant: 'destructive' });
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchResumes();
+  }, [fetchResumes]);
 
   const handleReview = async (resumeId: string) => {
     setLoading(true);
@@ -59,13 +58,13 @@ export default function ResumeReview() {
 
       if (error) throw error;
 
-      toast.success('Resume reviewed successfully!');
+      toast({ title: 'Success', description: 'Resume reviewed successfully!' });
       setSelectedResume(null);
       setFeedback('');
       fetchResumes();
     } catch (error) {
       console.error('Error reviewing resume:', error);
-      toast.error('Failed to submit review');
+      toast({ title: 'Error', description: 'Failed to submit review', variant: 'destructive' });
     } finally {
       setLoading(false);
     }
@@ -153,4 +152,4 @@ export default function ResumeReview() {
       </div>
     </div>
   );
-} 
+}

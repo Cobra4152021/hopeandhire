@@ -1,22 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/components/ui/use-toast';
-import {
-  MessageSquare,
-  Send,
-  User,
-  Search,
-  Clock,
-  Check,
-  CheckCheck,
-} from 'lucide-react';
+import { MessageSquare, Send, User, Search, Clock, Check, CheckCheck } from 'lucide-react';
 
 interface Volunteer {
   id: string;
@@ -38,12 +30,16 @@ interface Message {
 
 export default function MessagesPage() {
   const { toast } = useToast();
-  const [selectedVolunteer, setSelectedVolunteer] = useState<string>();
-  const [message, setMessage] = useState('');
+  const [volunteers, _setVolunteers] = useState<Volunteer[]>([]);
+  const [selectedVolunteer, setSelectedVolunteer] = useState<Volunteer | null>(null);
+  const [_messages, _setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [_editingMessage, _setEditingMessage] = useState<Message | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const queryClient = useQueryClient();
 
   // Fetch volunteers
-  const { data: volunteers, isLoading: isLoadingVolunteers } = useQuery({
+  const { data: fetchedVolunteers, isLoading: isLoadingVolunteers } = useQuery({
     queryKey: ['volunteers'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -57,18 +53,26 @@ export default function MessagesPage() {
   });
 
   // Fetch messages
-  const { data: messages, isLoading: isLoadingMessages } = useQuery({
-    queryKey: ['messages', selectedVolunteer],
+  const {
+    data: fetchedMessages,
+    isLoading: _isLoadingMessages,
+    error: _error,
+  } = useQuery<Message[], Error>({
+    queryKey: ['messages', selectedVolunteer?.id],
     queryFn: async () => {
       if (!selectedVolunteer) return [];
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
         .from('messages')
         .select('*')
-        .or(`and(sender_id.eq.${user.id},receiver_id.eq.${selectedVolunteer}),and(sender_id.eq.${selectedVolunteer},receiver_id.eq.${user.id})`)
+        .or(
+          `and(sender_id.eq.${user.id},receiver_id.eq.${selectedVolunteer.id}),and(sender_id.eq.${selectedVolunteer.id},receiver_id.eq.${user.id})`
+        )
         .order('created_at', { ascending: true });
 
       if (error) throw error;
@@ -80,22 +84,22 @@ export default function MessagesPage() {
   // Send message mutation
   const sendMessage = useMutation({
     mutationFn: async (content: string) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user || !selectedVolunteer) throw new Error('Not authenticated');
 
-      const { error } = await supabase
-        .from('messages')
-        .insert({
-          sender_id: user.id,
-          receiver_id: selectedVolunteer,
-          content,
-          is_read: false,
-        });
+      const { error } = await supabase.from('messages').insert({
+        sender_id: user.id,
+        receiver_id: selectedVolunteer.id,
+        content,
+        is_read: false,
+      });
 
       if (error) throw error;
     },
     onSuccess: () => {
-      setMessage('');
+      setNewMessage('');
     },
     onError: (error) => {
       toast({
@@ -107,12 +111,29 @@ export default function MessagesPage() {
   });
 
   // Filter volunteers based on search query
-  const filteredVolunteers = volunteers?.filter((volunteer) =>
-    volunteer.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    volunteer.expertise.some((skill) =>
-      skill.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+  const filteredVolunteers = fetchedVolunteers?.filter(
+    (volunteer) =>
+      volunteer.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      volunteer.expertise.some((skill) => skill.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
+  // Delete message mutation
+  const _deleteMessage = useMutation({
+    mutationFn: async (messageId: string) => {
+      const { error } = await supabase.from('messages').delete().eq('id', messageId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['messages', selectedVolunteer?.id] });
+    },
+    onError: (_error) => {
+      toast({
+        title: 'Error deleting message',
+        description: _error.message,
+        variant: 'destructive',
+      });
+    },
+  });
 
   if (isLoadingVolunteers) {
     return <div>Loading...</div>;
@@ -140,9 +161,9 @@ export default function MessagesPage() {
               {filteredVolunteers?.map((volunteer) => (
                 <button
                   key={volunteer.id}
-                  onClick={() => setSelectedVolunteer(volunteer.id)}
+                  onClick={() => setSelectedVolunteer(volunteer)}
                   className={`w-full p-3 rounded-lg flex items-center gap-3 hover:bg-gray-100 transition-colors ${
-                    selectedVolunteer === volunteer.id ? 'bg-gray-100' : ''
+                    selectedVolunteer?.id === volunteer.id ? 'bg-gray-100' : ''
                   }`}
                 >
                   <div className="relative">
@@ -163,9 +184,7 @@ export default function MessagesPage() {
                   </div>
                   <div className="flex-1 text-left">
                     <div className="font-medium">{volunteer.full_name}</div>
-                    <div className="text-sm text-gray-500">
-                      {volunteer.expertise.join(', ')}
-                    </div>
+                    <div className="text-sm text-gray-500">{volunteer.expertise.join(', ')}</div>
                   </div>
                   {!volunteer.is_online && (
                     <div className="text-xs text-gray-400">
@@ -183,7 +202,7 @@ export default function MessagesPage() {
           <CardHeader>
             <CardTitle>
               {selectedVolunteer
-                ? volunteers?.find((v) => v.id === selectedVolunteer)?.full_name
+                ? volunteers?.find((v) => v.id === selectedVolunteer.id)?.full_name
                 : 'Select a volunteer to start chatting'}
             </CardTitle>
           </CardHeader>
@@ -192,20 +211,16 @@ export default function MessagesPage() {
               <div className="flex flex-col h-[600px]">
                 {/* Messages */}
                 <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-                  {messages?.map((msg) => {
-                    const isSender = msg.sender_id === selectedVolunteer;
+                  {fetchedMessages?.map((msg) => {
+                    const isSender = msg.sender_id === selectedVolunteer.id;
                     return (
                       <div
                         key={msg.id}
-                        className={`flex ${
-                          isSender ? 'justify-start' : 'justify-end'
-                        }`}
+                        className={`flex ${isSender ? 'justify-start' : 'justify-end'}`}
                       >
                         <div
                           className={`max-w-[70%] p-3 rounded-lg ${
-                            isSender
-                              ? 'bg-gray-100'
-                              : 'bg-blue-500 text-white'
+                            isSender ? 'bg-gray-100' : 'bg-blue-500 text-white'
                           }`}
                         >
                           <p>{msg.content}</p>
@@ -236,20 +251,20 @@ export default function MessagesPage() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (message.trim()) {
-                      sendMessage.mutate(message);
+                    if (newMessage.trim()) {
+                      sendMessage.mutate(newMessage);
                     }
                   }}
                   className="flex gap-2"
                 >
                   <Textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
                     placeholder="Type your message..."
                     className="flex-1"
                     rows={1}
                   />
-                  <Button type="submit" disabled={!message.trim()}>
+                  <Button type="submit" disabled={!newMessage.trim()}>
                     <Send className="w-4 h-4" />
                   </Button>
                 </form>
@@ -267,4 +282,4 @@ export default function MessagesPage() {
       </div>
     </div>
   );
-} 
+}

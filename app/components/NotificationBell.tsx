@@ -80,7 +80,7 @@ export function NotificationBell() {
     };
 
     setupSubscription();
-  }, [queryClient, supabase]);
+  }, [queryClient]);
 
   return (
     <DropdownMenu>
@@ -110,21 +110,14 @@ export function NotificationBell() {
         {notifications?.length ? (
           notifications.slice(0, 3).map((notification) => (
             <DropdownMenuItem key={notification.id} asChild>
-              <Link
-                href="/notifications"
-                className="flex cursor-pointer flex-col items-start p-2"
-              >
+              <Link href="/notifications" className="flex cursor-pointer flex-col items-start p-2">
                 <p className="font-medium">{notification.title}</p>
-                <p className="text-sm text-muted-foreground">
-                  {notification.message}
-                </p>
+                <p className="text-sm text-muted-foreground">{notification.message}</p>
               </Link>
             </DropdownMenuItem>
           ))
         ) : (
-          <div className="p-4 text-center text-sm text-muted-foreground">
-            No new notifications
-          </div>
+          <div className="p-4 text-center text-sm text-muted-foreground">No new notifications</div>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

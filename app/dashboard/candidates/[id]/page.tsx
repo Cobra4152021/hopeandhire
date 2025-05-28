@@ -33,7 +33,7 @@ const candidateData = {
   website: 'michaeljohnson.dev',
   location: 'San Francisco, CA',
   experience: '8 years',
-  education: 'B.S. Computer Science, Stanford University',
+  educationSummary: 'B.S. Computer Science, Stanford University',
   status: 'Available',
   avatar: '/team-member-1.jpg',
   bio: 'Experienced frontend developer with a passion for creating intuitive user interfaces and optimizing web performance. Skilled in modern JavaScript frameworks and design systems.',
@@ -73,8 +73,7 @@ const candidateData = {
       institution: 'Stanford University',
       degree: 'B.S. Computer Science',
       duration: '2011 - 2015',
-      description:
-        'Graduated with honors. Specialized in Human-Computer Interaction.',
+      description: 'Graduated with honors. Specialized in Human-Computer Interaction.',
     },
   ],
   certifications: [
@@ -162,9 +161,7 @@ export default function CandidateDetailPage() {
             </Avatar>
             <div className="ml-4">
               <div className="flex items-center flex-wrap gap-2">
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {candidateData.name}
-                </h1>
+                <h1 className="text-2xl font-bold text-gray-900">{candidateData.name}</h1>
                 {candidateData.featured && (
                   <Badge className="bg-yellow text-dark-text">Featured</Badge>
                 )}
@@ -192,7 +189,7 @@ export default function CandidateDetailPage() {
                 </div>
                 <div className="flex items-center mr-4">
                   <GraduationCap className="mr-1 h-4 w-4" />
-                  {candidateData.education}
+                  {candidateData.educationSummary}
                 </div>
                 <div className="flex items-center">
                   <Clock className="mr-1 h-4 w-4" />
@@ -238,47 +235,29 @@ export default function CandidateDetailPage() {
                 <CardContent className="p-6">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        About
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">About</h3>
                       <p className="text-gray-700">{candidateData.bio}</p>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Skills
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Skills</h3>
                       <div className="space-y-3">
-                        {candidateData.skills.map((skill, index) => (
-                          <div key={index}>
+                        {candidateData.skills.map((skill) => (
+                          <div key={skill.name} className="mb-4">
                             <div className="flex justify-between mb-1">
                               <span className="text-sm font-medium text-gray-700">
                                 {skill.name}
                               </span>
-                              <span className="text-sm text-gray-500">
-                                {skill.level}%
-                              </span>
+                              <span className="text-sm text-gray-500">{skill.level}%</span>
                             </div>
-                            <Progress
-                              value={skill.level}
-                              className="h-2"
-                              indicatorClassName={
-                                skill.level >= 90
-                                  ? 'bg-green-600'
-                                  : skill.level >= 80
-                                    ? 'bg-teal'
-                                    : 'bg-yellow'
-                              }
-                            />
+                            <Progress value={skill.level} className="h-2" />
                           </div>
                         ))}
                       </div>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Certifications
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Certifications</h3>
                       <div className="space-y-3">
                         {candidateData.certifications.map((cert, index) => (
                           <div
@@ -286,9 +265,7 @@ export default function CandidateDetailPage() {
                             className="flex items-start border-l-2 border-teal pl-4 py-1"
                           >
                             <div>
-                              <h4 className="font-medium text-gray-900">
-                                {cert.name}
-                              </h4>
+                              <h4 className="font-medium text-gray-900">{cert.name}</h4>
                               <p className="text-sm text-gray-500">
                                 {cert.issuer} • {cert.date}
                               </p>
@@ -306,18 +283,11 @@ export default function CandidateDetailPage() {
                 <CardContent className="p-6">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Work Experience
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Work Experience</h3>
                       <div className="space-y-6">
                         {candidateData.workHistory.map((job, index) => (
-                          <div
-                            key={index}
-                            className="border-l-2 border-teal pl-4"
-                          >
-                            <h4 className="font-medium text-gray-900">
-                              {job.position}
-                            </h4>
+                          <div key={index} className="border-l-2 border-teal pl-4">
+                            <h4 className="font-medium text-gray-900">{job.position}</h4>
                             <p className="text-sm text-gray-500 mb-2">
                               {job.company} • {job.duration}
                             </p>
@@ -328,18 +298,11 @@ export default function CandidateDetailPage() {
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Education
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Education</h3>
                       <div className="space-y-6">
                         {candidateData.education.map((edu, index) => (
-                          <div
-                            key={index}
-                            className="border-l-2 border-yellow pl-4"
-                          >
-                            <h4 className="font-medium text-gray-900">
-                              {edu.degree}
-                            </h4>
+                          <div key={index} className="border-l-2 border-yellow pl-4">
+                            <h4 className="font-medium text-gray-900">{edu.degree}</h4>
                             <p className="text-sm text-gray-500 mb-2">
                               {edu.institution} • {edu.duration}
                             </p>
@@ -365,9 +328,7 @@ export default function CandidateDetailPage() {
                         className="flex flex-col md:flex-row md:items-center md:justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
                       >
                         <div>
-                          <h4 className="font-medium text-gray-900">
-                            {job.title}
-                          </h4>
+                          <h4 className="font-medium text-gray-900">{job.title}</h4>
                           <p className="text-sm text-gray-500">{job.company}</p>
                         </div>
                         <div className="mt-4 md:mt-0 flex flex-wrap items-center gap-3">
@@ -383,9 +344,7 @@ export default function CandidateDetailPage() {
                             >
                               {job.matchScore}%
                             </div>
-                            <span className="ml-2 text-sm text-gray-500">
-                              Match
-                            </span>
+                            <span className="ml-2 text-sm text-gray-500">Match</span>
                           </div>
                           <Badge
                             className={
@@ -424,26 +383,15 @@ export default function CandidateDetailPage() {
               <Card>
                 <CardContent className="p-6">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      Notes & Comments
-                    </h3>
-                    <Button className="bg-teal text-white hover:bg-teal-dark">
-                      Add Note
-                    </Button>
+                    <h3 className="text-lg font-semibold text-gray-900">Notes & Comments</h3>
+                    <Button className="bg-teal text-white hover:bg-teal-dark">Add Note</Button>
                   </div>
                   <div className="space-y-4">
                     {candidateData.notes.map((note, index) => (
-                      <div
-                        key={index}
-                        className="p-4 border rounded-lg bg-gray-50"
-                      >
+                      <div key={index} className="p-4 border rounded-lg bg-gray-50">
                         <div className="flex justify-between mb-2">
-                          <span className="font-medium text-gray-900">
-                            {note.author}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {note.date}
-                          </span>
+                          <span className="font-medium text-gray-900">{note.author}</span>
+                          <span className="text-sm text-gray-500">{note.date}</span>
                         </div>
                         <p className="text-gray-700">{note.content}</p>
                       </div>
@@ -466,27 +414,21 @@ export default function CandidateDetailPage() {
                   <Mail className="h-5 w-5 text-teal mr-3" />
                   <div>
                     <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-medium text-gray-900">
-                      {candidateData.email}
-                    </p>
+                    <p className="font-medium text-gray-900">{candidateData.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 text-teal mr-3" />
                   <div>
                     <p className="text-sm text-gray-500">Phone</p>
-                    <p className="font-medium text-gray-900">
-                      {candidateData.phone}
-                    </p>
+                    <p className="font-medium text-gray-900">{candidateData.phone}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
                   <Globe className="h-5 w-5 text-teal mr-3" />
                   <div>
                     <p className="text-sm text-gray-500">Website</p>
-                    <p className="font-medium text-gray-900">
-                      {candidateData.website}
-                    </p>
+                    <p className="font-medium text-gray-900">{candidateData.website}</p>
                   </div>
                 </div>
               </div>
@@ -509,11 +451,7 @@ export default function CandidateDetailPage() {
                       <p className="font-semibold text-gray-900 mr-2">
                         {candidateData.matchScore}%
                       </p>
-                      <Progress
-                        value={candidateData.matchScore}
-                        className="h-2 w-20"
-                        indicatorClassName="bg-teal"
-                      />
+                      <Progress value={candidateData.matchScore} className="h-2 w-20" />
                     </div>
                   </div>
                 </div>
@@ -536,17 +474,13 @@ export default function CandidateDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Status</p>
-                    <p className="font-semibold text-gray-900">
-                      {candidateData.status}
-                    </p>
+                    <p className="font-semibold text-gray-900">{candidateData.status}</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <h4 className="font-medium text-gray-900 mb-3">
-                  Quick Actions
-                </h4>
+                <h4 className="font-medium text-gray-900 mb-3">Quick Actions</h4>
                 <div className="space-y-2">
                   <Button className="w-full bg-teal text-white hover:bg-teal-dark">
                     Send Message

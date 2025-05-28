@@ -26,7 +26,10 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
   useEffect(() => {
     const validateSession = async () => {
       try {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        const {
+          data: { session },
+          error: sessionError,
+        } = await supabase.auth.getSession();
         if (sessionError) throw sessionError;
 
         if (!session?.user) {
@@ -35,7 +38,10 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
         }
 
         // Verify the session is still valid
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
         if (userError || !user) {
           await supabase.auth.signOut();
           router.push('/login');
@@ -50,7 +56,7 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
         }
 
         setUser(user);
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           fullName: user.user_metadata.full_name || '',
           email: user.email || '',
@@ -69,9 +75,9 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -84,7 +90,7 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
         data: {
           full_name: formData.fullName,
           phone: formData.phone,
-        }
+        },
       });
 
       if (error) throw error;
@@ -121,7 +127,7 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
 
     try {
       const { error } = await supabase.auth.updateUser({
-        password: formData.newPassword
+        password: formData.newPassword,
       });
 
       if (error) throw error;
@@ -132,7 +138,7 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
       });
 
       // Clear password fields
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         currentPassword: '',
         newPassword: '',
@@ -167,15 +173,13 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Settings</h1>
-      
+
       <div className="grid gap-8 md:grid-cols-2">
         {/* Profile Settings */}
         <Card>
           <CardHeader>
             <CardTitle>Profile Settings</CardTitle>
-            <CardDescription>
-              Update your personal information
-            </CardDescription>
+            <CardDescription>Update your personal information</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleProfileUpdate} className="space-y-4">
@@ -225,9 +229,7 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
         <Card>
           <CardHeader>
             <CardTitle>Password Settings</CardTitle>
-            <CardDescription>
-              Change your password
-            </CardDescription>
+            <CardDescription>Change your password</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handlePasswordUpdate} className="space-y-4">
@@ -279,4 +281,4 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
       </div>
     </div>
   );
-} 
+}

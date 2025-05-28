@@ -9,7 +9,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { format } from 'date-fns';
 
 interface Resume {
   id: string;
@@ -140,4 +139,4 @@ export default function ResumeReview({ resumeId }: ResumeReviewProps) {
       </CardContent>
     </Card>
   );
-} 
+}

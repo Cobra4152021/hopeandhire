@@ -34,17 +34,8 @@ export function JobList() {
   });
 
   const updateJobStatus = useMutation({
-    mutationFn: async ({
-      jobId,
-      status,
-    }: {
-      jobId: string;
-      status: 'active' | 'closed';
-    }) => {
-      const { error } = await supabase
-        .from('jobs')
-        .update({ status })
-        .eq('id', jobId);
+    mutationFn: async ({ jobId, status }: { jobId: string; status: 'active' | 'closed' }) => {
+      const { error } = await supabase.from('jobs').update({ status }).eq('id', jobId);
 
       if (error) throw error;
     },
@@ -92,10 +83,7 @@ export function JobList() {
     return (
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="h-[200px] animate-pulse rounded-lg bg-muted"
-          />
+          <div key={i} className="h-[200px] animate-pulse rounded-lg bg-muted" />
         ))}
       </div>
     );
@@ -126,9 +114,7 @@ export function JobList() {
                   Posted on {new Date(job.created_at).toLocaleDateString()}
                 </CardDescription>
               </div>
-              <Badge
-                variant={job.status === 'active' ? 'default' : 'secondary'}
-              >
+              <Badge variant={job.status === 'active' ? 'default' : 'secondary'}>
                 {job.status}
               </Badge>
             </div>
@@ -152,10 +138,7 @@ export function JobList() {
             >
               {job.status === 'active' ? 'Close Job' : 'Reopen Job'}
             </Button>
-            <Button
-              variant="destructive"
-              onClick={() => deleteJob.mutate(job.id)}
-            >
+            <Button variant="destructive" onClick={() => deleteJob.mutate(job.id)}>
               Delete
             </Button>
           </CardFooter>

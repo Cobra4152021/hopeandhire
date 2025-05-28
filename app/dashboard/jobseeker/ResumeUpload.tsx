@@ -22,7 +22,7 @@ export default function ResumeUpload() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       // Validate file size
       if (file.size > MAX_FILE_SIZE) {
         toast.error('File size must be less than 5MB');
@@ -30,14 +30,18 @@ export default function ResumeUpload() {
       }
 
       // Validate file type
-      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const validTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ];
       if (!validTypes.includes(file.type)) {
         toast.error('Please upload a PDF or Word document');
         return;
       }
 
       setResumeFile(file);
-      
+
       // Create preview URL
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
@@ -63,7 +67,9 @@ export default function ResumeUpload() {
 
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Upload file to Supabase Storage
@@ -76,22 +82,20 @@ export default function ResumeUpload() {
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('resumes')
-        .getPublicUrl(fileName);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('resumes').getPublicUrl(fileName);
 
       // Save resume record to database
-      const { error: dbError } = await supabase
-        .from('resumes')
-        .upsert({
-          user_id: user.id,
-          resume_url: publicUrl,
-          bio: bio.trim(),
-          skills: skills.trim(),
-          status: 'pending_review',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
+      const { error: dbError } = await supabase.from('resumes').upsert({
+        user_id: user.id,
+        resume_url: publicUrl,
+        bio: bio.trim(),
+        skills: skills.trim(),
+        status: 'pending_review',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
 
       if (dbError) throw dbError;
 
@@ -174,4 +178,4 @@ export default function ResumeUpload() {
       </Card>
     </div>
   );
-} 
+}

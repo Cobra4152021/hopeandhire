@@ -19,8 +19,7 @@ function OptimizedImage({
   const [isLoading, setIsLoading] = useState(true);
 
   // Default sizes if not provided
-  const defaultSizes =
-    sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw';
+  const defaultSizes = sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw';
 
   return (
     <div className={`relative ${isLoading ? 'animate-pulse bg-gray-200' : ''}`}>

@@ -3,14 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/lib/supabase';
-import {
-  Briefcase,
-  FileText,
-  User,
-  Building,
-  TrendingUp,
-  Clock,
-} from 'lucide-react';
+import { Briefcase, FileText, User, Building, TrendingUp, Clock } from 'lucide-react';
 
 interface DashboardStats {
   total_jobs: number;
@@ -38,7 +31,9 @@ export default function DashboardPage() {
   const { data: stats, isLoading } = useQuery({
     queryKey: ['dashboard-stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Get total jobs
@@ -84,13 +79,14 @@ export default function DashboardPage() {
         total_resumes: totalResumes || 0,
         total_companies: totalCompanies || 0,
         recent_jobs: recentJobs || [],
-        recent_applications: recentApplications?.map((app) => ({
-          id: app.id,
-          job_title: app.jobs.title,
-          company: app.jobs.company,
-          status: app.status,
-          applied_date: app.applied_date,
-        })) || [],
+        recent_applications:
+          recentApplications?.map((app) => ({
+            id: app.id,
+            job_title: app.jobs.title,
+            company: app.jobs.company,
+            status: app.status,
+            applied_date: app.applied_date,
+          })) || [],
       } as DashboardStats;
     },
   });
@@ -110,26 +106,18 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.total_jobs}</div>
-            <p className="text-xs text-gray-500">
-              Available job opportunities
-            </p>
+            <p className="text-xs text-gray-500">Available job opportunities</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Your Applications
-            </CardTitle>
+            <CardTitle className="text-sm font-medium">Your Applications</CardTitle>
             <FileText className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {stats?.total_applications}
-            </div>
-            <p className="text-xs text-gray-500">
-              Total applications submitted
-            </p>
+            <div className="text-2xl font-bold">{stats?.total_applications}</div>
+            <p className="text-xs text-gray-500">Total applications submitted</p>
           </CardContent>
         </Card>
 
@@ -140,26 +128,18 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.total_resumes}</div>
-            <p className="text-xs text-gray-500">
-              Resumes in your profile
-            </p>
+            <p className="text-xs text-gray-500">Resumes in your profile</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Companies
-            </CardTitle>
+            <CardTitle className="text-sm font-medium">Companies</CardTitle>
             <Building className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {stats?.total_companies}
-            </div>
-            <p className="text-xs text-gray-500">
-              Companies on the platform
-            </p>
+            <div className="text-2xl font-bold">{stats?.total_companies}</div>
+            <p className="text-xs text-gray-500">Companies on the platform</p>
           </CardContent>
         </Card>
       </div>
@@ -214,9 +194,7 @@ export default function DashboardPage() {
                 >
                   <div>
                     <p className="font-medium">{application.job_title}</p>
-                    <p className="text-sm text-gray-500">
-                      {application.company}
-                    </p>
+                    <p className="text-sm text-gray-500">{application.company}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <span
@@ -224,8 +202,8 @@ export default function DashboardPage() {
                         application.status === 'pending'
                           ? 'bg-yellow-100 text-yellow-800'
                           : application.status === 'accepted'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800'
                       }`}
                     >
                       {application.status}

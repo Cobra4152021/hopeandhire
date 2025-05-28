@@ -21,6 +21,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { supabase } from '@/lib/supabase';
 
 const profileFormSchema = z.object({
   full_name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -80,10 +81,7 @@ export default function ProfileClient() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('No user found');
 
-      const { error } = await supabase
-        .from('profiles')
-        .update(values)
-        .eq('id', user.id);
+      const { error } = await supabase.from('profiles').update(values).eq('id', user.id);
 
       if (error) throw error;
     },
@@ -112,10 +110,7 @@ export default function ProfileClient() {
     return (
       <div className="space-y-4">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="h-[100px] animate-pulse rounded-lg bg-muted"
-          />
+          <div key={i} className="h-[100px] animate-pulse rounded-lg bg-muted" />
         ))}
       </div>
     );
@@ -139,19 +134,12 @@ export default function ProfileClient() {
             <CardContent className="pt-6">
               <div className="flex flex-col items-center space-y-4">
                 <Avatar className="h-24 w-24">
-                  <AvatarImage
-                    src={profile?.avatar_url}
-                    alt={profile?.full_name}
-                  />
-                  <AvatarFallback>
-                    {profile?.full_name?.charAt(0) || 'U'}
-                  </AvatarFallback>
+                  <AvatarImage src={profile?.avatar_url} alt={profile?.full_name} />
+                  <AvatarFallback>{profile?.full_name?.charAt(0) || 'U'}</AvatarFallback>
                 </Avatar>
                 <div className="text-center">
                   <h3 className="font-medium">{profile?.full_name}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {profile?.email}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{profile?.email}</p>
                 </div>
               </div>
             </CardContent>
@@ -164,10 +152,7 @@ export default function ProfileClient() {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <Tabs defaultValue="basic" className="w-full">
                   <TabsList>
                     <TabsTrigger value="basic">Basic Info</TabsTrigger>
@@ -239,11 +224,7 @@ export default function ProfileClient() {
                         <FormItem>
                           <FormLabel>Bio</FormLabel>
                           <FormControl>
-                            <Textarea
-                              {...field}
-                              disabled={!isEditing}
-                              className="min-h-[100px]"
-                            />
+                            <Textarea {...field} disabled={!isEditing} className="min-h-[100px]" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -266,9 +247,7 @@ export default function ProfileClient() {
                               className="min-h-[100px]"
                             />
                           </FormControl>
-                          <FormDescription>
-                            List your skills, separated by commas
-                          </FormDescription>
+                          <FormDescription>List your skills, separated by commas</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}

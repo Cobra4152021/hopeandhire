@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/lib/supabase';
 
 interface CreateJobDialogProps {
   open: boolean;
@@ -87,9 +88,7 @@ export function CreateJobDialog({ open, onOpenChange }: CreateJobDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Post a New Job</DialogTitle>
-          <DialogDescription>
-            Fill in the details to create a new job posting
-          </DialogDescription>
+          <DialogDescription>Fill in the details to create a new job posting</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -144,19 +143,11 @@ export function CreateJobDialog({ open, onOpenChange }: CreateJobDialogProps) {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Switch
-              id="remote"
-              checked={isRemote}
-              onCheckedChange={setIsRemote}
-            />
+            <Switch id="remote" checked={isRemote} onCheckedChange={setIsRemote} />
             <Label htmlFor="remote">Remote position</Label>
           </div>
           <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
             <Button type="submit" disabled={createJob.isPending}>

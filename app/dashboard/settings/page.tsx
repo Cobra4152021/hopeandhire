@@ -9,17 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/components/ui/use-toast';
-import {
-  Bell,
-  Lock,
-  Mail,
-  User,
-  Shield,
-  Save,
-  LogOut,
-  Moon,
-  Sun,
-} from 'lucide-react';
+import { User, Shield, Save, LogOut, Lock } from 'lucide-react';
 
 interface Settings {
   id: string;
@@ -41,7 +31,9 @@ export default function SettingsPage() {
   const { data: settings, isLoading } = useQuery({
     queryKey: ['settings'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -58,7 +50,9 @@ export default function SettingsPage() {
   // Update settings mutation
   const updateSettings = useMutation({
     mutationFn: async (data: Partial<Settings>) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
@@ -77,7 +71,7 @@ export default function SettingsPage() {
         description: 'Settings updated successfully',
       });
     },
-    onError: (error) => {
+    onError: (_error) => {
       toast({
         title: 'Error',
         description: 'Failed to update settings',
@@ -120,57 +114,51 @@ export default function SettingsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Account Settings */}
         <Card>
-              <CardHeader>
+          <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="w-5 h-5" />
               Account Settings
             </CardTitle>
-              </CardHeader>
-              <CardContent>
+          </CardHeader>
+          <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Email Notifications</Label>
-                      <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500">
                       Receive notifications about your account activity
-                      </p>
+                    </p>
                   </div>
                   <Switch
                     checked={formData.email_notifications ?? settings?.email_notifications}
-                    onCheckedChange={(checked) =>
-                      handleToggle('email_notifications', checked)
-                    }
+                    onCheckedChange={(checked) => handleToggle('email_notifications', checked)}
                   />
-                    </div>
+                </div>
 
-                  <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Job Alerts</Label>
-                      <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500">
                       Get notified about new job opportunities
-                      </p>
+                    </p>
                   </div>
                   <Switch
                     checked={formData.job_alerts ?? settings?.job_alerts}
-                    onCheckedChange={(checked) =>
-                      handleToggle('job_alerts', checked)
-                    }
+                    onCheckedChange={(checked) => handleToggle('job_alerts', checked)}
                   />
-              </div>
+                </div>
 
-                  <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Marketing Emails</Label>
-                      <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500">
                       Receive updates about new features and promotions
-                      </p>
+                    </p>
                   </div>
                   <Switch
                     checked={formData.marketing_emails ?? settings?.marketing_emails}
-                    onCheckedChange={(checked) =>
-                      handleToggle('marketing_emails', checked)
-                    }
+                    onCheckedChange={(checked) => handleToggle('marketing_emails', checked)}
                   />
                 </div>
               </div>
@@ -178,19 +166,19 @@ export default function SettingsPage() {
               <Button type="submit" className="w-full">
                 <Save className="w-4 h-4 mr-2" />
                 Save Changes
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
 
         {/* Security Settings */}
-            <Card>
-              <CardHeader>
+        <Card>
+          <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="w-5 h-5" />
               Security Settings
             </CardTitle>
-              </CardHeader>
+          </CardHeader>
           <CardContent>
             <div className="space-y-6">
               <div className="space-y-4">
@@ -203,24 +191,18 @@ export default function SettingsPage() {
                   </div>
                   <Switch
                     checked={formData.two_factor_auth ?? settings?.two_factor_auth}
-                    onCheckedChange={(checked) =>
-                      handleToggle('two_factor_auth', checked)
-                    }
+                    onCheckedChange={(checked) => handleToggle('two_factor_auth', checked)}
                   />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Dark Mode</Label>
-                      <p className="text-sm text-gray-500">
-                      Switch between light and dark theme
-                      </p>
+                    <p className="text-sm text-gray-500">Switch between light and dark theme</p>
                   </div>
                   <Switch
                     checked={formData.dark_mode ?? settings?.dark_mode}
-                    onCheckedChange={(checked) =>
-                      handleToggle('dark_mode', checked)
-                    }
+                    onCheckedChange={(checked) => handleToggle('dark_mode', checked)}
                   />
                 </div>
               </div>
@@ -237,19 +219,11 @@ export default function SettingsPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="new_password">New Password</Label>
-                  <Input
-                    id="new_password"
-                    type="password"
-                    placeholder="Enter new password"
-                  />
+                  <Input id="new_password" type="password" placeholder="Enter new password" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="confirm_password">Confirm New Password</Label>
-                  <Input
-                    id="confirm_password"
-                    type="password"
-                    placeholder="Confirm new password"
-                  />
+                  <Input id="confirm_password" type="password" placeholder="Confirm new password" />
                 </div>
                 <Button className="w-full">
                   <Lock className="w-4 h-4 mr-2" />
@@ -258,18 +232,14 @@ export default function SettingsPage() {
               </div>
 
               <div className="pt-4 border-t">
-                <Button
-                  variant="destructive"
-                  className="w-full"
-                  onClick={handleSignOut}
-                >
+                <Button variant="destructive" className="w-full" onClick={handleSignOut}>
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
                 </Button>
               </div>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

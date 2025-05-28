@@ -119,9 +119,7 @@ const sampleMessages = [
 export default function MessagingPageClient() {
   const { user } = useUser();
   const { toast } = useToast();
-  const [activeConversation, setActiveConversation] = useState(
-    conversations[0]
-  );
+  const [activeConversation, setActiveConversation] = useState(conversations[0]);
   const [messages, setMessages] = useState(sampleMessages);
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -268,123 +266,96 @@ export default function MessagingPageClient() {
           <div className="border-r">
             <div className="flex justify-between items-center px-4 py-2 border-b">
               <span className="font-bold text-lg">Messages</span>
-              {user?.role &&
-                (user.role === 'jobseeker' || user.role === 'volunteer') && (
-                  <Dialog open={isNewChatOpen} onOpenChange={setIsNewChatOpen}>
-                    <DialogTrigger asChild>
-                      <Button size="sm" className="bg-teal text-white">
-                        New Chat
+              {user?.role && (user.role === 'jobseeker' || user.role === 'volunteer') && (
+                <Dialog open={isNewChatOpen} onOpenChange={setIsNewChatOpen}>
+                  <DialogTrigger asChild>
+                    <Button size="sm" className="bg-teal text-white">
+                      New Chat
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Start New Chat</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <Input
+                        placeholder="Name"
+                        value={newChatName}
+                        onChange={(e) => setNewChatName(e.target.value)}
+                      />
+                      <Input
+                        placeholder="Phone (for WhatsApp)"
+                        value={newChatPhone}
+                        onChange={(e) => setNewChatPhone(e.target.value)}
+                      />
+                    </div>
+                    <DialogFooter>
+                      <Button onClick={handleAddNewChat} className="bg-teal text-white">
+                        Start Chat
                       </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Start New Chat</DialogTitle>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <Input
-                          placeholder="Name"
-                          value={newChatName}
-                          onChange={(e) => setNewChatName(e.target.value)}
-                        />
-                        <Input
-                          placeholder="Phone (for WhatsApp)"
-                          value={newChatPhone}
-                          onChange={(e) => setNewChatPhone(e.target.value)}
-                        />
-                      </div>
-                      <DialogFooter>
-                        <Button
-                          onClick={handleAddNewChat}
-                          className="bg-teal text-white"
-                        >
-                          Start Chat
-                        </Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                )}
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              )}
             </div>
-                <Input
-                  placeholder="Search conversations..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+            <Input
+              placeholder="Search conversations..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="mb-4"
-                />
+            />
             <div className="space-y-2">
-                {filteredConversations.map((conversation) => (
-                  <div
-                    key={conversation.id}
+              {filteredConversations.map((conversation) => (
+                <div
+                  key={conversation.id}
                   className={`flex items-center p-2 rounded-lg cursor-pointer ${
                     activeConversation?.id === conversation.id
                       ? 'bg-teal-light/10'
                       : 'hover:bg-gray-100'
-                    }`}
-                    onClick={() => setActiveConversation(conversation)}
-                  >
-                      <Avatar className="h-10 w-10">
-                    <AvatarImage
-                      src={conversation.avatar}
-                      alt={conversation.name}
-                    />
-                    <AvatarFallback>
-                      {conversation.name.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
+                  }`}
+                  onClick={() => setActiveConversation(conversation)}
+                >
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={conversation.avatar} alt={conversation.name} />
+                    <AvatarFallback>{conversation.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
                   <div className="ml-3 flex-1">
                     <div className="flex items-center justify-between">
                       <span className="font-medium">{conversation.name}</span>
-                      <span className="text-xs text-gray-500">
-                        {conversation.time}
-                      </span>
+                      <span className="text-xs text-gray-500">{conversation.time}</span>
                     </div>
-                    <p className="text-sm text-gray-500 truncate">
-                      {conversation.lastMessage}
-                    </p>
-                    </div>
-                    {conversation.unread > 0 && (
-                    <Badge variant="secondary" className="ml-2">
-                        {conversation.unread}
-                    </Badge>
-                    )}
+                    <p className="text-sm text-gray-500 truncate">{conversation.lastMessage}</p>
                   </div>
-                ))}
-              </div>
+                  {conversation.unread > 0 && (
+                    <Badge variant="secondary" className="ml-2">
+                      {conversation.unread}
+                    </Badge>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
           {/* Chat Area */}
           <div className="md:col-span-2 flex flex-col">
             {activeConversation ? (
               <>
                 <div className="flex items-center justify-between p-4 border-b">
-              <div className="flex items-center">
+                  <div className="flex items-center">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage
-                        src={activeConversation.avatar}
-                        alt={activeConversation.name}
-                      />
-                      <AvatarFallback>
-                        {activeConversation.name.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="ml-3">
-                      <div className="font-medium">
-                        {activeConversation.name}
-                      </div>
+                      <AvatarImage src={activeConversation.avatar} alt={activeConversation.name} />
+                      <AvatarFallback>{activeConversation.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="ml-3">
+                      <div className="font-medium">{activeConversation.name}</div>
                       <div className="text-sm text-gray-500">
                         {activeConversation.online ? 'Online' : 'Offline'}
                       </div>
-                </div>
-              </div>
-              <div className="flex space-x-2">
-                    <Dialog
-                      open={isScheduleOpen}
-                      onOpenChange={setIsScheduleOpen}
-                    >
+                    </div>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Dialog open={isScheduleOpen} onOpenChange={setIsScheduleOpen}>
                       <DialogTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          title="Schedule Meeting"
-                        >
+                        <Button variant="ghost" size="icon" title="Schedule Meeting">
                           <Calendar className="text-gray-500" />
                         </Button>
                       </DialogTrigger>
@@ -405,12 +376,9 @@ export default function MessagingPageClient() {
                           />
                         </div>
                         <DialogFooter>
-                          <Button
-                            onClick={handleScheduleMeeting}
-                            className="bg-teal text-white"
-                          >
+                          <Button onClick={handleScheduleMeeting} className="bg-teal text-white">
                             Schedule
-                </Button>
+                          </Button>
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
@@ -421,16 +389,13 @@ export default function MessagingPageClient() {
                       title="Google Meet Video Call"
                     >
                       <Calendar className="text-gray-500" />
-                </Button>
+                    </Button>
                     <Button variant="ghost" size="icon" title="More options">
                       <MoreVertical className="text-gray-500" />
-                </Button>
-              </div>
-            </div>
-                <div
-                  id="messages-container"
-                  className="flex-1 overflow-y-auto p-4 space-y-4"
-                >
+                    </Button>
+                  </div>
+                </div>
+                <div id="messages-container" className="flex-1 overflow-y-auto p-4 space-y-4">
                   {messages.map((message, index) => (
                     <div
                       key={index}
@@ -438,27 +403,25 @@ export default function MessagingPageClient() {
                     >
                       <div
                         className={`max-w-[70%] rounded-lg p-3 ${
-                          message.isMe
-                            ? 'bg-teal text-white'
-                            : 'bg-gray-100 text-gray-900'
+                          message.isMe ? 'bg-teal text-white' : 'bg-gray-100 text-gray-900'
                         }`}
                       >
                         {message.content}
                       </div>
-                  </div>
-                ))}
-              </div>
+                    </div>
+                  ))}
+                </div>
                 <div className="p-4 border-t">
                   <form onSubmit={handleSendMessage} className="flex space-x-2">
-                <Input
-                  placeholder="Type a message..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  className="flex-1"
-                />
+                    <Input
+                      placeholder="Type a message..."
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      className="flex-1"
+                    />
                     <Button type="submit" className="bg-teal text-white">
                       Send
-                </Button>
+                    </Button>
                   </form>
                 </div>
               </>

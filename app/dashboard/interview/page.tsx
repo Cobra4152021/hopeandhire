@@ -2,21 +2,11 @@
 
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Video, PlayCircle, PauseCircle, StopCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import {
-  Video,
-  Mic,
-  FileText,
-  BarChart,
-  Play,
-  Pause,
-  StopCircle,
-  Download,
-} from 'lucide-react';
 
 interface MockInterview {
   id: string;
@@ -87,8 +77,8 @@ export default function InterviewPage() {
                         interview.difficulty === 'beginner'
                           ? 'bg-green-100 text-green-800'
                           : interview.difficulty === 'intermediate'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-red-100 text-red-800'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-red-100 text-red-800'
                       }`}
                     >
                       {interview.difficulty}
@@ -135,26 +125,17 @@ export default function InterviewPage() {
                 {/* Controls */}
                 <div className="flex justify-center gap-4">
                   {!isRecording ? (
-                    <Button
-                      onClick={() => setIsRecording(true)}
-                      className="bg-teal text-white"
-                    >
-                      <Play className="h-4 w-4 mr-2" />
+                    <Button onClick={() => setIsRecording(true)} className="bg-teal text-white">
+                      <PlayCircle className="h-4 w-4 mr-2" />
                       Start Recording
                     </Button>
                   ) : (
                     <>
-                      <Button
-                        variant="outline"
-                        onClick={() => setIsRecording(false)}
-                      >
-                        <Pause className="h-4 w-4 mr-2" />
+                      <Button variant="outline" onClick={() => setIsRecording(false)}>
+                        <PauseCircle className="h-4 w-4 mr-2" />
                         Pause
                       </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setIsRecording(false)}
-                      >
+                      <Button variant="outline" onClick={() => setIsRecording(false)}>
                         <StopCircle className="h-4 w-4 mr-2" />
                         Stop
                       </Button>
@@ -167,10 +148,7 @@ export default function InterviewPage() {
                   <h3 className="font-medium">Interview Questions</h3>
                   <div className="space-y-2">
                     {selectedInterview.questions.map((question, index) => (
-                      <div
-                        key={index}
-                        className="p-4 border rounded-lg bg-gray-50"
-                      >
+                      <div key={index} className="p-4 border rounded-lg bg-gray-50">
                         <p className="text-sm">{question}</p>
                       </div>
                     ))}
@@ -185,21 +163,17 @@ export default function InterviewPage() {
                       <div className="p-4 border rounded-lg">
                         <h4 className="font-medium mb-2">Strengths</h4>
                         <ul className="list-disc list-inside text-sm text-gray-600">
-                          {selectedInterview.feedback.strengths.map(
-                            (strength, index) => (
-                              <li key={index}>{strength}</li>
-                            )
-                          )}
+                          {selectedInterview.feedback.strengths.map((strength, index) => (
+                            <li key={index}>{strength}</li>
+                          ))}
                         </ul>
                       </div>
                       <div className="p-4 border rounded-lg">
                         <h4 className="font-medium mb-2">Areas for Improvement</h4>
                         <ul className="list-disc list-inside text-sm text-gray-600">
-                          {selectedInterview.feedback.improvements.map(
-                            (improvement, index) => (
-                              <li key={index}>{improvement}</li>
-                            )
-                          )}
+                          {selectedInterview.feedback.improvements.map((improvement, index) => (
+                            <li key={index}>{improvement}</li>
+                          ))}
                         </ul>
                       </div>
                     </div>
@@ -218,9 +192,7 @@ export default function InterviewPage() {
             ) : (
               <div className="text-center py-12">
                 <Video className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">
-                  Select a mock interview to begin
-                </p>
+                <p className="text-gray-500">Select a mock interview to begin</p>
               </div>
             )}
           </CardContent>
@@ -228,4 +200,4 @@ export default function InterviewPage() {
       </div>
     </div>
   );
-} 
+}

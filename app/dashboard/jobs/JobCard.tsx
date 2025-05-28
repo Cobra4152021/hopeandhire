@@ -24,6 +24,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { Job } from '@/types/job';
 import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/lib/supabase';
 
 interface JobCardProps {
   job: Job;
@@ -99,9 +100,7 @@ export function JobCard({ job }: JobCardProps) {
           <Badge variant="secondary">{job.location}</Badge>
           {job.is_remote && <Badge variant="secondary">Remote</Badge>}
         </div>
-        <p className="line-clamp-3 text-sm text-muted-foreground">
-          {job.description}
-        </p>
+        <p className="line-clamp-3 text-sm text-muted-foreground">{job.description}</p>
       </CardContent>
       <CardFooter>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -124,11 +123,7 @@ export function JobCard({ job }: JobCardProps) {
               />
             </div>
             <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsOpen(false)}
-                disabled={isSubmitting}
-              >
+              <Button variant="outline" onClick={() => setIsOpen(false)} disabled={isSubmitting}>
                 Cancel
               </Button>
               <Button onClick={handleSubmit} disabled={isSubmitting}>

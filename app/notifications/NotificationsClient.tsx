@@ -3,13 +3,7 @@
 import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Bell, Check, Trash2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
@@ -34,8 +28,7 @@ interface Notification {
 }
 
 export default function NotificationsClient() {
-  const [selectedNotification, setSelectedNotification] =
-    useState<Notification | null>(null);
+  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -69,10 +62,7 @@ export default function NotificationsClient() {
 
   const deleteNotification = useMutation({
     mutationFn: async (notificationId: string) => {
-      const { error } = await supabase
-        .from('notifications')
-        .delete()
-        .eq('id', notificationId);
+      const { error } = await supabase.from('notifications').delete().eq('id', notificationId);
 
       if (error) throw error;
     },
@@ -94,9 +84,12 @@ export default function NotificationsClient() {
 
   // Subscribe to real-time notifications
   useEffect(() => {
-    const supabase = supabase;
-
     const setupSubscription = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
       const channel = supabase
         .channel('notifications')
         .on(
@@ -105,10 +98,9 @@ export default function NotificationsClient() {
             event: 'INSERT',
             schema: 'public',
             table: 'notifications',
-            filter: `recipient_id=eq.${(await supabase.auth.getUser()).data.user?.id}`,
+            filter: `recipient_id=eq.${user.id}`,
           },
-          (payload) => {
-            console.log('New notification:', payload);
+          (_payload) => {
             queryClient.invalidateQueries({ queryKey: ['notifications'] });
             toast({
               title: 'New notification',
@@ -119,21 +111,18 @@ export default function NotificationsClient() {
         .subscribe();
 
       return () => {
-        supabase.removeChannel(channel);
+        void supabase.removeChannel(channel);
       };
     };
 
-    setupSubscription();
-  }, [queryClient, supabase, toast]);
+    void setupSubscription();
+  }, [queryClient, toast]);
 
   if (isLoading) {
     return (
       <div className="space-y-4">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="h-[100px] animate-pulse rounded-lg bg-muted"
-          />
+          <div key={i} className="h-[100px] animate-pulse rounded-lg bg-muted" />
         ))}
       </div>
     );
@@ -158,16 +147,11 @@ export default function NotificationsClient() {
       ) : (
         <div className="space-y-4">
           {notifications.map((notification) => (
-            <Card
-              key={notification.id}
-              className={notification.is_read ? 'opacity-75' : ''}
-            >
+            <Card key={notification.id} className={notification.is_read ? 'opacity-75' : ''}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
-                    <CardTitle className="text-base">
-                      {notification.title}
-                    </CardTitle>
+                    <CardTitle className="text-base">{notification.title}</CardTitle>
                     <CardDescription>
                       {new Date(notification.created_at).toLocaleDateString()}
                     </CardDescription>
@@ -187,9 +171,7 @@ export default function NotificationsClient() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground">
-                    {notification.message}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{notification.message}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       {!notification.is_read && (

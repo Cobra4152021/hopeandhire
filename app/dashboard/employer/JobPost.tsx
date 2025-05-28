@@ -22,7 +22,7 @@ export default function JobPost() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setJobData(prev => ({ ...prev, [name]: value }));
+    setJobData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,18 +30,18 @@ export default function JobPost() {
     setLoading(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
-        .from('jobs')
-        .insert({
-          employer_id: user.id,
-          ...jobData,
-          status: 'active',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
+      const { error } = await supabase.from('jobs').insert({
+        employer_id: user.id,
+        ...jobData,
+        status: 'active',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
 
       if (error) throw error;
 
@@ -128,4 +128,4 @@ export default function JobPost() {
       </Card>
     </div>
   );
-} 
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -45,27 +45,27 @@ export default function LoginPage() {
       if (data.user) {
         // Get the user's role from metadata
         const userRole = data.user.user_metadata?.role;
-        
+
         // If no role in metadata, update it with the selected userType
         if (!userRole) {
           const { error: updateError } = await supabase.auth.updateUser({
-            data: { role: userType }
+            data: { role: userType },
           });
-          
+
           if (updateError) throw updateError;
         }
-        
+
         // Use the role from metadata if it exists, otherwise use the selected userType
         const role = userRole || userType;
-        
+
         // Show success message
         toast({
-          title: "Success!",
+          title: 'Success!',
           description: "You've been logged in successfully.",
         });
-        
+
         setShowConfetti(true);
-        
+
         // Use Next.js router for client-side navigation after a short delay
         setTimeout(() => {
           router.push(`/dashboard/${role}`);
@@ -99,9 +99,7 @@ export default function LoginPage() {
               priority
             />
           </div>
-          <CardTitle className="text-2xl font-bold text-center">
-            Welcome Back
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
           <CardDescription className="text-center">
             Sign in to your account to access your dashboard
           </CardDescription>
@@ -129,10 +127,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
-                    <Link
-                      href="/reset-password"
-                      className="text-sm text-teal hover:underline"
-                    >
+                    <Link href="/reset-password" className="text-sm text-teal hover:underline">
                       Forgot password?
                     </Link>
                   </div>
@@ -169,10 +164,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="volunteer-password">Password</Label>
-                    <Link
-                      href="/reset-password"
-                      className="text-sm text-teal hover:underline"
-                    >
+                    <Link href="/reset-password" className="text-sm text-teal hover:underline">
                       Forgot password?
                     </Link>
                   </div>
@@ -209,10 +201,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="employer-password">Password</Label>
-                    <Link
-                      href="/reset-password"
-                      className="text-sm text-teal hover:underline"
-                    >
+                    <Link href="/reset-password" className="text-sm text-teal hover:underline">
                       Forgot password?
                     </Link>
                   </div>

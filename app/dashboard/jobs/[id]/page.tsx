@@ -119,20 +119,14 @@ export default function JobDetailPage() {
   return (
     <div className="container mx-auto py-8">
       <div className="mb-6">
-        <Button
-          variant="ghost"
-          onClick={() => router.push('/dashboard/jobs')}
-          className="mb-4"
-        >
+        <Button variant="ghost" onClick={() => router.push('/dashboard/jobs')} className="mb-4">
           <ChevronLeft className="mr-2 h-4 w-4" />
           Back to Jobs
         </Button>
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {jobData.title}
-            </h1>
+            <h1 className="text-2xl font-bold text-gray-900">{jobData.title}</h1>
             <div className="flex flex-wrap gap-y-2 text-sm text-gray-500 mt-2">
               <div className="flex items-center mr-4">
                 <Building className="mr-1 h-4 w-4" />
@@ -164,10 +158,7 @@ export default function JobDetailPage() {
               <Edit className="mr-2 h-4 w-4" />
               Edit
             </Button>
-            <Dialog
-              open={isDeleteDialogOpen}
-              onOpenChange={setIsDeleteDialogOpen}
-            >
+            <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
               <DialogTrigger asChild>
                 <Button
                   variant="outline"
@@ -181,15 +172,11 @@ export default function JobDetailPage() {
                 <DialogHeader>
                   <DialogTitle>Delete Job Listing</DialogTitle>
                   <DialogDescription>
-                    Are you sure you want to delete this job listing? This
-                    action cannot be undone.
+                    Are you sure you want to delete this job listing? This action cannot be undone.
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                  <Button
-                    variant="outline"
-                    onClick={() => setIsDeleteDialogOpen(false)}
-                  >
+                  <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
                     Cancel
                   </Button>
                   <Button variant="destructive" onClick={handleDelete}>
@@ -211,25 +198,19 @@ export default function JobDetailPage() {
           <Tabs defaultValue="details">
             <TabsList className="mb-4">
               <TabsTrigger value="details">Job Details</TabsTrigger>
-              <TabsTrigger value="applicants">
-                Applicants ({jobData.applicants.length})
-              </TabsTrigger>
+              <TabsTrigger value="applicants">Applicants ({jobData.applicants.length})</TabsTrigger>
             </TabsList>
             <TabsContent value="details">
               <Card>
                 <CardContent className="p-6">
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Job Description
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Job Description</h3>
                       <p className="text-gray-700">{jobData.description}</p>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Responsibilities
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Responsibilities</h3>
                       <ul className="list-disc pl-5 space-y-2 text-gray-700">
                         {jobData.responsibilities.map((item, index) => (
                           <li key={index}>{item}</li>
@@ -238,9 +219,7 @@ export default function JobDetailPage() {
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Requirements
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Requirements</h3>
                       <ul className="list-disc pl-5 space-y-2 text-gray-700">
                         {jobData.requirements.map((item, index) => (
                           <li key={index}>{item}</li>
@@ -249,9 +228,7 @@ export default function JobDetailPage() {
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        Benefits
-                      </h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Benefits</h3>
                       <ul className="list-disc pl-5 space-y-2 text-gray-700">
                         {jobData.benefits.map((item, index) => (
                           <li key={index}>{item}</li>
@@ -285,12 +262,8 @@ export default function JobDetailPage() {
                             </AvatarFallback>
                           </Avatar>
                           <div className="ml-4">
-                            <h4 className="font-medium text-gray-900">
-                              {applicant.name}
-                            </h4>
-                            <p className="text-sm text-gray-500">
-                              {applicant.role}
-                            </p>
+                            <h4 className="font-medium text-gray-900">{applicant.name}</h4>
+                            <p className="text-sm text-gray-500">{applicant.role}</p>
                           </div>
                         </div>
                         <div className="mt-4 md:mt-0 flex flex-wrap items-center gap-3">
@@ -305,16 +278,12 @@ export default function JobDetailPage() {
                           >
                             {applicant.status}
                           </Badge>
-                          <div className="text-sm text-gray-500">
-                            Applied {applicant.applied}
-                          </div>
+                          <div className="text-sm text-gray-500">Applied {applicant.applied}</div>
                           <div className="flex items-center">
                             <div className="w-8 h-8 rounded-full flex items-center justify-center bg-teal-light/20 text-teal font-medium text-sm">
                               {applicant.match}%
                             </div>
-                            <span className="ml-2 text-sm text-gray-500">
-                              Match
-                            </span>
+                            <span className="ml-2 text-sm text-gray-500">Match</span>
                           </div>
                           <Link href={`/dashboard/candidates/${applicant.id}`}>
                             <Button
@@ -348,9 +317,7 @@ export default function JobDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Total Applicants</p>
-                    <p className="font-semibold text-gray-900">
-                      {jobData.applications}
-                    </p>
+                    <p className="font-semibold text-gray-900">{jobData.applications}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -359,9 +326,7 @@ export default function JobDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Posted</p>
-                    <p className="font-semibold text-gray-900">
-                      {jobData.posted}
-                    </p>
+                    <p className="font-semibold text-gray-900">{jobData.posted}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -370,9 +335,7 @@ export default function JobDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Job Type</p>
-                    <p className="font-semibold text-gray-900">
-                      {jobData.type}
-                    </p>
+                    <p className="font-semibold text-gray-900">{jobData.type}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -381,9 +344,7 @@ export default function JobDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Location</p>
-                    <p className="font-semibold text-gray-900">
-                      {jobData.location}
-                    </p>
+                    <p className="font-semibold text-gray-900">{jobData.location}</p>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -392,17 +353,13 @@ export default function JobDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Salary Range</p>
-                    <p className="font-semibold text-gray-900">
-                      {jobData.salary}
-                    </p>
+                    <p className="font-semibold text-gray-900">{jobData.salary}</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <h4 className="font-medium text-gray-900 mb-3">
-                  Quick Actions
-                </h4>
+                <h4 className="font-medium text-gray-900 mb-3">Quick Actions</h4>
                 <div className="space-y-2">
                   <Button className="w-full bg-teal text-white hover:bg-teal-dark">
                     Find Matching Candidates

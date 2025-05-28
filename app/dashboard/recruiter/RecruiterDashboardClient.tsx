@@ -38,9 +38,7 @@ export default function RecruiterDashboardClient() {
         totalJobs: jobs.length,
         activeJobs: jobs.filter((job) => job.status === 'active').length,
         totalApplications: applications.length,
-        pendingApplications: applications.filter(
-          (app) => app.status === 'pending'
-        ).length,
+        pendingApplications: applications.filter((app) => app.status === 'pending').length,
       };
     },
   });
@@ -49,9 +47,7 @@ export default function RecruiterDashboardClient() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Recruiter Dashboard</h1>
-        <Button onClick={() => setIsCreateDialogOpen(true)}>
-          Post New Job
-        </Button>
+        <Button onClick={() => setIsCreateDialogOpen(true)}>Post New Job</Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -61,21 +57,15 @@ export default function RecruiterDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.totalJobs || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              {stats?.activeJobs || 0} active jobs
-            </p>
+            <p className="text-xs text-muted-foreground">{stats?.activeJobs || 0} active jobs</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Applications
-            </CardTitle>
+            <CardTitle className="text-sm font-medium">Total Applications</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {stats?.totalApplications || 0}
-            </div>
+            <div className="text-2xl font-bold">{stats?.totalApplications || 0}</div>
             <p className="text-xs text-muted-foreground">
               {stats?.pendingApplications || 0} pending applications
             </p>
@@ -96,10 +86,7 @@ export default function RecruiterDashboardClient() {
         </TabsContent>
       </Tabs>
 
-      <CreateJobDialog
-        open={isCreateDialogOpen}
-        onOpenChange={setIsCreateDialogOpen}
-      />
+      <CreateJobDialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen} />
     </div>
   );
 }

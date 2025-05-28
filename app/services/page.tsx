@@ -2,19 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  FileText,
-  Users,
-  Briefcase,
-  GraduationCap,
-  BarChart,
-} from 'lucide-react';
+import { FileText, Users, Briefcase, GraduationCap, BarChart } from 'lucide-react';
 
 const services = [
   {
     title: 'Resume Review',
-    description:
-      'Professional resume review and optimization to help you stand out to employers.',
+    description: 'Professional resume review and optimization to help you stand out to employers.',
     icon: FileText,
     href: '/services/resume-review',
     color: 'bg-teal-light/20',
@@ -31,8 +24,7 @@ const services = [
   },
   {
     title: 'Career Counseling',
-    description:
-      'Guidance and support to help you identify and pursue your career goals.',
+    description: 'Guidance and support to help you identify and pursue your career goals.',
     icon: GraduationCap,
     href: '/services/career-counseling',
     color: 'bg-teal-light/20',
@@ -77,13 +69,10 @@ export default function ServicesPage() {
       <section className="bg-light-bg py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-dark-text">
-              Our Services
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-dark-text">Our Services</h1>
             <p className="text-lg mb-8 text-gray-600">
-              Hope and Hire offers a range of services to help job seekers
-              prepare for, find, and succeed in meaningful employment
-              opportunities.
+              Hope and Hire offers a range of services to help job seekers prepare for, find, and
+              succeed in meaningful employment opportunities.
             </p>
           </div>
         </div>
@@ -101,12 +90,8 @@ export default function ServicesPage() {
                   >
                     <service.icon className={`h-6 w-6 ${service.textColor}`} />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-dark-text">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 mb-6 flex-grow">
-                    {service.description}
-                  </p>
+                  <h3 className="text-xl font-bold mb-2 text-dark-text">{service.title}</h3>
+                  <p className="text-gray-600 mb-6 flex-grow">{service.description}</p>
                   <Link href={service.href}>
                     <Button
                       variant="outline"
@@ -125,32 +110,26 @@ export default function ServicesPage() {
       {/* How We Help */}
       <section className="py-16 bg-light-bg">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">
-            How We Help
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">How We Help</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-gray-600 mb-4">
-                At Hope and Hire, we understand that finding meaningful
-                employment can be challenging, especially for individuals facing
-                barriers such as justice involvement, gaps in employment
-                history, or other obstacles.
+                At Hope and Hire, we understand that finding meaningful employment can be
+                challenging, especially for individuals facing barriers such as justice involvement,
+                gaps in employment history, or other obstacles.
               </p>
               <p className="text-gray-600 mb-4">
-                Our services are designed to address these challenges by
-                providing personalized support, professional guidance, and
-                connections to employers who are committed to providing second
-                chances.
+                Our services are designed to address these challenges by providing personalized
+                support, professional guidance, and connections to employers who are committed to
+                providing second chances.
               </p>
               <p className="text-gray-600 mb-4">
-                We work with each individual to identify their strengths,
-                address areas for growth, and develop a personalized plan for
-                achieving their employment goals.
+                We work with each individual to identify their strengths, address areas for growth,
+                and develop a personalized plan for achieving their employment goals.
               </p>
               <p className="text-gray-600">
-                Through our network of volunteer professionals and employer
-                partners, we provide the resources, support, and opportunities
-                needed to build a sustainable career.
+                Through our network of volunteer professionals and employer partners, we provide the
+                resources, support, and opportunities needed to build a sustainable career.
               </p>
             </div>
             <div className="hidden md:block">
@@ -169,12 +148,10 @@ export default function ServicesPage() {
       {/* Eligibility */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-6 text-dark-text">
-            Eligibility
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-6 text-dark-text">Eligibility</h2>
           <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
-            Our services are available to individuals who face barriers to
-            employment and are committed to building a stable career.
+            Our services are available to individuals who face barriers to employment and are
+            committed to building a stable career.
           </p>
           <div className="max-w-3xl mx-auto">
             <Card>
@@ -194,9 +171,8 @@ export default function ServicesPage() {
                   <Link href="/contact" className="text-teal hover:underline">
                     contact us
                   </Link>{' '}
-                  to discuss your situation. We&apos;re committed to helping as
-                  many individuals as possible find pathways to meaningful
-                  employment.
+                  to discuss your situation. We&apos;re committed to helping as many individuals as
+                  possible find pathways to meaningful employment.
                 </p>
               </CardContent>
             </Card>
@@ -207,18 +183,13 @@ export default function ServicesPage() {
       {/* CTA Section */}
       <section className="py-16 bg-light-bg">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-dark-text">
-            Ready to Get Started?
-          </h2>
+          <h2 className="text-3xl font-bold mb-4 text-dark-text">Ready to Get Started?</h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Take the first step toward your career goals by registering for our
-            services today.
+            Take the first step toward your career goals by registering for our services today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register">
-              <Button className="bg-teal text-white hover:bg-teal-dark">
-                Register Now
-              </Button>
+              <Button className="bg-teal text-white hover:bg-teal-dark">Register Now</Button>
             </Link>
             <Link href="/contact">
               <Button

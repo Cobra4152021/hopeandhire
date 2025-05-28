@@ -1,25 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
-import {
-  Users,
-  MessageSquare,
-  Calendar,
-  Star,
-  Award,
-  ChevronRight,
-  UserPlus,
-  Video,
-  Mail,
-  Bookmark,
-  Share2,
-} from 'lucide-react';
+import { Users, MessageSquare, Star, UserPlus, Calendar, Video } from 'lucide-react';
 
 interface Mentor {
   id: string;
@@ -69,8 +56,9 @@ interface Discussion {
 }
 
 export default function NetworkPage() {
+  const [_activeTab, _setActiveTab] = useState('connections');
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [_searchTerm, _setSearchTerm] = useState('');
 
   // Fetch mentors
   const { data: mentors } = useQuery({
@@ -142,10 +130,7 @@ export default function NetworkPage() {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {mentor.expertise.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2 py-1 bg-gray-100 rounded-full text-xs"
-                      >
+                      <span key={skill} className="px-2 py-1 bg-gray-100 rounded-full text-xs">
                         {skill}
                       </span>
                     ))}
@@ -180,8 +165,7 @@ export default function NetworkPage() {
                       <div>
                         <h3 className="font-medium">{event.title}</h3>
                         <p className="text-sm text-gray-500">
-                          {new Date(event.date).toLocaleDateString()} •{' '}
-                          {event.duration} minutes
+                          {new Date(event.date).toLocaleDateString()} • {event.duration} minutes
                         </p>
                       </div>
                       <span
@@ -189,8 +173,8 @@ export default function NetworkPage() {
                           event.registration_status === 'open'
                             ? 'bg-green-100 text-green-800'
                             : event.registration_status === 'full'
-                            ? 'bg-red-100 text-red-800'
-                            : 'bg-gray-100 text-gray-800'
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-gray-100 text-gray-800'
                         }`}
                       >
                         {event.registration_status}
@@ -214,9 +198,7 @@ export default function NetworkPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Users className="h-4 w-4 text-gray-400" />
-                          <span className="text-sm text-gray-500">
-                            {event.attendees} attendees
-                          </span>
+                          <span className="text-sm text-gray-500">{event.attendees} attendees</span>
                         </div>
                         <Button size="sm">
                           <Calendar className="h-4 w-4 mr-2" />
@@ -242,15 +224,11 @@ export default function NetworkPage() {
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-1">
                           <MessageSquare className="h-4 w-4 text-gray-400" />
-                          <span className="text-sm text-gray-500">
-                            {discussion.replies}
-                          </span>
+                          <span className="text-sm text-gray-500">{discussion.replies}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Users className="h-4 w-4 text-gray-400" />
-                          <span className="text-sm text-gray-500">
-                            {discussion.views}
-                          </span>
+                          <span className="text-sm text-gray-500">{discussion.views}</span>
                         </div>
                       </div>
                     </div>
@@ -259,10 +237,7 @@ export default function NetworkPage() {
 
                     <div className="flex flex-wrap gap-2">
                       {discussion.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-gray-100 rounded-full text-xs"
-                        >
+                        <span key={tag} className="px-2 py-1 bg-gray-100 rounded-full text-xs">
                           {tag}
                         </span>
                       ))}
@@ -292,15 +267,13 @@ export default function NetworkPage() {
                             <div className="flex items-center gap-1">
                               <Star className="h-4 w-4 text-yellow-400" />
                               <span className="text-sm">
-                                {selectedMentor.rating} ({selectedMentor.reviews}{' '}
-                                reviews)
+                                {selectedMentor.rating} ({selectedMentor.reviews} reviews)
                               </span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Calendar className="h-4 w-4 text-gray-400" />
                               <span className="text-sm">
-                                {selectedMentor.availability.days.length} days
-                                available
+                                {selectedMentor.availability.days.length} days available
                               </span>
                             </div>
                           </div>
@@ -334,17 +307,15 @@ export default function NetworkPage() {
                               <p className="text-sm font-medium">
                                 {new Date(session.date).toLocaleDateString()}
                               </p>
-                              <p className="text-xs text-gray-500">
-                                {session.type} session
-                              </p>
+                              <p className="text-xs text-gray-500">{session.type} session</p>
                             </div>
                             <span
                               className={`px-2 py-1 rounded-full text-xs ${
                                 session.status === 'scheduled'
                                   ? 'bg-blue-100 text-blue-800'
                                   : session.status === 'completed'
-                                  ? 'bg-green-100 text-green-800'
-                                  : 'bg-red-100 text-red-800'
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-red-100 text-red-800'
                               }`}
                             >
                               {session.status}
@@ -372,9 +343,7 @@ export default function NetworkPage() {
                 ) : (
                   <div className="text-center py-12">
                     <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-500">
-                      Select a mentor to view their profile
-                    </p>
+                    <p className="text-gray-500">Select a mentor to view their profile</p>
                   </div>
                 )}
               </TabsContent>
@@ -384,4 +353,4 @@ export default function NetworkPage() {
       </div>
     </div>
   );
-} 
+}

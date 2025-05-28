@@ -4,22 +4,16 @@ import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar } from '@/components/ui/calendar';
 import { supabase } from '@/lib/supabase';
 import {
   Briefcase,
-  Calendar as CalendarIcon,
-  Mail,
   Building,
-  BarChart,
+  Calendar as CalendarIcon,
   CheckCircle,
   Clock,
-  AlertCircle,
-  ChevronRight,
-  Users,
-  FileText,
+  Mail,
+  BarChart2 as BarChart,
 } from 'lucide-react';
 
 interface JobApplication {
@@ -59,15 +53,24 @@ interface JobApplication {
   };
 }
 
-export default function ApplicationsPage() {
+export default function JobApplicationsPage() {
   const [selectedApplication, setSelectedApplication] = useState<JobApplication | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [_applications, _setApplications] = useState<JobApplication[]>([]);
+  const [_isLoading, _setIsLoading] = useState(true);
+  const [_searchTerm, _setSearchTerm] = useState('');
+  const [_statusFilter, _setStatusFilter] = useState('all');
+  const [_sortOrder, _setSortOrder] = useState('newest');
 
   // Fetch applications
-  const { data: applications } = useQuery({
+  const { data: _fetchedApplications, isLoading: _isLoadingApplications } = useQuery<
+    JobApplication[],
+    Error
+  >({
     queryKey: ['applications'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -84,10 +87,7 @@ export default function ApplicationsPage() {
   // Update application status
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: JobApplication['status'] }) => {
-      const { error } = await supabase
-        .from('job_applications')
-        .update({ status })
-        .eq('id', id);
+      const { error } = await supabase.from('job_applications').update({ status }).eq('id', id);
 
       if (error) throw error;
     },
@@ -103,7 +103,7 @@ export default function ApplicationsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {applications?.map((application) => (
+              {_applications?.map((application) => (
                 <div
                   key={application.id}
                   className="p-4 border rounded-lg space-y-2 cursor-pointer hover:bg-gray-50"
@@ -116,12 +116,12 @@ export default function ApplicationsPage() {
                         application.status === 'accepted'
                           ? 'bg-green-100 text-green-800'
                           : application.status === 'interviewing'
-                          ? 'bg-blue-100 text-blue-800'
-                          : application.status === 'offered'
-                          ? 'bg-purple-100 text-purple-800'
-                          : application.status === 'rejected'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-gray-100 text-gray-800'
+                            ? 'bg-blue-100 text-blue-800'
+                            : application.status === 'offered'
+                              ? 'bg-purple-100 text-purple-800'
+                              : application.status === 'rejected'
+                                ? 'bg-red-100 text-red-800'
+                                : 'bg-gray-100 text-gray-800'
                       }`}
                     >
                       {application.status}
@@ -129,9 +129,7 @@ export default function ApplicationsPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Building className="h-4 w-4 text-gray-400" />
-                    <span className="text-sm text-gray-500">
-                      {application.company}
-                    </span>
+                    <span className="text-sm text-gray-500">{application.company}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CalendarIcon className="h-4 w-4 text-gray-400" />
@@ -185,21 +183,15 @@ export default function ApplicationsPage() {
                         </div>
                         <div>
                           <p className="text-sm text-gray-500">Industry</p>
-                          <p className="text-sm">
-                            {selectedApplication.company_info.industry}
-                          </p>
+                          <p className="text-sm">{selectedApplication.company_info.industry}</p>
                         </div>
                         <div>
                           <p className="text-sm text-gray-500">Company Size</p>
-                          <p className="text-sm">
-                            {selectedApplication.company_info.size}
-                          </p>
+                          <p className="text-sm">{selectedApplication.company_info.size}</p>
                         </div>
                         <div>
                           <p className="text-sm text-gray-500">Location</p>
-                          <p className="text-sm">
-                            {selectedApplication.company_info.location}
-                          </p>
+                          <p className="text-sm">{selectedApplication.company_info.location}</p>
                         </div>
                       </div>
                     </div>
@@ -209,10 +201,7 @@ export default function ApplicationsPage() {
                       <h3 className="font-medium mb-4">Next Steps</h3>
                       <div className="space-y-4">
                         {selectedApplication.next_steps.map((step, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between"
-                          >
+                          <div key={index} className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               {step.completed ? (
                                 <CheckCircle className="h-5 w-5 text-green-600" />
@@ -290,8 +279,7 @@ export default function ApplicationsPage() {
                             {interview.interviewer}
                           </p>
                           <p className="text-sm">
-                            <span className="font-medium">Notes:</span>{' '}
-                            {interview.notes}
+                            <span className="font-medium">Notes:</span> {interview.notes}
                           </p>
                         </div>
                       </div>
@@ -313,8 +301,8 @@ export default function ApplicationsPage() {
                               followUp.status === 'responded'
                                 ? 'bg-green-100 text-green-800'
                                 : followUp.status === 'sent'
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-yellow-100 text-yellow-800'
+                                  ? 'bg-blue-100 text-blue-800'
+                                  : 'bg-yellow-100 text-yellow-800'
                             }`}
                           >
                             {followUp.status}
@@ -336,17 +324,13 @@ export default function ApplicationsPage() {
                       <h3 className="font-medium mb-4">Application Analytics</h3>
                       <div className="grid grid-cols-2 gap-6">
                         <div>
-                          <h4 className="text-sm font-medium mb-2">
-                            Application Status
-                          </h4>
+                          <h4 className="text-sm font-medium mb-2">Application Status</h4>
                           <div className="h-48 bg-gray-50 rounded-lg flex items-center justify-center">
                             <BarChart className="h-12 w-12 text-gray-400" />
                           </div>
                         </div>
                         <div>
-                          <h4 className="text-sm font-medium mb-2">
-                            Response Timeline
-                          </h4>
+                          <h4 className="text-sm font-medium mb-2">Response Timeline</h4>
                           <div className="h-48 bg-gray-50 rounded-lg flex items-center justify-center">
                             <BarChart className="h-12 w-12 text-gray-400" />
                           </div>
@@ -359,9 +343,7 @@ export default function ApplicationsPage() {
             ) : (
               <div className="text-center py-12">
                 <Briefcase className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">
-                  Select an application to view details
-                </p>
+                <p className="text-gray-500">Select an application to view details</p>
               </div>
             )}
           </CardContent>

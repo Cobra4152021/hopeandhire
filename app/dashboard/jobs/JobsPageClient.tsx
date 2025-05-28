@@ -37,9 +37,7 @@ export default function JobsPageClient() {
         .eq('status', 'active');
 
       if (search) {
-        query = query.or(
-          `title.ilike.%${search}%,description.ilike.%${search}%`
-        );
+        query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
       }
 
       if (category !== 'all') {
@@ -103,19 +101,14 @@ export default function JobsPageClient() {
       {isLoading ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="h-[300px] animate-pulse rounded-lg bg-muted"
-            />
+            <div key={i} className="h-[300px] animate-pulse rounded-lg bg-muted" />
           ))}
         </div>
       ) : jobs?.length === 0 ? (
         <div className="flex h-[400px] items-center justify-center rounded-lg border border-dashed">
           <div className="text-center">
             <h3 className="text-lg font-semibold">No jobs found</h3>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search or filters
-            </p>
+            <p className="text-sm text-muted-foreground">Try adjusting your search or filters</p>
           </div>
         </div>
       ) : (

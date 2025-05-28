@@ -17,6 +17,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Plus, Upload, FileText, Trash2, Edit2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useUser } from '@/lib/hooks/useUser';
+import { useQuery } from '@tanstack/react-query';
 
 interface Resume {
   id: string;
@@ -142,9 +143,7 @@ export function ResumesList() {
     fetchResumes();
   };
 
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file || !user) return;
 
@@ -154,9 +153,7 @@ export function ResumesList() {
       // Upload file to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage
-        .from('resumes')
-        .upload(fileName, file);
+      const { error: uploadError } = await supabase.storage.from('resumes').upload(fileName, file);
 
       if (uploadError) throw uploadError;
 
@@ -220,24 +217,17 @@ export function ResumesList() {
                 <Input
                   placeholder="Resume Title"
                   value={newResume.title}
-                  onChange={(e) =>
-                    setNewResume({ ...newResume, title: e.target.value })
-                  }
+                  onChange={(e) => setNewResume({ ...newResume, title: e.target.value })}
                 />
                 <Textarea
                   placeholder="Resume Content"
                   value={newResume.content}
-                  onChange={(e) =>
-                    setNewResume({ ...newResume, content: e.target.value })
-                  }
+                  onChange={(e) => setNewResume({ ...newResume, content: e.target.value })}
                   rows={10}
                 />
               </div>
               <DialogFooter>
-                <Button
-                  onClick={handleCreateResume}
-                  className="bg-teal text-white"
-                >
+                <Button onClick={handleCreateResume} className="bg-teal text-white">
                   Create
                 </Button>
               </DialogFooter>
@@ -253,10 +243,7 @@ export function ResumesList() {
               disabled={uploading}
             />
             <label htmlFor="resume-upload">
-              <Button
-                className="bg-teal text-white cursor-pointer"
-                disabled={uploading}
-              >
+              <Button className="bg-teal text-white cursor-pointer" disabled={uploading}>
                 <Upload className="mr-2 h-4 w-4" />
                 {uploading ? 'Uploading...' : 'Upload Resume'}
               </Button>
@@ -272,18 +259,10 @@ export function ResumesList() {
               <CardTitle className="flex items-center justify-between">
                 <span className="truncate">{resume.title}</span>
                 <div className="flex space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleEdit(resume)}
-                  >
+                  <Button variant="ghost" size="icon" onClick={() => handleEdit(resume)}>
                     <Edit2 className="h-4 w-4" />
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDeleteResume(resume.id)}
-                  >
+                  <Button variant="ghost" size="icon" onClick={() => handleDeleteResume(resume.id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -319,16 +298,12 @@ export function ResumesList() {
             <Input
               placeholder="Resume Title"
               value={newResume.title}
-              onChange={(e) =>
-                setNewResume({ ...newResume, title: e.target.value })
-              }
+              onChange={(e) => setNewResume({ ...newResume, title: e.target.value })}
             />
             <Textarea
               placeholder="Resume Content"
               value={newResume.content}
-              onChange={(e) =>
-                setNewResume({ ...newResume, content: e.target.value })
-              }
+              onChange={(e) => setNewResume({ ...newResume, content: e.target.value })}
               rows={10}
             />
           </div>

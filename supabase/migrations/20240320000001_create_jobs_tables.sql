@@ -1,3 +1,6 @@
+-- Drop existing jobs table
+DROP TABLE IF EXISTS jobs CASCADE;
+
 -- Create jobs table
 CREATE TABLE IF NOT EXISTS jobs (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -7,6 +10,7 @@ CREATE TABLE IF NOT EXISTS jobs (
   location TEXT NOT NULL,
   is_remote BOOLEAN DEFAULT false,
   status TEXT NOT NULL DEFAULT 'active',
+  company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
   recruiter_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
@@ -26,6 +30,7 @@ CREATE TABLE IF NOT EXISTS job_applications (
 
 -- Create indexes
 CREATE INDEX IF NOT EXISTS jobs_recruiter_id_idx ON jobs(recruiter_id);
+CREATE INDEX IF NOT EXISTS jobs_company_id_idx ON jobs(company_id);
 CREATE INDEX IF NOT EXISTS jobs_status_idx ON jobs(status);
 CREATE INDEX IF NOT EXISTS job_applications_job_id_idx ON job_applications(job_id);
 CREATE INDEX IF NOT EXISTS job_applications_user_id_idx ON job_applications(user_id);

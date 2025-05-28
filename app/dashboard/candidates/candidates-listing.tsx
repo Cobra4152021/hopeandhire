@@ -5,21 +5,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from '@/components/ui/select';
-import {
-  Briefcase,
-  GraduationCap,
-  MapPin,
-  Filter,
-  Search,
-  ArrowUpDown,
-  Plus,
-} from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
+import { Briefcase, GraduationCap, Filter, Search, ArrowUpDown, Plus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
@@ -108,13 +95,10 @@ export default function CandidatesListingPage() {
       const matchesSearch =
         candidate.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         candidate.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        candidate.skills.some((skill) =>
-          skill.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        candidate.skills.some((skill) => skill.toLowerCase().includes(searchTerm.toLowerCase()));
 
       // Status filter
-      const matchesStatus =
-        filterStatus === 'all' || candidate.status === filterStatus;
+      const matchesStatus = filterStatus === 'all' || candidate.status === filterStatus;
 
       // Featured filter
       const matchesFeatured = !showFeaturedOnly || candidate.featured;
@@ -129,8 +113,7 @@ export default function CandidatesListingPage() {
         return a.name.localeCompare(b.name);
       } else if (sortBy === 'experience') {
         return (
-          Number.parseInt(b.experience.split(' ')[0]) -
-          Number.parseInt(a.experience.split(' ')[0])
+          Number.parseInt(b.experience.split(' ')[0]) - Number.parseInt(a.experience.split(' ')[0])
         );
       }
       return 0;
@@ -141,9 +124,7 @@ export default function CandidatesListingPage() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Candidates</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Browse and manage job seekers
-          </p>
+          <p className="mt-1 text-sm text-gray-500">Browse and manage job seekers</p>
         </div>
         <div className="mt-4 md:mt-0">
           <Link href="/dashboard/candidates/add">
@@ -175,9 +156,7 @@ export default function CandidatesListingPage() {
                 <div className="flex items-center">
                   <Filter className="mr-2 h-4 w-4 text-gray-400" />
                   <span>
-                    {filterStatus === 'all'
-                      ? 'All Statuses'
-                      : `${filterStatus} Candidates`}
+                    {filterStatus === 'all' ? 'All Statuses' : `${filterStatus} Candidates`}
                   </span>
                 </div>
               </SelectTrigger>
@@ -196,11 +175,7 @@ export default function CandidatesListingPage() {
                   <ArrowUpDown className="mr-2 h-4 w-4 text-gray-400" />
                   <span>
                     Sort by:{' '}
-                    {sortBy === 'match'
-                      ? 'Match Score'
-                      : sortBy === 'name'
-                        ? 'Name'
-                        : 'Experience'}
+                    {sortBy === 'match' ? 'Match Score' : sortBy === 'name' ? 'Name' : 'Experience'}
                   </span>
                 </div>
               </SelectTrigger>
@@ -229,9 +204,7 @@ export default function CandidatesListingPage() {
       <div className="space-y-4">
         {filteredCandidates.length === 0 ? (
           <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
-            <p className="text-gray-500">
-              No candidates found matching your criteria.
-            </p>
+            <p className="text-gray-500">No candidates found matching your criteria.</p>
           </div>
         ) : (
           filteredCandidates.map((candidate) => (
@@ -259,13 +232,9 @@ export default function CandidatesListingPage() {
                       </Avatar>
                       <div className="ml-4">
                         <div className="flex items-center">
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            {candidate.name}
-                          </h3>
+                          <h3 className="text-lg font-semibold text-gray-900">{candidate.name}</h3>
                           {candidate.featured && (
-                            <Badge className="ml-2 bg-yellow text-dark-text">
-                              Featured
-                            </Badge>
+                            <Badge className="ml-2 bg-yellow text-dark-text">Featured</Badge>
                           )}
                           <Badge
                             className={`ml-2 ${
@@ -281,26 +250,22 @@ export default function CandidatesListingPage() {
                         </div>
                         <p className="text-gray-600">{candidate.role}</p>
                         <div className="flex flex-wrap gap-y-2 text-sm text-gray-500 mt-1">
-                          <div className="flex items-center mr-4">
-                            <MapPin className="mr-1 h-4 w-4" />
-                            {candidate.location}
-                          </div>
-                          <div className="flex items-center mr-4">
-                            <Briefcase className="mr-1 h-4 w-4" />
-                            {candidate.experience}
-                          </div>
-                          <div className="flex items-center">
-                            <GraduationCap className="mr-1 h-4 w-4" />
-                            {candidate.education}
+                          <div className="flex items-center space-x-4">
+                            <div className="flex items-center mr-4">
+                              <Briefcase className="mr-1 h-4 w-4" />
+                              {candidate.experience}
+                            </div>
+                            <div className="flex items-center mr-4">
+                              <GraduationCap className="mr-1 h-4 w-4" />
+                              {candidate.education}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="mt-4 md:mt-0 flex flex-col items-end">
                       <div className="flex items-center mb-2">
-                        <span className="text-sm text-gray-500 mr-2">
-                          Match Score:
-                        </span>
+                        <span className="text-sm text-gray-500 mr-2">Match Score:</span>
                         <span
                           className={`font-medium ${
                             candidate.matchScore >= 90
@@ -314,74 +279,20 @@ export default function CandidatesListingPage() {
                         </span>
                       </div>
                       <div className="w-32 mb-3">
-                        <Progress
-                          value={candidate.matchScore}
-                          className="h-2"
-                          indicatorClassName={
-                            candidate.matchScore >= 90
-                              ? 'bg-green-600'
-                              : candidate.matchScore >= 80
-                                ? 'bg-teal'
-                                : 'bg-yellow'
-                          }
-                        />
+                        <Progress value={candidate.matchScore} className="h-2" />
                       </div>
                       <Link href={`/dashboard/candidates/${candidate.id}`}>
-                        <Button
-                          variant="outline"
-                          className="border-teal text-teal hover:bg-teal hover:text-white"
-                        >
+                        <Button className="bg-teal text-white hover:bg-teal-dark">
                           View Profile
                         </Button>
                       </Link>
                     </div>
-                  </div>
-                  <div className="mt-4">
-                    <div className="flex flex-wrap gap-2">
-                      {candidate.skills.map((skill, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="bg-gray-50"
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="mt-4 text-sm text-gray-500">
-                    Last active: {candidate.lastActive}
                   </div>
                 </div>
               </CardContent>
             </Card>
           ))
         )}
-      </div>
-
-      {/* Pagination */}
-      <div className="mt-8 flex justify-center">
-        <div className="flex space-x-2">
-          <Button variant="outline" size="sm" disabled>
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-teal text-white hover:bg-teal-dark"
-          >
-            1
-          </Button>
-          <Button variant="outline" size="sm">
-            2
-          </Button>
-          <Button variant="outline" size="sm">
-            3
-          </Button>
-          <Button variant="outline" size="sm">
-            Next
-          </Button>
-        </div>
       </div>
     </div>
   );

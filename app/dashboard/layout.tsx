@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -21,56 +21,71 @@ const navigation = [
     name: 'Dashboard',
     href: '/dashboard',
     icon: LayoutDashboard,
+    exact: true,
   },
   {
     name: 'Jobs',
     href: '/dashboard/jobs',
     icon: Briefcase,
+    exact: false,
   },
   {
     name: 'Resumes',
     href: '/dashboard/resumes',
     icon: FileText,
+    exact: false,
   },
   {
     name: 'Messages',
     href: '/dashboard/messages',
     icon: MessageSquare,
+    exact: false,
   },
   {
     name: 'Schedule',
     href: '/dashboard/schedule',
     icon: Calendar,
+    exact: false,
   },
   {
     name: 'Profile',
     href: '/dashboard/profile',
     icon: User,
+    exact: false,
   },
   {
     name: 'Settings',
     href: '/dashboard/settings',
     icon: Settings,
+    exact: false,
   },
 ];
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const isActive = (item: (typeof navigation)[0]) => {
+    if (!pathname) return false;
+    if (item.href === pathname) {
+      return true;
+    }
+    return pathname.startsWith(item.href);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile sidebar */}
-      <div
-        className={cn(
-          'fixed inset-0 z-40 lg:hidden',
-          isSidebarOpen ? 'block' : 'hidden'
-        )}
-      >
+      <div className={cn('fixed inset-0 z-40 lg:hidden', isSidebarOpen ? 'block' : 'hidden')}>
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75" />
         <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white">
           <div className="flex h-16 items-center justify-between px-4">
@@ -91,17 +106,16 @@ export default function DashboardLayout({
                 href={item.href}
                 className={cn(
                   'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
-                  pathname === item.href
+                  isActive(item)
                     ? 'bg-gray-100 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 )}
+                onClick={() => setIsSidebarOpen(false)}
               >
                 <item.icon
                   className={cn(
                     'mr-3 h-5 w-5 flex-shrink-0',
-                    pathname === item.href
-                      ? 'text-gray-500'
-                      : 'text-gray-400 group-hover:text-gray-500'
+                    isActive(item) ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500'
                   )}
                 />
                 {item.name}
@@ -126,7 +140,7 @@ export default function DashboardLayout({
                 href={item.href}
                 className={cn(
                   'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
-                  pathname === item.href
+                  isActive(item)
                     ? 'bg-gray-100 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 )}
@@ -134,9 +148,7 @@ export default function DashboardLayout({
                 <item.icon
                   className={cn(
                     'mr-3 h-5 w-5 flex-shrink-0',
-                    pathname === item.href
-                      ? 'text-gray-500'
-                      : 'text-gray-400 group-hover:text-gray-500'
+                    isActive(item) ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500'
                   )}
                 />
                 {item.name}
@@ -165,9 +177,7 @@ export default function DashboardLayout({
         </div>
 
         <main className="py-6">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {children}
-          </div>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
         </main>
       </div>
     </div>

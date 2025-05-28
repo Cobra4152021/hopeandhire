@@ -5,21 +5,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from '@/components/ui/select';
-import {
-  Filter,
-  Search,
-  ArrowUpDown,
-  Calendar,
-  Clock,
-  Building,
-  User,
-} from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
+import { Filter, Search, ArrowUpDown, Calendar, Clock, Building, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -43,6 +30,7 @@ const sampleApplications = [
     },
     status: 'Under Review',
     appliedDate: 'May 15, 2023',
+    lastUpdated: '1 day ago',
     matchScore: 92,
   },
   {
@@ -63,6 +51,7 @@ const sampleApplications = [
     },
     status: 'Interview Scheduled',
     appliedDate: 'May 10, 2023',
+    lastUpdated: '3 days ago',
     matchScore: 85,
   },
   {
@@ -83,6 +72,7 @@ const sampleApplications = [
     },
     status: 'Rejected',
     appliedDate: 'April 25, 2023',
+    lastUpdated: '1 week ago',
     matchScore: 78,
   },
   {
@@ -103,6 +93,7 @@ const sampleApplications = [
     },
     status: 'New',
     appliedDate: 'May 20, 2023',
+    lastUpdated: '2 hours ago',
     matchScore: 88,
   },
   {
@@ -123,6 +114,7 @@ const sampleApplications = [
     },
     status: 'Rejected',
     appliedDate: 'April 25, 2023',
+    lastUpdated: '2 weeks ago',
     matchScore: 72,
   },
 ];
@@ -139,13 +131,10 @@ export default function ApplicationsPage() {
       const matchesSearch =
         application.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
         application.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        application.candidate.name
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
+        application.candidate.name.toLowerCase().includes(searchTerm.toLowerCase());
 
       // Status filter
-      const matchesStatus =
-        filterStatus === 'all' || application.status === filterStatus;
+      const matchesStatus = filterStatus === 'all' || application.status === filterStatus;
 
       return matchesSearch && matchesStatus;
     })
@@ -185,9 +174,7 @@ export default function ApplicationsPage() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Applications</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Track and manage job applications
-          </p>
+          <p className="mt-1 text-sm text-gray-500">Track and manage job applications</p>
         </div>
       </div>
 
@@ -212,9 +199,7 @@ export default function ApplicationsPage() {
                 <div className="flex items-center">
                   <Filter className="mr-2 h-4 w-4 text-gray-400" />
                   <span>
-                    {filterStatus === 'all'
-                      ? 'All Statuses'
-                      : `${filterStatus} Applications`}
+                    {filterStatus === 'all' ? 'All Statuses' : `${filterStatus} Applications`}
                   </span>
                 </div>
               </SelectTrigger>
@@ -257,16 +242,11 @@ export default function ApplicationsPage() {
       <div className="space-y-4">
         {filteredApplications.length === 0 ? (
           <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
-            <p className="text-gray-500">
-              No applications found matching your criteria.
-            </p>
+            <p className="text-gray-500">No applications found matching your criteria.</p>
           </div>
         ) : (
           filteredApplications.map((application) => (
-            <Card
-              key={application.id}
-              className="overflow-hidden transition-all hover:shadow-md"
-            >
+            <Card key={application.id} className="overflow-hidden transition-all hover:shadow-md">
               <CardContent className="p-0">
                 <div className="p-6">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -275,9 +255,7 @@ export default function ApplicationsPage() {
                         <h3 className="text-lg font-semibold text-gray-900">
                           {application.jobTitle}
                         </h3>
-                        <Badge
-                          className={`ml-2 ${getStatusColor(application.status)}`}
-                        >
+                        <Badge className={`ml-2 ${getStatusColor(application.status)}`}>
                           {application.status}
                         </Badge>
                       </div>
@@ -309,9 +287,7 @@ export default function ApplicationsPage() {
                         >
                           {application.matchScore}%
                         </div>
-                        <span className="ml-2 text-sm text-gray-500">
-                          Match
-                        </span>
+                        <span className="ml-2 text-sm text-gray-500">Match</span>
                       </div>
                       <Link href={`/dashboard/applications/${application.id}`}>
                         <Button
@@ -326,16 +302,12 @@ export default function ApplicationsPage() {
                   <div className="mt-4 flex items-center">
                     <div className="flex items-center">
                       <User className="mr-2 h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-500 mr-2">
-                        Candidate:
-                      </span>
+                      <span className="text-sm text-gray-500 mr-2">Candidate:</span>
                     </div>
                     <div className="flex items-center">
                       <Avatar className="h-6 w-6 mr-2">
                         <AvatarImage
-                          src={
-                            application.candidate.avatar || '/placeholder.svg'
-                          }
+                          src={application.candidate.avatar || '/placeholder.svg'}
                           alt={application.candidate.name}
                         />
                         <AvatarFallback className="bg-teal-light/20 text-teal text-xs">
@@ -366,11 +338,7 @@ export default function ApplicationsPage() {
           <Button variant="outline" size="sm" disabled>
             Previous
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-teal text-white hover:bg-teal-dark"
-          >
+          <Button variant="outline" size="sm" className="bg-teal text-white hover:bg-teal-dark">
             1
           </Button>
           <Button variant="outline" size="sm">

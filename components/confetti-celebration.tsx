@@ -7,9 +7,7 @@ interface ConfettiCelebrationProps {
   duration?: number;
 }
 
-export default function ConfettiCelebration({
-  duration = 5000,
-}: ConfettiCelebrationProps) {
+export default function ConfettiCelebration({ duration = 5000 }: ConfettiCelebrationProps) {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [showConfetti, setShowConfetti] = useState(true);
 

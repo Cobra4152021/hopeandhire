@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function middleware(req: NextRequest) {
   // Get the Supabase auth cookie
-  const supabaseToken = req.cookies.get('sb-access-token')?.value;
+  const supabaseToken = req.cookies.get('sb-auth-token')?.value;
   const supabaseRefreshToken = req.cookies.get('sb-refresh-token')?.value;
 
   // Initialize Supabase client
@@ -14,6 +14,13 @@ export async function middleware(req: NextRequest) {
     {
       auth: {
         persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+      global: {
+        headers: {
+          'Cache-Control': 'no-store',
+        },
       },
     }
   );
@@ -36,21 +43,29 @@ export async function middleware(req: NextRequest) {
 
     try {
       // Verify the session and get user data
-      const { data: { user }, error } = await supabase.auth.getUser(supabaseToken);
-      
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser(supabaseToken);
+
       if (error || !user) {
         console.log('Invalid session, redirecting to login');
         return NextResponse.redirect(new URL('/login', req.url));
       }
 
       // Get the role from the URL (e.g., /dashboard/jobseeker -> jobseeker)
-      const urlRole = req.nextUrl.pathname.split('/')[2];
-      
+      const pathParts = req.nextUrl.pathname.split('/');
+      const urlRole = pathParts.length > 2 ? pathParts[2] : null;
+
       // Get user's role from metadata
       const userRole = user.user_metadata?.role || 'jobseeker';
 
-      // If trying to access a role-specific dashboard that doesn't match the user's role
-      if (urlRole && urlRole !== userRole) {
+      // Only redirect if there's a role in the URL and it doesn't match the user's role
+      if (
+        urlRole &&
+        ['jobseeker', 'volunteer', 'employer'].includes(urlRole) &&
+        urlRole !== userRole
+      ) {
         console.log('Role mismatch, redirecting to correct dashboard');
         return NextResponse.redirect(new URL(`/dashboard/${userRole}`, req.url));
       }
@@ -79,4 +94,4 @@ export const config = {
     '/employers',
     '/jobseekers',
   ],
-}; 
+};

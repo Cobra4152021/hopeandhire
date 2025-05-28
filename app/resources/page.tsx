@@ -11,179 +11,174 @@ import {
 
 export default function ResourcesPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-dark-text">Resources</h1>
-        <p className="text-gray-600 mb-8">
-          We&apos;ve compiled a collection of resources to help job seekers,
-          employers, and organizations navigate the employment landscape.
-        </p>
+    <div className="bg-white">
+      <div className="container py-8 sm:py-12">
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Resources</h1>
+            <p className="mt-2 text-lg text-gray-600">
+              We&apos;ve compiled a collection of resources to help job seekers, employers, and
+              organizations navigate the employment landscape.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">For Job Seekers</CardTitle>
+                <CardDescription>Resources to help you in your job search</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Resume templates and guides</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Interview preparation tips</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Skills assessment tools</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Career development resources</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/job-seekers" className="w-full">
+                  <Button className="w-full bg-teal text-white hover:bg-teal-dark">
+                    View Job Seeker Resources
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">For Employers</CardTitle>
+                <CardDescription>Resources to help you find qualified candidates</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Inclusive hiring practices</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Tax incentives for hiring</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Onboarding best practices</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Retention strategies</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/employers" className="w-full">
+                  <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">
+                    View Employer Resources
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">For Organizations</CardTitle>
+                <CardDescription>Resources to help your clients succeed</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Client assessment tools</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Program development guides</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Funding opportunities</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Partnership resources</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/organizations" className="w-full">
+                  <Button className="w-full bg-teal text-white hover:bg-teal-dark">
+                    View Organization Resources
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">For Volunteers</CardTitle>
+                <CardDescription>Resources to help you make an impact</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Volunteer training materials</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Mentorship guidelines</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Impact measurement tools</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-teal mr-2 text-lg leading-none">•</span>
+                    <span className="text-gray-600">Volunteer recognition programs</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Link href="/volunteers" className="w-full">
+                  <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">
+                    View Volunteer Resources
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          </div>
+
+          <Card className="mt-8 bg-gray-50">
             <CardHeader>
-              <CardTitle>For Job Seekers</CardTitle>
+              <CardTitle className="text-xl">Need Additional Resources?</CardTitle>
               <CardDescription>
-                Resources to help you in your job search
+                If you&apos;re looking for specific resources that aren&apos;t listed here, please
+                contact us. We&apos;re happy to help you find what you need.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Resume templates and guides</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Interview preparation tips</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Skills assessment tools</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Career development resources</span>
-                </li>
-              </ul>
-            </CardContent>
             <CardFooter>
-              <Link href="/job-seekers">
-                <Button className="bg-teal text-white hover:bg-teal-dark">
-                  View Job Seeker Resources
+              <Link href="/contact" className="w-full">
+                <Button
+                  variant="outline"
+                  className="w-full border-teal text-teal hover:bg-teal hover:text-white"
+                >
+                  Contact Us
                 </Button>
               </Link>
             </CardFooter>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>For Employers</CardTitle>
-              <CardDescription>
-                Resources to help you find qualified candidates
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Inclusive hiring practices</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Tax incentives for hiring</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Onboarding best practices</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Retention strategies</span>
-                </li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Link href="/employers">
-                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">
-                  View Employer Resources
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>For Organizations</CardTitle>
-              <CardDescription>
-                Resources to help your clients succeed
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Client assessment tools</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Program development guides</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Funding opportunities</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Partnership resources</span>
-                </li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Link href="/organizations">
-                <Button className="bg-teal text-white hover:bg-teal-dark">
-                  View Organization Resources
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>For Volunteers</CardTitle>
-              <CardDescription>
-                Resources to help you make an impact
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Volunteer training materials</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Mentorship guidelines</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Impact measurement tools</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-teal mr-2">•</span>
-                  <span>Volunteer recognition programs</span>
-                </li>
-              </ul>
-            </CardContent>
-            <CardFooter>
-              <Link href="/volunteers">
-                <Button className="bg-yellow text-dark-text hover:bg-yellow-dark">
-                  View Volunteer Resources
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        </div>
-
-        <div className="mt-12 p-6 bg-light-bg rounded-lg">
-          <h2 className="text-2xl font-bold mb-4 text-dark-text">
-            Need Additional Resources?
-          </h2>
-          <p className="text-gray-600 mb-4">
-            If you&apos;re looking for specific resources that aren&apos;t
-            listed here, please contact us. We&apos;re happy to help you find
-            what you need.
-          </p>
-          <Link href="/contact">
-            <Button
-              variant="outline"
-              className="border-teal text-teal hover:bg-teal hover:text-white"
-            >
-              Contact Us
-            </Button>
-          </Link>
         </div>
       </div>
     </div>

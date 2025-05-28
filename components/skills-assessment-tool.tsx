@@ -161,12 +161,8 @@ export default function SkillsAssessmentTool() {
               <div key={option} className="flex items-center space-x-2">
                 <Checkbox
                   id={option}
-                  checked={((answers[question.id] as string[]) || []).includes(
-                    option
-                  )}
-                  onCheckedChange={(checked) =>
-                    handleMultipleAnswer(option, checked as boolean)
-                  }
+                  checked={((answers[question.id] as string[]) || []).includes(option)}
+                  onCheckedChange={(checked) => handleMultipleAnswer(option, checked as boolean)}
                 />
                 <Label htmlFor={option}>{option}</Label>
               </div>
@@ -182,10 +178,7 @@ export default function SkillsAssessmentTool() {
             className="flex justify-between space-x-2"
           >
             {question.options?.map((option) => (
-              <div
-                key={option}
-                className="flex flex-col items-center space-y-1"
-              >
+              <div key={option} className="flex flex-col items-center space-y-1">
                 <RadioGroupItem value={option} id={option} />
                 <Label htmlFor={option} className="text-xs text-center">
                   {option}
@@ -205,12 +198,10 @@ export default function SkillsAssessmentTool() {
     return (
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-xl font-bold text-teal mb-2">
-            Assessment Complete!
-          </h3>
+          <h3 className="text-xl font-bold text-teal mb-2">Assessment Complete!</h3>
           <p className="text-gray-600">
-            Based on your responses, we&apos;ve identified the following
-            strengths and opportunities:
+            Based on your responses, we&apos;ve identified the following strengths and
+            opportunities:
           </p>
         </div>
 
@@ -246,13 +237,11 @@ export default function SkillsAssessmentTool() {
         <div className="bg-light-bg p-4 rounded-lg">
           <h4 className="font-medium mb-2">Next Steps:</h4>
           <p className="text-gray-700 mb-4">
-            We recommend exploring our training resources for the skills listed
-            above and browsing job listings that match your strengths.
+            We recommend exploring our training resources for the skills listed above and browsing
+            job listings that match your strengths.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button className="bg-teal text-white hover:bg-teal-dark">
-              View Recommended Jobs
-            </Button>
+            <Button className="bg-teal text-white hover:bg-teal-dark">View Recommended Jobs</Button>
             <Button
               variant="outline"
               className="border-teal text-teal hover:bg-teal hover:text-white"
@@ -270,8 +259,8 @@ export default function SkillsAssessmentTool() {
       <CardHeader>
         <CardTitle>Skills Assessment</CardTitle>
         <CardDescription>
-          Answer the following questions to help us identify your strengths and
-          career opportunities.
+          Answer the following questions to help us identify your strengths and career
+          opportunities.
         </CardDescription>
         <Progress value={progress} className="h-2 mt-2" />
       </CardHeader>
@@ -291,11 +280,7 @@ export default function SkillsAssessmentTool() {
       <CardFooter className="flex justify-between">
         {!isComplete ? (
           <>
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentQuestion === 0}
-            >
+            <Button variant="outline" onClick={handlePrevious} disabled={currentQuestion === 0}>
               Previous
             </Button>
             <Button
@@ -303,9 +288,7 @@ export default function SkillsAssessmentTool() {
               disabled={!isAnswered()}
               className="bg-teal text-white hover:bg-teal-dark"
             >
-              {currentQuestion < questions.length - 1
-                ? 'Next'
-                : 'Complete Assessment'}
+              {currentQuestion < questions.length - 1 ? 'Next' : 'Complete Assessment'}
             </Button>
           </>
         ) : (

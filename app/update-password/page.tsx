@@ -19,7 +19,7 @@ function UpdatePasswordForm() {
 
   useEffect(() => {
     // Check if we have the access token in the URL
-    const accessToken = searchParams.get('access_token');
+    const accessToken = searchParams?.get('access_token');
     if (!accessToken) {
       toast({
         title: 'Error',
@@ -46,7 +46,7 @@ function UpdatePasswordForm() {
 
     try {
       const { error } = await supabase.auth.updateUser({
-        password: password
+        password: password,
       });
 
       if (error) throw error;
@@ -55,7 +55,7 @@ function UpdatePasswordForm() {
         title: 'Success!',
         description: 'Your password has been updated successfully.',
       });
-      
+
       // Redirect to login after a short delay
       setTimeout(() => {
         router.push('/login');
@@ -76,9 +76,7 @@ function UpdatePasswordForm() {
     <Card className="w-full max-w-md">
       <CardHeader>
         <CardTitle>Update Password</CardTitle>
-        <CardDescription>
-          Enter your new password below
-        </CardDescription>
+        <CardDescription>Enter your new password below</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleUpdatePassword} className="space-y-4">
@@ -120,18 +118,18 @@ function UpdatePasswordForm() {
 export default function UpdatePasswordPage() {
   return (
     <div className="container flex items-center justify-center min-h-screen py-12">
-      <Suspense fallback={
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>Loading...</CardTitle>
-            <CardDescription>
-              Please wait while we load the password update form
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      }>
+      <Suspense
+        fallback={
+          <Card className="w-full max-w-md">
+            <CardHeader>
+              <CardTitle>Loading...</CardTitle>
+              <CardDescription>Please wait while we load the password update form</CardDescription>
+            </CardHeader>
+          </Card>
+        }
+      >
         <UpdatePasswordForm />
       </Suspense>
     </div>
   );
-} 
+}

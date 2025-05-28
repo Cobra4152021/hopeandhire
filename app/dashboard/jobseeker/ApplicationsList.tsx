@@ -1,13 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
@@ -36,8 +30,7 @@ interface Application {
 }
 
 export function ApplicationsList() {
-  const [selectedApplication, setSelectedApplication] =
-    useState<Application | null>(null);
+  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
 
   const { data: applications, isLoading } = useQuery({
     queryKey: ['jobseeker-applications'],
@@ -67,10 +60,7 @@ export function ApplicationsList() {
     return (
       <div className="space-y-4">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="h-[100px] animate-pulse rounded-lg bg-muted"
-          />
+          <div key={i} className="h-[100px] animate-pulse rounded-lg bg-muted" />
         ))}
       </div>
     );
@@ -97,9 +87,7 @@ export function ApplicationsList() {
             <div className="flex items-start justify-between">
               <div>
                 <CardTitle>{application.job.title}</CardTitle>
-                <CardDescription>
-                  {application.job.company.name}
-                </CardDescription>
+                <CardDescription>{application.job.company.name}</CardDescription>
               </div>
               <Badge
                 variant={
@@ -115,15 +103,11 @@ export function ApplicationsList() {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="line-clamp-2 text-sm text-muted-foreground">
-              {application.message}
-            </p>
+            <p className="line-clamp-2 text-sm text-muted-foreground">{application.message}</p>
           </CardContent>
           <Dialog
             open={selectedApplication?.id === application.id}
-            onOpenChange={(open) =>
-              setSelectedApplication(open ? application : null)
-            }
+            onOpenChange={(open) => setSelectedApplication(open ? application : null)}
           >
             <DialogTrigger asChild>
               <Button variant="outline" className="ml-4 mb-4">
@@ -133,22 +117,16 @@ export function ApplicationsList() {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Application Details</DialogTitle>
-                <DialogDescription>
-                  Your application for {application.job.title}
-                </DialogDescription>
+                <DialogDescription>Your application for {application.job.title}</DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div>
                   <h4 className="font-medium">Company</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {application.job.company.name}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{application.job.company.name}</p>
                 </div>
                 <div>
                   <h4 className="font-medium">Your Message</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {application.message}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{application.message}</p>
                 </div>
                 <div>
                   <h4 className="font-medium">Status</h4>

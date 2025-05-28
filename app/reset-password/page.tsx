@@ -30,7 +30,7 @@ export default function ResetPasswordPage() {
         title: 'Success!',
         description: 'Check your email for the password reset link.',
       });
-      
+
       // Redirect to login after a short delay
       setTimeout(() => {
         router.push('/login');
@@ -81,4 +81,4 @@ export default function ResetPasswordPage() {
       </Card>
     </div>
   );
-} 
+}

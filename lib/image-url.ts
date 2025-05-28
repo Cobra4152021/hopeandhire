@@ -24,11 +24,7 @@ export function ensureAbsoluteUrl(url: string): string {
  * @param query The query to use for the placeholder image
  * @returns The placeholder image URL
  */
-export function getPlaceholderImage(
-  width: number,
-  height: number,
-  query: string
-): string {
+export function getPlaceholderImage(width: number, height: number, query: string): string {
   return `/placeholder.svg?height=${height}&width=${width}&query=${encodeURIComponent(query)}`;
 }
 
@@ -36,9 +32,7 @@ export function getPlaceholderImage(
  * Handles image loading errors by providing a fallback image
  * @param event The error event
  */
-export function handleImageError(
-  event: React.SyntheticEvent<HTMLImageElement>
-): void {
+export function handleImageError(event: React.SyntheticEvent<HTMLImageElement>): void {
   const target = event.target as HTMLImageElement;
   target.src = '/broken-image-icon.png';
   target.onerror = null; // Prevent infinite error loop

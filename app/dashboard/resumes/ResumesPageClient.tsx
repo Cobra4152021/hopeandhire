@@ -1,15 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useUser } from '@/lib/hooks/useUser';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -24,6 +18,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Upload, FileText, Trash2, Edit2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface Resume {
   id: string;
@@ -38,7 +33,7 @@ interface Resume {
 export default function ResumesPageClient() {
   const { user } = useUser();
   const { toast } = useToast();
-  const [resumes, setResumes] = useState<Resume[]>([]);
+  const [_resumes, setResumes] = useState<Resume[]>([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
@@ -48,11 +43,7 @@ export default function ResumesPageClient() {
   });
   const [uploading, setUploading] = useState(false);
 
-  useEffect(() => {
-    fetchResumes();
-  }, [user]);
-
-  const fetchResumes = async () => {
+  const fetchResumes = useCallback(async () => {
     if (!user) return;
 
     const { data, error } = await supabase
@@ -71,7 +62,13 @@ export default function ResumesPageClient() {
     }
 
     setResumes(data || []);
-  };
+  }, [user, toast]);
+
+  useEffect(() => {
+    if (user) {
+      fetchResumes();
+    }
+  }, [user, fetchResumes]);
 
   const handleCreateResume = async () => {
     if (!user) return;
@@ -153,9 +150,7 @@ export default function ResumesPageClient() {
     fetchResumes();
   };
 
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file || !user) return;
 
@@ -165,9 +160,7 @@ export default function ResumesPageClient() {
       // Upload file to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage
-        .from('resumes')
-        .upload(fileName, file);
+      const { error: uploadError } = await supabase.storage.from('resumes').upload(fileName, file);
 
       if (uploadError) throw uploadError;
 
@@ -232,24 +225,17 @@ export default function ResumesPageClient() {
                   <Input
                     placeholder="Resume Title"
                     value={newResume.title}
-                    onChange={(e) =>
-                      setNewResume({ ...newResume, title: e.target.value })
-                    }
+                    onChange={(e) => setNewResume({ ...newResume, title: e.target.value })}
                   />
                   <Textarea
                     placeholder="Resume Content"
                     value={newResume.content}
-                    onChange={(e) =>
-                      setNewResume({ ...newResume, content: e.target.value })
-                    }
+                    onChange={(e) => setNewResume({ ...newResume, content: e.target.value })}
                     rows={10}
                   />
                 </div>
                 <DialogFooter>
-                  <Button
-                    onClick={handleCreateResume}
-                    className="bg-teal text-white"
-                  >
+                  <Button onClick={handleCreateResume} className="bg-teal text-white">
                     Create
                   </Button>
                 </DialogFooter>
@@ -265,10 +251,7 @@ export default function ResumesPageClient() {
                 disabled={uploading}
               />
               <label htmlFor="resume-upload">
-                <Button
-                  className="bg-teal text-white cursor-pointer"
-                  disabled={uploading}
-                >
+                <Button className="bg-teal text-white cursor-pointer" disabled={uploading}>
                   <Upload className="mr-2 h-4 w-4" />
                   {uploading ? 'Uploading...' : 'Upload Resume'}
                 </Button>
@@ -279,18 +262,14 @@ export default function ResumesPageClient() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {resumes.map((resume) => (
+        {_resumes.map((resume) => (
           <Card key={resume.id}>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span className="truncate">{resume.title}</span>
                 {user?.role === 'jobseeker' && (
                   <div className="flex space-x-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleEdit(resume)}
-                    >
+                    <Button variant="ghost" size="icon" onClick={() => handleEdit(resume)}>
                       <Edit2 className="h-4 w-4" />
                     </Button>
                     <Button
@@ -339,16 +318,12 @@ export default function ResumesPageClient() {
             <Input
               placeholder="Resume Title"
               value={newResume.title}
-              onChange={(e) =>
-                setNewResume({ ...newResume, title: e.target.value })
-              }
+              onChange={(e) => setNewResume({ ...newResume, title: e.target.value })}
             />
             <Textarea
               placeholder="Resume Content"
               value={newResume.content}
-              onChange={(e) =>
-                setNewResume({ ...newResume, content: e.target.value })
-              }
+              onChange={(e) => setNewResume({ ...newResume, content: e.target.value })}
               rows={10}
             />
           </div>

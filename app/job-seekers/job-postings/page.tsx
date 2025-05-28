@@ -16,15 +16,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import {
-  Briefcase,
-  MapPin,
-  Clock,
-  Search,
-  Filter,
-  Building,
-  ChevronDown,
-} from 'lucide-react';
+import { Briefcase, MapPin, Clock, Search, Filter, Building, ChevronDown } from 'lucide-react';
 
 // Sample job data
 const jobListings = [
@@ -64,8 +56,7 @@ export default function JobPostingsPage() {
       job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.description.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesCategory =
-      selectedCategory === '' || job.category === selectedCategory;
+    const matchesCategory = selectedCategory === '' || job.category === selectedCategory;
     const matchesType = selectedType === '' || job.type === selectedType;
     const matchesFairChance = !fairChanceOnly || job.fairChance;
 
@@ -93,8 +84,7 @@ export default function JobPostingsPage() {
               Job <span className="text-teal">Postings</span>
             </h1>
             <p className="text-center text-gray-600 mb-8">
-              Browse through our curated list of job opportunities from
-              fair-chance employers.
+              Browse through our curated list of job opportunities from fair-chance employers.
             </p>
 
             {/* Search Bar */}
@@ -132,52 +122,30 @@ export default function JobPostingsPage() {
               <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label
-                      htmlFor="category"
-                      className="text-sm font-medium mb-1 block"
-                    >
+                    <Label htmlFor="category" className="text-sm font-medium mb-1 block">
                       Job Category
                     </Label>
-                    <Select
-                      value={selectedCategory}
-                      onValueChange={setSelectedCategory}
-                    >
+                    <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                       <SelectTrigger id="category">
                         <SelectValue placeholder="All Categories" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="all">All Categories</SelectItem>
-                        <SelectItem value="Administrative">
-                          Administrative
-                        </SelectItem>
-                        <SelectItem value="Customer Service">
-                          Customer Service
-                        </SelectItem>
-                        <SelectItem value="Food Service">
-                          Food Service
-                        </SelectItem>
+                        <SelectItem value="Administrative">Administrative</SelectItem>
+                        <SelectItem value="Customer Service">Customer Service</SelectItem>
+                        <SelectItem value="Food Service">Food Service</SelectItem>
                         <SelectItem value="Logistics">Logistics</SelectItem>
-                        <SelectItem value="Manufacturing">
-                          Manufacturing
-                        </SelectItem>
-                        <SelectItem value="Construction/Trades">
-                          Construction/Trades
-                        </SelectItem>
+                        <SelectItem value="Manufacturing">Manufacturing</SelectItem>
+                        <SelectItem value="Construction/Trades">Construction/Trades</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div>
-                    <Label
-                      htmlFor="type"
-                      className="text-sm font-medium mb-1 block"
-                    >
+                    <Label htmlFor="type" className="text-sm font-medium mb-1 block">
                       Job Type
                     </Label>
-                    <Select
-                      value={selectedType}
-                      onValueChange={setSelectedType}
-                    >
+                    <Select value={selectedType} onValueChange={setSelectedType}>
                       <SelectTrigger id="type">
                         <SelectValue placeholder="All Types" />
                       </SelectTrigger>
@@ -196,14 +164,9 @@ export default function JobPostingsPage() {
                       <Checkbox
                         id="fairChance"
                         checked={fairChanceOnly}
-                        onCheckedChange={(checked) =>
-                          setFairChanceOnly(checked as boolean)
-                        }
+                        onCheckedChange={(checked) => setFairChanceOnly(checked as boolean)}
                       />
-                      <Label
-                        htmlFor="fairChance"
-                        className="text-sm font-medium"
-                      >
+                      <Label htmlFor="fairChance" className="text-sm font-medium">
                         Fair Chance Employers Only
                       </Label>
                     </div>
@@ -222,8 +185,7 @@ export default function JobPostingsPage() {
             {/* Results Count */}
             <div className="mb-6">
               <p className="text-gray-600">
-                Showing {filteredJobs.length}{' '}
-                {filteredJobs.length === 1 ? 'job' : 'jobs'}
+                Showing {filteredJobs.length} {filteredJobs.length === 1 ? 'job' : 'jobs'}
               </p>
             </div>
 
@@ -253,28 +215,20 @@ export default function JobPostingsPage() {
                         <div className="p-6 md:w-4/5">
                           <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                             <div>
-                              <h3 className="text-xl font-bold text-dark-text">
-                                {job.title}
-                              </h3>
+                              <h3 className="text-xl font-bold text-dark-text">{job.title}</h3>
                               <div className="flex items-center mt-1">
                                 <Building className="h-4 w-4 text-gray-500 mr-1" />
-                                <span className="text-gray-700">
-                                  {job.company}
-                                </span>
+                                <span className="text-gray-700">{job.company}</span>
                               </div>
                             </div>
                             <div className="mt-2 md:mt-0">
                               {job.fairChance && (
-                                <Badge className="bg-teal text-white">
-                                  Fair Chance Employer
-                                </Badge>
+                                <Badge className="bg-teal text-white">Fair Chance Employer</Badge>
                               )}
                             </div>
                           </div>
 
-                          <p className="text-gray-600 mb-4">
-                            {job.description}
-                          </p>
+                          <p className="text-gray-600 mb-4">{job.description}</p>
 
                           <div className="flex flex-wrap gap-3 mb-4">
                             <div className="flex items-center text-sm text-gray-500">
@@ -292,9 +246,7 @@ export default function JobPostingsPage() {
                           </div>
 
                           <div className="mb-4">
-                            <h4 className="font-medium text-sm mb-2">
-                              Requirements:
-                            </h4>
+                            <h4 className="font-medium text-sm mb-2">Requirements:</h4>
                             <ul className="list-disc pl-5 text-sm text-gray-600 space-y-1">
                               {job.requirements.map((req, index) => (
                                 <li key={index}>{req}</li>
@@ -306,10 +258,7 @@ export default function JobPostingsPage() {
                             <Button className="bg-teal text-white hover:bg-teal-dark">
                               Apply Now
                             </Button>
-                            <Button
-                              variant="outline"
-                              className="border-gray-300"
-                            >
+                            <Button variant="outline" className="border-gray-300">
                               Save Job
                             </Button>
                           </div>
@@ -320,9 +269,7 @@ export default function JobPostingsPage() {
                 ))
               ) : (
                 <div className="text-center py-12">
-                  <p className="text-gray-500 mb-4">
-                    No jobs match your current filters.
-                  </p>
+                  <p className="text-gray-500 mb-4">No jobs match your current filters.</p>
                   <Button
                     variant="outline"
                     className="border-teal text-teal"
@@ -349,14 +296,12 @@ export default function JobPostingsPage() {
             Don&apos;t see what you&apos;re looking for?
           </h2>
           <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Create a profile to get personalized job recommendations and be
-            notified when new opportunities match your skills.
+            Create a profile to get personalized job recommendations and be notified when new
+            opportunities match your skills.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register">
-              <Button className="bg-teal text-white hover:bg-teal-dark">
-                Create Your Profile
-              </Button>
+              <Button className="bg-teal text-white hover:bg-teal-dark">Create Your Profile</Button>
             </Link>
             <Link href="/job-seekers">
               <Button

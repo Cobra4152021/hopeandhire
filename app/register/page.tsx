@@ -44,20 +44,13 @@ export default function RegisterPage() {
     let password = '';
     if (userType === 'jobseeker') {
       email = (document.getElementById('email') as HTMLInputElement)?.value;
-      password = (document.getElementById('password') as HTMLInputElement)
-        ?.value;
+      password = (document.getElementById('password') as HTMLInputElement)?.value;
     } else if (userType === 'volunteer') {
-      email = (document.getElementById('volunteerEmail') as HTMLInputElement)
-        ?.value;
-      password = (
-        document.getElementById('volunteerPassword') as HTMLInputElement
-      )?.value;
+      email = (document.getElementById('volunteerEmail') as HTMLInputElement)?.value;
+      password = (document.getElementById('volunteerPassword') as HTMLInputElement)?.value;
     } else if (userType === 'employer') {
-      email = (document.getElementById('employerEmail') as HTMLInputElement)
-        ?.value;
-      password = (
-        document.getElementById('employerPassword') as HTMLInputElement
-      )?.value;
+      email = (document.getElementById('employerEmail') as HTMLInputElement)?.value;
+      password = (document.getElementById('employerPassword') as HTMLInputElement)?.value;
     }
 
     // Register with Supabase and store role in user_metadata
@@ -98,9 +91,7 @@ export default function RegisterPage() {
 
       <Card className="w-full max-w-md mt-16">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
-            Create an Account
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">Create an Account</CardTitle>
           <CardDescription className="text-center">
             Join Hope and Hire to connect with opportunities and resources
           </CardDescription>
@@ -145,17 +136,11 @@ export default function RegisterPage() {
                   <Checkbox id="terms" required />
                   <Label htmlFor="terms" className="text-sm">
                     I agree to the{' '}
-                    <Link
-                      href="/terms-of-service"
-                      className="text-teal hover:underline"
-                    >
+                    <Link href="/terms-of-service" className="text-teal hover:underline">
                       Terms of Service
                     </Link>{' '}
                     and{' '}
-                    <Link
-                      href="/privacy-policy"
-                      className="text-teal hover:underline"
-                    >
+                    <Link href="/privacy-policy" className="text-teal hover:underline">
                       Privacy Policy
                     </Link>
                   </Label>
@@ -204,9 +189,7 @@ export default function RegisterPage() {
                       <SelectItem value="resume">Resume Review</SelectItem>
                       <SelectItem value="interview">Mock Interviews</SelectItem>
                       <SelectItem value="career">Career Counseling</SelectItem>
-                      <SelectItem value="jobsearch">
-                        Job Search Strategy
-                      </SelectItem>
+                      <SelectItem value="jobsearch">Job Search Strategy</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
@@ -218,31 +201,19 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="volunteerConfirmPassword">
-                    Confirm Password
-                  </Label>
-                  <Input
-                    id="volunteerConfirmPassword"
-                    type="password"
-                    required
-                  />
+                  <Label htmlFor="volunteerConfirmPassword">Confirm Password</Label>
+                  <Input id="volunteerConfirmPassword" type="password" required />
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Checkbox id="volunteerTerms" required />
                   <Label htmlFor="volunteerTerms" className="text-sm">
                     I agree to the{' '}
-                    <Link
-                      href="/terms-of-service"
-                      className="text-teal hover:underline"
-                    >
+                    <Link href="/terms-of-service" className="text-teal hover:underline">
                       Terms of Service
                     </Link>{' '}
                     and{' '}
-                    <Link
-                      href="/privacy-policy"
-                      className="text-teal hover:underline"
-                    >
+                    <Link href="/privacy-policy" className="text-teal hover:underline">
                       Privacy Policy
                     </Link>
                   </Label>
@@ -295,9 +266,7 @@ export default function RegisterPage() {
                     <SelectContent>
                       <SelectItem value="technology">Technology</SelectItem>
                       <SelectItem value="healthcare">Healthcare</SelectItem>
-                      <SelectItem value="manufacturing">
-                        Manufacturing
-                      </SelectItem>
+                      <SelectItem value="manufacturing">Manufacturing</SelectItem>
                       <SelectItem value="retail">Retail</SelectItem>
                       <SelectItem value="finance">Finance</SelectItem>
                       <SelectItem value="education">Education</SelectItem>
@@ -312,31 +281,19 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="employerConfirmPassword">
-                    Confirm Password
-                  </Label>
-                  <Input
-                    id="employerConfirmPassword"
-                    type="password"
-                    required
-                  />
+                  <Label htmlFor="employerConfirmPassword">Confirm Password</Label>
+                  <Input id="employerConfirmPassword" type="password" required />
                 </div>
 
                 <div className="flex items-center space-x-2">
                   <Checkbox id="employerTerms" required />
                   <Label htmlFor="employerTerms" className="text-sm">
                     I agree to the{' '}
-                    <Link
-                      href="/terms-of-service"
-                      className="text-teal hover:underline"
-                    >
+                    <Link href="/terms-of-service" className="text-teal hover:underline">
                       Terms of Service
                     </Link>{' '}
                     and{' '}
-                    <Link
-                      href="/privacy-policy"
-                      className="text-teal hover:underline"
-                    >
+                    <Link href="/privacy-policy" className="text-teal hover:underline">
                       Privacy Policy
                     </Link>
                   </Label>

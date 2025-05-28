@@ -61,7 +61,9 @@ export default function ProfilePage() {
   const { data: profile, isLoading } = useQuery({
     queryKey: ['profile'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -78,7 +80,9 @@ export default function ProfilePage() {
   // Update profile mutation
   const updateProfile = useMutation({
     mutationFn: async (data: Partial<Profile>) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
@@ -98,10 +102,10 @@ export default function ProfilePage() {
       });
       setIsEditing(false);
     },
-    onError: (error) => {
+    onError: (_error) => {
       toast({
         title: 'Error',
-        description: 'Failed to update profile',
+        description: _error.message,
         variant: 'destructive',
       });
     },
@@ -114,9 +118,7 @@ export default function ProfilePage() {
   };
 
   // Handle form changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -429,10 +431,7 @@ export default function ProfilePage() {
                   <h3 className="font-medium mb-2">Skills</h3>
                   <div className="flex flex-wrap gap-2">
                     {profile.skills.map((skill, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-gray-100 rounded-full text-sm"
-                      >
+                      <span key={index} className="px-3 py-1 bg-gray-100 rounded-full text-sm">
                         {skill}
                       </span>
                     ))}
@@ -452,9 +451,7 @@ export default function ProfilePage() {
                           <p className="text-sm text-gray-500">
                             {exp.company} • {exp.duration}
                           </p>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {exp.description}
-                          </p>
+                          <p className="text-sm text-gray-600 mt-1">{exp.description}</p>
                         </div>
                       </div>
                     ))}
@@ -474,9 +471,7 @@ export default function ProfilePage() {
                           <p className="text-sm text-gray-500">
                             {edu.institution} • {edu.year}
                           </p>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {edu.description}
-                          </p>
+                          <p className="text-sm text-gray-600 mt-1">{edu.description}</p>
                         </div>
                       </div>
                     ))}
@@ -508,4 +503,4 @@ export default function ProfilePage() {
       </Card>
     </div>
   );
-} 
+}

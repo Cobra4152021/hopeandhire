@@ -1,13 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Select,
@@ -33,14 +27,7 @@ import {
   AreaChart,
   Area,
 } from 'recharts';
-import {
-  ArrowUpRight,
-  ArrowDownRight,
-  Users,
-  Briefcase,
-  FileText,
-  Calendar,
-} from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Users, Briefcase, FileText, Calendar } from 'lucide-react';
 
 // Sample data for charts
 const applicationData = [
@@ -85,12 +72,8 @@ export default function AnalyticsClientPage() {
     <div className="container mx-auto py-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Analytics Dashboard
-          </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Track your hiring metrics and performance
-          </p>
+          <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+          <p className="mt-1 text-sm text-gray-500">Track your hiring metrics and performance</p>
         </div>
         <div className="mt-4 md:mt-0">
           <Select value={timeRange} onValueChange={setTimeRange}>
@@ -201,9 +184,7 @@ export default function AnalyticsClientPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Application Funnel</CardTitle>
-                <CardDescription>
-                  Applications, interviews, and hires over time
-                </CardDescription>
+                <CardDescription>Applications, interviews, and hires over time</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-80">
@@ -222,16 +203,8 @@ export default function AnalyticsClientPage() {
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Bar
-                        dataKey="applications"
-                        fill="#0ea5e9"
-                        name="Applications"
-                      />
-                      <Bar
-                        dataKey="interviews"
-                        fill="#14b8a6"
-                        name="Interviews"
-                      />
+                      <Bar dataKey="applications" fill="#0ea5e9" name="Applications" />
+                      <Bar dataKey="interviews" fill="#14b8a6" name="Interviews" />
                       <Bar dataKey="hires" fill="#eab308" name="Hires" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -242,9 +215,7 @@ export default function AnalyticsClientPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Application Sources</CardTitle>
-                <CardDescription>
-                  Where your candidates are coming from
-                </CardDescription>
+                <CardDescription>Where your candidates are coming from</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-80">
@@ -255,18 +226,13 @@ export default function AnalyticsClientPage() {
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        label={({ name, percent }) =>
-                          `${name}: ${(percent * 100).toFixed(0)}%`
-                        }
+                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                         outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
                       >
                         {sourceData.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          />
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                       </Pie>
                       <Tooltip />
@@ -283,9 +249,7 @@ export default function AnalyticsClientPage() {
           <Card>
             <CardHeader>
               <CardTitle>Application Trends</CardTitle>
-              <CardDescription>
-                Number of applications over time
-              </CardDescription>
+              <CardDescription>Number of applications over time</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">
@@ -323,9 +287,7 @@ export default function AnalyticsClientPage() {
           <Card>
             <CardHeader>
               <CardTitle>Time to Hire by Department</CardTitle>
-              <CardDescription>
-                Average days to hire by department
-              </CardDescription>
+              <CardDescription>Average days to hire by department</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80">

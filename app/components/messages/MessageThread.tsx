@@ -27,7 +27,11 @@ interface MessageThreadProps {
   currentUserRole: string;
 }
 
-export default function MessageThread({ recipientId, recipientRole, currentUserRole }: MessageThreadProps) {
+export default function MessageThread({
+  recipientId,
+  recipientRole,
+  currentUserRole,
+}: MessageThreadProps) {
   const [newMessage, setNewMessage] = useState('');
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const queryClient = useQueryClient();
@@ -35,7 +39,9 @@ export default function MessageThread({ recipientId, recipientRole, currentUserR
   // Fetch current user ID once
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       setCurrentUserId(user?.id || null);
     };
     fetchUser();
@@ -45,13 +51,17 @@ export default function MessageThread({ recipientId, recipientRole, currentUserR
   const { data: messages } = useQuery({
     queryKey: ['messages', recipientId],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
         .from('messages')
         .select('*')
-        .or(`and(sender_id.eq.${user.id},receiver_id.eq.${recipientId}),and(sender_id.eq.${recipientId},receiver_id.eq.${user.id})`)
+        .or(
+          `and(sender_id.eq.${user.id},receiver_id.eq.${recipientId}),and(sender_id.eq.${recipientId},receiver_id.eq.${user.id})`
+        )
         .order('created_at', { ascending: true });
 
       if (error) throw error;
@@ -63,14 +73,15 @@ export default function MessageThread({ recipientId, recipientRole, currentUserR
   useEffect(() => {
     const markAsRead = async () => {
       if (!messages?.length || !currentUserId) return;
-      const unreadMessages = messages.filter(
-        m => m.receiver_id === currentUserId && !m.is_read
-      );
+      const unreadMessages = messages.filter((m) => m.receiver_id === currentUserId && !m.is_read);
       if (unreadMessages.length > 0) {
         await supabase
           .from('messages')
           .update({ is_read: true })
-          .in('id', unreadMessages.map(m => m.id));
+          .in(
+            'id',
+            unreadMessages.map((m) => m.id)
+          );
         queryClient.invalidateQueries({ queryKey: ['messages', recipientId] });
       }
     };
@@ -82,16 +93,14 @@ export default function MessageThread({ recipientId, recipientRole, currentUserR
   const sendMessage = useMutation({
     mutationFn: async () => {
       if (!currentUserId) throw new Error('Not authenticated');
-      const { error } = await supabase
-        .from('messages')
-        .insert({
-          content: newMessage,
-          sender_id: currentUserId,
-          receiver_id: recipientId,
-          sender_role: currentUserRole,
-          receiver_role: recipientRole,
-          is_read: false,
-        });
+      const { error } = await supabase.from('messages').insert({
+        content: newMessage,
+        sender_id: currentUserId,
+        receiver_id: recipientId,
+        sender_role: currentUserRole,
+        receiver_role: recipientRole,
+        is_read: false,
+      });
       if (error) throw error;
     },
     onSuccess: () => {
@@ -118,13 +127,9 @@ export default function MessageThread({ recipientId, recipientRole, currentUserR
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <Avatar className="h-6 w-6">
-                      <AvatarFallback>
-                        {message.sender_role.charAt(0).toUpperCase()}
-                      </AvatarFallback>
+                      <AvatarFallback>{message.sender_role.charAt(0).toUpperCase()}</AvatarFallback>
                     </Avatar>
-                    <span className="text-xs opacity-70">
-                      {message.sender_role}
-                    </span>
+                    <span className="text-xs opacity-70">{message.sender_role}</span>
                   </div>
                   <p>{message.content}</p>
                   <span className="text-xs opacity-70 mt-1 block">
@@ -166,4 +171,4 @@ export default function MessageThread({ recipientId, recipientRole, currentUserR
       </CardContent>
     </Card>
   );
-} 
+}

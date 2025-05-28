@@ -1,13 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -125,9 +119,7 @@ const timeSlots = [
 ];
 
 export default function SchedulePageClient() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [appointments, setAppointments] = useState(sampleAppointments);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newAppointment, setNewAppointment] = useState({
@@ -209,20 +201,19 @@ export default function SchedulePageClient() {
         <Card className="md:col-span-1">
           <CardHeader>
             <CardTitle>Calendar</CardTitle>
-            <CardDescription>
-              Select a date to view or schedule appointments
-            </CardDescription>
+            <CardDescription>Select a date to view or schedule appointments</CardDescription>
           </CardHeader>
           <CardContent>
             <Calendar
               mode="single"
               selected={selectedDate}
-              onSelect={setSelectedDate}
+              onSelect={(date) => date && setSelectedDate(date)}
               className="rounded-md border"
-              styles={{
-                day_selected: { backgroundColor: 'var(--teal-primary)' },
-                day_today: { color: 'var(--teal-primary)' },
+              modifiersStyles={{
+                selected: { backgroundColor: 'var(--teal-primary)' },
+                today: { color: 'var(--teal-primary)' },
               }}
+              initialFocus
             />
             <div className="mt-4">
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -273,10 +264,7 @@ export default function SchedulePageClient() {
                         </SelectTrigger>
                         <SelectContent>
                           {appointmentTypes.map((type) => (
-                            <SelectItem
-                              key={type.id}
-                              value={type.id.toString()}
-                            >
+                            <SelectItem key={type.id} value={type.id.toString()}>
                               {type.name} ({type.duration} min)
                             </SelectItem>
                           ))}
@@ -348,9 +336,7 @@ export default function SchedulePageClient() {
                 day: 'numeric',
               })}
             </CardTitle>
-            <CardDescription>
-              {sortedAppointments.length} appointments scheduled
-            </CardDescription>
+            <CardDescription>{sortedAppointments.length} appointments scheduled</CardDescription>
           </CardHeader>
           <CardContent>
             {sortedAppointments.length === 0 ? (
@@ -360,9 +346,7 @@ export default function SchedulePageClient() {
             ) : (
               <div className="space-y-4">
                 {sortedAppointments.map((appointment) => {
-                  const appointmentType = getAppointmentType(
-                    appointment.typeId
-                  );
+                  const appointmentType = getAppointmentType(appointment.typeId);
                   return (
                     <div
                       key={appointment.id}
@@ -376,12 +360,9 @@ export default function SchedulePageClient() {
                               hour: '2-digit',
                               minute: '2-digit',
                             })}{' '}
-                            - {appointmentType?.name} (
-                            {appointmentType?.duration} min)
+                            - {appointmentType?.name} ({appointmentType?.duration} min)
                           </p>
-                          <p className="text-sm text-gray-600 mt-2">
-                            {appointment.description}
-                          </p>
+                          <p className="text-sm text-gray-600 mt-2">{appointment.description}</p>
                         </div>
                         <div className="flex space-x-2">
                           <Button

@@ -27,7 +27,9 @@ export default function ResumesPage() {
   const { data: resumes } = useQuery({
     queryKey: ['resumes'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
       const { data, error } = await supabase
         .from('resumes')
@@ -42,16 +44,16 @@ export default function ResumesPage() {
   // Create resume mutation
   const createResume = useMutation({
     mutationFn: async (data: Partial<Resume>) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
-      const { error } = await supabase
-        .from('resumes')
-        .insert({
-          ...data,
-          user_id: user.id,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
+      const { error } = await supabase.from('resumes').insert({
+        ...data,
+        user_id: user.id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
       if (error) throw error;
     },
     onSuccess: () => {
@@ -78,17 +80,6 @@ export default function ResumesPage() {
     },
   });
 
-  // Delete resume mutation
-  const deleteResume = useMutation({
-    mutationFn: async (resumeId: string) => {
-      const { error } = await supabase
-        .from('resumes')
-        .delete()
-        .eq('id', resumeId);
-      if (error) throw error;
-    },
-  });
-
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,9 +91,7 @@ export default function ResumesPage() {
   };
 
   // Handle form changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -111,7 +100,12 @@ export default function ResumesPage() {
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">My Resumes</h1>
-        <Button onClick={() => { setSelectedResume(null); setIsEditing(true); }}>
+        <Button
+          onClick={() => {
+            setSelectedResume(null);
+            setIsEditing(true);
+          }}
+        >
           Upload New Resume
         </Button>
       </div>
@@ -127,7 +121,10 @@ export default function ResumesPage() {
                 <div
                   key={resume.id}
                   className="p-4 border rounded-lg space-y-2 cursor-pointer hover:bg-gray-50"
-                  onClick={() => { setSelectedResume(resume); setIsEditing(true); }}
+                  onClick={() => {
+                    setSelectedResume(resume);
+                    setIsEditing(true);
+                  }}
                 >
                   <div className="flex items-center justify-between">
                     <h3 className="font-medium">{resume.title}</h3>
@@ -138,7 +135,14 @@ export default function ResumesPage() {
                     </span>
                   </div>
                   {resume.file_url && (
-                    <a href={resume.file_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline text-xs">View File</a>
+                    <a
+                      href={resume.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline text-xs"
+                    >
+                      View File
+                    </a>
                   )}
                 </div>
               ))}
@@ -171,7 +175,11 @@ export default function ResumesPage() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => { setIsEditing(false); setSelectedResume(null); setFormData({}); }}
+                    onClick={() => {
+                      setIsEditing(false);
+                      setSelectedResume(null);
+                      setFormData({});
+                    }}
                   >
                     Cancel
                   </Button>

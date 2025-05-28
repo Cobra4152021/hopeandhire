@@ -46,9 +46,7 @@ export default function EmployerSignIn() {
       <Card className="w-[350px]">
         <CardHeader>
           <CardTitle>Employer Sign In</CardTitle>
-          <CardDescription>
-            Sign in to access your employer dashboard
-          </CardDescription>
+          <CardDescription>Sign in to access your employer dashboard</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSignIn} className="space-y-4">
@@ -87,4 +85,4 @@ export default function EmployerSignIn() {
       </Card>
     </div>
   );
-} 
+}

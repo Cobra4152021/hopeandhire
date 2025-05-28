@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
-import { Calendar, Users, MessageSquare, FileText, Briefcase } from 'lucide-react';
+import { Briefcase, FileText, MessageSquare, Calendar } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
@@ -16,7 +16,9 @@ export default function JobSeekerDashboardClient() {
   // Check auth state on mount
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         console.log('No user found, redirecting to login');
         router.push('/login');
@@ -31,7 +33,9 @@ export default function JobSeekerDashboardClient() {
   const { data: stats } = useQuery({
     queryKey: ['jobseeker-stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Get total applications
@@ -117,9 +121,7 @@ export default function JobSeekerDashboardClient() {
             <div className="text-2xl font-bold capitalize">
               {stats?.resumeStatus.replace('_', ' ')}
             </div>
-            <p className="text-xs text-muted-foreground">
-              Current status
-            </p>
+            <p className="text-xs text-muted-foreground">Current status</p>
           </CardContent>
         </Card>
 
@@ -130,9 +132,7 @@ export default function JobSeekerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.unreadMessages || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              From volunteer recruiters
-            </p>
+            <p className="text-xs text-muted-foreground">From volunteer recruiters</p>
           </CardContent>
         </Card>
 
@@ -143,9 +143,7 @@ export default function JobSeekerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.upcomingMeetings || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              With volunteer recruiters
-            </p>
+            <p className="text-xs text-muted-foreground">With volunteer recruiters</p>
           </CardContent>
         </Card>
       </div>

@@ -28,10 +28,7 @@ async function runTests() {
   // Test 2: Profile Management
   console.log('\nTest 2: Profile Management');
   try {
-    const { data: profile, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .single();
+    const { data: profile, error } = await supabase.from('profiles').select('*').single();
     if (error) throw error;
     console.log('✅ Profile retrieval successful');
   } catch (error) {
@@ -41,10 +38,7 @@ async function runTests() {
   // Test 3: Job Search
   console.log('\nTest 3: Job Search');
   try {
-    const { data: jobs, error } = await supabase
-      .from('jobs')
-      .select('*')
-      .limit(5);
+    const { data: jobs, error } = await supabase.from('jobs').select('*').limit(5);
     if (error) throw error;
     console.log('✅ Job search successful');
   } catch (error) {
@@ -54,10 +48,7 @@ async function runTests() {
   // Test 4: Job Application
   console.log('\nTest 4: Job Application');
   try {
-    const { data: application, error } = await supabase
-      .from('applications')
-      .select('*')
-      .limit(1);
+    const { data: application, error } = await supabase.from('applications').select('*').limit(1);
     if (error) throw error;
     console.log('✅ Job application retrieval successful');
   } catch (error) {
@@ -80,10 +71,7 @@ async function runTests() {
   // Test 6: Settings
   console.log('\nTest 6: Settings');
   try {
-    const { data: settings, error } = await supabase
-      .from('user_settings')
-      .select('*')
-      .single();
+    const { data: settings, error } = await supabase.from('user_settings').select('*').single();
     if (error) throw error;
     console.log('✅ Settings retrieval successful');
   } catch (error) {

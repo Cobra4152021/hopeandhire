@@ -116,29 +116,20 @@ export default function JobSearchClient() {
       {isLoading ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="h-[200px] animate-pulse rounded-lg bg-muted"
-            />
+            <div key={i} className="h-[200px] animate-pulse rounded-lg bg-muted" />
           ))}
         </div>
       ) : !jobs?.length ? (
         <div className="flex h-[400px] items-center justify-center rounded-lg border border-dashed">
           <div className="text-center">
             <h3 className="text-lg font-semibold">No jobs found</h3>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search criteria
-            </p>
+            <p className="text-sm text-muted-foreground">Try adjusting your search criteria</p>
           </div>
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {jobs.map((job) => (
-            <JobCard
-              key={job.id}
-              job={job}
-              onApply={() => setSelectedJob(job)}
-            />
+            <JobCard key={job.id} job={job} onApply={() => setSelectedJob(job)} />
           ))}
         </div>
       )}

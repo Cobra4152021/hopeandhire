@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
-import { Calendar, Users, MessageSquare, Briefcase, FileText, Building } from 'lucide-react';
+import { Users, MessageSquare, FileText } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
@@ -16,7 +16,9 @@ export default function VolunteerDashboardClient() {
   // Check auth state on mount
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         console.log('No user found, redirecting to login');
         router.push('/login');
@@ -31,7 +33,9 @@ export default function VolunteerDashboardClient() {
   const { data: stats } = useQuery({
     queryKey: ['volunteer-stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Get total job seekers assigned
@@ -99,9 +103,7 @@ export default function VolunteerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.totalJobSeekers || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              Assigned to you
-            </p>
+            <p className="text-xs text-muted-foreground">Assigned to you</p>
           </CardContent>
         </Card>
 
@@ -112,9 +114,7 @@ export default function VolunteerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.pendingApplications || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              Pending review
-            </p>
+            <p className="text-xs text-muted-foreground">Pending review</p>
           </CardContent>
         </Card>
 
@@ -125,9 +125,7 @@ export default function VolunteerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.pendingResumes || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              Need review
-            </p>
+            <p className="text-xs text-muted-foreground">Need review</p>
           </CardContent>
         </Card>
 
@@ -138,9 +136,7 @@ export default function VolunteerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.unreadMessages || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              Unread messages
-            </p>
+            <p className="text-xs text-muted-foreground">Unread messages</p>
           </CardContent>
         </Card>
       </div>
@@ -201,4 +197,4 @@ export default function VolunteerDashboardClient() {
       </Tabs>
     </div>
   );
-} 
+}

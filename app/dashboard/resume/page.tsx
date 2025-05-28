@@ -9,15 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/lib/supabase';
-import {
-  FileText,
-  Download,
-  Upload,
-  CheckCircle,
-  AlertCircle,
-  Sparkles,
-  Settings,
-} from 'lucide-react';
+import { FileText, Download, Upload, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
 
 interface Resume {
   id: string;
@@ -38,13 +30,16 @@ interface Resume {
 
 export default function ResumePage() {
   const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const [_resumeText, _setResumeText] = useState('');
+  const [_atsScore, _setAtsScore] = useState<number | null>(null);
 
   // Fetch resumes
   const { data: resumes } = useQuery({
     queryKey: ['resumes'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -95,8 +90,8 @@ export default function ResumePage() {
                         resume.ats_score >= 80
                           ? 'bg-green-100 text-green-800'
                           : resume.ats_score >= 60
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-red-100 text-red-800'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-red-100 text-red-800'
                       }`}
                     >
                       {resume.ats_score}% ATS Score
@@ -121,9 +116,7 @@ export default function ResumePage() {
         {/* Resume Editor */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>
-              {selectedResume ? selectedResume.title : 'Select a Resume'}
-            </CardTitle>
+            <CardTitle>{selectedResume ? selectedResume.title : 'Select a Resume'}</CardTitle>
           </CardHeader>
           <CardContent>
             {selectedResume ? (
@@ -163,9 +156,7 @@ export default function ResumePage() {
                           <Download className="h-4 w-4 mr-2" />
                           Download
                         </Button>
-                        <Button
-                          onClick={() => optimizeResume.mutate(selectedResume.id)}
-                        >
+                        <Button onClick={() => optimizeResume.mutate(selectedResume.id)}>
                           <Sparkles className="h-4 w-4 mr-2" />
                           Optimize
                         </Button>
@@ -183,8 +174,8 @@ export default function ResumePage() {
                             selectedResume.ats_score >= 80
                               ? 'text-green-600'
                               : selectedResume.ats_score >= 60
-                              ? 'text-yellow-600'
-                              : 'text-red-600'
+                                ? 'text-yellow-600'
+                                : 'text-red-600'
                           }`}
                         >
                           {selectedResume.ats_score}%
@@ -198,10 +189,7 @@ export default function ResumePage() {
                       <h3 className="font-medium mb-4">Keyword Matches</h3>
                       <div className="space-y-2">
                         {selectedResume.keyword_matches.map((match) => (
-                          <div
-                            key={match.keyword}
-                            className="flex items-center justify-between"
-                          >
+                          <div key={match.keyword} className="flex items-center justify-between">
                             <span className="text-sm">{match.keyword}</span>
                             <div className="flex items-center gap-2">
                               <span
@@ -209,8 +197,8 @@ export default function ResumePage() {
                                   match.importance === 'high'
                                     ? 'text-green-600'
                                     : match.importance === 'medium'
-                                    ? 'text-yellow-600'
-                                    : 'text-red-600'
+                                      ? 'text-yellow-600'
+                                      : 'text-red-600'
                                 }`}
                               >
                                 {match.count}x
@@ -220,8 +208,8 @@ export default function ResumePage() {
                                   match.importance === 'high'
                                     ? 'bg-green-100 text-green-800'
                                     : match.importance === 'medium'
-                                    ? 'bg-yellow-100 text-yellow-800'
-                                    : 'bg-red-100 text-red-800'
+                                      ? 'bg-yellow-100 text-yellow-800'
+                                      : 'bg-red-100 text-red-800'
                                 }`}
                               >
                                 {match.importance}
@@ -255,8 +243,8 @@ export default function ResumePage() {
                                   suggestion.impact === 'high'
                                     ? 'text-green-600'
                                     : suggestion.impact === 'medium'
-                                    ? 'text-yellow-600'
-                                    : 'text-red-600'
+                                      ? 'text-yellow-600'
+                                      : 'text-red-600'
                                 }`}
                               >
                                 {suggestion.impact} impact
@@ -285,9 +273,7 @@ export default function ResumePage() {
             ) : (
               <div className="text-center py-12">
                 <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">
-                  Select a resume to edit or create a new one
-                </p>
+                <p className="text-gray-500">Select a resume to edit or create a new one</p>
               </div>
             )}
           </CardContent>
@@ -295,4 +281,4 @@ export default function ResumePage() {
       </div>
     </div>
   );
-} 
+}

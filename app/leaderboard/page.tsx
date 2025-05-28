@@ -43,7 +43,7 @@ export default function LeaderboardPage() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-6">Volunteer Leaderboard</h1>
-      
+
       <div className="grid gap-8">
         <section>
           <h2 className="text-xl font-semibold mb-4">Monthly Leaders</h2>
@@ -53,12 +53,7 @@ export default function LeaderboardPage() {
                 <CardHeader>
                   <div className="flex items-center space-x-4">
                     <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                      <Image
-                        src={leader.image}
-                        alt={leader.name}
-                        fill
-                        className="object-cover"
-                      />
+                      <Image src={leader.image} alt={leader.name} fill className="object-cover" />
                     </div>
                     <CardTitle className="text-lg">{leader.name}</CardTitle>
                   </div>
@@ -79,12 +74,7 @@ export default function LeaderboardPage() {
                 <CardHeader>
                   <div className="flex items-center space-x-4">
                     <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                      <Image
-                        src={leader.image}
-                        alt={leader.name}
-                        fill
-                        className="object-cover"
-                      />
+                      <Image src={leader.image} alt={leader.name} fill className="object-cover" />
                     </div>
                     <CardTitle className="text-lg">{leader.name}</CardTitle>
                   </div>

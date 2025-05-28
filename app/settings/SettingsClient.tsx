@@ -18,13 +18,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { supabase } from '@/lib/supabase';
 
@@ -35,10 +29,7 @@ const settingsFormSchema = z
     new_messages: z.boolean(),
     marketing_emails: z.boolean(),
     current_password: z.string().optional(),
-    new_password: z
-      .string()
-      .min(8, 'Password must be at least 8 characters')
-      .optional(),
+    new_password: z.string().min(8, 'Password must be at least 8 characters').optional(),
     confirm_password: z.string().optional(),
   })
   .refine(
@@ -101,15 +92,13 @@ export default function SettingsClient() {
       if (!user) throw new Error('No user found');
 
       // Update notification settings
-      const { error: settingsError } = await supabase
-        .from('user_settings')
-        .upsert({
-          user_id: user.id,
-          email_notifications: values.email_notifications,
-          application_updates: values.application_updates,
-          new_messages: values.new_messages,
-          marketing_emails: values.marketing_emails,
-        });
+      const { error: settingsError } = await supabase.from('user_settings').upsert({
+        user_id: user.id,
+        email_notifications: values.email_notifications,
+        application_updates: values.application_updates,
+        new_messages: values.new_messages,
+        marketing_emails: values.marketing_emails,
+      });
 
       if (settingsError) throw settingsError;
 
@@ -153,10 +142,7 @@ export default function SettingsClient() {
     return (
       <div className="space-y-4">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="h-[100px] animate-pulse rounded-lg bg-muted"
-          />
+          <div key={i} className="h-[100px] animate-pulse rounded-lg bg-muted" />
         ))}
       </div>
     );
@@ -173,9 +159,7 @@ export default function SettingsClient() {
           <Card>
             <CardHeader>
               <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>
-                Manage how you receive notifications
-              </CardDescription>
+              <CardDescription>Manage how you receive notifications</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <FormField
@@ -185,15 +169,10 @@ export default function SettingsClient() {
                   <FormItem className="flex items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
                       <FormLabel>Email Notifications</FormLabel>
-                      <FormDescription>
-                        Receive notifications via email
-                      </FormDescription>
+                      <FormDescription>Receive notifications via email</FormDescription>
                     </div>
                     <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Switch checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -206,15 +185,10 @@ export default function SettingsClient() {
                   <FormItem className="flex items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
                       <FormLabel>Application Updates</FormLabel>
-                      <FormDescription>
-                        Get notified about your job applications
-                      </FormDescription>
+                      <FormDescription>Get notified about your job applications</FormDescription>
                     </div>
                     <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Switch checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -227,15 +201,10 @@ export default function SettingsClient() {
                   <FormItem className="flex items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
                       <FormLabel>New Messages</FormLabel>
-                      <FormDescription>
-                        Get notified about new messages
-                      </FormDescription>
+                      <FormDescription>Get notified about new messages</FormDescription>
                     </div>
                     <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Switch checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -248,15 +217,10 @@ export default function SettingsClient() {
                   <FormItem className="flex items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
                       <FormLabel>Marketing Emails</FormLabel>
-                      <FormDescription>
-                        Receive marketing and promotional emails
-                      </FormDescription>
+                      <FormDescription>Receive marketing and promotional emails</FormDescription>
                     </div>
                     <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Switch checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                   </FormItem>
                 )}

@@ -16,79 +16,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-function UserMenu({ user }: { user: any }) {
-  const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const { toast } = useToast();
-  const initials = user?.email?.slice(0, 2).toUpperCase() || 'U';
-  const role = user?.user_metadata?.role || 'jobseeker';
-
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      toast({
-        title: "Success",
-        description: "You've been logged out successfully.",
-      });
-      router.push('/login');
-    } catch (error) {
-      console.error('Logout error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to log out. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleNavigation = (path: string) => {
-    setOpen(false);
-    router.push(path);
-  };
-
-  return (
-    <div className="relative">
-      <button onClick={() => setOpen((v) => !v)} className="focus:outline-none">
-        <Avatar className="h-10 w-10">
-          <AvatarImage
-            src={user?.user_metadata?.avatar_url || undefined}
-            alt={user?.email}
-          />
-          <AvatarFallback>{initials}</AvatarFallback>
-        </Avatar>
-      </button>
-      {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
-          <button
-            onClick={() => handleNavigation(`/dashboard/${role}`)}
-            className="w-full text-left px-4 py-2 hover:bg-gray-100"
-          >
-            Dashboard
-          </button>
-          <button
-            onClick={() => handleNavigation('/profile')}
-            className="w-full text-left px-4 py-2 hover:bg-gray-100"
-          >
-            Profile
-          </button>
-          <button
-            onClick={() => handleNavigation('/settings')}
-            className="w-full text-left px-4 py-2 hover:bg-gray-100"
-          >
-            Settings
-          </button>
-          <button
-            onClick={handleLogout}
-            className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
-          >
-            Logout
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
@@ -102,12 +29,18 @@ export default function Header() {
     // Get initial session
     const getInitialSession = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
         if (error) throw error;
-        
+
         if (session?.user) {
           // Verify the session is still valid
-          const { data: { user }, error: userError } = await supabase.auth.getUser();
+          const {
+            data: { user },
+            error: userError,
+          } = await supabase.auth.getUser();
           if (userError || !user) {
             // Session is invalid, clear it
             await supabase.auth.signOut();
@@ -115,7 +48,7 @@ export default function Header() {
             setUserRole('');
             return;
           }
-          
+
           setUser(session.user);
           setUserRole(session.user.user_metadata.role || 'jobseeker');
         } else {
@@ -133,7 +66,9 @@ export default function Header() {
     getInitialSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_OUT') {
         setUser(null);
         setUserRole('');
@@ -175,15 +110,15 @@ export default function Header() {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      
+
       // Clear any local storage or cookies
       localStorage.removeItem('supabase.auth.token');
-      
+
       toast({
-        title: "Success",
+        title: 'Success',
         description: "You've been signed out successfully.",
       });
-      
+
       router.push('/login');
     } catch (error: any) {
       console.error('Sign out error:', error);
@@ -200,171 +135,136 @@ export default function Header() {
     return `/dashboard/${userRole}`;
   };
 
-  const getProfilePath = () => {
-    if (!userRole) return '/login';
-    return `/profile/${userRole}`;
-  };
-
-  const getSettingsPath = () => {
-    if (!userRole) return '/login';
-    return `/settings/${userRole}`;
-  };
-
   if (isLoading) {
     return null; // or a loading spinner
   }
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/logo.png"
-              alt="Hope and Hire Logo"
-              width={120}
-              height={48}
-              className="h-auto"
-              priority
-            />
+    <header className="bg-white border-b">
+      <nav className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Hope & Hire"
+                width={150}
+                height={40}
+                className="h-10 w-auto"
+              />
             </Link>
+          </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex md:items-center md:space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-gray-600 hover:text-teal ${
-                  isActive(item.href) ? 'text-teal font-medium' : ''
+                className={`text-sm font-medium transition-colors hover:text-teal ${
+                  isActive(item.href) ? 'text-teal' : 'text-gray-600 hover:text-teal'
                 }`}
               >
                 {item.name}
               </Link>
             ))}
-          </nav>
+          </div>
 
-          <div className="flex items-center space-x-4">
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <span className="sr-only">Open user menu</span>
-                    <div className="h-8 w-8 rounded-full bg-teal flex items-center justify-center text-white">
-                      {user.email?.[0].toUpperCase()}
-                    </div>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuItem asChild>
-                    <Link href={getDashboardPath()}>Dashboard</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href={getProfilePath()}>Profile</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href={getSettingsPath()}>Settings</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleSignOut}>
-                    Sign out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
+          {/* User Menu or Auth Buttons */}
+          <div className="hidden md:flex md:items-center md:space-x-4">
+            {!isLoading && (
               <>
-            <Link href="/login">
-                  <Button variant="ghost">Sign in</Button>
-                </Link>
-                <Link href="/register">
-                  <Button className="bg-teal text-white hover:bg-teal-dark">
-                    Sign up
-              </Button>
-            </Link>
+                {user ? (
+                  <div className="flex items-center space-x-4">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Avatar className="h-8 w-8 cursor-pointer">
+                          <AvatarImage src={user?.user_metadata?.avatar_url} alt={user?.email} />
+                          <AvatarFallback>{user?.email?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem onClick={() => router.push(getDashboardPath())}>
+                          Dashboard
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => router.push('/profile')}>
+                          Profile
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => router.push('/settings')}>
+                          Settings
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
+                          Sign out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-4">
+                    <Link href="/login">
+                      <Button variant="ghost">Sign in</Button>
+                    </Link>
+                    <Link href="/register">
+                      <Button className="bg-teal text-white hover:bg-teal-dark">Sign up</Button>
+                    </Link>
+                  </div>
+                )}
               </>
             )}
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="flex md:hidden">
             <button
-              type="button"
-              className="text-gray-700 hover:text-teal"
               onClick={toggleMenu}
-              aria-expanded={isMenuOpen}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal"
             >
               <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
-                <X className="h-6 w-6" aria-hidden="true" />
+                <X className="block h-6 w-6" aria-hidden="true" />
               ) : (
-                <Menu className="h-6 w-6" aria-hidden="true" />
+                <Menu className="block h-6 w-6" aria-hidden="true" />
               )}
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`block px-3 py-2 text-base font-medium rounded-md ${
-                  isActive(item.href)
-                    ? 'bg-teal-light/10 text-teal'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-teal'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <div className="mt-4 px-3 space-y-2">
-              {user ? (
-                <>
-                  <Link href={`/dashboard/${userRole}`} className="block">
-                    <Button variant="outline" className="w-full">
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Link href={`/profile/${userRole}`} className="block">
-                    <Button variant="outline" className="w-full">
-                      Profile
-                    </Button>
-                  </Link>
-                  <Link href={`/settings/${userRole}`} className="block">
-                    <Button variant="outline" className="w-full">
-                      Settings
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="outline"
-                    className="w-full text-red-600"
-                    onClick={handleSignOut}
-                  >
-                    Sign out
-                  </Button>
-                </>
-              ) : (
-                <>
-              <Link href="/login" className="block">
-                    <Button variant="outline" className="w-full">
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${
+                    isActive(item.href)
+                      ? 'bg-teal-light/10 text-teal'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-teal'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              {!isLoading && !user && (
+                <div className="mt-4 space-y-2">
+                  <Link href="/login" className="block">
+                    <Button variant="ghost" className="w-full justify-start">
                       Sign in
-                </Button>
-              </Link>
+                    </Button>
+                  </Link>
                   <Link href="/register" className="block">
                     <Button className="w-full bg-teal text-white hover:bg-teal-dark">
                       Sign up
                     </Button>
-              </Link>
-                </>
+                  </Link>
+                </div>
               )}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </nav>
     </header>
   );
 }

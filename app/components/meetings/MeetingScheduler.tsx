@@ -8,7 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { format, addHours, setHours, setMinutes } from 'date-fns';
 import { toast } from 'sonner';
 
@@ -31,7 +37,11 @@ interface MeetingSchedulerProps {
   currentUserRole: string;
 }
 
-export default function MeetingScheduler({ recipientId, recipientRole, currentUserRole }: MeetingSchedulerProps) {
+export default function MeetingScheduler({
+  recipientId,
+  recipientRole,
+  currentUserRole,
+}: MeetingSchedulerProps) {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [startTime, setStartTime] = useState('09:00');
   const [duration, setDuration] = useState('30');
@@ -43,13 +53,17 @@ export default function MeetingScheduler({ recipientId, recipientRole, currentUs
   const { data: meetings } = useQuery({
     queryKey: ['meetings', recipientId],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
         .from('meetings')
         .select('*')
-        .or(`and(volunteer_id.eq.${user.id},${recipientRole}_id.eq.${recipientId}),and(volunteer_id.eq.${recipientId},${currentUserRole}_id.eq.${user.id})`)
+        .or(
+          `and(volunteer_id.eq.${user.id},${recipientRole}_id.eq.${recipientId}),and(volunteer_id.eq.${recipientId},${currentUserRole}_id.eq.${user.id})`
+        )
         .order('date', { ascending: true });
 
       if (error) throw error;
@@ -60,11 +74,16 @@ export default function MeetingScheduler({ recipientId, recipientRole, currentUs
   // Schedule meeting mutation
   const scheduleMeeting = useMutation({
     mutationFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
       if (!selectedDate) throw new Error('Please select a date');
 
-      const startDateTime = setMinutes(setHours(selectedDate, parseInt(startTime.split(':')[0])), parseInt(startTime.split(':')[1]));
+      const startDateTime = setMinutes(
+        setHours(selectedDate, parseInt(startTime.split(':')[0])),
+        parseInt(startTime.split(':')[1])
+      );
       const endDateTime = addHours(startDateTime, parseInt(duration) / 60);
 
       const meetingData = {
@@ -77,9 +96,7 @@ export default function MeetingScheduler({ recipientId, recipientRole, currentUs
         notes: notes.trim() || undefined,
       };
 
-      const { error } = await supabase
-        .from('meetings')
-        .insert(meetingData);
+      const { error } = await supabase.from('meetings').insert(meetingData);
 
       if (error) throw error;
     },
@@ -97,12 +114,17 @@ export default function MeetingScheduler({ recipientId, recipientRole, currentUs
   });
 
   // Get booked time slots for the selected date
-  const bookedSlots = meetings?.filter(meeting => 
-    format(new Date(meeting.date), 'yyyy-MM-dd') === format(selectedDate || new Date(), 'yyyy-MM-dd')
-  ).map(meeting => ({
-    start: new Date(meeting.start_time),
-    end: new Date(meeting.end_time),
-  })) || [];
+  const bookedSlots =
+    meetings
+      ?.filter(
+        (meeting) =>
+          format(new Date(meeting.date), 'yyyy-MM-dd') ===
+          format(selectedDate || new Date(), 'yyyy-MM-dd')
+      )
+      .map((meeting) => ({
+        start: new Date(meeting.start_time),
+        end: new Date(meeting.end_time),
+      })) || [];
 
   return (
     <Card>
@@ -185,4 +207,4 @@ export default function MeetingScheduler({ recipientId, recipientRole, currentUs
       </CardContent>
     </Card>
   );
-} 
+}

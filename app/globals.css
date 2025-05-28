@@ -82,11 +82,18 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-screen;
+  }
+  html {
+    @apply antialiased;
   }
 }
 
 @layer components {
+  .container {
+    @apply max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
   .bg-teal {
     background-color: var(--teal-primary);
   }
@@ -148,8 +155,7 @@
   .btn-teal {
     background-color: var(--teal-primary);
     color: white;
-    transition-property:
-      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-duration: 150ms;
   }
 
@@ -160,8 +166,7 @@
   .btn-yellow {
     background-color: var(--yellow-primary);
     color: var(--dark-text);
-    transition-property:
-      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-duration: 150ms;
   }
 
@@ -172,8 +177,7 @@
   .btn-outline-teal {
     border: 1px solid var(--teal-primary);
     color: var(--teal-primary);
-    transition-property:
-      color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-duration: 150ms;
   }
 

@@ -11,14 +11,12 @@ import {
   BookOpen,
   Award,
   Users,
-  BarChart,
   CheckCircle,
-  Clock,
-  AlertCircle,
   ChevronRight,
-  Star,
-  Target,
+  Clock,
   Bookmark,
+  Star,
+  BarChart2 as BarChart,
 } from 'lucide-react';
 
 interface LearningPath {
@@ -69,7 +67,9 @@ export default function LearningPage() {
   const { data: learningPaths } = useQuery({
     queryKey: ['learning-paths'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -127,8 +127,8 @@ export default function LearningPage() {
                         path.level === 'beginner'
                           ? 'bg-green-100 text-green-800'
                           : path.level === 'intermediate'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-red-100 text-red-800'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-red-100 text-red-800'
                       }`}
                     >
                       {path.level}
@@ -137,9 +137,7 @@ export default function LearningPage() {
                   <p className="text-sm text-gray-500">{path.description}</p>
                   <div className="flex items-center gap-2">
                     <BookOpen className="h-4 w-4 text-gray-400" />
-                    <span className="text-sm text-gray-500">
-                      {path.modules.length} modules
-                    </span>
+                    <span className="text-sm text-gray-500">{path.modules.length} modules</span>
                   </div>
                   <Progress value={path.progress} />
                 </div>
@@ -155,9 +153,7 @@ export default function LearningPage() {
         {/* Learning Path Details */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>
-              {selectedPath ? selectedPath.title : 'Select a Learning Path'}
-            </CardTitle>
+            <CardTitle>{selectedPath ? selectedPath.title : 'Select a Learning Path'}</CardTitle>
           </CardHeader>
           <CardContent>
             {selectedPath ? (
@@ -212,9 +208,7 @@ export default function LearningPage() {
                             >
                               <Bookmark className="h-4 w-4 text-gray-400" />
                               <span className="text-sm">{resource.title}</span>
-                              <span className="text-xs text-gray-500">
-                                ({resource.type})
-                              </span>
+                              <span className="text-xs text-gray-500">({resource.type})</span>
                             </a>
                           ))}
                         </div>
@@ -228,18 +222,12 @@ export default function LearningPage() {
                         <div className="flex items-center justify-between mb-2">
                           <h3 className="font-medium">{skill.name}</h3>
                           <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-500">
-                              Level {skill.level}
-                            </span>
+                            <span className="text-sm text-gray-500">Level {skill.level}</span>
                             <ChevronRight className="h-4 w-4 text-gray-400" />
-                            <span className="text-sm font-medium">
-                              Level {skill.target_level}
-                            </span>
+                            <span className="text-sm font-medium">Level {skill.target_level}</span>
                           </div>
                         </div>
-                        <Progress
-                          value={(skill.level / skill.target_level) * 100}
-                        />
+                        <Progress value={(skill.level / skill.target_level) * 100} />
                       </div>
                     ))}
                   </TabsContent>
@@ -254,9 +242,7 @@ export default function LearningPage() {
                             </div>
                             <div>
                               <h3 className="font-medium">{badge.name}</h3>
-                              <p className="text-sm text-gray-500">
-                                {badge.description}
-                              </p>
+                              <p className="text-sm text-gray-500">{badge.description}</p>
                             </div>
                           </div>
                           {badge.earned ? (
@@ -277,9 +263,7 @@ export default function LearningPage() {
                           <Users className="h-5 w-5 text-gray-400" />
                           <div>
                             <p className="text-sm text-gray-500">Members</p>
-                            <p className="text-lg font-medium">
-                              {selectedPath.community.members}
-                            </p>
+                            <p className="text-lg font-medium">{selectedPath.community.members}</p>
                           </div>
                         </div>
                       </div>
@@ -300,33 +284,24 @@ export default function LearningPage() {
                     <div className="p-4 border rounded-lg">
                       <h3 className="font-medium mb-4">Recent Activity</h3>
                       <div className="space-y-4">
-                        {selectedPath.community.recent_activity.map(
-                          (activity, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center justify-between"
-                            >
-                              <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                                  <Users className="h-4 w-4 text-gray-400" />
-                                </div>
-                                <div>
-                                  <p className="text-sm">
-                                    <span className="font-medium">
-                                      {activity.user}
-                                    </span>{' '}
-                                    {activity.action}
-                                  </p>
-                                  <p className="text-xs text-gray-500">
-                                    {new Date(
-                                      activity.timestamp
-                                    ).toLocaleDateString()}
-                                  </p>
-                                </div>
+                        {selectedPath.community.recent_activity.map((activity, index) => (
+                          <div key={index} className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                                <Users className="h-4 w-4 text-gray-400" />
+                              </div>
+                              <div>
+                                <p className="text-sm">
+                                  <span className="font-medium">{activity.user}</span>{' '}
+                                  {activity.action}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  {new Date(activity.timestamp).toLocaleDateString()}
+                                </p>
                               </div>
                             </div>
-                          )
-                        )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </TabsContent>
@@ -335,9 +310,7 @@ export default function LearningPage() {
             ) : (
               <div className="text-center py-12">
                 <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">
-                  Select a learning path to begin
-                </p>
+                <p className="text-gray-500">Select a learning path to begin</p>
               </div>
             )}
           </CardContent>
@@ -345,4 +318,4 @@ export default function LearningPage() {
       </div>
     </div>
   );
-} 
+}

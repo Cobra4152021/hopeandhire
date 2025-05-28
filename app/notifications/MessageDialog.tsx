@@ -35,11 +35,7 @@ interface MessageDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function MessageDialog({
-  notification,
-  open,
-  onOpenChange,
-}: MessageDialogProps) {
+export function MessageDialog({ notification, open, onOpenChange }: MessageDialogProps) {
   const [message, setMessage] = useState('');
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -59,8 +55,7 @@ export function MessageDialog({
           job_title: notification.data.job_title,
           company_name: notification.data.company_name,
           sender_id: (await supabase.auth.getUser()).data.user?.id,
-          sender_name: (await supabase.auth.getUser()).data.user?.user_metadata
-            .full_name,
+          sender_name: (await supabase.auth.getUser()).data.user?.user_metadata.full_name,
         },
       });
 
@@ -96,9 +91,7 @@ export function MessageDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Reply to Message</DialogTitle>
-          <DialogDescription>
-            Send a message to {notification.data?.sender_name}
-          </DialogDescription>
+          <DialogDescription>Send a message to {notification.data?.sender_name}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -113,11 +106,7 @@ export function MessageDialog({
             />
           </div>
           <div className="flex justify-end space-x-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
             <Button type="submit" disabled={sendMessage.isPending}>

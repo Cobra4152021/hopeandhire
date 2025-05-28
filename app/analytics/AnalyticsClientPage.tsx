@@ -89,9 +89,7 @@ export default function AnalyticsClientPage() {
   const renderGrowthIndicator = (growth: number) => {
     const isPositive = growth >= 0;
     return (
-      <div
-        className={`flex items-center ${isPositive ? 'text-green-600' : 'text-red-600'}`}
-      >
+      <div className={`flex items-center ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`h-4 w-4 ${isPositive ? 'rotate-0' : 'rotate-180'}`}
@@ -137,9 +135,7 @@ export default function AnalyticsClientPage() {
                 className="w-full bg-teal rounded-t"
                 style={{ height: `${(value / max) * 100}%` }}
               ></div>
-              <span className="text-xs mt-1 text-gray-500">
-                {months[index]}
-              </span>
+              <span className="text-xs mt-1 text-gray-500">{months[index]}</span>
             </div>
           ))}
         </div>
@@ -166,10 +162,7 @@ export default function AnalyticsClientPage() {
               const percentage = (item.value / total) * 100;
               const previousPercentages = data
                 .slice(0, index)
-                .reduce(
-                  (sum, prevItem) => sum + (prevItem.value / total) * 100,
-                  0
-                );
+                .reduce((sum, prevItem) => sum + (prevItem.value / total) * 100, 0);
 
               return (
                 <circle
@@ -192,9 +185,7 @@ export default function AnalyticsClientPage() {
         <div className="mt-4 md:mt-0 md:ml-6 grid grid-cols-2 gap-2">
           {data.map((item, index) => (
             <div key={index} className="flex items-center">
-              <div
-                className={`w-3 h-3 rounded-full ${colors[index % colors.length]} mr-2`}
-              ></div>
+              <div className={`w-3 h-3 rounded-full ${colors[index % colors.length]} mr-2`}></div>
               <span className="text-sm text-gray-700">
                 {item.name}: {item.value}
               </span>
@@ -207,22 +198,15 @@ export default function AnalyticsClientPage() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-12 text-teal">
-        Analytics Dashboard
-      </h1>
+      <h1 className="text-4xl font-bold text-center mb-12 text-teal">Analytics Dashboard</h1>
 
       <div className="max-w-6xl mx-auto">
         <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20 mb-8">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold text-dark-text">
-              Platform Overview
-            </h2>
+            <h2 className="text-2xl font-semibold text-dark-text">Platform Overview</h2>
 
             <div>
-              <Select
-                value={timeRange}
-                onValueChange={(value) => setTimeRange(value)}
-              >
+              <Select value={timeRange} onValueChange={(value) => setTimeRange(value)}>
                 <SelectTrigger className="w-[180px] border-teal-light/30">
                   <SelectValue placeholder="Select time range" />
                 </SelectTrigger>
@@ -281,12 +265,8 @@ export default function AnalyticsClientPage() {
           <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal">
-                  Job Postings
-                </h3>
-                <p className="text-3xl font-bold mt-2 text-dark-text">
-                  {analyticsData.jobs.total}
-                </p>
+                <h3 className="text-lg font-semibold text-teal">Job Postings</h3>
+                <p className="text-3xl font-bold mt-2 text-dark-text">{analyticsData.jobs.total}</p>
               </div>
               {renderGrowthIndicator(analyticsData.jobs.growth)}
             </div>
@@ -296,9 +276,7 @@ export default function AnalyticsClientPage() {
           <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="text-lg font-semibold text-teal">
-                  Appointments
-                </h3>
+                <h3 className="text-lg font-semibold text-teal">Appointments</h3>
                 <p className="text-3xl font-bold mt-2 text-dark-text">
                   {analyticsData.appointments.total}
                 </p>
@@ -312,9 +290,7 @@ export default function AnalyticsClientPage() {
         <div className="bg-white p-6 rounded-lg shadow-md border border-teal-light/20 mb-8">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="text-lg font-semibold text-teal">
-                Successful Placements
-              </h3>
+              <h3 className="text-lg font-semibold text-teal">Successful Placements</h3>
               <p className="text-3xl font-bold mt-2 text-dark-text">
                 {analyticsData.placements.total}
               </p>
@@ -322,9 +298,7 @@ export default function AnalyticsClientPage() {
             {renderGrowthIndicator(analyticsData.placements.growth)}
           </div>
           <div className="mt-4">
-            <h4 className="text-sm font-medium text-gray-700 mb-2">
-              By Industry
-            </h4>
+            <h4 className="text-sm font-medium text-gray-700 mb-2">By Industry</h4>
             {renderPieChart(analyticsData.placements.byIndustry)}
           </div>
         </div>
@@ -336,26 +310,25 @@ export default function AnalyticsClientPage() {
             <div className="p-4 bg-teal-light/10 rounded-lg border border-teal-light/20">
               <h4 className="font-medium text-teal">Growing Volunteer Base</h4>
               <p className="text-gray-700 mt-1">
-                Our volunteer base has grown by{' '}
-                {analyticsData.volunteers.growth}% in the last year, allowing us
-                to provide more personalized support to job seekers.
+                Our volunteer base has grown by {analyticsData.volunteers.growth}% in the last year,
+                allowing us to provide more personalized support to job seekers.
               </p>
             </div>
 
             <div className="p-4 bg-teal-light/10 rounded-lg border border-teal-light/20">
               <h4 className="font-medium text-teal">Successful Placements</h4>
               <p className="text-gray-700 mt-1">
-                We&apos;ve helped {analyticsData.placements.total} job seekers
-                find employment, with a {analyticsData.placements.growth}%
-                increase in successful placements compared to last year.
+                We&apos;ve helped {analyticsData.placements.total} job seekers find employment, with
+                a {analyticsData.placements.growth}% increase in successful placements compared to
+                last year.
               </p>
             </div>
 
             <div className="p-4 bg-teal-light/10 rounded-lg border border-teal-light/20">
               <h4 className="font-medium text-teal">Popular Services</h4>
               <p className="text-gray-700 mt-1">
-                Resume reviews continue to be our most requested service,
-                followed by mock interviews and career counseling.
+                Resume reviews continue to be our most requested service, followed by mock
+                interviews and career counseling.
               </p>
             </div>
           </div>

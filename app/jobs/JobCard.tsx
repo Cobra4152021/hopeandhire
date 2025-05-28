@@ -1,13 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Briefcase } from 'lucide-react';
@@ -67,19 +61,11 @@ export function JobCard({ job, onApply }: JobCardProps) {
               {job.category}
             </div>
           </div>
-          <p
-            className={`text-sm text-muted-foreground ${
-              isExpanded ? '' : 'line-clamp-2'
-            }`}
-          >
+          <p className={`text-sm text-muted-foreground ${isExpanded ? '' : 'line-clamp-2'}`}>
             {job.description}
           </p>
           <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? 'Show less' : 'Show more'}
             </Button>
             <Button size="sm" onClick={onApply}>

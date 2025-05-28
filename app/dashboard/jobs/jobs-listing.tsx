@@ -227,9 +227,7 @@ export default function JobsListingPage() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Job Listings</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Manage and view all job opportunities
-          </p>
+          <p className="mt-1 text-sm text-gray-500">Manage and view all job opportunities</p>
         </div>
         <div className="mt-4 md:mt-0">
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -253,9 +251,7 @@ export default function JobsListingPage() {
                   <Input
                     id="title"
                     value={newJob.title}
-                    onChange={(e) =>
-                      setNewJob({ ...newJob, title: e.target.value })
-                    }
+                    onChange={(e) => setNewJob({ ...newJob, title: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -266,9 +262,7 @@ export default function JobsListingPage() {
                   <Input
                     id="company"
                     value={newJob.company}
-                    onChange={(e) =>
-                      setNewJob({ ...newJob, company: e.target.value })
-                    }
+                    onChange={(e) => setNewJob({ ...newJob, company: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -279,9 +273,7 @@ export default function JobsListingPage() {
                   <Input
                     id="location"
                     value={newJob.location}
-                    onChange={(e) =>
-                      setNewJob({ ...newJob, location: e.target.value })
-                    }
+                    onChange={(e) => setNewJob({ ...newJob, location: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
@@ -291,9 +283,7 @@ export default function JobsListingPage() {
                   </Label>
                   <Select
                     value={newJob.type}
-                    onValueChange={(value) =>
-                      setNewJob({ ...newJob, type: value })
-                    }
+                    onValueChange={(value) => setNewJob({ ...newJob, type: value })}
                   >
                     <SelectTrigger className="col-span-3">
                       <SelectValue placeholder="Select job type" />
@@ -313,9 +303,7 @@ export default function JobsListingPage() {
                   <Input
                     id="salary"
                     value={newJob.salary}
-                    onChange={(e) =>
-                      setNewJob({ ...newJob, salary: e.target.value })
-                    }
+                    onChange={(e) => setNewJob({ ...newJob, salary: e.target.value })}
                     placeholder="e.g. $50,000 - $70,000"
                     className="col-span-3"
                   />
@@ -327,9 +315,7 @@ export default function JobsListingPage() {
                   <Textarea
                     id="description"
                     value={newJob.description}
-                    onChange={(e) =>
-                      setNewJob({ ...newJob, description: e.target.value })
-                    }
+                    onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}
                     className="col-span-3"
                     rows={4}
                   />
@@ -369,11 +355,7 @@ export default function JobsListingPage() {
               <SelectTrigger>
                 <div className="flex items-center">
                   <Filter className="mr-2 h-4 w-4 text-gray-400" />
-                  <span>
-                    {filterType === 'all'
-                      ? 'All Job Types'
-                      : `${filterType} Jobs`}
-                  </span>
+                  <span>{filterType === 'all' ? 'All Job Types' : `${filterType} Jobs`}</span>
                 </div>
               </SelectTrigger>
               <SelectContent>
@@ -425,9 +407,7 @@ export default function JobsListingPage() {
       <div className="space-y-4">
         {filteredJobs.length === 0 ? (
           <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
-            <p className="text-gray-500">
-              No jobs found matching your criteria.
-            </p>
+            <p className="text-gray-500">No jobs found matching your criteria.</p>
           </div>
         ) : (
           filteredJobs.map((job) => (
@@ -442,13 +422,9 @@ export default function JobsListingPage() {
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div>
                       <div className="flex items-center mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          {job.title}
-                        </h3>
+                        <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
                         {job.featured && (
-                          <Badge className="ml-2 bg-yellow text-dark-text">
-                            Featured
-                          </Badge>
+                          <Badge className="ml-2 bg-yellow text-dark-text">Featured</Badge>
                         )}
                       </div>
                       <div className="flex flex-wrap gap-y-2 text-sm text-gray-500">
@@ -472,9 +448,7 @@ export default function JobsListingPage() {
                     </div>
                     <div className="mt-4 md:mt-0 flex items-center">
                       <div className="mr-4 text-sm">
-                        <span className="font-medium text-gray-900">
-                          {job.applications}
-                        </span>{' '}
+                        <span className="font-medium text-gray-900">{job.applications}</span>{' '}
                         applications
                       </div>
                       <Link href={`/dashboard/jobs/${job.id}`}>
@@ -495,11 +469,7 @@ export default function JobsListingPage() {
                       {job.salary}
                     </Badge>
                     {job.requirements.slice(0, 2).map((req, index) => (
-                      <Badge
-                        key={index}
-                        variant="outline"
-                        className="bg-gray-50"
-                      >
+                      <Badge key={index} variant="outline" className="bg-gray-50">
                         {req}
                       </Badge>
                     ))}
@@ -522,11 +492,7 @@ export default function JobsListingPage() {
           <Button variant="outline" size="sm" disabled>
             Previous
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            className="bg-teal text-white hover:bg-teal-dark"
-          >
+          <Button variant="outline" size="sm" className="bg-teal text-white hover:bg-teal-dark">
             1
           </Button>
           <Button variant="outline" size="sm">

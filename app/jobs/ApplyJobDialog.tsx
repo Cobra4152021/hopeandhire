@@ -41,11 +41,7 @@ interface ApplyJobDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export function ApplyJobDialog({
-  job,
-  open,
-  onOpenChange,
-}: ApplyJobDialogProps) {
+export function ApplyJobDialog({ job, open, onOpenChange }: ApplyJobDialogProps) {
   const [message, setMessage] = useState('');
   const [selectedResume, setSelectedResume] = useState('');
   const { toast } = useToast();
@@ -109,18 +105,12 @@ export function ApplyJobDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Apply for {job.title}</DialogTitle>
-          <DialogDescription>
-            Submit your application for {job.company.name}
-          </DialogDescription>
+          <DialogDescription>Submit your application for {job.company.name}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="resume">Select Resume</Label>
-            <Select
-              value={selectedResume}
-              onValueChange={setSelectedResume}
-              required
-            >
+            <Select value={selectedResume} onValueChange={setSelectedResume} required>
               <SelectTrigger>
                 <SelectValue placeholder="Choose a resume" />
               </SelectTrigger>
@@ -145,11 +135,7 @@ export function ApplyJobDialog({
             />
           </div>
           <div className="flex justify-end space-x-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
             <Button type="submit" disabled={applyJob.isPending}>

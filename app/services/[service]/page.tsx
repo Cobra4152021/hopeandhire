@@ -9,8 +9,7 @@ import { CheckCircle } from 'lucide-react';
 const services = {
   'resume-review': {
     title: 'Resume Review',
-    description:
-      'Professional resume review and optimization to help you stand out to employers.',
+    description: 'Professional resume review and optimization to help you stand out to employers.',
     image: '/resume-review.png',
     features: [
       'One-on-one resume review with a professional volunteer',
@@ -49,8 +48,7 @@ const services = {
   },
   'career-counseling': {
     title: 'Career Counseling',
-    description:
-      'Guidance and support to help you identify and pursue your career goals.',
+    description: 'Guidance and support to help you identify and pursue your career goals.',
     image: '/career-counseling.png',
     features: [
       'One-on-one career counseling sessions',
@@ -109,11 +107,7 @@ const services = {
   },
 };
 
-export default function ServicePage({
-  params,
-}: {
-  params: { service: string };
-}) {
+export default function ServicePage({ params }: { params: { service: string } }) {
   const service = services[params.service as keyof typeof services];
 
   // If service doesn't exist, return 404
@@ -143,14 +137,10 @@ export default function ServicePage({
               <h1 className="text-4xl md:text-5xl font-bold mb-6 text-dark-text">
                 {service.title}
               </h1>
-              <p className="text-lg mb-8 text-gray-600">
-                {service.description}
-              </p>
+              <p className="text-lg mb-8 text-gray-600">{service.description}</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/register">
-                  <Button className="bg-teal text-white hover:bg-teal-dark">
-                    Get Started
-                  </Button>
+                  <Button className="bg-teal text-white hover:bg-teal-dark">Get Started</Button>
                 </Link>
                 <Link href="/contact">
                   <Button
@@ -178,15 +168,11 @@ export default function ServicePage({
       {/* Service Features */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">
-            What We Offer
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">What We Offer</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-6 text-dark-text">
-                  Service Features
-                </h3>
+                <h3 className="text-xl font-bold mb-6 text-dark-text">Service Features</h3>
                 <ul className="space-y-4">
                   {service.features.map((feature, index) => (
                     <li key={index} className="flex items-start">
@@ -199,9 +185,7 @@ export default function ServicePage({
             </Card>
             <Card>
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-6 text-dark-text">
-                  Benefits
-                </h3>
+                <h3 className="text-xl font-bold mb-6 text-dark-text">Benefits</h3>
                 <ul className="space-y-4">
                   {service.benefits.map((benefit, index) => (
                     <li key={index} className="flex items-start">
@@ -219,17 +203,13 @@ export default function ServicePage({
       {/* How It Works */}
       <section className="py-16 bg-light-bg">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">
-            How It Works
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="rounded-full bg-teal text-white w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 1
               </div>
-              <h3 className="text-lg font-bold mb-2 text-dark-text">
-                Register
-              </h3>
+              <h3 className="text-lg font-bold mb-2 text-dark-text">Register</h3>
               <p className="text-gray-600">
                 Create an account and complete your profile to get started.
               </p>
@@ -238,9 +218,7 @@ export default function ServicePage({
               <div className="rounded-full bg-teal text-white w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                 2
               </div>
-              <h3 className="text-lg font-bold mb-2 text-dark-text">
-                Schedule
-              </h3>
+              <h3 className="text-lg font-bold mb-2 text-dark-text">Schedule</h3>
               <p className="text-gray-600">
                 Book a session with one of our professional volunteers.
               </p>
@@ -251,8 +229,7 @@ export default function ServicePage({
               </div>
               <h3 className="text-lg font-bold mb-2 text-dark-text">Succeed</h3>
               <p className="text-gray-600">
-                Receive personalized support and take steps toward your career
-                goals.
+                Receive personalized support and take steps toward your career goals.
               </p>
             </div>
           </div>
@@ -262,17 +239,14 @@ export default function ServicePage({
       {/* Testimonials */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">
-            Success Stories
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-dark-text">Success Stories</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card>
               <CardContent className="p-6">
                 <blockquote className="border-l-4 border-teal pl-4 italic text-gray-600 mb-4">
-                  "The &quot;{service.title.toLowerCase()}&quot; service at Hope and Hire
-                  was instrumental in helping me secure my current position. The
-                  personalized support and guidance made all the difference in
-                  my job search."
+                  "The &quot;{service.title.toLowerCase()}&quot; service at Hope and Hire was
+                  instrumental in helping me secure my current position. The personalized support
+                  and guidance made all the difference in my job search."
                 </blockquote>
                 <p className="font-medium">- Michael R., Program Participant</p>
               </CardContent>
@@ -280,10 +254,9 @@ export default function ServicePage({
             <Card>
               <CardContent className="p-6">
                 <blockquote className="border-l-4 border-yellow pl-4 italic text-gray-600 mb-4">
-                  "I was struggling to find employment due to gaps in my work
-                  history. The &quot;{service.title.toLowerCase()}&quot; service helped me
-                  address these challenges effectively and present myself
-                  confidently to employers."
+                  "I was struggling to find employment due to gaps in my work history. The &quot;
+                  {service.title.toLowerCase()}&quot; service helped me address these challenges
+                  effectively and present myself confidently to employers."
                 </blockquote>
                 <p className="font-medium">- Sarah T., Program Participant</p>
               </CardContent>
@@ -295,17 +268,14 @@ export default function ServicePage({
       {/* CTA Section */}
       <section className="py-16 bg-light-bg">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-dark-text">
-            Ready to Get Started?
-          </h2>
+          <h2 className="text-3xl font-bold mb-4 text-dark-text">Ready to Get Started?</h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Take the first step toward your career goals with our &quot;{service.title.toLowerCase()}&quot; service.
+            Take the first step toward your career goals with our &quot;
+            {service.title.toLowerCase()}&quot; service.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register">
-              <Button className="bg-teal text-white hover:bg-teal-dark">
-                Register Now
-              </Button>
+              <Button className="bg-teal text-white hover:bg-teal-dark">Register Now</Button>
             </Link>
             <Link href="/contact">
               <Button

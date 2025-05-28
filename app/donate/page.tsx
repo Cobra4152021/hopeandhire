@@ -65,9 +65,8 @@ export default function DonatePage() {
               Support Our Mission
             </h1>
             <p className="text-lg mb-8 text-gray-600">
-              Your donation helps us create pathways to employment for
-              individuals seeking second chances. Together, we can build
-              stronger communities through meaningful work.
+              Your donation helps us create pathways to employment for individuals seeking second
+              chances. Together, we can build stronger communities through meaningful work.
             </p>
             <div className="flex justify-center">
               <Heart className="h-16 w-16 text-yellow" />
@@ -93,13 +92,11 @@ export default function DonatePage() {
                         Thank You for Your Donation!
                       </h2>
                       <p className="text-gray-600 mb-6">
-                        Your generous contribution will help us continue our
-                        mission of connecting individuals with meaningful
-                        employment opportunities.
+                        Your generous contribution will help us continue our mission of connecting
+                        individuals with meaningful employment opportunities.
                       </p>
                       <p className="text-gray-600 mb-6">
-                        A receipt has been sent to your email address. Thank you
-                        for your support!
+                        A receipt has been sent to your email address. Thank you for your support!
                       </p>
                       <Button
                         onClick={() => setIsSubmitted(false)}
@@ -126,10 +123,7 @@ export default function DonatePage() {
                       </TabsList>
 
                       <TabsContent value="one-time">
-                        <form
-                          onSubmit={handleDonationSubmit}
-                          className="space-y-6"
-                        >
+                        <form onSubmit={handleDonationSubmit} className="space-y-6">
                           <div className="space-y-4">
                             <Label>Select Donation Amount</Label>
                             <RadioGroup
@@ -137,37 +131,26 @@ export default function DonatePage() {
                               onValueChange={handleAmountChange}
                               className="grid grid-cols-3 gap-4"
                             >
-                              {['25', '50', '100', '250', '500', 'custom'].map(
-                                (amount) => (
-                                  <div
-                                    key={amount}
-                                    className="flex items-center"
-                                  >
-                                    <RadioGroupItem
-                                      value={amount}
-                                      id={`amount-${amount}`}
-                                      className="peer sr-only"
-                                    />
+                              {['25', '50', '100', '250', '500', 'custom'].map((amount) => (
+                                <div key={amount} className="flex items-center">
+                                  <RadioGroupItem
+                                    value={amount}
+                                    id={`amount-${amount}`}
+                                    className="peer sr-only"
+                                  />
                                   <Label
                                     htmlFor={`amount-${amount}`}
                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-teal [&:has([data-state=checked])]:border-teal"
                                   >
-                                      {amount === 'custom' ? (
-                                        'Custom'
-                                      ) : (
-                                        <span>${amount}</span>
-                                      )}
+                                    {amount === 'custom' ? 'Custom' : <span>${amount}</span>}
                                   </Label>
                                 </div>
-                                )
-                              )}
+                              ))}
                             </RadioGroup>
 
                             {donationAmount === 'custom' && (
                               <div className="mt-4">
-                                <Label htmlFor="customAmount">
-                                  Enter Custom Amount
-                                </Label>
+                                <Label htmlFor="customAmount">Enter Custom Amount</Label>
                                 <div className="relative mt-1">
                                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <span className="text-gray-500">$</span>
@@ -221,10 +204,7 @@ export default function DonatePage() {
                       </TabsContent>
 
                       <TabsContent value="monthly">
-                        <form
-                          onSubmit={handleDonationSubmit}
-                          className="space-y-6"
-                        >
+                        <form onSubmit={handleDonationSubmit} className="space-y-6">
                           <div className="space-y-4">
                             <Label>Select Monthly Donation Amount</Label>
                             <RadioGroup
@@ -232,37 +212,26 @@ export default function DonatePage() {
                               onValueChange={handleAmountChange}
                               className="grid grid-cols-3 gap-4"
                             >
-                              {['10', '25', '50', '100', '200', 'custom'].map(
-                                (amount) => (
-                                  <div
-                                    key={amount}
-                                    className="flex items-center"
-                                  >
-                                    <RadioGroupItem
-                                      value={amount}
-                                      id={`monthly-${amount}`}
-                                      className="peer sr-only"
-                                    />
+                              {['10', '25', '50', '100', '200', 'custom'].map((amount) => (
+                                <div key={amount} className="flex items-center">
+                                  <RadioGroupItem
+                                    value={amount}
+                                    id={`monthly-${amount}`}
+                                    className="peer sr-only"
+                                  />
                                   <Label
                                     htmlFor={`monthly-${amount}`}
                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-teal [&:has([data-state=checked])]:border-teal"
                                   >
-                                      {amount === 'custom' ? (
-                                        'Custom'
-                                      ) : (
-                                        <span>${amount}</span>
-                                      )}
+                                    {amount === 'custom' ? 'Custom' : <span>${amount}</span>}
                                   </Label>
                                 </div>
-                                )
-                              )}
+                              ))}
                             </RadioGroup>
 
                             {donationAmount === 'custom' && (
                               <div className="mt-4">
-                                <Label htmlFor="customAmount">
-                                  Enter Custom Amount
-                                </Label>
+                                <Label htmlFor="customAmount">Enter Custom Amount</Label>
                                 <div className="relative mt-1">
                                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <span className="text-gray-500">$</span>

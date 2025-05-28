@@ -24,14 +24,7 @@ import {
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import {
-  MapPin,
-  Plus,
-  CalendarIcon,
-  ChevronLeft,
-  ChevronRight,
-  Trash2,
-} from 'lucide-react';
+import { MapPin, Plus, CalendarIcon, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
 import { Tabs } from '@/components/ui/tabs';
 
 interface Event {
@@ -39,10 +32,15 @@ interface Event {
   title: string;
   date: Date;
   time: string;
-  duration: number;
-  type: string;
+  type: 'Interview' | 'Resume Review' | 'Meeting' | string;
   location: string;
-  attendees: any[];
+  description: string;
+  duration: number;
+  attendees: {
+    name: string;
+    avatar: string;
+    role: string;
+  }[];
 }
 
 // Sample events data
@@ -55,6 +53,7 @@ const initialEvents = [
     type: 'Interview',
     location: 'Virtual (Zoom)',
     description: 'Initial interview for the Software Developer position',
+    duration: 60,
     attendees: [
       {
         name: 'Michael Johnson',
@@ -76,6 +75,7 @@ const initialEvents = [
     type: 'Resume Review',
     location: 'Office - Room 203',
     description: 'Review resumes for the Marketing Specialist position',
+    duration: 60,
     attendees: [
       {
         name: 'David Chen',
@@ -97,6 +97,7 @@ const initialEvents = [
     type: 'Meeting',
     location: 'Conference Room A',
     description: 'Discuss hiring strategy for Q3',
+    duration: 60,
     attendees: [
       {
         name: 'Sarah Thompson',
@@ -145,6 +146,7 @@ export default function SchedulePageClient() {
       date: eventDate,
       description: newEvent.description || '',
       attendees: newEvent.attendees || [],
+      type: newEvent.type.charAt(0).toUpperCase() + newEvent.type.slice(1),
     };
 
     setEvents([...events, newEventWithId]);
@@ -154,7 +156,7 @@ export default function SchedulePageClient() {
       date: new Date(),
       time: '09:00',
       duration: 60,
-      type: 'interview',
+      type: 'Interview',
       location: '',
       description: '',
       attendees: [],
@@ -211,15 +213,10 @@ export default function SchedulePageClient() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Schedule</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Manage your interviews and meetings
-          </p>
+          <p className="mt-1 text-sm text-gray-500">Manage your interviews and meetings</p>
         </div>
         <div className="flex items-center space-x-2">
-          <Tabs
-            value={view}
-            onValueChange={(val) => setView(val as 'day' | 'week' | 'month')}
-          >
+          <Tabs value={view} onValueChange={(val) => setView(val as 'day' | 'week' | 'month')}>
             <TabsList>
               <TabsTrigger value="day">Day</TabsTrigger>
               <TabsTrigger value="week">Week</TabsTrigger>
@@ -248,13 +245,15 @@ export default function SchedulePageClient() {
               selected={currentDate}
               onSelect={(date) => date && setCurrentDate(date)}
               className="rounded-md border"
+              modifiersStyles={{
+                selected: { backgroundColor: 'var(--teal-primary)' },
+                today: { color: 'var(--teal-primary)' },
+              }}
               initialFocus
             />
 
             <div className="mt-6">
-              <h3 className="font-medium text-gray-900 mb-3">
-                Upcoming Events
-              </h3>
+              <h3 className="font-medium text-gray-900 mb-3">Upcoming Events</h3>
               <div className="space-y-3">
                 {events.slice(0, 3).map((event) => (
                   <div
@@ -311,11 +310,8 @@ export default function SchedulePageClient() {
               {view === 'day' && (
                 <div className="space-y-4">
                   {events
-                    .filter(
-                      (event: Event) =>
-                        event.date.toDateString() === currentDate.toDateString()
-                    )
-                    .map((event: Event) => (
+                    .filter((event) => event.date.toDateString() === currentDate.toDateString())
+                    .map((event) => (
                       <Card key={event.id} className="p-4">
                         <div className="flex justify-between items-start">
                           <div>
@@ -329,9 +325,7 @@ export default function SchedulePageClient() {
                             <p className="text-sm text-gray-500">
                               Duration: {event.duration} minutes
                             </p>
-                            <p className="text-sm text-gray-500">
-                              Location: {event.location}
-                            </p>
+                            <p className="text-sm text-gray-500">Location: {event.location}</p>
                           </div>
                           <Button
                             variant="ghost"
@@ -361,15 +355,10 @@ export default function SchedulePageClient() {
                           {date.toLocaleDateString('en-US', { day: 'numeric' })}
                         </div>
                         {events
-                          .filter(
-                            (event: Event) =>
-                              event.date.toDateString() === date.toDateString()
-                          )
-                          .map((event: Event) => (
+                          .filter((event) => event.date.toDateString() === date.toDateString())
+                          .map((event) => (
                             <Card key={event.id} className="p-2">
-                              <h3 className="font-semibold text-sm">
-                                {event.title}
-                              </h3>
+                              <h3 className="font-semibold text-sm">{event.title}</h3>
                               <p className="text-xs text-gray-500">
                                 {event.date.toLocaleTimeString('en-US', {
                                   hour: 'numeric',
@@ -386,34 +375,22 @@ export default function SchedulePageClient() {
               {view === 'month' && (
                 <div className="grid grid-cols-7 gap-4">
                   {Array.from({ length: 35 }, (_, i) => {
-                    const date = new Date(
-                      currentDate.getFullYear(),
-                      currentDate.getMonth(),
-                      1
-                    );
+                    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
                     date.setDate(date.getDate() + i);
                     return (
                       <div
                         key={i}
                         className={`p-2 ${
-                          date.getMonth() === currentDate.getMonth()
-                            ? 'bg-white'
-                            : 'bg-gray-50'
+                          date.getMonth() === currentDate.getMonth() ? 'bg-white' : 'bg-gray-50'
                         }`}
                       >
                         <div className="text-center font-semibold">
                           {date.toLocaleDateString('en-US', { day: 'numeric' })}
                         </div>
                         {events
-                          .filter(
-                            (event: Event) =>
-                              event.date.toDateString() === date.toDateString()
-                          )
-                          .map((event: Event) => (
-                            <div
-                              key={event.id}
-                              className="text-xs text-gray-500 truncate"
-                            >
+                          .filter((event) => event.date.toDateString() === date.toDateString())
+                          .map((event) => (
+                            <div key={event.id} className="text-xs text-gray-500 truncate">
                               {event.title}
                             </div>
                           ))}
@@ -429,16 +406,11 @@ export default function SchedulePageClient() {
 
       {/* Event Details Dialog */}
       {selectedEvent && (
-        <Dialog
-          open={!!selectedEvent}
-          onOpenChange={() => setSelectedEvent(null)}
-        >
+        <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
           <DialogContent className="sm:max-w-[550px]">
             <DialogHeader>
               <DialogTitle>{selectedEvent.title}</DialogTitle>
-              <Badge
-                className={`mt-2 ${getEventTypeColor(selectedEvent.type)}`}
-              >
+              <Badge className={`mt-2 ${getEventTypeColor(selectedEvent.type)}`}>
                 {selectedEvent.type}
               </Badge>
             </DialogHeader>
@@ -446,8 +418,7 @@ export default function SchedulePageClient() {
               <div className="flex items-center">
                 <CalendarIcon className="h-5 w-5 text-gray-400 mr-2" />
                 <span>
-                  {selectedEvent.date.toLocaleDateString()} •{' '}
-                  {selectedEvent.time}
+                  {selectedEvent.date.toLocaleDateString()} • {selectedEvent.time}
                 </span>
               </div>
               <div className="flex items-center">
@@ -461,30 +432,26 @@ export default function SchedulePageClient() {
               <div>
                 <h4 className="font-medium mb-2">Attendees</h4>
                 <div className="space-y-2">
-                  {selectedEvent.attendees.map(
-                    (attendee: any, index: number) => (
-                      <div key={index} className="flex items-center">
-                        <Avatar className="h-8 w-8 mr-2">
-                          <AvatarImage
-                            src={attendee.avatar || '/placeholder.svg'}
-                            alt={attendee.name}
-                          />
-                          <AvatarFallback className="bg-teal-light/20 text-teal">
-                            {attendee.name
-                              .split(' ')
-                              .map((n: string) => n[0])
-                              .join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-medium">{attendee.name}</p>
-                          <p className="text-xs text-gray-500">
-                            {attendee.role}
-                          </p>
-                        </div>
+                  {selectedEvent.attendees.map((attendee: any, index: number) => (
+                    <div key={index} className="flex items-center">
+                      <Avatar className="h-8 w-8 mr-2">
+                        <AvatarImage
+                          src={attendee.avatar || '/placeholder.svg'}
+                          alt={attendee.name}
+                        />
+                        <AvatarFallback className="bg-teal-light/20 text-teal">
+                          {attendee.name
+                            .split(' ')
+                            .map((n: string) => n[0])
+                            .join('')}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-medium">{attendee.name}</p>
+                        <p className="text-xs text-gray-500">{attendee.role}</p>
                       </div>
-                    )
-                  )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -492,9 +459,7 @@ export default function SchedulePageClient() {
               <Button variant="outline" onClick={() => setSelectedEvent(null)}>
                 Close
               </Button>
-              <Button className="bg-teal text-white hover:bg-teal-dark">
-                Edit Event
-              </Button>
+              <Button className="bg-teal text-white hover:bg-teal-dark">Edit Event</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -559,9 +524,7 @@ export default function SchedulePageClient() {
               <Label htmlFor="type">Type</Label>
               <Select
                 value={newEvent.type}
-                onValueChange={(value: string) =>
-                  setNewEvent({ ...newEvent, type: value })
-                }
+                onValueChange={(value: string) => setNewEvent({ ...newEvent, type: value })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />

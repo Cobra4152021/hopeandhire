@@ -22,8 +22,7 @@ const sampleContacts = [
     name: 'Michael Chen',
     role: 'Volunteer Career Coach',
     avatar: '/microphone-concert-stage.png',
-    lastMessage:
-      "I've reviewed the resume you sent. Let's discuss it tomorrow.",
+    lastMessage: "I've reviewed the resume you sent. Let's discuss it tomorrow.",
     unread: false,
     time: 'Yesterday',
   },
@@ -164,33 +163,20 @@ export default function MessagingPageClient() {
                 >
                   <div className="flex items-start">
                     <Avatar className="h-12 w-12">
-                      <AvatarImage
-                        src={contact.avatar || '/placeholder.svg'}
-                        alt={contact.name}
-                      />
+                      <AvatarImage src={contact.avatar || '/placeholder.svg'} alt={contact.name} />
                       <AvatarFallback className="bg-teal-light/20 text-teal">
                         {contact.name.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="ml-4 flex-1">
                       <div className="flex justify-between items-start">
-                        <h3 className="font-medium text-gray-900">
-                          {contact.name}
-                        </h3>
-                        <span className="text-xs text-gray-500">
-                          {contact.time}
-                        </span>
+                        <h3 className="font-medium text-gray-900">{contact.name}</h3>
+                        <span className="text-xs text-gray-500">{contact.time}</span>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {contact.role}
-                      </p>
-                      <p className="text-sm text-gray-600 mt-1 truncate">
-                        {contact.lastMessage}
-                      </p>
+                      <p className="text-xs text-gray-500 mt-1">{contact.role}</p>
+                      <p className="text-sm text-gray-600 mt-1 truncate">{contact.lastMessage}</p>
                     </div>
-                    {contact.unread && (
-                      <div className="w-2 h-2 bg-teal rounded-full mt-2"></div>
-                    )}
+                    {contact.unread && <div className="w-2 h-2 bg-teal rounded-full mt-2"></div>}
                   </div>
                 </div>
               ))}
@@ -211,9 +197,7 @@ export default function MessagingPageClient() {
                 </AvatarFallback>
               </Avatar>
               <div className="ml-4">
-                <h3 className="font-medium text-gray-900">
-                  {selectedContact.name}
-                </h3>
+                <h3 className="font-medium text-gray-900">{selectedContact.name}</h3>
                 <p className="text-xs text-gray-500">{selectedContact.role}</p>
               </div>
             </div>
@@ -259,10 +243,7 @@ export default function MessagingPageClient() {
                   }
                 }}
               />
-              <Button
-                onClick={handleSendMessage}
-                className="bg-teal text-white hover:bg-teal-dark"
-              >
+              <Button onClick={handleSendMessage} className="bg-teal text-white hover:bg-teal-dark">
                 Send
               </Button>
             </div>

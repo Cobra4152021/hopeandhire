@@ -84,9 +84,7 @@ export function ProfileForm() {
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h3 className="text-lg font-semibold">Your Profile</h3>
-          <p className="text-sm text-muted-foreground">
-            Manage your professional profile
-          </p>
+          <p className="text-sm text-muted-foreground">Manage your professional profile</p>
         </div>
         <Button
           variant="outline"
@@ -107,9 +105,7 @@ export function ProfileForm() {
           <Input
             id="full_name"
             value={isEditing ? formData.full_name : profile?.full_name}
-            onChange={(e) =>
-              setFormData({ ...formData, full_name: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
             disabled={!isEditing}
           />
         </div>
@@ -130,9 +126,7 @@ export function ProfileForm() {
           <Input
             id="location"
             value={isEditing ? formData.location : profile?.location}
-            onChange={(e) =>
-              setFormData({ ...formData, location: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
             disabled={!isEditing}
           />
         </div>
@@ -141,11 +135,7 @@ export function ProfileForm() {
           <Label htmlFor="skills">Skills (comma-separated)</Label>
           <Input
             id="skills"
-            value={
-              isEditing
-                ? formData.skills?.join(', ')
-                : profile?.skills?.join(', ')
-            }
+            value={isEditing ? formData.skills?.join(', ') : profile?.skills?.join(', ')}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -161,9 +151,7 @@ export function ProfileForm() {
           <Textarea
             id="experience"
             value={isEditing ? formData.experience : profile?.experience}
-            onChange={(e) =>
-              setFormData({ ...formData, experience: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
             disabled={!isEditing}
             rows={4}
           />
@@ -174,9 +162,7 @@ export function ProfileForm() {
           <Textarea
             id="education"
             value={isEditing ? formData.education : profile?.education}
-            onChange={(e) =>
-              setFormData({ ...formData, education: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, education: e.target.value })}
             disabled={!isEditing}
             rows={4}
           />

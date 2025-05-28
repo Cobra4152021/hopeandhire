@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
-import { Calendar, Users, MessageSquare, Briefcase, Building } from 'lucide-react';
+import { Briefcase, Users, MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
@@ -16,7 +16,9 @@ export default function EmployerDashboardClient() {
   // Check auth state on mount
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         console.log('No user found, redirecting to login');
         router.push('/login');
@@ -31,7 +33,9 @@ export default function EmployerDashboardClient() {
   const { data: stats } = useQuery({
     queryKey: ['employer-stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Get total jobs posted
@@ -75,9 +79,7 @@ export default function EmployerDashboardClient() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Employer Dashboard</h1>
-        <Button onClick={() => router.push('/dashboard/employer/post-job')}>
-          Post New Job
-        </Button>
+        <Button onClick={() => router.push('/dashboard/employer/post-job')}>Post New Job</Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -88,9 +90,7 @@ export default function EmployerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.totalJobs || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              {stats?.activeJobs || 0} active jobs
-            </p>
+            <p className="text-xs text-muted-foreground">{stats?.activeJobs || 0} active jobs</p>
           </CardContent>
         </Card>
 
@@ -101,9 +101,7 @@ export default function EmployerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.totalApplications || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              Reviewed by volunteer recruiters
-            </p>
+            <p className="text-xs text-muted-foreground">Reviewed by volunteer recruiters</p>
           </CardContent>
         </Card>
 
@@ -114,9 +112,7 @@ export default function EmployerDashboardClient() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats?.unreadMessages || 0}</div>
-            <p className="text-xs text-muted-foreground">
-              From volunteer recruiters
-            </p>
+            <p className="text-xs text-muted-foreground">From volunteer recruiters</p>
           </CardContent>
         </Card>
       </div>
@@ -130,9 +126,7 @@ export default function EmployerDashboardClient() {
         </TabsList>
         <TabsContent value="jobs" className="space-y-4">
           {/* Jobs list component will go here */}
-          <div className="text-center text-gray-500 py-8">
-            Your posted jobs will appear here
-          </div>
+          <div className="text-center text-gray-500 py-8">Your posted jobs will appear here</div>
           {/* Example: Jobs list component */}
           <div className="border rounded p-4">
             <h3 className="font-bold">Example Posted Jobs</h3>
@@ -163,4 +157,4 @@ export default function EmployerDashboardClient() {
       </Tabs>
     </div>
   );
-} 
+}

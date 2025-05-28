@@ -41,8 +41,7 @@ interface Application {
 }
 
 export function ApplicationsList() {
-  const [selectedApplication, setSelectedApplication] =
-    useState<Application | null>(null);
+  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -118,10 +117,7 @@ export function ApplicationsList() {
     return (
       <div className="space-y-4">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="h-[100px] animate-pulse rounded-lg bg-muted"
-          />
+          <div key={i} className="h-[100px] animate-pulse rounded-lg bg-muted" />
         ))}
       </div>
     );
@@ -166,16 +162,12 @@ export function ApplicationsList() {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="line-clamp-2 text-sm text-muted-foreground">
-              {application.message}
-            </p>
+            <p className="line-clamp-2 text-sm text-muted-foreground">{application.message}</p>
           </CardContent>
           <CardFooter>
             <Dialog
               open={selectedApplication?.id === application.id}
-              onOpenChange={(open) =>
-                setSelectedApplication(open ? application : null)
-              }
+              onOpenChange={(open) => setSelectedApplication(open ? application : null)}
             >
               <DialogTrigger asChild>
                 <Button variant="outline">View Details</Button>
@@ -196,9 +188,7 @@ export function ApplicationsList() {
                   </div>
                   <div>
                     <h4 className="font-medium">Message</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {application.message}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{application.message}</p>
                   </div>
                 </div>
                 <DialogFooter>

@@ -3,19 +3,9 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
-import {
-  TrendingUp,
-  DollarSign,
-  Award,
-  BookOpen,
-  Users,
-  ArrowRight,
-  ChevronRight,
-} from 'lucide-react';
+import { ArrowRight, DollarSign, TrendingUp, Users, Award, BookOpen } from 'lucide-react';
 
 interface CareerPath {
   id: string;
@@ -100,9 +90,7 @@ export default function CareerPathPage() {
         {/* Career Path Details */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>
-              {selectedPath ? selectedPath.title : 'Select a Career Path'}
-            </CardTitle>
+            <CardTitle>{selectedPath ? selectedPath.title : 'Select a Career Path'}</CardTitle>
           </CardHeader>
           <CardContent>
             {selectedPath ? (
@@ -116,10 +104,7 @@ export default function CareerPathPage() {
 
                   <TabsContent value="progression" className="space-y-6">
                     {selectedPath.levels.map((level, index) => (
-                      <div
-                        key={level.level}
-                        className="relative p-4 border rounded-lg"
-                      >
+                      <div key={level.level} className="relative p-4 border rounded-lg">
                         {index < selectedPath.levels.length - 1 && (
                           <div className="absolute left-8 top-16 bottom-0 w-0.5 bg-gray-200" />
                         )}
@@ -130,9 +115,7 @@ export default function CareerPathPage() {
                           <div className="flex-grow space-y-4">
                             <div>
                               <h3 className="font-medium">{level.title}</h3>
-                              <p className="text-sm text-gray-500">
-                                Level {level.level}
-                              </p>
+                              <p className="text-sm text-gray-500">Level {level.level}</p>
                             </div>
 
                             {/* Salary Range */}
@@ -146,9 +129,7 @@ export default function CareerPathPage() {
 
                             {/* Required Skills */}
                             <div>
-                              <h4 className="text-sm font-medium mb-2">
-                                Required Skills
-                              </h4>
+                              <h4 className="text-sm font-medium mb-2">Required Skills</h4>
                               <div className="flex flex-wrap gap-2">
                                 {level.required_skills.map((skill) => (
                                   <span
@@ -163,9 +144,7 @@ export default function CareerPathPage() {
 
                             {/* Certifications */}
                             <div>
-                              <h4 className="text-sm font-medium mb-2">
-                                Certifications
-                              </h4>
+                              <h4 className="text-sm font-medium mb-2">Certifications</h4>
                               <div className="flex flex-wrap gap-2">
                                 {level.certifications.map((cert) => (
                                   <span
@@ -208,8 +187,8 @@ export default function CareerPathPage() {
                               transition.difficulty === 'easy'
                                 ? 'bg-green-100 text-green-800'
                                 : transition.difficulty === 'medium'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-red-100 text-red-800'
+                                  ? 'bg-yellow-100 text-yellow-800'
+                                  : 'bg-red-100 text-red-800'
                             }`}
                           >
                             {transition.difficulty}
@@ -218,9 +197,7 @@ export default function CareerPathPage() {
 
                         {/* Required Skills */}
                         <div className="mb-4">
-                          <h4 className="text-sm font-medium mb-2">
-                            Required Skills
-                          </h4>
+                          <h4 className="text-sm font-medium mb-2">Required Skills</h4>
                           <div className="flex flex-wrap gap-2">
                             {transition.required_skills.map((skill) => (
                               <span
@@ -261,16 +238,12 @@ export default function CareerPathPage() {
 
                             <div>
                               <h4 className="text-sm font-medium mb-2">Journey</h4>
-                              <p className="text-sm text-gray-600">
-                                {story.journey}
-                              </p>
+                              <p className="text-sm text-gray-600">{story.journey}</p>
                             </div>
 
                             <div>
                               <h4 className="text-sm font-medium mb-2">Advice</h4>
-                              <p className="text-sm text-gray-600">
-                                {story.advice}
-                              </p>
+                              <p className="text-sm text-gray-600">{story.advice}</p>
                             </div>
                           </div>
                         </div>
@@ -282,9 +255,7 @@ export default function CareerPathPage() {
             ) : (
               <div className="text-center py-12">
                 <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">
-                  Select a career path to explore
-                </p>
+                <p className="text-gray-500">Select a career path to explore</p>
               </div>
             )}
           </CardContent>
@@ -292,4 +263,4 @@ export default function CareerPathPage() {
       </div>
     </div>
   );
-} 
+}

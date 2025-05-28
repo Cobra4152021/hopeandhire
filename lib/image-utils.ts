@@ -26,10 +26,7 @@ export function getResponsiveSizes(
  * @param aboveTheFold Whether the image is above the fold
  * @returns 'eager' or 'lazy'
  */
-export function getLoadingStrategy(
-  priority: boolean,
-  aboveTheFold: boolean
-): 'eager' | 'lazy' {
+export function getLoadingStrategy(priority: boolean, aboveTheFold: boolean): 'eager' | 'lazy' {
   if (priority || aboveTheFold) {
     return 'eager';
   }

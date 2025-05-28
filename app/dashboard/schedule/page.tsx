@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -17,13 +16,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/components/ui/use-toast';
 import { Calendar } from '@/components/ui/calendar';
-import {
-  Calendar as CalendarIcon,
-  Clock,
-  Users,
-  MessageSquare,
-  Video,
-} from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Users, MessageSquare, Video } from 'lucide-react';
 
 interface Volunteer {
   id: string;
@@ -74,7 +67,9 @@ export default function SchedulePage() {
   const { data: meetings, isLoading: isLoadingMeetings } = useQuery({
     queryKey: ['meetings'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -91,16 +86,16 @@ export default function SchedulePage() {
   // Schedule meeting mutation
   const scheduleMeeting = useMutation({
     mutationFn: async (meetingData: Partial<Meeting>) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
-        .from('meetings')
-        .insert({
-          ...meetingData,
-          user_id: user.id,
-          status: 'scheduled',
-        });
+      const { error } = await supabase.from('meetings').insert({
+        ...meetingData,
+        user_id: user.id,
+        status: 'scheduled',
+      });
 
       if (error) throw error;
     },
@@ -116,10 +111,10 @@ export default function SchedulePage() {
       setMeetingType('video');
       setNotes('');
     },
-    onError: (error) => {
+    onError: (_error) => {
       toast({
-        title: 'Error',
-        description: 'Failed to schedule meeting',
+        title: 'Error scheduling meeting',
+        description: _error.message,
         variant: 'destructive',
       });
     },
@@ -163,10 +158,7 @@ export default function SchedulePage() {
               {/* Volunteer Selection */}
               <div className="space-y-2">
                 <Label>Select Volunteer</Label>
-                <Select
-                  value={selectedVolunteer}
-                  onValueChange={setSelectedVolunteer}
-                >
+                <Select value={selectedVolunteer} onValueChange={setSelectedVolunteer}>
                   <SelectTrigger>
                     <SelectValue placeholder="Choose a volunteer" />
                   </SelectTrigger>
@@ -204,13 +196,14 @@ export default function SchedulePage() {
                     <SelectValue placeholder="Choose a time slot" />
                   </SelectTrigger>
                   <SelectContent>
-                    {selectedVolunteer && volunteers
-                      ?.find((v) => v.id === selectedVolunteer)
-                      ?.availability.time_slots.map((time) => (
-                        <SelectItem key={time} value={time}>
-                          {time}
-                        </SelectItem>
-                      ))}
+                    {selectedVolunteer &&
+                      volunteers
+                        ?.find((v) => v.id === selectedVolunteer)
+                        ?.availability.time_slots.map((time) => (
+                          <SelectItem key={time} value={time}>
+                            {time}
+                          </SelectItem>
+                        ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -266,32 +259,24 @@ export default function SchedulePage() {
           <CardContent>
             <div className="space-y-4">
               {meetings?.map((meeting) => {
-                const volunteer = volunteers?.find(
-                  (v) => v.id === meeting.volunteer_id
-                );
+                const volunteer = volunteers?.find((v) => v.id === meeting.volunteer_id);
                 return (
-                  <div
-                    key={meeting.id}
-                    className="p-4 border rounded-lg space-y-2"
-                  >
+                  <div key={meeting.id} className="p-4 border rounded-lg space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Users className="w-4 h-4 text-gray-400" />
-                        <span className="font-medium">
-                          {volunteer?.full_name}
-                        </span>
+                        <span className="font-medium">{volunteer?.full_name}</span>
                       </div>
                       <span
                         className={`px-2 py-1 rounded-full text-xs ${
                           meeting.status === 'scheduled'
                             ? 'bg-blue-100 text-blue-700'
                             : meeting.status === 'completed'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-red-100 text-red-700'
+                              ? 'bg-green-100 text-green-700'
+                              : 'bg-red-100 text-red-700'
                         }`}
                       >
-                        {meeting.status.charAt(0).toUpperCase() +
-                          meeting.status.slice(1)}
+                        {meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
                       </span>
                     </div>
                     <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -312,16 +297,12 @@ export default function SchedulePage() {
                         {meeting.type === 'video' ? 'Video Call' : 'Chat'}
                       </div>
                     </div>
-                    {meeting.notes && (
-                      <p className="text-sm text-gray-500">{meeting.notes}</p>
-                    )}
+                    {meeting.notes && <p className="text-sm text-gray-500">{meeting.notes}</p>}
                   </div>
                 );
               })}
               {meetings?.length === 0 && (
-                <p className="text-center text-gray-500">
-                  No upcoming meetings scheduled
-                </p>
+                <p className="text-center text-gray-500">No upcoming meetings scheduled</p>
               )}
             </div>
           </CardContent>

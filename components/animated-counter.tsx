@@ -8,11 +8,7 @@ interface AnimatedCounterProps {
   delay?: number;
 }
 
-function AnimatedCounter({
-  end,
-  duration = 2000,
-  delay = 0,
-}: AnimatedCounterProps) {
+function AnimatedCounter({ end, duration = 2000, delay = 0 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {

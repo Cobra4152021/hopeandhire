@@ -49,7 +49,9 @@ export default function BusinessProfile() {
 
   const fetchProfile = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
@@ -74,7 +76,7 @@ export default function BusinessProfile() {
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       // Validate file size (2MB max)
       if (file.size > 2 * 1024 * 1024) {
         toast.error('Logo size must be less than 2MB');
@@ -98,7 +100,7 @@ export default function BusinessProfile() {
     const { name, value } = e.target;
     if (name.startsWith('social_')) {
       const platform = name.replace('social_', '');
-      setProfile(prev => ({
+      setProfile((prev) => ({
         ...prev,
         social_links: {
           ...prev.social_links,
@@ -106,7 +108,7 @@ export default function BusinessProfile() {
         },
       }));
     } else {
-      setProfile(prev => ({ ...prev, [name]: value }));
+      setProfile((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -115,7 +117,9 @@ export default function BusinessProfile() {
     setLoading(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       let logoUrl = profile.logo_url;
@@ -130,22 +134,20 @@ export default function BusinessProfile() {
 
         if (uploadError) throw uploadError;
 
-        const { data: { publicUrl } } = supabase.storage
-          .from('business-logos')
-          .getPublicUrl(fileName);
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('business-logos').getPublicUrl(fileName);
 
         logoUrl = publicUrl;
       }
 
       // Update profile in database
-      const { error } = await supabase
-        .from('business_profiles')
-        .upsert({
-          user_id: user.id,
-          ...profile,
-          logo_url: logoUrl,
-          updated_at: new Date().toISOString(),
-        });
+      const { error } = await supabase.from('business_profiles').upsert({
+        user_id: user.id,
+        ...profile,
+        logo_url: logoUrl,
+        updated_at: new Date().toISOString(),
+      });
 
       if (error) throw error;
 
@@ -180,12 +182,7 @@ export default function BusinessProfile() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Industry</label>
-                <Input
-                  name="industry"
-                  value={profile.industry}
-                  onChange={handleChange}
-                  required
-                />
+                <Input name="industry" value={profile.industry} onChange={handleChange} required />
               </div>
 
               <div className="space-y-2">
@@ -201,12 +198,7 @@ export default function BusinessProfile() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Location</label>
-                <Input
-                  name="location"
-                  value={profile.location}
-                  onChange={handleChange}
-                  required
-                />
+                <Input name="location" value={profile.location} onChange={handleChange} required />
               </div>
 
               <div className="space-y-2">
@@ -302,4 +294,4 @@ export default function BusinessProfile() {
       </Card>
     </div>
   );
-} 
+}
