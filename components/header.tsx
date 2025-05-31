@@ -203,12 +203,12 @@ export default function Header() {
                   </div>
                 ) : (
                   <div className="flex items-center space-x-4">
-                    <Link href="/login">
+            <Link href="/login">
                       <Button variant="ghost">Sign in</Button>
-                    </Link>
+            </Link>
                     <Link href="/register">
                       <Button className="bg-teal text-white hover:bg-teal-dark">Sign up</Button>
-                    </Link>
+            </Link>
                   </div>
                 )}
               </>
@@ -228,43 +228,43 @@ export default function Header() {
                 <Menu className="block h-6 w-6" aria-hidden="true" />
               )}
             </button>
-          </div>
         </div>
+      </div>
 
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="md:hidden">
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium ${
                     isActive(item.href)
                       ? 'bg-teal-light/10 text-teal'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-teal'
                   }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              >
+                {item.name}
+              </Link>
+            ))}
               {!isLoading && !user && (
                 <div className="mt-4 space-y-2">
-                  <Link href="/login" className="block">
+              <Link href="/login" className="block">
                     <Button variant="ghost" className="w-full justify-start">
                       Sign in
-                    </Button>
-                  </Link>
+                </Button>
+              </Link>
                   <Link href="/register" className="block">
                     <Button className="w-full bg-teal text-white hover:bg-teal-dark">
                       Sign up
                     </Button>
-                  </Link>
-                </div>
-              )}
+              </Link>
             </div>
+              )}
           </div>
-        )}
+        </div>
+      )}
       </nav>
     </header>
   );

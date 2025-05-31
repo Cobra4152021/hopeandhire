@@ -166,12 +166,12 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-500">
                       {job.company} • {job.location}
                     </p>
-                  </div>
+              </div>
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <Clock className="h-4 w-4" />
                     {new Date(job.posted_date).toLocaleDateString()}
-                  </div>
-                </div>
+              </div>
+            </div>
               ))}
             </div>
           </CardContent>
@@ -192,10 +192,10 @@ export default function DashboardPage() {
                   key={application.id}
                   className="flex items-start justify-between border-b pb-4 last:border-0 last:pb-0"
                 >
-                  <div>
+                <div>
                     <p className="font-medium">{application.job_title}</p>
                     <p className="text-sm text-gray-500">{application.company}</p>
-                  </div>
+                </div>
                   <div className="flex items-center gap-2">
                     <span
                       className={`rounded-full px-2 py-1 text-xs font-medium ${
@@ -211,7 +211,7 @@ export default function DashboardPage() {
                     <span className="text-sm text-gray-500">
                       {new Date(application.applied_date).toLocaleDateString()}
                     </span>
-                  </div>
+              </div>
                 </div>
               ))}
             </div>

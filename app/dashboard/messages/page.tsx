@@ -50,9 +50,7 @@ export default function MessagesPage() {
   });
 
   // Fetch messages
-  const {
-    data: messages,
-  } = useQuery<Message[], Error>({
+  const { data: messages } = useQuery<Message[], Error>({
     queryKey: ['messages', selectedVolunteer?.id],
     queryFn: async () => {
       if (!selectedVolunteer) return [];

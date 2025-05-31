@@ -186,7 +186,7 @@ export default function ResumesPageClient() {
     } catch (error) {
       toast({
         title: 'Error',
-        description: (error instanceof Error ? error.message : 'Failed to upload resume'),
+        description: error instanceof Error ? error.message : 'Failed to upload resume',
         variant: 'destructive',
       });
     } finally {

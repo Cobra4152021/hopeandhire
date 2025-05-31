@@ -34,7 +34,6 @@ interface ActionMap {
 
 type Action = ActionMap[keyof ActionMap];
 
-
 interface State {
   toasts: ToasterToast[];
 }
@@ -71,7 +70,8 @@ export const reducer = (state: State, action: Action): State => {
         toasts: state.toasts.map((t) => (t.id === action.toast.id ? { ...t, ...action.toast } : t)),
       };
 
-    case 'DISMISS_TOAST': { // Use string literal
+    case 'DISMISS_TOAST': {
+      // Use string literal
       const { toastId } = action;
 
       if (toastId) {

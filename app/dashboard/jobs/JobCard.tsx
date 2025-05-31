@@ -33,7 +33,9 @@ interface JobCardProps {
 async function applyForJob(jobId: number): Promise<void> {
   const { error } = await supabase
     .from('job_applications')
-    .insert([{ job_id: jobId, user_id: (await supabase.auth.getUser()).data.user?.id, status: 'pending' }]);
+    .insert([
+      { job_id: jobId, user_id: (await supabase.auth.getUser()).data.user?.id, status: 'pending' },
+    ]);
   if (error) throw error;
 }
 
@@ -55,9 +57,8 @@ export function JobCard({ job }: JobCardProps) {
     },
   });
 
-  const {
-    mutate: applyToJob,
-  } = useMutation<void, Error, number>({ // Ensures useMutation expects a number
+  const { mutate: applyToJob } = useMutation<void, Error, number>({
+    // Ensures useMutation expects a number
     mutationFn: applyForJob,
     onSuccess: () => {
       toast({
@@ -84,15 +85,15 @@ export function JobCard({ job }: JobCardProps) {
       console.error('Error submitting application:', error);
       if (error instanceof Error) {
         toast({
-            title: 'Submission Error',
-            description: error.message || 'An unexpected error occurred during submission.',
-            variant: 'destructive',
+          title: 'Submission Error',
+          description: error.message || 'An unexpected error occurred during submission.',
+          variant: 'destructive',
         });
       } else {
         toast({
-            title: 'Submission Error',
-            description: 'An unexpected error occurred during submission.',
-            variant: 'destructive',
+          title: 'Submission Error',
+          description: 'An unexpected error occurred during submission.',
+          variant: 'destructive',
         });
       }
     } finally {

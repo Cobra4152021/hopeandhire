@@ -251,13 +251,13 @@ export default function CandidatesListingPage() {
                         <p className="text-gray-600">{candidate.role}</p>
                         <div className="flex flex-wrap gap-y-2 text-sm text-gray-500 mt-1">
                           <div className="flex items-center space-x-4">
+                          <div className="flex items-center mr-4">
+                            <Briefcase className="mr-1 h-4 w-4" />
+                            {candidate.experience}
+                          </div>
                             <div className="flex items-center mr-4">
-                              <Briefcase className="mr-1 h-4 w-4" />
-                              {candidate.experience}
-                            </div>
-                            <div className="flex items-center mr-4">
-                              <GraduationCap className="mr-1 h-4 w-4" />
-                              {candidate.education}
+                            <GraduationCap className="mr-1 h-4 w-4" />
+                            {candidate.education}
                             </div>
                           </div>
                         </div>

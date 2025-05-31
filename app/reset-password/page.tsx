@@ -22,7 +22,8 @@ export default function ResetPasswordPage() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, { // Uses email from useState
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        // Uses email from useState
         redirectTo: `${window.location.origin}/update-password`,
       });
 
@@ -37,7 +38,8 @@ export default function ResetPasswordPage() {
       setTimeout(() => {
         router.push('/login');
       }, 2000);
-    } catch (error: unknown) { // error typed as unknown
+    } catch (error: unknown) {
+      // error typed as unknown
       console.error('Reset password error:', error);
       // Improved error message handling
       let message = 'Failed to send reset email';

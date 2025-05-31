@@ -51,13 +51,16 @@ export default function SettingsPage() {
       // Depending on app logic, you might want to return default settings or throw.
       // For useQuery, throwing an error is generally preferred if data is considered mandatory.
       console.warn('No settings found for user, potentially create defaults or handle as error.');
-      throw new Error('No settings found for user.'); 
+      throw new Error('No settings found for user.');
     }
     return data as Settings;
   };
 
   // Fetch settings
-  const { data: settings, isLoading /*, refetch*/ } = useQuery<Settings>({ queryKey: ['userSettings'], queryFn: fetchUserSettings });
+  const { data: settings, isLoading /*, refetch*/ } = useQuery<Settings>({
+    queryKey: ['userSettings'],
+    queryFn: fetchUserSettings,
+  });
 
   // Update settings mutation
   const updateSettings = useMutation({

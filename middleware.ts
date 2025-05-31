@@ -63,7 +63,12 @@ export async function middleware(req: NextRequest) {
 
       // Get user's role from metadata
       const userRole = user.user_metadata?.role || 'jobseeker';
-      console.log('[Middleware] User metadata role:', user.user_metadata?.role, 'Effective role:', userRole);
+      console.log(
+        '[Middleware] User metadata role:',
+        user.user_metadata?.role,
+        'Effective role:',
+        userRole
+      );
 
       // Only redirect if there's a role in the URL and it doesn't match the user's role
       if (
@@ -71,7 +76,9 @@ export async function middleware(req: NextRequest) {
         ['jobseeker', 'volunteer', 'employer'].includes(urlRole) &&
         urlRole !== userRole
       ) {
-        console.log(`[Middleware] Role mismatch: URL role "${urlRole}" !== User role "${userRole}". Redirecting to /dashboard/${userRole}`);
+        console.log(
+          `[Middleware] Role mismatch: URL role "${urlRole}" !== User role "${userRole}". Redirecting to /dashboard/${userRole}`
+        );
         return NextResponse.redirect(new URL(`/dashboard/${userRole}`, req.url));
       }
     } catch (error) {

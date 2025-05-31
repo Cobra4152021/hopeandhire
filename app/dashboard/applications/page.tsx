@@ -7,13 +7,45 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
 import {
-  Briefcase,
+  AlertCircle,
+  Archive,
+  ArchiveX,
   Building,
-  Calendar as CalendarIcon,
+  CalendarIcon,
   CheckCircle,
+  ChevronRight,
   Clock,
+  FileText,
+  Filter,
+  Inbox,
+  Loader2,
   Mail,
-  BarChart2 as BarChart,
+  BarChart,
+  MessagesSquare,
+  MoreVertical,
+  Search,
+  Send,
+  Trash2,
+  Users,
+  UserCheck,
+  Briefcase,
+  DollarSign,
+  MapPin,
+  ExternalLink,
+  Bell,
+  Settings,
+  LogOut,
+  LayoutDashboard,
+  List,
+  Eye,
+  Edit3,
+  Share2,
+  Download,
+  Star,
+  XCircle,
+  PlusCircle,
+  Save,
+  ArrowLeft,
 } from 'lucide-react';
 
 interface JobApplication {
@@ -55,9 +87,7 @@ interface JobApplication {
 
 export default function ApplicationsPage() {
   const [selectedApplication, setSelectedApplication] = useState<JobApplication | null>(null);
-  const {
-    data: applications,
-  } = useQuery<JobApplication[]>({
+  const { data: applications } = useQuery<JobApplication[]>({
     queryKey: ['applications'],
     queryFn: async () => {
       const {

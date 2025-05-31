@@ -154,14 +154,14 @@ function Footer() {
                 href="/privacy-policy"
                 className="text-sm text-gray-500 hover:text-teal transition-colors"
               >
-                Privacy Policy
-              </Link>
+              Privacy Policy
+            </Link>
               <Link
                 href="/terms-of-service"
                 className="text-sm text-gray-500 hover:text-teal transition-colors"
               >
-                Terms of Service
-              </Link>
+              Terms of Service
+            </Link>
               <Link
                 href="/accessibility"
                 className="text-sm text-gray-500 hover:text-teal transition-colors"

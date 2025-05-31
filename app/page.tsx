@@ -51,15 +51,15 @@ export default function Home() {
                 className="flex items-center justify-center bg-white px-4"
                 style={{ width: '44%' }}
               >
-                <Image
-                  src="/logo.png"
-                  alt="Hope and Hire Logo"
-                  width={200}
-                  height={80}
+              <Image
+                src="/logo.png"
+                alt="Hope and Hire Logo"
+                width={200}
+                height={80}
                   className="h-auto w-full object-contain"
-                  priority
-                  quality={90}
-                />
+                priority
+                quality={90}
+              />
               </div>
               {/* Right image */}
               <div className="h-48 md:h-64 flex items-center" style={{ width: '28%' }}>
@@ -128,7 +128,7 @@ export default function Home() {
       {/* Impact Stats */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 debug-impact-grid">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
                 <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">
@@ -184,8 +184,8 @@ export default function Home() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4 text-gray-900">Top Contributors</h2>
               <p className="text-lg text-gray-600">
-                Recognizing the volunteers who are making a difference in our community.
-              </p>
+              Recognizing the volunteers who are making a difference in our community.
+            </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

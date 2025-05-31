@@ -65,14 +65,14 @@ export function ResumesList() {
       }
       setResumes(data || []);
     } catch (err) {
-        toast({
-            title: 'Error',
-            description: 'An unexpected error occurred while fetching resumes.',
-            variant: 'destructive',
-          });
-        setResumes([]);
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred while fetching resumes.',
+        variant: 'destructive',
+      });
+      setResumes([]);
     } finally {
-        setIsFetchingResumes(false);
+      setIsFetchingResumes(false);
     }
   };
 
@@ -81,38 +81,40 @@ export function ResumesList() {
     if (user) {
       fetchResumes();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]); // Add toast to dependency array if it's used inside a callback that's memoized based on this. For now, assuming fetchResumes isn't memoized in a way that makes toast a dep.
 
   // Removed the useQuery line that was here:
   // const { isLoading } = useQuery({ queryKey: ["resumes"], queryFn: fetchResumes });
 
-
   const handleCreateResume = async () => {
     if (!user) return;
     // Add loading state if needed for create operation
     try {
-        const { error } = await supabase.from('resumes').insert({
+      const { error } = await supabase
+        .from('resumes')
+        .insert({
           user_id: user.id,
           title: newResume.title,
           content: newResume.content,
-        }).select(); // .select() can be useful if you need the inserted data, otherwise optional
+        })
+        .select(); // .select() can be useful if you need the inserted data, otherwise optional
 
-        if (error) throw error;
+      if (error) throw error;
 
-        toast({
-          title: 'Success',
-          description: 'Resume created successfully',
-        });
-        setIsCreateOpen(false);
-        setNewResume({ title: '', content: '' });
-        fetchResumes(); // Refetch resumes
+      toast({
+        title: 'Success',
+        description: 'Resume created successfully',
+      });
+      setIsCreateOpen(false);
+      setNewResume({ title: '', content: '' });
+      fetchResumes(); // Refetch resumes
     } catch (err: unknown) {
-        toast({
-            title: 'Error creating resume',
-            description: err instanceof Error ? err.message : 'An unexpected error occurred.',
-            variant: 'destructive',
-        });
+      toast({
+        title: 'Error creating resume',
+        description: err instanceof Error ? err.message : 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -120,54 +122,54 @@ export function ResumesList() {
     if (!selectedResume) return;
     // Add loading state if needed for update operation
     try {
-        const { error } = await supabase
-          .from('resumes')
-          .update({
-            title: newResume.title,
-            content: newResume.content,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', selectedResume.id);
+      const { error } = await supabase
+        .from('resumes')
+        .update({
+          title: newResume.title,
+          content: newResume.content,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', selectedResume.id);
 
-        if (error) throw error;
+      if (error) throw error;
 
-        toast({
-          title: 'Success',
-          description: 'Resume updated successfully',
-        });
-        setIsEditOpen(false);
-        setSelectedResume(null);
-        setNewResume({ title: '', content: '' });
-        fetchResumes(); // Refetch resumes
+      toast({
+        title: 'Success',
+        description: 'Resume updated successfully',
+      });
+      setIsEditOpen(false);
+      setSelectedResume(null);
+      setNewResume({ title: '', content: '' });
+      fetchResumes(); // Refetch resumes
     } catch (err: unknown) {
-        toast({
-            title: 'Error updating resume',
-            description: err instanceof Error ? err.message : 'An unexpected error occurred.',
-            variant: 'destructive',
-        });
+      toast({
+        title: 'Error updating resume',
+        description: err instanceof Error ? err.message : 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
     }
   };
 
   const handleDeleteResume = async (id: string) => {
     setIsDeleting(true);
     try {
-        const { error } = await supabase.from('resumes').delete().eq('id', id);
+      const { error } = await supabase.from('resumes').delete().eq('id', id);
 
-        if (error) throw error;
+      if (error) throw error;
 
-        toast({
-          title: 'Success',
-          description: 'Resume deleted successfully',
-        });
-        fetchResumes(); // Refetch resumes
+      toast({
+        title: 'Success',
+        description: 'Resume deleted successfully',
+      });
+      fetchResumes(); // Refetch resumes
     } catch (err: unknown) {
-        toast({
-            title: 'Error deleting resume',
-            description: err instanceof Error ? err.message : 'An unexpected error occurred.',
-            variant: 'destructive',
-        });
+      toast({
+        title: 'Error deleting resume',
+        description: err instanceof Error ? err.message : 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
     } finally {
-        setIsDeleting(false);
+      setIsDeleting(false);
     }
   };
 
@@ -201,7 +203,8 @@ export function ResumesList() {
         description: 'Resume uploaded successfully',
       });
       fetchResumes();
-    } catch (err: unknown) { // Typed error
+    } catch (err: unknown) {
+      // Typed error
       toast({
         title: 'Error uploading resume',
         description: err instanceof Error ? err.message : 'An unexpected error occurred.',

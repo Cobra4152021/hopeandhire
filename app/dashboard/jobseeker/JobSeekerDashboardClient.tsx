@@ -5,7 +5,33 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
-import { Briefcase, FileText, MessageSquare, Calendar } from 'lucide-react';
+import {
+  Bell,
+  Briefcase,
+  Calendar,
+  CheckCircle,
+  DollarSign,
+  FileText,
+  Home,
+  LineChart,
+  ListFilter,
+  LogOut,
+  MessageSquare,
+  Package,
+  Package2,
+  PanelLeft,
+  PlusCircle,
+  Search,
+  Settings,
+  ShoppingCart,
+  Star,
+  User,
+  Users2,
+  Heart,
+  Award,
+  MapPin,
+  Navigation,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 

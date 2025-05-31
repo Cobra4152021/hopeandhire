@@ -6,7 +6,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { supabase } from '@/lib/supabase';
-import { Users, MessageSquare, Star, UserPlus, Calendar, Video } from 'lucide-react';
+import {
+  Activity,
+  CreditCard,
+  DollarSign,
+  Download,
+  Search,
+  Users,
+  UserPlus,
+  Star,
+  Calendar,
+  Video,
+  MessageSquare,
+} from 'lucide-react';
 
 interface Mentor {
   id: string;

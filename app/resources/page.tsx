@@ -23,142 +23,142 @@ export default function ResourcesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
+          <Card>
+            <CardHeader>
                 <CardTitle className="text-xl">For Job Seekers</CardTitle>
-                <CardDescription>Resources to help you in your job search</CardDescription>
-              </CardHeader>
-              <CardContent>
+              <CardDescription>Resources to help you in your job search</CardDescription>
+            </CardHeader>
+            <CardContent>
                 <ul className="space-y-3">
-                  <li className="flex items-start">
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Resume templates and guides</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Interview preparation tips</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Skills assessment tools</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Career development resources</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter>
+                </li>
+              </ul>
+            </CardContent>
+            <CardFooter>
                 <Link href="/job-seekers" className="w-full">
                   <Button className="w-full bg-teal text-white hover:bg-teal-dark">
                     View Job Seeker Resources
                   </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+              </Link>
+            </CardFooter>
+          </Card>
 
-            <Card>
-              <CardHeader>
+          <Card>
+            <CardHeader>
                 <CardTitle className="text-xl">For Employers</CardTitle>
-                <CardDescription>Resources to help you find qualified candidates</CardDescription>
-              </CardHeader>
-              <CardContent>
+              <CardDescription>Resources to help you find qualified candidates</CardDescription>
+            </CardHeader>
+            <CardContent>
                 <ul className="space-y-3">
-                  <li className="flex items-start">
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Inclusive hiring practices</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Tax incentives for hiring</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Onboarding best practices</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Retention strategies</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter>
+                </li>
+              </ul>
+            </CardContent>
+            <CardFooter>
                 <Link href="/employers" className="w-full">
                   <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">
                     View Employer Resources
                   </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+              </Link>
+            </CardFooter>
+          </Card>
 
-            <Card>
-              <CardHeader>
+          <Card>
+            <CardHeader>
                 <CardTitle className="text-xl">For Organizations</CardTitle>
-                <CardDescription>Resources to help your clients succeed</CardDescription>
-              </CardHeader>
-              <CardContent>
+              <CardDescription>Resources to help your clients succeed</CardDescription>
+            </CardHeader>
+            <CardContent>
                 <ul className="space-y-3">
-                  <li className="flex items-start">
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Client assessment tools</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Program development guides</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Funding opportunities</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Partnership resources</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter>
+                </li>
+              </ul>
+            </CardContent>
+            <CardFooter>
                 <Link href="/organizations" className="w-full">
                   <Button className="w-full bg-teal text-white hover:bg-teal-dark">
                     View Organization Resources
                   </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+              </Link>
+            </CardFooter>
+          </Card>
 
-            <Card>
-              <CardHeader>
+          <Card>
+            <CardHeader>
                 <CardTitle className="text-xl">For Volunteers</CardTitle>
-                <CardDescription>Resources to help you make an impact</CardDescription>
-              </CardHeader>
-              <CardContent>
+              <CardDescription>Resources to help you make an impact</CardDescription>
+            </CardHeader>
+            <CardContent>
                 <ul className="space-y-3">
-                  <li className="flex items-start">
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Volunteer training materials</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Mentorship guidelines</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Impact measurement tools</span>
-                  </li>
-                  <li className="flex items-start">
+                </li>
+                <li className="flex items-start">
                     <span className="text-teal mr-2 text-lg leading-none">•</span>
                     <span className="text-gray-600">Volunteer recognition programs</span>
-                  </li>
-                </ul>
-              </CardContent>
-              <CardFooter>
+                </li>
+              </ul>
+            </CardContent>
+            <CardFooter>
                 <Link href="/volunteers" className="w-full">
                   <Button className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">
                     View Volunteer Resources
                   </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          </div>
+              </Link>
+            </CardFooter>
+          </Card>
+        </div>
 
           <Card className="mt-8 bg-gray-50">
             <CardHeader>
@@ -174,9 +174,9 @@ export default function ResourcesPage() {
                   variant="outline"
                   className="w-full border-teal text-teal hover:bg-teal hover:text-white"
                 >
-                  Contact Us
-                </Button>
-              </Link>
+              Contact Us
+            </Button>
+          </Link>
             </CardFooter>
           </Card>
         </div>
