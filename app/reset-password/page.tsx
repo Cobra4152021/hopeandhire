@@ -8,19 +8,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
+// import { z } from 'zod'; // Intentionally removed: Unused import
 
 export default function ResetPasswordPage() {
   const router = useRouter();
   const { toast } = useToast();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(''); // Restored useState for email
   const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState<string | null>(null); // Intentionally removed: Unused state
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { // Uses email from useState
         redirectTo: `${window.location.origin}/update-password`,
       });
 
@@ -35,11 +37,16 @@ export default function ResetPasswordPage() {
       setTimeout(() => {
         router.push('/login');
       }, 2000);
-    } catch (error: any) {
+    } catch (error: unknown) { // error typed as unknown
       console.error('Reset password error:', error);
+      // Improved error message handling
+      let message = 'Failed to send reset email';
+      if (error instanceof Error) {
+        message = error.message;
+      }
       toast({
         title: 'Error',
-        description: error.message || 'Failed to send reset email',
+        description: message,
         variant: 'destructive',
       });
     } finally {
@@ -64,8 +71,8 @@ export default function ResetPasswordPage() {
                 id="email"
                 type="email"
                 placeholder="your.email@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={email} // Uses email from useState
+                onChange={(e) => setEmail(e.target.value)} // Uses setEmail from useState
                 required
               />
             </div>

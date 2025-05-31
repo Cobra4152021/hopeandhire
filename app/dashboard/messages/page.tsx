@@ -30,16 +30,13 @@ interface Message {
 
 export default function MessagesPage() {
   const { toast } = useToast();
-  const [volunteers, _setVolunteers] = useState<Volunteer[]>([]);
-  const [selectedVolunteer, setSelectedVolunteer] = useState<Volunteer | null>(null);
-  const [_messages, _setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [_editingMessage, _setEditingMessage] = useState<Message | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedVolunteer, setSelectedVolunteer] = useState<Volunteer | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const queryClient = useQueryClient();
 
   // Fetch volunteers
-  const { data: fetchedVolunteers, isLoading: isLoadingVolunteers } = useQuery({
+  const { data: volunteers, isLoading: isLoadingVolunteers } = useQuery({
     queryKey: ['volunteers'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -54,9 +51,7 @@ export default function MessagesPage() {
 
   // Fetch messages
   const {
-    data: fetchedMessages,
-    isLoading: _isLoadingMessages,
-    error: _error,
+    data: messages,
   } = useQuery<Message[], Error>({
     queryKey: ['messages', selectedVolunteer?.id],
     queryFn: async () => {
@@ -100,8 +95,9 @@ export default function MessagesPage() {
     },
     onSuccess: () => {
       setNewMessage('');
+      queryClient.invalidateQueries({ queryKey: ['messages', selectedVolunteer?.id] });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: 'Error',
         description: 'Failed to send message',
@@ -111,29 +107,11 @@ export default function MessagesPage() {
   });
 
   // Filter volunteers based on search query
-  const filteredVolunteers = fetchedVolunteers?.filter(
+  const filteredVolunteers = volunteers?.filter(
     (volunteer) =>
-      volunteer.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      volunteer.expertise.some((skill) => skill.toLowerCase().includes(searchQuery.toLowerCase()))
+      volunteer.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      volunteer.expertise.some((skill) => skill.toLowerCase().includes(searchTerm.toLowerCase()))
   );
-
-  // Delete message mutation
-  const _deleteMessage = useMutation({
-    mutationFn: async (messageId: string) => {
-      const { error } = await supabase.from('messages').delete().eq('id', messageId);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['messages', selectedVolunteer?.id] });
-    },
-    onError: (_error) => {
-      toast({
-        title: 'Error deleting message',
-        description: _error.message,
-        variant: 'destructive',
-      });
-    },
-  });
 
   if (isLoadingVolunteers) {
     return <div>Loading...</div>;
@@ -150,8 +128,8 @@ export default function MessagesPage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 placeholder="Search volunteers..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-9"
               />
             </div>
@@ -211,7 +189,7 @@ export default function MessagesPage() {
               <div className="flex flex-col h-[600px]">
                 {/* Messages */}
                 <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-                  {fetchedMessages?.map((msg) => {
+                  {messages?.map((msg) => {
                     const isSender = msg.sender_id === selectedVolunteer.id;
                     return (
                       <div

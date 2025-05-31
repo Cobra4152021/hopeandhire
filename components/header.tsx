@@ -15,12 +15,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import type { User } from '@supabase/supabase-js';
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const { toast } = useToast();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<string>('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -120,11 +121,11 @@ export default function Header() {
       });
 
       router.push('/login');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Sign out error:', error);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to sign out',
+        description: error instanceof Error ? error.message : 'Failed to sign out',
         variant: 'destructive',
       });
     }

@@ -56,9 +56,9 @@ interface Discussion {
 }
 
 export default function NetworkPage() {
-  const [_activeTab, _setActiveTab] = useState('connections');
+  // const [_activeTab, _setActiveTab] = useState('jobSeekers');
+  // const [_searchTerm, _setSearchTerm] = useState('');
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
-  const [_searchTerm, _setSearchTerm] = useState('');
 
   // Fetch mentors
   const { data: mentors } = useQuery({

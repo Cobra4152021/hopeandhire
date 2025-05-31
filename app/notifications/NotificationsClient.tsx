@@ -100,7 +100,7 @@ export default function NotificationsClient() {
             table: 'notifications',
             filter: `recipient_id=eq.${user.id}`,
           },
-          (_payload) => {
+          () => {
             queryClient.invalidateQueries({ queryKey: ['notifications'] });
             toast({
               title: 'New notification',

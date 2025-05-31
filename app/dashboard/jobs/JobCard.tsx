@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -21,20 +21,26 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
 import { Job } from '@/types/job';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
+import { toast } from '@/components/ui/use-toast';
 
 interface JobCardProps {
   job: Job;
+}
+
+async function applyForJob(jobId: number): Promise<void> {
+  const { error } = await supabase
+    .from('job_applications')
+    .insert([{ job_id: jobId, user_id: (await supabase.auth.getUser()).data.user?.id, status: 'pending' }]);
+  if (error) throw error;
 }
 
 export function JobCard({ job }: JobCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
 
   const { data: recruiter } = useQuery({
     queryKey: ['recruiter', job.recruiter_id],
@@ -49,29 +55,46 @@ export function JobCard({ job }: JobCardProps) {
     },
   });
 
-  const handleSubmit = async () => {
-    try {
-      setIsSubmitting(true);
-      const { error } = await supabase.from('job_applications').insert({
-        job_id: job.id,
-        message,
-        status: 'pending',
-      });
-
-      if (error) throw error;
-
+  const {
+    mutate: applyToJob,
+  } = useMutation<void, Error, number>({ // Ensures useMutation expects a number
+    mutationFn: applyForJob,
+    onSuccess: () => {
       toast({
         title: 'Application sent',
         description: 'The recruiter will review your application soon.',
       });
       setIsOpen(false);
       setMessage('');
-    } catch (error) {
+    },
+    onError: (error: Error) => {
       toast({
         title: 'Error',
-        description: 'Failed to send application. Please try again.',
+        description: error.message || 'Failed to send application. Please try again.',
         variant: 'destructive',
       });
+    },
+  });
+
+  const handleSubmit = async () => {
+    try {
+      setIsSubmitting(true);
+      applyToJob(Number(job.id)); // Ensures job.id is passed as a number
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      if (error instanceof Error) {
+        toast({
+            title: 'Submission Error',
+            description: error.message || 'An unexpected error occurred during submission.',
+            variant: 'destructive',
+        });
+      } else {
+        toast({
+            title: 'Submission Error',
+            description: 'An unexpected error occurred during submission.',
+            variant: 'destructive',
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }

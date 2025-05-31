@@ -10,6 +10,7 @@ import {
   FieldValues,
   FormProvider,
   useFormContext,
+  ControllerFieldState,
 } from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
@@ -45,9 +46,7 @@ const useFormField = (): {
   formItemId: string;
   formDescriptionId: string;
   formMessageId: string;
-  // Add any other returned properties from fieldState
-  [key: string]: any;
-} => {
+} & ControllerFieldState => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();

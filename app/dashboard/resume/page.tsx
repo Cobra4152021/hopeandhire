@@ -30,8 +30,6 @@ interface Resume {
 
 export default function ResumePage() {
   const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
-  const [_resumeText, _setResumeText] = useState('');
-  const [_atsScore, _setAtsScore] = useState<number | null>(null);
 
   // Fetch resumes
   const { data: resumes } = useQuery({

@@ -18,7 +18,6 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Upload, FileText, Trash2, Edit2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface Resume {
   id: string;
@@ -33,7 +32,7 @@ interface Resume {
 export default function ResumesPageClient() {
   const { user } = useUser();
   const { toast } = useToast();
-  const [_resumes, setResumes] = useState<Resume[]>([]);
+  const [resumes, setResumes] = useState<Resume[]>([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedResume, setSelectedResume] = useState<Resume | null>(null);
@@ -44,7 +43,10 @@ export default function ResumesPageClient() {
   const [uploading, setUploading] = useState(false);
 
   const fetchResumes = useCallback(async () => {
-    if (!user) return;
+    if (!user) {
+      setResumes([]);
+      return;
+    }
 
     const { data, error } = await supabase
       .from('resumes')
@@ -58,6 +60,7 @@ export default function ResumesPageClient() {
         description: 'Failed to fetch resumes',
         variant: 'destructive',
       });
+      setResumes([]);
       return;
     }
 
@@ -73,7 +76,7 @@ export default function ResumesPageClient() {
   const handleCreateResume = async () => {
     if (!user) return;
 
-    const { data, error } = await supabase.from('resumes').insert({
+    const { error } = await supabase.from('resumes').insert({
       user_id: user.id,
       title: newResume.title,
       content: newResume.content,
@@ -95,7 +98,7 @@ export default function ResumesPageClient() {
 
     setIsCreateOpen(false);
     setNewResume({ title: '', content: '' });
-    fetchResumes();
+    await fetchResumes();
   };
 
   const handleUpdateResume = async () => {
@@ -127,7 +130,7 @@ export default function ResumesPageClient() {
     setIsEditOpen(false);
     setSelectedResume(null);
     setNewResume({ title: '', content: '' });
-    fetchResumes();
+    await fetchResumes();
   };
 
   const handleDeleteResume = async (id: string) => {
@@ -146,8 +149,7 @@ export default function ResumesPageClient() {
       title: 'Success',
       description: 'Resume deleted successfully',
     });
-
-    fetchResumes();
+    await fetchResumes();
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -157,19 +159,16 @@ export default function ResumesPageClient() {
     setUploading(true);
 
     try {
-      // Upload file to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage.from('resumes').upload(fileName, file);
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
       const {
         data: { publicUrl },
       } = supabase.storage.from('resumes').getPublicUrl(fileName);
 
-      // Create resume record
       const { error: dbError } = await supabase.from('resumes').insert({
         user_id: user.id,
         title: file.name,
@@ -183,11 +182,11 @@ export default function ResumesPageClient() {
         description: 'Resume uploaded successfully',
       });
 
-      fetchResumes();
+      await fetchResumes();
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Failed to upload resume',
+        description: (error instanceof Error ? error.message : 'Failed to upload resume'),
         variant: 'destructive',
       });
     } finally {
@@ -262,7 +261,7 @@ export default function ResumesPageClient() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {_resumes.map((resume) => (
+        {resumes.map((resume) => (
           <Card key={resume.id}>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">

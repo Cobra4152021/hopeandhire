@@ -9,10 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 
+import type { User } from '@supabase/supabase-js';
 export default function SettingsPage({ params }: { params: { role: string } }) {
   const router = useRouter();
   const { toast } = useToast();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -99,11 +100,11 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
         title: 'Success!',
         description: 'Your profile has been updated successfully.',
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Profile update error:', error);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to update profile',
+        description: error instanceof Error ? error.message : 'Failed to update profile',
         variant: 'destructive',
       });
     } finally {
@@ -144,11 +145,11 @@ export default function SettingsPage({ params }: { params: { role: string } }) {
         newPassword: '',
         confirmPassword: '',
       }));
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Password update error:', error);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to update password',
+        description: error instanceof Error ? error.message : 'Failed to update profile',
         variant: 'destructive',
       });
     } finally {

@@ -22,20 +22,24 @@ export default function EmployerSignIn() {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (signInError) throw signInError;
 
       if (data.user) {
-        // Set the user role cookie
+        // TODO: Consider setting user role in a more secure way if needed (e.g., custom claims)
         document.cookie = `user-role=employer; path=/`;
-        router.push('/dashboard/employer');
+        router.push('/dashboard/employer'); // Ensure this route exists and is appropriate
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during sign in');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An error occurred during sign in');
+      }
     } finally {
       setLoading(false);
     }

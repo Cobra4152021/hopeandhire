@@ -35,12 +35,12 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error: supabaseError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (supabaseError) throw supabaseError;
 
       if (data.user) {
         // Get the user's role from metadata
@@ -66,16 +66,18 @@ export default function LoginPage() {
 
         setShowConfetti(true);
 
-        // Use Next.js router for client-side navigation after a short delay
-        setTimeout(() => {
-          router.push(`/dashboard/${role}`);
-        }, 1000); // Short delay to show the confetti
+        // Use Next.js router for client-side navigation
+        router.push(`/dashboard/${role}`);
       }
-    } catch (error: any) {
-      console.error('Login error:', error);
+    } catch (err: unknown) {
+      console.error('Login error:', err);
+      let message = 'Failed to sign in';
+      if (err instanceof Error) {
+        message = err.message;
+      }
       toast({
         title: 'Error',
-        description: error.message || 'Failed to sign in',
+        description: message,
         variant: 'destructive',
       });
     } finally {

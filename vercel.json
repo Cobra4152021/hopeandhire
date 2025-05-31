@@ -1,7 +1,7 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
   "env": {
     "NEXT_PUBLIC_SUPABASE_URL": "env",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "env"

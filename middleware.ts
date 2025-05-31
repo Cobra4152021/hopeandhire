@@ -48,17 +48,22 @@ export async function middleware(req: NextRequest) {
         error,
       } = await supabase.auth.getUser(supabaseToken);
 
+      console.log('[Middleware] User object from getUser:', user);
+      console.log('[Middleware] Error from getUser:', error);
+
       if (error || !user) {
-        console.log('Invalid session, redirecting to login');
+        console.log('[Middleware] Invalid session or no user, redirecting to login. Error:', error);
         return NextResponse.redirect(new URL('/login', req.url));
       }
 
       // Get the role from the URL (e.g., /dashboard/jobseeker -> jobseeker)
       const pathParts = req.nextUrl.pathname.split('/');
       const urlRole = pathParts.length > 2 ? pathParts[2] : null;
+      console.log('[Middleware] URL role:', urlRole);
 
       // Get user's role from metadata
       const userRole = user.user_metadata?.role || 'jobseeker';
+      console.log('[Middleware] User metadata role:', user.user_metadata?.role, 'Effective role:', userRole);
 
       // Only redirect if there's a role in the URL and it doesn't match the user's role
       if (
@@ -66,7 +71,7 @@ export async function middleware(req: NextRequest) {
         ['jobseeker', 'volunteer', 'employer'].includes(urlRole) &&
         urlRole !== userRole
       ) {
-        console.log('Role mismatch, redirecting to correct dashboard');
+        console.log(`[Middleware] Role mismatch: URL role "${urlRole}" !== User role "${userRole}". Redirecting to /dashboard/${userRole}`);
         return NextResponse.redirect(new URL(`/dashboard/${userRole}`, req.url));
       }
     } catch (error) {

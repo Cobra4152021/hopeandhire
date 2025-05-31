@@ -53,19 +53,11 @@ interface JobApplication {
   };
 }
 
-export default function JobApplicationsPage() {
+export default function ApplicationsPage() {
   const [selectedApplication, setSelectedApplication] = useState<JobApplication | null>(null);
-  const [_applications, _setApplications] = useState<JobApplication[]>([]);
-  const [_isLoading, _setIsLoading] = useState(true);
-  const [_searchTerm, _setSearchTerm] = useState('');
-  const [_statusFilter, _setStatusFilter] = useState('all');
-  const [_sortOrder, _setSortOrder] = useState('newest');
-
-  // Fetch applications
-  const { data: _fetchedApplications, isLoading: _isLoadingApplications } = useQuery<
-    JobApplication[],
-    Error
-  >({
+  const {
+    data: applications,
+  } = useQuery<JobApplication[]>({
     queryKey: ['applications'],
     queryFn: async () => {
       const {
@@ -103,7 +95,7 @@ export default function JobApplicationsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {_applications?.map((application) => (
+              {applications?.map((application) => (
                 <div
                   key={application.id}
                   className="p-4 border rounded-lg space-y-2 cursor-pointer hover:bg-gray-50"

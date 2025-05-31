@@ -27,25 +27,37 @@ export default function SettingsPage() {
   const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Settings>>({});
 
+  // Define fetchUserSettings function
+  const fetchUserSettings = async (): Promise<Settings> => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+
+    const { data, error } = await supabase
+      .from('settings') // Assuming your table is named 'settings'
+      .select('*')
+      .eq('user_id', user.id)
+      .single(); // Assuming one settings row per user
+
+    if (error) {
+      // If Supabase returns an error (e.g., network issue, RLS policy violation)
+      console.error('Error fetching settings:', error.message);
+      throw new Error(`Failed to fetch settings: ${error.message}`);
+    }
+    if (!data) {
+      // If no row is found (which .single() can return as data:null, error:null if no RLS error)
+      // This case implies settings for the user might not exist yet.
+      // Depending on app logic, you might want to return default settings or throw.
+      // For useQuery, throwing an error is generally preferred if data is considered mandatory.
+      console.warn('No settings found for user, potentially create defaults or handle as error.');
+      throw new Error('No settings found for user.'); 
+    }
+    return data as Settings;
+  };
+
   // Fetch settings
-  const { data: settings, isLoading } = useQuery({
-    queryKey: ['settings'],
-    queryFn: async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const { data, error } = await supabase
-        .from('settings')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      if (error) throw error;
-      return data as Settings;
-    },
-  });
+  const { data: settings, isLoading /*, refetch*/ } = useQuery<Settings>({ queryKey: ['userSettings'], queryFn: fetchUserSettings });
 
   // Update settings mutation
   const updateSettings = useMutation({
@@ -71,7 +83,7 @@ export default function SettingsPage() {
         description: 'Settings updated successfully',
       });
     },
-    onError: (_error) => {
+    onError: () => {
       toast({
         title: 'Error',
         description: 'Failed to update settings',
@@ -114,47 +126,47 @@ export default function SettingsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Account Settings */}
         <Card>
-          <CardHeader>
+              <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="w-5 h-5" />
               Account Settings
             </CardTitle>
-          </CardHeader>
-          <CardContent>
+              </CardHeader>
+              <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Email Notifications</Label>
-                    <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500">
                       Receive notifications about your account activity
-                    </p>
+                      </p>
                   </div>
                   <Switch
                     checked={formData.email_notifications ?? settings?.email_notifications}
                     onCheckedChange={(checked) => handleToggle('email_notifications', checked)}
                   />
-                </div>
+                    </div>
 
-                <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Job Alerts</Label>
-                    <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500">
                       Get notified about new job opportunities
-                    </p>
+                      </p>
                   </div>
                   <Switch
                     checked={formData.job_alerts ?? settings?.job_alerts}
                     onCheckedChange={(checked) => handleToggle('job_alerts', checked)}
                   />
-                </div>
+              </div>
 
-                <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Marketing Emails</Label>
-                    <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500">
                       Receive updates about new features and promotions
-                    </p>
+                      </p>
                   </div>
                   <Switch
                     checked={formData.marketing_emails ?? settings?.marketing_emails}
@@ -166,19 +178,19 @@ export default function SettingsPage() {
               <Button type="submit" className="w-full">
                 <Save className="w-4 h-4 mr-2" />
                 Save Changes
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
 
         {/* Security Settings */}
-        <Card>
-          <CardHeader>
+            <Card>
+              <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="w-5 h-5" />
               Security Settings
             </CardTitle>
-          </CardHeader>
+              </CardHeader>
           <CardContent>
             <div className="space-y-6">
               <div className="space-y-4">
@@ -205,7 +217,7 @@ export default function SettingsPage() {
                     onCheckedChange={(checked) => handleToggle('dark_mode', checked)}
                   />
                 </div>
-              </div>
+          </div>
 
               <div className="space-y-4">
                 <h3 className="font-medium">Change Password</h3>
@@ -216,12 +228,12 @@ export default function SettingsPage() {
                     type="password"
                     placeholder="Enter current password"
                   />
-                </div>
+                    </div>
                 <div className="space-y-2">
                   <Label htmlFor="new_password">New Password</Label>
                   <Input id="new_password" type="password" placeholder="Enter new password" />
-                </div>
-                <div className="space-y-2">
+                  </div>
+                  <div className="space-y-2">
                   <Label htmlFor="confirm_password">Confirm New Password</Label>
                   <Input id="confirm_password" type="password" placeholder="Confirm new password" />
                 </div>
@@ -237,9 +249,9 @@ export default function SettingsPage() {
                   Sign Out
                 </Button>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            </CardContent>
+          </Card>
       </div>
     </div>
   );

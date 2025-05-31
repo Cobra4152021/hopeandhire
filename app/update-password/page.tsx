@@ -60,11 +60,11 @@ function UpdatePasswordForm() {
       setTimeout(() => {
         router.push('/login');
       }, 2000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Update password error:', error);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to update password',
+        description: error instanceof Error ? error.message : 'Failed to update password',
         variant: 'destructive',
       });
     } finally {

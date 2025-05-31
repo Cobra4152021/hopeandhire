@@ -161,7 +161,7 @@ export default function JobsListingPage() {
             setJobs(data);
           }
         }
-      } catch (e) {
+      } catch {
         // fallback to sampleJobs
       }
     }
@@ -346,7 +346,7 @@ export default function JobsListingPage() {
             <Input
               placeholder="Search jobs..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(event) => setSearchTerm(event.target.value)}
               className="pl-10"
             />
           </div>
