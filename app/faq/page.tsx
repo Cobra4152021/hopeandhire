@@ -1,6 +1,7 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -10,11 +11,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { FileText, Users, Building, Heart, HelpCircle, Mail, Phone, ArrowRight, Search } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Frequently Asked Questions',
-  description: 'Find answers to common questions about Hope and Hire\'s services, how we support job seekers, employers, volunteers, and partner organizations.',
-};
 
 export default function FAQPage() {
   const faqs = [
@@ -226,7 +222,7 @@ export default function FAQPage() {
               const isYellow = category.color === 'yellow';
               
               return (
-                <Card key={index} className={`border-t-4 ${isYellow ? 'border-yellow' : 'border-teal'} shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer`}>
+                <Card key={index} className={`border-t-4 ${isYellow ? 'border-yellow' : 'border-teal'} shadow-lg hover:shadow-xl transition-all duration-300 group`}>
                   <CardContent className="pt-8 text-center">
                     <div className={`rounded-full ${isYellow ? 'bg-yellow-light/20 group-hover:bg-yellow' : 'bg-teal-light/20 group-hover:bg-teal'} w-16 h-16 flex items-center justify-center mx-auto mb-4 transition-all duration-300`}>
                       <IconComponent className={`${isYellow ? 'text-yellow group-hover:text-white' : 'text-teal group-hover:text-white'} h-8 w-8 transition-all duration-300`} />
@@ -235,16 +231,14 @@ export default function FAQPage() {
                     <p className="text-gray-600 mb-4 text-sm">
                       {category.questions.length} frequently asked questions
                     </p>
-                    <Button 
-                      variant="outline" 
-                      className={`w-full ${isYellow ? 'border-yellow text-yellow hover:bg-yellow' : 'border-teal text-teal hover:bg-teal'} hover:text-white transition-all duration-300`}
-                      onClick={() => {
-                        const element = document.getElementById(`category-${index}`);
-                        element?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                    >
-                      View Questions
-                    </Button>
+                    <a href={`#category-${index}`}>
+                      <Button 
+                        variant="outline" 
+                        className={`w-full ${isYellow ? 'border-yellow text-yellow hover:bg-yellow' : 'border-teal text-teal hover:bg-teal'} hover:text-white transition-all duration-300`}
+                      >
+                        View Questions
+                      </Button>
+                    </a>
                   </CardContent>
                 </Card>
               );
