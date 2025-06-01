@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://hopeandhire.net'),
   title: {
     default: "Hope and Hire - Building Better Futures",
     template: "%s | Hope and Hire"
