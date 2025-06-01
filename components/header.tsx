@@ -158,12 +158,12 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          <div className="hidden md:grid md:grid-cols-6 md:gap-6 md:items-center">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-teal ${
+                className={`text-sm font-medium transition-colors hover:text-teal text-center ${
                   isActive(item.href) ? 'text-teal' : 'text-gray-600 hover:text-teal'
                 }`}
               >

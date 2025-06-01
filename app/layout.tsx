@@ -4,6 +4,10 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { GridDiagnostic } from "@/components/grid-diagnostic"
 import { LayoutDebugger } from "@/components/layout-debugger"
+import Header from "@/components/header"
+import Footer from "@/components/footer"
+import Providers from "@/app/providers"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -20,14 +24,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
-        {/* Only show debugging tools in development */}
-        {process.env.NODE_ENV === "development" && (
-          <>
-            <GridDiagnostic />
-            <LayoutDebugger />
-          </>
-        )}
+        <Providers>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+          {/* Only show debugging tools in development */}
+          {process.env.NODE_ENV === "development" && (
+            <>
+              <GridDiagnostic />
+              <LayoutDebugger />
+            </>
+          )}
+        </Providers>
       </body>
     </html>
   )

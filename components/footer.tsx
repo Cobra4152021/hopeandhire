@@ -12,7 +12,7 @@ function Footer() {
               Empowering individuals with second chances through workforce readiness and meaningful
               employment.
             </p>
-            <div className="flex space-x-4">
+            <div className="grid grid-cols-4 gap-4">
               <Link href="#" className="text-gray-400 hover:text-teal transition-colors">
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
@@ -149,22 +149,22 @@ function Footer() {
             <p className="text-sm text-gray-500">
               © {new Date().getFullYear()} Hope and Hire. All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-4 md:mt-0">
               <Link
                 href="/privacy-policy"
-                className="text-sm text-gray-500 hover:text-teal transition-colors"
+                className="text-sm text-gray-500 hover:text-teal transition-colors text-center"
               >
               Privacy Policy
             </Link>
               <Link
                 href="/terms-of-service"
-                className="text-sm text-gray-500 hover:text-teal transition-colors"
+                className="text-sm text-gray-500 hover:text-teal transition-colors text-center"
               >
               Terms of Service
             </Link>
               <Link
                 href="/accessibility"
-                className="text-sm text-gray-500 hover:text-teal transition-colors"
+                className="text-sm text-gray-500 hover:text-teal transition-colors text-center"
               >
                 Accessibility
               </Link>

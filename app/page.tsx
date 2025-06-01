@@ -84,19 +84,19 @@ export default function Home() {
               Empowering individuals with second chances through workforce readiness and meaningful employment.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
               <Link href="/organizations">
-                <Button size="lg" className="w-full sm:w-auto bg-teal text-white hover:bg-teal-dark">
+                <Button size="lg" className="w-full bg-teal text-white hover:bg-teal-dark">
                   Support Your Clients
                 </Button>
               </Link>
               <Link href="/volunteers">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-gray-300 hover:bg-gray-50">
+                <Button size="lg" variant="outline" className="w-full border-gray-300 hover:bg-gray-50">
                   Start Volunteering
                 </Button>
               </Link>
               <Link href="/employers">
-                <Button size="lg" className="w-full sm:w-auto bg-yellow text-dark-text hover:bg-yellow-dark">
+                <Button size="lg" className="w-full bg-yellow text-dark-text hover:bg-yellow-dark">
                   Hire Job-Ready Candidates
                 </Button>
               </Link>
@@ -226,7 +226,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto grid gap-6 text-center">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 gap-6 text-center">
             <h2 className="text-3xl font-bold text-dark-text">Ready to Make a Difference?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Join our community of volunteers, employers, and organizations committed to creating second chances.
