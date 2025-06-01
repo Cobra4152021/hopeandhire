@@ -1,7 +1,24 @@
-/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base styles that don't rely on @apply directives */
+* {
+  border-color: hsl(214.3 31.8% 91.4%);
+}
+
+body {
+  background-color: hsl(180 20% 98%);
+  color: hsl(200 25% 16%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 :root {
   /* Core brand colors from the screenshots */
@@ -78,21 +95,27 @@
   --ring: 176 60% 42%;
 }
 
-/* @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground min-h-screen;
-  }
-  html {
-    @apply antialiased;
-  }
-}
-
 @layer components {
   .container {
-    @apply max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
 
   .bg-teal {
@@ -135,6 +158,10 @@
     color: var(--dark-text);
   }
 
+  .text-dark-text {
+    color: var(--dark-text);
+  }
+
   .border-teal {
     border-color: var(--teal-primary);
   }
@@ -156,8 +183,9 @@
   .btn-teal {
     background-color: var(--teal-primary);
     color: white;
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-    transition-duration: 150ms;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: all 150ms ease-in-out;
   }
 
   .btn-teal:hover {
@@ -167,8 +195,9 @@
   .btn-yellow {
     background-color: var(--yellow-primary);
     color: var(--dark-text);
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-    transition-duration: 150ms;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: all 150ms ease-in-out;
   }
 
   .btn-yellow:hover {
@@ -178,8 +207,10 @@
   .btn-outline-teal {
     border: 1px solid var(--teal-primary);
     color: var(--teal-primary);
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-    transition-duration: 150ms;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: all 150ms ease-in-out;
+    background-color: transparent;
   }
 
   .btn-outline-teal:hover {
@@ -190,10 +221,54 @@
   .gradient-light {
     background: linear-gradient(to right, var(--light-bg), white);
   }
-} */
 
-.debug-impact-grid {
-  border: 5px solid red !important;
-  display: grid !important; /* Force it */
-  grid-template-columns: repeat(3, 1fr) !important; /* Force 3 columns */
+  .grid-fix {
+    display: grid !important;
+  }
+
+  .flex-fix {
+    display: flex !important;
+  }
+
+  .debug-grid {
+    border: 2px solid var(--teal-primary) !important;
+    background-color: rgba(42, 173, 161, 0.1) !important;
+  }
+
+  .debug-grid-item {
+    border: 1px solid var(--yellow-primary) !important;
+    background-color: rgba(245, 179, 53, 0.1) !important;
+  }
 }
+
+/* Grid debugging utilities outside of layers */
+.debug-impact-grid {
+  border: 5px solid var(--teal-primary) !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 1rem !important;
+  background-color: rgba(42, 173, 161, 0.05) !important;
+}
+
+.debug-flex {
+  border: 3px solid var(--yellow-primary) !important;
+  display: flex !important;
+  background-color: rgba(245, 179, 53, 0.05) !important;
+}
+
+.debug-block {
+  border: 2px solid red !important;
+  display: block !important;
+  background-color: rgba(255, 0, 0, 0.05) !important;
+}
+
+/* Hero pattern with your color scheme */
+.hero-pattern {
+  background-color: var(--light-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%232aada1' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Additional global styles if any */
+
+/* Styles from vertical-stacking-fixes.txt can be conditionally added here later if needed */
+/* For now, let's keep it clean and focus on making Tailwind work */

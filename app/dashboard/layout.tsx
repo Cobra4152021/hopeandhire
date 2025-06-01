@@ -100,10 +100,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </button>
           </div>
           <nav className="flex-1 space-y-1 px-2 py-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
                 className={cn(
                   'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
                   isActive(item)
@@ -111,17 +111,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 )}
                 onClick={() => setIsSidebarOpen(false)}
-              >
-                <item.icon
+                >
+                  <item.icon
                   className={cn(
                     'mr-3 h-5 w-5 flex-shrink-0',
                     isActive(item) ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500'
                   )}
-                />
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+                  />
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
         </div>
       </div>
 
@@ -161,13 +161,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main content */}
       <div className="lg:pl-64">
         <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
-          <button
+            <button
             type="button"
             className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 lg:hidden"
             onClick={() => setIsSidebarOpen(true)}
-          >
+            >
             <Menu className="h-6 w-6" />
-          </button>
+            </button>
           <div className="flex flex-1 justify-between px-4">
             <div className="flex flex-1" />
             <div className="ml-4 flex items-center md:ml-6">

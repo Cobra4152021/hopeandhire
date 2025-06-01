@@ -6,6 +6,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './*.{js,ts,jsx,tsx,mdx}', // root-level files
   ],
   theme: {
     container: {
@@ -50,7 +51,6 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // Direct color values for easier use
         teal: {
           DEFAULT: '#2AADA1',
           dark: '#218F86',
@@ -85,7 +85,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  // plugins: [require('tailwindcss-animate')], // Temporarily commented out
 };
 
 export default config;

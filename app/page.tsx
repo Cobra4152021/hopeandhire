@@ -30,44 +30,35 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section with Logo */}
+      {/* Hero Section with Grid Layout */}
       <section className="bg-gradient-to-b from-gray-50 to-white py-12 md:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Hero image row: left, logo, right (touching, no gaps) */}
-            <div className="flex justify-center items-center mb-12 w-full max-w-3xl mx-auto rounded-2xl shadow-lg border border-gray-200 overflow-hidden bg-white">
-              {/* Left image */}
-              <div className="h-48 md:h-64 flex items-center" style={{ width: '28%' }}>
+            <div className="grid grid-cols-3 mb-12 w-full max-w-3xl mx-auto rounded-2xl shadow-lg border border-gray-200 overflow-hidden bg-white">
+              <div className="h-48 md:h-64">
                 <img
                   src="/612x612.jpg"
                   alt="Diverse workers left"
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: 'right center' }}
+                  className="h-full w-full object-cover object-right"
                   loading="lazy"
                 />
               </div>
-              {/* Center logo */}
-              <div
-                className="flex items-center justify-center bg-white px-4"
-                style={{ width: '44%' }}
-              >
-              <Image
-                src="/logo.png"
-                alt="Hope and Hire Logo"
-                width={200}
-                height={80}
+              <div className="flex items-center justify-center bg-white px-4">
+                <Image
+                  src="/logo.png"
+                  alt="Hope and Hire Logo"
+                  width={200}
+                  height={80}
                   className="h-auto w-full object-contain"
-                priority
-                quality={90}
-              />
+                  priority
+                  quality={90}
+                />
               </div>
-              {/* Right image */}
-              <div className="h-48 md:h-64 flex items-center" style={{ width: '28%' }}>
+              <div className="h-48 md:h-64">
                 <img
                   src="/1612x612.jpg"
                   alt="Diverse workers right"
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: 'left center' }}
+                  className="h-full w-full object-cover object-left"
                   loading="lazy"
                 />
               </div>
@@ -90,33 +81,22 @@ export default function Home() {
             </h1>
 
             <p className="text-lg md:text-xl mb-12 text-gray-600 max-w-3xl mx-auto">
-              Empowering individuals with second chances through workforce readiness and meaningful
-              employment.
+              Empowering individuals with second chances through workforce readiness and meaningful employment.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/organizations">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-teal text-white hover:bg-teal-dark"
-                >
+                <Button size="lg" className="w-full sm:w-auto bg-teal text-white hover:bg-teal-dark">
                   Support Your Clients
                 </Button>
               </Link>
               <Link href="/volunteers">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto border-gray-300 hover:bg-gray-50"
-                >
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-gray-300 hover:bg-gray-50">
                   Start Volunteering
                 </Button>
               </Link>
               <Link href="/employers">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto bg-yellow text-dark-text hover:bg-yellow-dark"
-                >
+                <Button size="lg" className="w-full sm:w-auto bg-yellow text-dark-text hover:bg-yellow-dark">
                   Hire Job-Ready Candidates
                 </Button>
               </Link>
@@ -128,12 +108,10 @@ export default function Home() {
       {/* Impact Stats */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 debug-impact-grid">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">
-                  Resumes Written
-                </h3>
+                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">Resumes Written</h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
                   <AnimatedCounter end={3250} duration={5000} />
                 </p>
@@ -143,9 +121,7 @@ export default function Home() {
 
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">
-                  Interviews Conducted
-                </h3>
+                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">Interviews Conducted</h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
                   <AnimatedCounter end={1875} duration={5000} />
                 </p>
@@ -155,9 +131,7 @@ export default function Home() {
 
             <Card className="border-0 shadow-sm">
               <CardContent className="p-8">
-                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">
-                  Job Placements Made
-                </h3>
+                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">Job Placements Made</h3>
                 <p className="text-center text-teal text-5xl font-bold mb-2">
                   <AnimatedCounter end={925} duration={5000} />
                 </p>
@@ -174,179 +148,73 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-bold mb-4 text-gray-900">Our Impact</h2>
             <p className="text-lg text-gray-600">
-              Together, we're creating meaningful change in the lives of formerly incarcerated
-              individuals.
+              Together, we're creating meaningful change in the lives of formerly incarcerated individuals.
             </p>
           </div>
 
-          {/* Top Contributors */}
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-4 text-gray-900">Top Contributors</h2>
               <p className="text-lg text-gray-600">
-              Recognizing the volunteers who are making a difference in our community.
-            </p>
+                Recognizing the volunteers who are making a difference in our community.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Monthly Leaders */}
               <Card className="border-t-4 border-teal">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-6">
                     <Trophy className="text-teal mr-2" />
                     <h3 className="text-xl font-bold text-dark-text">Monthly Leaders</h3>
                   </div>
-
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-1.jpg"
-                            alt="Sarah Johnson"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
+                    {[
+                      { name: 'Sarah Johnson', role: 'HR Director', image: '/team-member-1.jpg', count: 42 },
+                      { name: 'Michael Chen', role: 'Recruiter', image: '/team-member-2.jpg', count: 37 },
+                      { name: 'David Rodriguez', role: 'Career Coach', image: '/team-member-3.jpg', count: 29 },
+                    ].map((person, i) => (
+                      <div key={i} className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                            <Image src={person.image} alt={person.name} width={40} height={40} className="object-cover" loading="lazy" sizes="40px" />
+                          </div>
+                          <div>
+                            <p className="font-medium">{person.name}</p>
+                            <p className="text-sm text-gray-500">{person.role}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium">Sarah Johnson</p>
-                          <p className="text-sm text-gray-500">HR Director</p>
-                        </div>
+                        <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">{person.count} resumes</div>
                       </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">
-                        42 resumes
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-2.jpg"
-                            alt="Michael Chen"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Michael Chen</p>
-                          <p className="text-sm text-gray-500">Recruiter</p>
-                        </div>
-                      </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">
-                        37 resumes
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-3.jpg"
-                            alt="David Rodriguez"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">David Rodriguez</p>
-                          <p className="text-sm text-gray-500">Career Coach</p>
-                        </div>
-                      </div>
-                      <div className="bg-teal-light/20 text-teal text-sm px-3 py-1 rounded-full">
-                        29 resumes
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Yearly Leaders */}
               <Card className="border-t-4 border-yellow">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-6">
                     <Trophy className="text-yellow mr-2" />
                     <h3 className="text-xl font-bold text-dark-text">Yearly Leaders</h3>
                   </div>
-
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-4.png"
-                            alt="Jennifer Williams"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
+                    {[
+                      { name: 'Jennifer Williams', role: 'HR Manager', image: '/team-member-4.png', count: 312 },
+                      { name: 'Robert Taylor', role: 'Talent Acquisition', image: '/team-member-5.png', count: 287 },
+                      { name: 'Lisa Martinez', role: 'Career Specialist', image: '/team-member-6.jpg', count: 253 },
+                    ].map((person, i) => (
+                      <div key={i} className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+                            <Image src={person.image} alt={person.name} width={40} height={40} className="object-cover" loading="lazy" sizes="40px" />
+                          </div>
+                          <div>
+                            <p className="font-medium">{person.name}</p>
+                            <p className="text-sm text-gray-500">{person.role}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium">Jennifer Williams</p>
-                          <p className="text-sm text-gray-500">HR Manager</p>
-                        </div>
+                        <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">{person.count} resumes</div>
                       </div>
-                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
-                        312 resumes
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-5.png"
-                            alt="Robert Taylor"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Robert Taylor</p>
-                          <p className="text-sm text-gray-500">Talent Acquisition</p>
-                        </div>
-                      </div>
-                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
-                        287 resumes
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                          <Image
-                            src="/team-member-6.jpg"
-                            alt="Lisa Martinez"
-                            width={40}
-                            height={40}
-                            className="object-cover"
-                            loading="lazy"
-                            sizes="40px"
-                          />
-                        </div>
-                        <div>
-                          <p className="font-medium">Lisa Martinez</p>
-                          <p className="text-sm text-gray-500">Career Specialist</p>
-                        </div>
-                      </div>
-                      <div className="bg-yellow-light/30 text-yellow-dark text-sm px-3 py-1 rounded-full">
-                        253 resumes
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -358,23 +226,21 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 text-dark-text">Ready to Make a Difference?</h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join our community of volunteers, employers, and organizations committed to creating
-            second chances.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register">
-              <Button className="bg-teal text-white hover:bg-teal-dark">Get Started Today</Button>
-            </Link>
-            <Link href="/contact">
-              <Button
-                variant="outline"
-                className="border-teal text-teal hover:bg-teal hover:text-white"
-              >
-                Contact Us
-              </Button>
-            </Link>
+          <div className="max-w-4xl mx-auto grid gap-6 text-center">
+            <h2 className="text-3xl font-bold text-dark-text">Ready to Make a Difference?</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Join our community of volunteers, employers, and organizations committed to creating second chances.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/register">
+                <Button className="bg-teal text-white hover:bg-teal-dark">Get Started Today</Button>
+              </Link>
+              <Link href="/contact">
+                <Button variant="outline" className="border-teal text-teal hover:bg-teal hover:text-white">
+                  Contact Us
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
