@@ -36,16 +36,18 @@ export default function Home() {
         <div className="absolute inset-0 hero-pattern opacity-30"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-5xl mx-auto text-center">
-            <div className="grid grid-cols-3 mb-12 w-full max-w-3xl mx-auto rounded-2xl shadow-xl border border-teal/20 overflow-hidden bg-white/95 backdrop-blur-sm">
-              <div className="h-48 md:h-64">
-                <img
+            <div className="grid grid-cols-3 mb-8 md:mb-12 w-full max-w-3xl mx-auto rounded-2xl shadow-xl border border-teal/20 overflow-hidden bg-white/95 backdrop-blur-sm">
+              <div className="h-40 md:h-48 lg:h-64 relative">
+                <Image
                   src="/612x612.jpg"
-                  alt="Diverse workers left"
-                  className="h-full w-full object-cover object-right"
-                  loading="lazy"
+                  alt="Diverse workers collaborating"
+                  fill
+                  className="object-cover object-right"
+                  sizes="(max-width: 768px) 33vw, (max-width: 1200px) 300px, 400px"
+                  priority
                 />
               </div>
-              <div className="flex items-center justify-center bg-white px-4">
+              <div className="flex items-center justify-center bg-white px-2 md:px-4">
                 <Image
                   src="/logo.png"
                   alt="Hope and Hire Logo"
@@ -54,51 +56,64 @@ export default function Home() {
                   className="h-auto w-full object-contain"
                   priority
                   quality={90}
+                  sizes="(max-width: 768px) 150px, 200px"
                 />
               </div>
-              <div className="h-48 md:h-64">
-                <img
+              <div className="h-40 md:h-48 lg:h-64 relative">
+                <Image
                   src="/1612x612.jpg"
-                  alt="Diverse workers right"
-                  className="h-full w-full object-cover object-left"
-                  loading="lazy"
+                  alt="Professional team meeting"
+                  fill
+                  className="object-cover object-left"
+                  sizes="(max-width: 768px) 33vw, (max-width: 1200px) 300px, 400px"
+                  priority
                 />
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
-              <span className="bg-white/80 backdrop-blur-sm text-gray-700 px-4 py-2 rounded-full text-sm font-medium border border-gray-200">
+            <div className="flex flex-wrap justify-center gap-3 mb-6 md:mb-8">
+              <span className="bg-white/80 backdrop-blur-sm text-gray-700 px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium border border-gray-200">
                 Empowering second chances
               </span>
-              <span className="bg-teal/10 text-teal px-4 py-2 rounded-full text-sm font-medium border border-teal/20">
+              <span className="bg-teal/10 text-teal px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium border border-teal/20">
                 Building bridges to opportunity
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-gray-900 leading-tight">
               Bridging the Gap from
               <span className="text-teal"> Hope </span>
               to
               <span className="text-yellow"> Hire</span>
             </h1>
 
-            <p className="text-lg md:text-xl mb-12 text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base md:text-lg lg:text-xl mb-8 md:mb-12 text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Empowering individuals with second chances through workforce readiness and meaningful employment.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
-              <Link href="/organizations">
-                <Button size="lg" className="w-full bg-teal text-white hover:bg-teal-dark shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 justify-center max-w-4xl mx-auto">
+              <Link href="/organizations" className="w-full">
+                <Button 
+                  size="lg" 
+                  className="w-full bg-teal text-white hover:bg-teal-dark shadow-lg hover:shadow-xl transition-all duration-300 touch-manipulation active:scale-95 text-sm md:text-base py-3 md:py-4"
+                >
                   Support Your Clients
                 </Button>
               </Link>
-              <Link href="/volunteers">
-                <Button size="lg" variant="outline" className="w-full border-2 border-teal text-teal hover:bg-teal hover:text-white shadow-md hover:shadow-lg transition-all duration-300">
+              <Link href="/volunteers" className="w-full">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="w-full border-2 border-teal text-teal hover:bg-teal hover:text-white shadow-md hover:shadow-lg transition-all duration-300 touch-manipulation active:scale-95 text-sm md:text-base py-3 md:py-4"
+                >
                   Start Volunteering
                 </Button>
               </Link>
-              <Link href="/employers">
-                <Button size="lg" className="w-full bg-yellow text-dark-text hover:bg-yellow-dark shadow-lg hover:shadow-xl transition-all duration-300">
+              <Link href="/employers" className="w-full sm:col-span-2 lg:col-span-1">
+                <Button 
+                  size="lg" 
+                  className="w-full bg-yellow text-dark-text hover:bg-yellow-dark shadow-lg hover:shadow-xl transition-all duration-300 touch-manipulation active:scale-95 text-sm md:text-base py-3 md:py-4"
+                >
                   Hire Job-Ready Candidates
                 </Button>
               </Link>
@@ -108,45 +123,45 @@ export default function Home() {
       </section>
 
       {/* Impact Stats with enhanced cards and animated icons */}
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 border-t-4 border-teal group">
-              <CardContent className="p-8">
+              <CardContent className="p-6 md:p-8">
                 <div className="flex justify-center mb-4">
-                  <FileText className="h-12 w-12 text-teal group-hover:scale-110 transition-transform duration-300" />
+                  <FileText className="h-10 w-10 md:h-12 md:w-12 text-teal group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">Resumes Written</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={3250} duration={5000} />
+                <h3 className="text-center text-gray-600 mb-2 text-base md:text-lg font-medium">Resumes Written</h3>
+                <p className="text-center text-teal text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+                  <AnimatedCounter end={67} duration={3000} />
                 </p>
-                <p className="text-center text-gray-500">Professional resumes created</p>
+                <p className="text-center text-gray-500 text-sm md:text-base">Professional resumes created</p>
               </CardContent>
             </Card>
 
             <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 border-t-4 border-yellow group">
-              <CardContent className="p-8">
+              <CardContent className="p-6 md:p-8">
                 <div className="flex justify-center mb-4">
-                  <Users className="h-12 w-12 text-yellow group-hover:scale-110 transition-transform duration-300" />
+                  <Users className="h-10 w-10 md:h-12 md:w-12 text-yellow group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">Interviews Conducted</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={1875} duration={5000} />
+                <h3 className="text-center text-gray-600 mb-2 text-base md:text-lg font-medium">Interviews Conducted</h3>
+                <p className="text-center text-teal text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+                  <AnimatedCounter end={34} duration={3000} />
                 </p>
-                <p className="text-center text-gray-500">Mock interviews with feedback</p>
+                <p className="text-center text-gray-500 text-sm md:text-base">Mock interviews with feedback</p>
               </CardContent>
             </Card>
 
             <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 border-t-4 border-teal-dark group">
-              <CardContent className="p-8">
+              <CardContent className="p-6 md:p-8">
                 <div className="flex justify-center mb-4">
-                  <Briefcase className="h-12 w-12 text-teal-dark group-hover:scale-110 transition-transform duration-300" />
+                  <Briefcase className="h-10 w-10 md:h-12 md:w-12 text-teal-dark group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h3 className="text-center text-gray-600 mb-2 text-lg font-medium">Job Placements Made</h3>
-                <p className="text-center text-teal text-5xl font-bold mb-2">
-                  <AnimatedCounter end={925} duration={5000} />
+                <h3 className="text-center text-gray-600 mb-2 text-base md:text-lg font-medium">Job Placements Made</h3>
+                <p className="text-center text-teal text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+                  <AnimatedCounter end={15} duration={3000} />
                 </p>
-                <p className="text-center text-gray-500">Successful career placements</p>
+                <p className="text-center text-gray-500 text-sm md:text-base">Successful career placements</p>
               </CardContent>
             </Card>
           </div>
@@ -154,35 +169,35 @@ export default function Home() {
       </section>
 
       {/* Success Stories Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">Success Stories</h2>
-            <p className="text-lg text-gray-600">
+          <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">Success Stories</h2>
+            <p className="text-base md:text-lg text-gray-600">
               Real transformations from our community members who found their path to meaningful employment.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
             <Card className="shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
               <CardContent className="p-0">
-                <div className="bg-gradient-to-r from-teal/10 to-teal/5 p-6">
+                <div className="bg-gradient-to-r from-teal/10 to-teal/5 p-4 md:p-6">
                   <div className="flex items-center mb-4">
-                    <Heart className="h-6 w-6 text-teal mr-2" />
-                    <span className="text-sm font-medium text-teal">Success Story</span>
+                    <Heart className="h-5 w-5 md:h-6 md:w-6 text-teal mr-2" />
+                    <span className="text-xs md:text-sm font-medium text-teal">Success Story</span>
                   </div>
-                  <h3 className="font-bold text-lg mb-2">Marcus Johnson</h3>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <h3 className="font-bold text-base md:text-lg mb-2">Marcus Johnson</h3>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
                     "After 8 years, I thought no one would give me a chance. Hope & Hire helped me build confidence and land a job in construction management."
                   </p>
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div>
                       <p className="text-xs text-gray-500">Before</p>
-                      <p className="font-semibold text-red-600">Unemployed</p>
+                      <p className="font-semibold text-red-600 text-sm">Unemployed</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">After</p>
-                      <p className="font-semibold text-teal">Site Manager</p>
+                      <p className="font-semibold text-teal text-sm">Site Manager</p>
                     </div>
                   </div>
                 </div>
@@ -191,48 +206,48 @@ export default function Home() {
 
             <Card className="shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
               <CardContent className="p-0">
-                <div className="bg-gradient-to-r from-yellow/10 to-yellow/5 p-6">
+                <div className="bg-gradient-to-r from-yellow/10 to-yellow/5 p-4 md:p-6">
                   <div className="flex items-center mb-4">
-                    <Target className="h-6 w-6 text-yellow mr-2" />
-                    <span className="text-sm font-medium text-yellow">Success Story</span>
+                    <Target className="h-5 w-5 md:h-6 md:w-6 text-yellow mr-2" />
+                    <span className="text-xs md:text-sm font-medium text-yellow">Success Story</span>
                   </div>
-                  <h3 className="font-bold text-lg mb-2">Sarah Williams</h3>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <h3 className="font-bold text-base md:text-lg mb-2">Sarah Williams</h3>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
                     "The interview coaching was a game-changer. I went from nervous to confident and secured my dream job in healthcare administration."
                   </p>
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div>
                       <p className="text-xs text-gray-500">Before</p>
-                      <p className="font-semibold text-red-600">Multiple Rejections</p>
+                      <p className="font-semibold text-red-600 text-sm">Multiple Rejections</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">After</p>
-                      <p className="font-semibold text-teal">Healthcare Admin</p>
+                      <p className="font-semibold text-teal text-sm">Healthcare Admin</p>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+            <Card className="shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden md:col-span-2 lg:col-span-1">
               <CardContent className="p-0">
-                <div className="bg-gradient-to-r from-teal-dark/10 to-teal-dark/5 p-6">
+                <div className="bg-gradient-to-r from-teal-dark/10 to-teal-dark/5 p-4 md:p-6">
                   <div className="flex items-center mb-4">
-                    <CheckCircle className="h-6 w-6 text-teal-dark mr-2" />
-                    <span className="text-sm font-medium text-teal-dark">Success Story</span>
+                    <CheckCircle className="h-5 w-5 md:h-6 md:w-6 text-teal-dark mr-2" />
+                    <span className="text-xs md:text-sm font-medium text-teal-dark">Success Story</span>
                   </div>
-                  <h3 className="font-bold text-lg mb-2">James Rodriguez</h3>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <h3 className="font-bold text-base md:text-lg mb-2">James Rodriguez</h3>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
                     "From day laborer to restaurant owner. The business mentorship program helped me start my own catering company."
                   </p>
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div>
                       <p className="text-xs text-gray-500">Before</p>
-                      <p className="font-semibold text-red-600">Day Labor</p>
+                      <p className="font-semibold text-red-600 text-sm">Day Labor</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">After</p>
-                      <p className="font-semibold text-teal">Business Owner</p>
+                      <p className="font-semibold text-teal text-sm">Business Owner</p>
                     </div>
                   </div>
                 </div>
@@ -243,77 +258,77 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-teal/5">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-gray-50 to-teal/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">What People Say</h2>
-            <p className="text-lg text-gray-600">
+          <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">What People Say</h2>
+            <p className="text-base md:text-lg text-gray-600">
               Hear from volunteers, employers, and job seekers about their experience with Hope & Hire.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
             <Card className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow fill-current" />
+                    <Star key={i} className="h-4 w-4 md:h-5 md:w-5 text-yellow fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-600 mb-4 italic">
+                <p className="text-gray-600 mb-4 italic text-sm md:text-base leading-relaxed">
                   "Volunteering with Hope & Hire has been incredibly rewarding. Seeing candidates land their dream jobs makes every session worthwhile."
                 </p>
                 <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-teal/20 flex items-center justify-center mr-3">
-                    <span className="text-teal font-bold">EM</span>
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-teal/20 flex items-center justify-center mr-3">
+                    <span className="text-teal font-bold text-sm">EM</span>
                   </div>
                   <div>
-                    <p className="font-semibold">Emily Martinez</p>
-                    <p className="text-sm text-gray-500">Volunteer Resume Coach</p>
+                    <p className="font-semibold text-sm md:text-base">Emily Martinez</p>
+                    <p className="text-xs md:text-sm text-gray-500">Volunteer Resume Coach</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow fill-current" />
+                    <Star key={i} className="h-4 w-4 md:h-5 md:w-5 text-yellow fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-600 mb-4 italic">
+                <p className="text-gray-600 mb-4 italic text-sm md:text-base leading-relaxed">
                   "Hope & Hire connected us with amazing talent. These candidates bring unique perspectives and strong work ethic to our team."
                 </p>
                 <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-yellow/20 flex items-center justify-center mr-3">
-                    <span className="text-yellow-dark font-bold">DT</span>
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-yellow/20 flex items-center justify-center mr-3">
+                    <span className="text-yellow-dark font-bold text-sm">DT</span>
                   </div>
                   <div>
-                    <p className="font-semibold">David Thompson</p>
-                    <p className="text-sm text-gray-500">HR Director, TechCorp</p>
+                    <p className="font-semibold text-sm md:text-base">David Thompson</p>
+                    <p className="text-xs md:text-sm text-gray-500">HR Director, TechCorp</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-6">
+            <Card className="bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 md:col-span-3 lg:col-span-1">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow fill-current" />
+                    <Star key={i} className="h-4 w-4 md:h-5 md:w-5 text-yellow fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-600 mb-4 italic">
+                <p className="text-gray-600 mb-4 italic text-sm md:text-base leading-relaxed">
                   "The support I received was life-changing. Not just job placement, but genuine care for my success and growth as a person."
                 </p>
                 <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-teal-dark/20 flex items-center justify-center mr-3">
-                    <span className="text-teal-dark font-bold">AL</span>
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-teal-dark/20 flex items-center justify-center mr-3">
+                    <span className="text-teal-dark font-bold text-sm">AL</span>
                   </div>
                   <div>
-                    <p className="font-semibold">Alex Lopez</p>
-                    <p className="text-sm text-gray-500">Manufacturing Specialist</p>
+                    <p className="font-semibold text-sm md:text-base">Alex Lopez</p>
+                    <p className="text-xs md:text-sm text-gray-500">Manufacturing Specialist</p>
                   </div>
                 </div>
               </CardContent>
@@ -323,29 +338,29 @@ export default function Home() {
       </section>
 
       {/* Our Impact with teal background */}
-      <section className="py-16 bg-gradient-to-br from-teal/5 to-teal-light/10">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-teal/5 to-teal-light/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">Our Impact</h2>
-            <p className="text-lg text-gray-600">
+          <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">Our Impact</h2>
+            <p className="text-base md:text-lg text-gray-600">
               Together, we're creating meaningful change in the lives of formerly incarcerated individuals.
             </p>
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4 text-gray-900">Top Contributors</h2>
-              <p className="text-lg text-gray-600">
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">Top Contributors</h2>
+              <p className="text-base md:text-lg text-gray-600">
                 Recognizing the volunteers who are making a difference in our community.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <Card className="border-t-4 border-teal shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <div className="flex items-center mb-6">
-                    <Trophy className="text-teal mr-2" />
-                    <h3 className="text-xl font-bold text-dark-text">Monthly Leaders</h3>
+                    <Trophy className="text-teal mr-2 h-5 w-5 md:h-6 md:w-6" />
+                    <h3 className="text-lg md:text-xl font-bold text-dark-text">Monthly Leaders</h3>
                   </div>
                   <div className="space-y-4">
                     {[
@@ -355,15 +370,21 @@ export default function Home() {
                     ].map((person, i) => (
                       <div key={i} className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <div className="w-10 h-10 rounded-full overflow-hidden mr-3 ring-2 ring-teal/20">
-                            <Image src={person.image} alt={person.name} width={40} height={40} className="object-cover" loading="lazy" sizes="40px" />
+                          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden mr-3 ring-2 ring-teal/20 relative">
+                            <Image 
+                              src={person.image} 
+                              alt={person.name} 
+                              fill
+                              className="object-cover" 
+                              sizes="(max-width: 768px) 32px, 40px"
+                            />
                           </div>
                           <div>
-                            <p className="font-medium">{person.name}</p>
-                            <p className="text-sm text-gray-500">{person.role}</p>
+                            <p className="font-medium text-sm md:text-base">{person.name}</p>
+                            <p className="text-xs md:text-sm text-gray-500">{person.role}</p>
                           </div>
                         </div>
-                        <div className="bg-teal/10 text-teal text-sm px-3 py-1 rounded-full border border-teal/20">{person.count} resumes</div>
+                        <div className="bg-teal/10 text-teal text-xs md:text-sm px-2 md:px-3 py-1 rounded-full border border-teal/20">{person.count} resumes</div>
                       </div>
                     ))}
                   </div>
@@ -371,28 +392,34 @@ export default function Home() {
               </Card>
 
               <Card className="border-t-4 border-yellow shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <div className="flex items-center mb-6">
-                    <Trophy className="text-yellow mr-2" />
-                    <h3 className="text-xl font-bold text-dark-text">Yearly Leaders</h3>
+                    <Trophy className="text-yellow mr-2 h-5 w-5 md:h-6 md:w-6" />
+                    <h3 className="text-lg md:text-xl font-bold text-dark-text">Yearly Leaders</h3>
                   </div>
                   <div className="space-y-4">
                     {[
-                      { name: 'Jennifer Williams', role: 'HR Manager', image: '/team-member-4.png', count: 312 },
-                      { name: 'Robert Taylor', role: 'Talent Acquisition', image: '/team-member-5.png', count: 287 },
+                      { name: 'Jennifer Williams', role: 'HR Manager', image: '/team-member-4.jpg', count: 312 },
+                      { name: 'Robert Taylor', role: 'Talent Acquisition', image: '/team-member-5.jpg', count: 287 },
                       { name: 'Lisa Martinez', role: 'Career Specialist', image: '/team-member-6.jpg', count: 253 },
                     ].map((person, i) => (
                       <div key={i} className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <div className="w-10 h-10 rounded-full overflow-hidden mr-3 ring-2 ring-yellow/20">
-                            <Image src={person.image} alt={person.name} width={40} height={40} className="object-cover" loading="lazy" sizes="40px" />
+                          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden mr-3 ring-2 ring-yellow/20 relative">
+                            <Image 
+                              src={person.image} 
+                              alt={person.name} 
+                              fill
+                              className="object-cover" 
+                              sizes="(max-width: 768px) 32px, 40px"
+                            />
                           </div>
                           <div>
-                            <p className="font-medium">{person.name}</p>
-                            <p className="text-sm text-gray-500">{person.role}</p>
+                            <p className="font-medium text-sm md:text-base">{person.name}</p>
+                            <p className="text-xs md:text-sm text-gray-500">{person.role}</p>
                           </div>
                         </div>
-                        <div className="bg-yellow/20 text-yellow-dark text-sm px-3 py-1 rounded-full border border-yellow/30">{person.count} resumes</div>
+                        <div className="bg-yellow/20 text-yellow-dark text-xs md:text-sm px-2 md:px-3 py-1 rounded-full border border-yellow/30">{person.count} resumes</div>
                       </div>
                     ))}
                   </div>
@@ -404,27 +431,28 @@ export default function Home() {
       </section>
 
       {/* Newsletter Signup Section */}
-      <section className="py-16 bg-gradient-to-r from-teal to-teal-dark relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-teal to-teal-dark relative overflow-hidden">
         <div className="absolute inset-0 hero-pattern opacity-10"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-2xl mx-auto">
-            <Mail className="h-16 w-16 text-white mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-white mb-4">Stay Connected</h2>
-            <p className="text-teal-light text-lg mb-8">
+            <Mail className="h-12 w-12 md:h-16 md:w-16 text-white mx-auto mb-4 md:mb-6" />
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Stay Connected</h2>
+            <p className="text-teal-light text-base md:text-lg mb-6 md:mb-8 leading-relaxed">
               Get the latest success stories, volunteer opportunities, and impact updates delivered to your inbox.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-yellow focus:outline-none"
+                className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-yellow focus:outline-none text-sm md:text-base"
+                aria-label="Email address for newsletter"
               />
-              <Button className="bg-yellow text-dark-text hover:bg-yellow-dark px-6 py-3 font-semibold">
+              <Button className="bg-yellow text-dark-text hover:bg-yellow-dark px-4 md:px-6 py-3 font-semibold touch-manipulation active:scale-95 text-sm md:text-base">
                 Subscribe
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
-            <p className="text-teal-light text-sm mt-4">
+            <p className="text-teal-light text-xs md:text-sm mt-4">
               No spam, unsubscribe anytime. Your email helps us build a stronger community.
             </p>
           </div>
@@ -432,19 +460,21 @@ export default function Home() {
       </section>
 
       {/* CTA Section with enhanced design */}
-      <section className="py-16 bg-gradient-to-r from-white via-teal/5 to-white">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-white via-teal/5 to-white">
         <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto grid grid-cols-1 gap-6 text-center">
-            <h2 className="text-3xl font-bold text-dark-text">Ready to Make a Difference?</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 gap-4 md:gap-6 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-dark-text">Ready to Make a Difference?</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
               Join our community of volunteers, employers, and organizations committed to creating second chances.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/register">
-                <Button className="bg-teal text-white hover:bg-teal-dark shadow-lg hover:shadow-xl transition-all duration-300">Get Started Today</Button>
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center max-w-md mx-auto">
+              <Link href="/register" className="w-full sm:w-auto">
+                <Button className="w-full bg-teal text-white hover:bg-teal-dark shadow-lg hover:shadow-xl transition-all duration-300 touch-manipulation active:scale-95 text-sm md:text-base py-3">
+                  Get Started Today
+                </Button>
               </Link>
-              <Link href="/contact">
-                <Button variant="outline" className="border-2 border-teal text-teal hover:bg-teal hover:text-white shadow-md hover:shadow-lg transition-all duration-300">
+              <Link href="/contact" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full border-2 border-teal text-teal hover:bg-teal hover:text-white shadow-md hover:shadow-lg transition-all duration-300 touch-manipulation active:scale-95 text-sm md:text-base py-3">
                   Contact Us
                 </Button>
               </Link>

@@ -1,0 +1,53 @@
+{
+  "name": "Hope and Hire",
+  "short_name": "Hope&Hire",
+  "description": "Empowering individuals with second chances through workforce readiness and meaningful employment",
+  "theme_color": "#0D9488",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["social", "productivity", "business"],
+  "lang": "en-US",
+  "shortcuts": [
+    {
+      "name": "Volunteer",
+      "short_name": "Volunteer",
+      "description": "Start volunteering with Hope and Hire",
+      "url": "/volunteers",
+      "icons": [
+        {
+          "src": "/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Employers",
+      "short_name": "Employers",
+      "description": "Hire job-ready candidates",
+      "url": "/employers",
+      "icons": [
+        {
+          "src": "/logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+} 
